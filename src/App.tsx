@@ -1,25 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <form>
+        <input type="number" name="price" id="price" placeholder="Precio" />
+
+        <label htmlFor="condition">Condicion:</label>
+
+        <select id="conditions">
+          <option value="sale">Venta</option>
+          <option value="rental">Alquiler</option>
+        </select>
+
+        <input type="text" name="address" id="adress" placeholder="Direccion" />
+
+        <input
+          type="number"
+          name="squareMeters"
+          id="squareMeters"
+          placeholder="Metros cuadrados"
+        />
+
+        <input
+          type="text"
+          name="constructionDate"
+          id="constructionDate"
+          placeholder="Fecha de construccion"
+        />
+
+        <input type="text" name="style" id="style" placeholder="Estilo" />
+
+        <input
+          type="number"
+          name="ambientsQuantity"
+          id="ambientsQuantity"
+          placeholder="Cantidad de ambientes"
+        />
+
+        <input
+          type="number"
+          name="roomsQuantity"
+          id="roomsQuantity"
+          placeholder="Cantidad de habitaciones"
+        />
+
+        <input
+          type="number"
+          name="bathroomsQuantity"
+          id="bathroomsQuantity"
+          placeholder="Cantidad de baños"
+        />
+
+        <input
+          type="number"
+          name="expensesPrice"
+          id="expensesPrice"
+          placeholder="Precio de expensas"
+        />
+      </form>
+    </>
   );
 }
 
