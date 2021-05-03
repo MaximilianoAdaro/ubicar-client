@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import App from "./App";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { ErrorPage } from "./components/ErrorPage";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import store from "./store/store";
@@ -11,7 +13,9 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ErrorBoundary fallback={<ErrorPage />}>
+        <App />
+      </ErrorBoundary>
     </Provider>
   </React.StrictMode>,
   rootElement
