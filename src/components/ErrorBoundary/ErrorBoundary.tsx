@@ -1,9 +1,8 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
-import { JsxElement } from "typescript";
+import { Component, ErrorInfo, ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
-  fallback: JsxElement;
+  fallback: JSX.Element;
 }
 
 interface State {

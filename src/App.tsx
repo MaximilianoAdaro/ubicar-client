@@ -1,9 +1,8 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
-import { Switch, Route } from "react-router-dom";
-import CreateProperty from "./pages/CreateProperty";
+import { Route, Switch } from "react-router-dom";
+import { CreateProperty } from "./routes";
 
-function App() {
+export default function App() {
   return (
     <Switch>
       <Route exact path="/create-property" component={CreateProperty} />
@@ -12,8 +11,8 @@ function App() {
   );
 }
 
-export default App;
-
-function WorkInProgress() {
-  return <Typography>Work in progress!</Typography>;
-}
+const WorkInProgress = () => (
+  <div className="app">
+    <h1>App in progress...</h1>
+  </div>
+);

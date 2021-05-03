@@ -1,19 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { ErrorPage } from "./components/ErrorPage";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import store from "./store/store";
+
+const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   // <ErrorBoundary fallback={ErrorPage}>
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <ErrorBoundary fallback={<ErrorPage />}>
+          <App />
+        </ErrorBoundary>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
-  // </ErrorBoundary>,
-  document.getElementById("root")
+  rootElement
 );
 
 // If you want to start measuring performance in your app, pass a function
