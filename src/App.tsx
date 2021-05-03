@@ -1,8 +1,9 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
 
-function App() {
-  return <Typography>Work in progress!</Typography>;
+export default function App() {
+  return (
+      <div className="app">
+        <h1>App in progress...</h1>
+      </div>
+  );
 }
-
-export default App;
