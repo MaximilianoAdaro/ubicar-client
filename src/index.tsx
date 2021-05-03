@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ErrorPage } from "./components/ErrorPage";
@@ -12,11 +13,13 @@ const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ErrorBoundary fallback={<ErrorPage />}>
-        <App />
-      </ErrorBoundary>
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <ErrorBoundary fallback={<ErrorPage />}>
+          <App />
+        </ErrorBoundary>
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   rootElement
 );

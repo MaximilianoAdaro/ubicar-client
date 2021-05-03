@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 
+import styles from "./CreateProperty.module.scss";
+
 interface FormData {
   price: number;
   condition: string;
@@ -13,8 +15,9 @@ interface FormData {
   expensesPrice: number;
 }
 
-function CreateProperty() {
+export function CreateProperty() {
   const { handleSubmit, register } = useForm<FormData>();
+
   const onSubmit = handleSubmit((data) => {
     console.log(data);
   });
@@ -22,6 +25,7 @@ function CreateProperty() {
   return (
     <form onSubmit={onSubmit}>
       <input
+        className={styles.textInput}
         type="number"
         id="price"
         placeholder="Precio"
@@ -94,5 +98,3 @@ function CreateProperty() {
     </form>
   );
 }
-
-export default CreateProperty;
