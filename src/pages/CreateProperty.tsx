@@ -1,64 +1,98 @@
-import React from "react";
+import { useForm } from "react-hook-form";
+
+interface FormData {
+  price: number;
+  condition: string;
+  address: string;
+  squareMeters: string;
+  constructionDate: Date;
+  style: string;
+  ambientsQuantity: number;
+  roomsQuantity: number;
+  bathroomsQuantity: number;
+  expensesPrice: number;
+}
 
 function CreateProperty() {
+  const { handleSubmit, register } = useForm<FormData>();
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
   return (
-    <>
-      <form>
-        <input type="number" name="price" id="price" placeholder="Precio" />
+    <form onSubmit={onSubmit}>
+      <input
+        type="number"
+        id="price"
+        placeholder="Precio"
+        {...register("price")}
+      />
 
-        <label htmlFor="condition">Condicion:</label>
+      <label htmlFor="condition">Condicion:</label>
+      <select id="conditions" {...register("condition")}>
+        <option value="sale">Venta</option>
+        <option value="rental">Alquiler</option>
+      </select>
 
-        <select id="conditions">
-          <option value="sale">Venta</option>
-          <option value="rental">Alquiler</option>
-        </select>
+      <input
+        type="text"
+        id="adress"
+        placeholder="Direccion"
+        {...register("address")}
+      />
 
-        <input type="text" name="address" id="adress" placeholder="Direccion" />
+      <input
+        type="number"
+        id="squareMeters"
+        placeholder="Metros cuadrados"
+        {...register("squareMeters")}
+      />
 
-        <input
-          type="number"
-          name="squareMeters"
-          id="squareMeters"
-          placeholder="Metros cuadrados"
-        />
+      <input
+        type="date"
+        id="constructionDate"
+        placeholder="Fecha de construccion"
+        {...register("constructionDate")}
+      />
 
-        <input
-          type="text"
-          name="constructionDate"
-          id="constructionDate"
-          placeholder="Fecha de construccion"
-        />
+      <input
+        type="text"
+        id="style"
+        placeholder="Estilo"
+        {...register("style")}
+      />
 
-        <input type="text" name="style" id="style" placeholder="Estilo" />
+      <input
+        type="number"
+        id="ambientsQuantity"
+        placeholder="Cantidad de ambientes"
+        {...register("ambientsQuantity")}
+      />
 
-        <input
-          type="number"
-          name="ambientsQuantity"
-          id="ambientsQuantity"
-          placeholder="Cantidad de ambientes"
-        />
+      <input
+        type="number"
+        id="roomsQuantity"
+        placeholder="Cantidad de habitaciones"
+        {...register("roomsQuantity")}
+      />
 
-        <input
-          type="number"
-          name="roomsQuantity"
-          id="roomsQuantity"
-          placeholder="Cantidad de habitaciones"
-        />
+      <input
+        type="number"
+        id="bathroomsQuantity"
+        placeholder="Cantidad de baños"
+        {...register("bathroomsQuantity")}
+      />
 
-        <input
-          type="number"
-          name="bathroomsQuantity"
-          id="bathroomsQuantity"
-          placeholder="Cantidad de baños"
-        />
+      <input
+        type="number"
+        id="expensesPrice"
+        placeholder="Precio de expensas"
+        {...register("expensesPrice")}
+      />
 
-        <input
-          type="number"
-          name="expensesPrice"
-          id="expensesPrice"
-          placeholder="Precio de expensas"
-        />
-      </form>
-    </>
+      <input type="submit" value="submit" />
+    </form>
   );
 }
+
+export default CreateProperty;
