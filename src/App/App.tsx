@@ -5,12 +5,14 @@ import { Counter } from "../components/Counter";
 import styles from "./App.module.scss";
 import { Button } from "react-bootstrap";
 import { ErrorPage } from "../components/ErrorPage";
+import {viewMap} from "../routes/viewMap/viewMap";
 
 export default function App() {
   return (
     <Switch>
       <Route exact path="/" component={WorkInProgress} />
       <Route exact path="/create-property" component={CreateProperty} />
+      <Route exact path="/map" component={viewMap}/>
       <Route component={ErrorPage} />
     </Switch>
   );
