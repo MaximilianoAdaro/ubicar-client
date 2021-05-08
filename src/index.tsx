@@ -2,17 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import App from "./App";
+import App from "./App/App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ErrorPage } from "./components/ErrorPage";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import store from "./store/store";
+import { store } from "./store";
 
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-  // <ErrorBoundary fallback={ErrorPage}>
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>

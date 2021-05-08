@@ -1,124 +1,119 @@
-import { Form } from "react-bootstrap";
-import { Controller, useForm } from "react-hook-form";
+import { Button, Col, Container, Form } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { TextInput } from "./TextInput";
+import { FormData, schema } from "./formData";
+import { SelectInput } from "./SelectInput";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import styles from "./CreateProperty.module.scss";
-
-interface FormData {
-  price: number;
-  condition: string;
-  address: string;
-  squareMeters: string;
-  constructionDate: Date;
-  style: string;
-  ambientsQuantity: number;
-  roomsQuantity: number;
-  bathroomsQuantity: number;
-  expensesPrice: number;
-}
-
-export function CreateProperty() {
-  const { handleSubmit, register, control } = useForm<FormData>();
+export const CreateProperty = () => {
+  const { handleSubmit, control } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    mode: "onBlur",
+  });
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
   });
 
   return (
-    <div>
+    <Container>
       <h1>Publicar una propiedad</h1>
-      <Form onSubmit={onSubmit}>
-        {/* <Controller control={control} name="price" 
 
-      
-      render={({ field }) =>  (
-      
-       } 
-        /> */}
+      <Form onSubmit={onSubmit} noValidate>
+        <Form.Row>
+          <Col>
+            <TextInput control={control} name="title" placeholder="Titulo" />
+          </Col>
+          <Col>
+            <TextInput control={control} name="style" placeholder="Estilo" />
+          </Col>
+          <Col>
+            <SelectInput
+              control={control}
+              name="condition"
+              placeholder="Condicion"
+              options={[
+                { value: "sale", name: "Venta" },
+                { value: "rental", name: "Alquiler" },
+              ]}
+            />
+          </Col>
+        </Form.Row>
 
-        <Controller
-          render={({ field }) => (
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="text" placeholder="price" {...field} />
-            </Form.Group>
-          )}
-          name="price"
+        <TextInput control={control} name="address" placeholder="Direccion" />
+
+        <Form.Row>
+          <Col>
+            <TextInput
+              control={control}
+              name="squareFoot"
+              placeholder="Metros cuadrados"
+            />
+          </Col>
+          <Col>
+            <TextInput
+              control={control}
+              name="constructionDate"
+              placeholder="Fecha de construccion"
+              type="date"
+            />
+          </Col>
+        </Form.Row>
+
+        <TextInput
           control={control}
-          defaultValue=""
-        />
-
-        {/* <input
-          className={styles.textInput}
-          type="number"
-          id="price"
-          placeholder="Precio"
-          {...register("price")}
-        /> */}
-
-        <label htmlFor="condition">Condicion:</label>
-        <select id="conditions" {...register("condition")}>
-          <option value="sale">Venta</option>
-          <option value="rental">Alquiler</option>
-        </select>
-
-        <input
-          type="text"
-          id="adress"
-          placeholder="Direccion"
-          {...register("address")}
-        />
-
-        <input
-          type="number"
-          id="squareMeters"
-          placeholder="Metros cuadrados"
-          {...register("squareMeters")}
-        />
-
-        <input
-          type="date"
-          id="constructionDate"
-          placeholder="Fecha de construccion"
-          {...register("constructionDate")}
-        />
-
-        <input
-          type="text"
-          id="style"
-          placeholder="Estilo"
-          {...register("style")}
-        />
-
-        <input
-          type="number"
-          id="ambientsQuantity"
-          placeholder="Cantidad de ambientes"
-          {...register("ambientsQuantity")}
-        />
-
-        <input
-          type="number"
-          id="roomsQuantity"
+          name="rooms"
           placeholder="Cantidad de habitaciones"
-          {...register("roomsQuantity")}
         />
 
-        <input
-          type="number"
-          id="bathroomsQuantity"
-          placeholder="Cantidad de baños"
-          {...register("bathroomsQuantity")}
-        />
+        <Form.Row>
+          <Col>
+            <TextInput
+              control={control}
+              name="halfBaths"
+              placeholder="half bath"
+            />
+          </Col>
+          <Col>
+            <TextInput
+              control={control}
+              name="quarterBaths"
+              placeholder="quarter bath"
+            />
+          </Col>
 
-        <input
-          type="number"
-          id="expensesPrice"
-          placeholder="Precio de expensas"
-          {...register("expensesPrice")}
-        />
+          <Col>
+            <TextInput
+              control={control}
+              name="threeQuarterBaths"
+              placeholder="three quarter bath"
+            />
+          </Col>
 
-        <input type="submit" value="submit" />
+          <Col>
+            <TextInput
+              control={control}
+              name="fullBaths"
+              placeholder="full bath"
+            />
+          </Col>
+        </Form.Row>
+
+        <Form.Row>
+          <Col>
+            <TextInput control={control} name="price" placeholder="Precio" />
+          </Col>
+          <Col>
+            <TextInput
+              control={control}
+              name="expenses"
+              placeholder="Precio de expensas"
+            />
+          </Col>
+        </Form.Row>
+
+        <Button type="submit">Submit form</Button>
       </Form>
-    </div>
+    </Container>
   );
-}
+};
