@@ -15,7 +15,7 @@ interface SelectInputProps<T> {
 
 interface SelectOption {
   value: string;
-  name: string;
+  displayName: string;
 }
 
 export const SelectInput = <T,>({
@@ -39,9 +39,9 @@ export const SelectInput = <T,>({
             isInvalid={invalid}
             {...(field as ControllerRenderProps)}
           >
-            {options.map(({ name, value }) => (
+            {options.map(({ displayName, value }) => (
               <option key={value} value={value}>
-                {name}
+                {displayName}
               </option>
             ))}
           </Form.Control>

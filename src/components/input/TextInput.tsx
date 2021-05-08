@@ -11,6 +11,7 @@ interface TextInputProps<T> {
   name: Path<T>;
   placeholder: string;
   type?: "text" | "date";
+  defaultValue?: string;
 }
 
 export const TextInput = <T,>({
@@ -18,10 +19,12 @@ export const TextInput = <T,>({
   name,
   placeholder,
   type = "text",
+  defaultValue = "",
 }: TextInputProps<T>) => {
   return (
     <Controller
       name={name}
+      defaultValue={defaultValue}
       control={control}
       render={({ field, fieldState: { invalid, error } }) => (
         <Form.Group>
