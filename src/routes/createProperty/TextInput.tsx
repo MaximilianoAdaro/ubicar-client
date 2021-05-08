@@ -29,7 +29,6 @@ export const TextInput: FC<TextInputProps> = ({
             isInvalid={invalid}
             {...field}
           />
-
           <Form.Control.Feedback type="invalid">
             {error?.message}
           </Form.Control.Feedback>
