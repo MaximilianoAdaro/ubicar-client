@@ -1,100 +1,164 @@
+import { Button, Col, Container, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { TextInput } from "../../components/input/TextInput";
+import { CreatePropertyFormData, schema } from "./createPropertyFormData";
+import { SelectInput } from "../../components/input/SelectInput";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import styles from "./CreateProperty.module.scss";
-
-interface FormData {
-  price: number;
-  condition: string;
-  address: string;
-  squareMeters: string;
-  constructionDate: Date;
-  style: string;
-  ambientsQuantity: number;
-  roomsQuantity: number;
-  bathroomsQuantity: number;
-  expensesPrice: number;
-}
-
-export function CreateProperty() {
-  const { handleSubmit, register } = useForm<FormData>();
+export const CreateProperty = () => {
+  const { handleSubmit, control } = useForm<CreatePropertyFormData>({
+    resolver: yupResolver(schema),
+    mode: "onBlur",
+  });
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
   });
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        className={styles.textInput}
-        type="number"
-        id="price"
-        placeholder="Precio"
-        {...register("price")}
-      />
+    <Container>
+      <h1>Publicar una propiedad</h1>
 
-      <label htmlFor="condition">Condicion:</label>
-      <select id="conditions" {...register("condition")}>
-        <option value="sale">Venta</option>
-        <option value="rental">Alquiler</option>
-      </select>
+      <Form onSubmit={onSubmit} noValidate>
+        <Form.Row>
+          <Col>
+            <TextInput control={control} name="title" placeholder="Titulo" />
+          </Col>
+          <Col>
+            <TextInput control={control} name="style" placeholder="Estilo" />
+          </Col>
+          <Col>
+            <SelectInput
+              control={control}
+              name="condition"
+              placeholder="Condicion"
+              options={[
+                { value: "sale", displayName: "Venta" },
+                { value: "rental", displayName: "Alquiler" },
+              ]}
+            />
+          </Col>
+        </Form.Row>
 
-      <input
-        type="text"
-        id="adress"
-        placeholder="Direccion"
-        {...register("address")}
-      />
+        <TextInput control={control} name="address" placeholder="Direccion" />
 
-      <input
-        type="number"
-        id="squareMeters"
-        placeholder="Metros cuadrados"
-        {...register("squareMeters")}
-      />
+        <Form.Row>
+          <Col>
+            <TextInput
+              control={control}
+              name="squareFoot"
+              placeholder="Metros cuadrados"
+            />
+          </Col>
+          <Col>
+            <TextInput
+              control={control}
+              name="constructionDate"
+              placeholder="Fecha de construccion"
+              type="date"
+            />
+          </Col>
+        </Form.Row>
 
-      <input
-        type="date"
-        id="constructionDate"
-        placeholder="Fecha de construccion"
-        {...register("constructionDate")}
-      />
+        <TextInput
+          control={control}
+          name="rooms"
+          placeholder="Cantidad de habitaciones"
+        />
 
-      <input
-        type="text"
-        id="style"
-        placeholder="Estilo"
-        {...register("style")}
-      />
+        <Form.Row>
+          <Col>
+            <TextInput
+              control={control}
+              name="halfBaths"
+              placeholder="half bath"
+            />
+          </Col>
+          <Col>
+            <TextInput
+              control={control}
+              name="quarterBaths"
+              placeholder="quarter bath"
+            />
+          </Col>
 
-      <input
-        type="number"
-        id="ambientsQuantity"
-        placeholder="Cantidad de ambientes"
-        {...register("ambientsQuantity")}
-      />
+          <Col>
+            <TextInput
+              control={control}
+              name="threeQuarterBaths"
+              placeholder="three quarter bath"
+            />
+          </Col>
 
-      <input
-        type="number"
-        id="roomsQuantity"
-        placeholder="Cantidad de habitaciones"
-        {...register("roomsQuantity")}
-      />
+          <Col>
+            <TextInput
+              control={control}
+              name="fullBaths"
+              placeholder="full bath"
+            />
+          </Col>
+        </Form.Row>
 
-      <input
-        type="number"
-        id="bathroomsQuantity"
-        placeholder="Cantidad de baños"
-        {...register("bathroomsQuantity")}
-      />
+        <Form.Row>
+          <Col>
+            <TextInput control={control} name="price" placeholder="Precio" />
+          </Col>
+          <Col>
+            <TextInput
+              control={control}
+              name="expenses"
+              placeholder="Precio de expensas"
+            />
+          </Col>
+        </Form.Row>
 
-      <input
-        type="number"
-        id="expensesPrice"
-        placeholder="Precio de expensas"
-        {...register("expensesPrice")}
-      />
+        <TextInput
+          control={control}
+          name="availabilitiesIncluded"
+          placeholder="Disponibilidades incluidas"
+        />
+        <TextInput
+          control={control}
+          name="constructionMaterial"
+          placeholder="Material de construccion"
+        />
+        <TextInput
+          control={control}
+          name="securityMeasures"
+          placeholder="Medidas de seguridad"
+        />
+        <TextInput
+          control={control}
+          name="parkCharacteristics"
+          placeholder="Caracteristicas del parque"
+        />
+        <TextInput
+          control={control}
+          name="youtubeLink"
+          placeholder="Link de Youtube"
+        />
+        <TextInput
+          control={control}
+          name="sellerContact"
+          placeholder="Contacto de vendedor"
+        />
 
-      <input type="submit" value="submit" />
-    </form>
+        <TextInput
+          control={control}
+          name="openHouseDays"
+          placeholder="Dias y Horarios para una Open House"
+        />
+
+        <TextInput
+          control={control}
+          name="additionalComments"
+          placeholder="Comentarios Adicionales"
+        />
+
+        <Button type="submit">Submit form</Button>
+      </Form>
+    </Container>
   );
-}
+};
+
+// additionalComments?: string;
