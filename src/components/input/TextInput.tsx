@@ -1,21 +1,24 @@
-import { FC } from "react";
 import { Form } from "react-bootstrap";
-import { Control, Controller } from "react-hook-form";
-import { FormData } from "./formData";
+import {
+  Control,
+  Controller,
+  ControllerRenderProps,
+  Path,
+} from "react-hook-form";
 
-interface TextInputProps {
-  control: Control<FormData>;
-  name: keyof FormData;
+interface TextInputProps<T> {
+  control: Control<T>;
+  name: Path<T>;
   placeholder: string;
   type?: "text" | "date";
 }
 
-export const TextInput: FC<TextInputProps> = ({
+export const TextInput = <T,>({
   control,
   name,
   placeholder,
   type = "text",
-}) => {
+}: TextInputProps<T>) => {
   return (
     <Controller
       name={name}
@@ -27,7 +30,7 @@ export const TextInput: FC<TextInputProps> = ({
             type={type}
             placeholder={placeholder}
             isInvalid={invalid}
-            {...field}
+            {...(field as ControllerRenderProps)}
           />
           <Form.Control.Feedback type="invalid">
             {error?.message}

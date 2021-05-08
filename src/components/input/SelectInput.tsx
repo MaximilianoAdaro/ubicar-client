@@ -1,24 +1,29 @@
-import { Control, Controller } from "react-hook-form";
-import { FormData } from "./formData";
-import { FC } from "react";
+import {
+  Control,
+  Controller,
+  ControllerRenderProps,
+  Path,
+} from "react-hook-form";
 import { Form } from "react-bootstrap";
 
-interface SelectInputProps {
-  control: Control<FormData>;
-  name: keyof FormData;
+interface SelectInputProps<T> {
+  control: Control<T>;
+  name: Path<T>;
   placeholder: string;
-  options: {
-    value: string;
-    name: string;
-  }[];
+  options: SelectOption[];
 }
 
-export const SelectInput: FC<SelectInputProps> = ({
+interface SelectOption {
+  value: string;
+  name: string;
+}
+
+export const SelectInput = <T,>({
   control,
   name,
   placeholder,
   options,
-}) => {
+}: SelectInputProps<T>) => {
   return (
     <Controller
       name={name}
@@ -32,7 +37,7 @@ export const SelectInput: FC<SelectInputProps> = ({
             type="text"
             placeholder={placeholder}
             isInvalid={invalid}
-            {...field}
+            {...(field as ControllerRenderProps)}
           >
             {options.map(({ name, value }) => (
               <option key={value} value={value}>

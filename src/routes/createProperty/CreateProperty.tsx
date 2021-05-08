@@ -1,8 +1,8 @@
 import { Button, Col, Container, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { TextInput } from "./TextInput";
+import { TextInput } from "../../components/input/TextInput";
 import { FormData, schema } from "./formData";
-import { SelectInput } from "./SelectInput";
+import { SelectInput } from "../../components/input/SelectInput";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export const CreateProperty = () => {

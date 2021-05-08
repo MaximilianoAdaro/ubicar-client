@@ -1,5 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../../store";
-import { actions } from "../../slices/actions";
+import { actions, useAppDispatch, useAppSelector } from "../../store";
 import { useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
 import styles from "./Counter.module.scss";
