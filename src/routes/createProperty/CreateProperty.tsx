@@ -1,58 +1,33 @@
 import { Button, Col, Container, Form } from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import { TextInput } from "../../components/input/TextInput";
 import { CreatePropertyFormData, schema } from "./createPropertyFormData";
-import { SelectInput } from "../../components/input/SelectInput";
-import { yupResolver } from "@hookform/resolvers/yup";
+import React from "react";
+import { useCustomForm } from "../../hooks/useCustomForm";
+import { CustomForm } from "../../components/forms/CustomForm";
+import { CreatePropertyTextInput } from "./createPropertyFormInputs";
+import { Description } from "./Description";
 
 export const CreateProperty = () => {
-  const { handleSubmit, control } = useForm<CreatePropertyFormData>({
-    resolver: yupResolver(schema),
-    mode: "onBlur",
+  const customFormProps = useCustomForm<CreatePropertyFormData>({
+    schema,
+    onSubmit: (data) => console.log(data),
   });
-
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-  });
-
   return (
     <Container>
       <h1>Publicar una propiedad</h1>
 
-      <Form onSubmit={onSubmit} noValidate>
-        <Form.Row>
-          <Col>
-            <TextInput control={control} name="title" placeholder="Titulo" />
-          </Col>
-          <Col>
-            <TextInput control={control} name="style" placeholder="Estilo" />
-          </Col>
-          <Col>
-            <SelectInput
-              control={control}
-              name="condition"
-              placeholder="Condicion"
-              options={[
-                { value: "sale", displayName: "Venta" },
-                { value: "rental", displayName: "Alquiler" },
-              ]}
-            />
-          </Col>
-        </Form.Row>
-
-        <TextInput control={control} name="address" placeholder="Direccion" />
+      <CustomForm {...customFormProps}>
+        <Description />
+        <CreatePropertyTextInput name="address" placeholder="Direccion" />
 
         <Form.Row>
           <Col>
-            <TextInput
-              control={control}
+            <CreatePropertyTextInput
               name="squareFoot"
               placeholder="Metros cuadrados"
             />
           </Col>
           <Col>
-            <TextInput
-              control={control}
+            <CreatePropertyTextInput
               name="constructionDate"
               placeholder="Fecha de construccion"
               type="date"
@@ -60,105 +35,83 @@ export const CreateProperty = () => {
           </Col>
         </Form.Row>
 
-        <TextInput
-          control={control}
+        <CreatePropertyTextInput
           name="rooms"
           placeholder="Cantidad de habitaciones"
         />
 
         <Form.Row>
           <Col>
-            <TextInput
-              control={control}
-              name="halfBaths"
-              placeholder="half bath"
-            />
+            <CreatePropertyTextInput name="halfBaths" placeholder="half bath" />
           </Col>
           <Col>
-            <TextInput
-              control={control}
+            <CreatePropertyTextInput
               name="quarterBaths"
               placeholder="quarter bath"
             />
           </Col>
 
           <Col>
-            <TextInput
-              control={control}
+            <CreatePropertyTextInput
               name="threeQuarterBaths"
               placeholder="three quarter bath"
             />
           </Col>
 
           <Col>
-            <TextInput
-              control={control}
-              name="fullBaths"
-              placeholder="full bath"
-            />
+            <CreatePropertyTextInput name="fullBaths" placeholder="full bath" />
           </Col>
         </Form.Row>
 
         <Form.Row>
           <Col>
-            <TextInput control={control} name="price" placeholder="Precio" />
+            <CreatePropertyTextInput name="price" placeholder="Precio" />
           </Col>
           <Col>
-            <TextInput
-              control={control}
+            <CreatePropertyTextInput
               name="expenses"
               placeholder="Precio de expensas"
             />
           </Col>
         </Form.Row>
 
-        <TextInput
-          control={control}
+        <CreatePropertyTextInput
           name="availabilitiesIncluded"
           placeholder="Disponibilidades incluidas"
         />
-        <TextInput
-          control={control}
+        <CreatePropertyTextInput
           name="constructionMaterial"
           placeholder="Material de construccion"
         />
-        <TextInput
-          control={control}
+        <CreatePropertyTextInput
           name="securityMeasures"
           placeholder="Medidas de seguridad"
         />
-        <TextInput
-          control={control}
+        <CreatePropertyTextInput
           name="parkCharacteristics"
           placeholder="Caracteristicas del parque"
         />
-        <TextInput
-          control={control}
+        <CreatePropertyTextInput
           name="youtubeLink"
           placeholder="Link de Youtube"
         />
-        <TextInput
-          control={control}
+        <CreatePropertyTextInput
           name="sellerContact"
           placeholder="Contacto de vendedor"
         />
 
-        <TextInput
-          control={control}
+        <CreatePropertyTextInput
           name="openHouseDays"
           placeholder="Dias y Horarios para una Open House"
         />
 
-        <TextInput
-          control={control}
+        <CreatePropertyTextInput
           name="additionalComments"
           placeholder="Comentarios Adicionales"
         />
 
         <Button type="submit">Submit form</Button>
-      </Form>
+      </CustomForm>
     </Container>
   );
 };
-
-// additionalComments?: string;
