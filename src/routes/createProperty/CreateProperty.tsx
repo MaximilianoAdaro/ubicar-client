@@ -1,10 +1,12 @@
-import { Button, Col, Container, Form } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { CreatePropertyFormData, schema } from "./createPropertyFormData";
-import React from "react";
 import { useCustomForm } from "../../hooks/useCustomForm";
 import { CustomForm } from "../../components/forms/CustomForm";
 import { CreatePropertyTextInput } from "./createPropertyFormInputs";
 import { Description } from "./Description";
+import { Address } from "./Address";
+import { Price } from "./Price";
+import { Characteristics } from "./Characteristics";
 
 export const CreateProperty = () => {
   const customFormProps = useCustomForm<CreatePropertyFormData>({
@@ -17,63 +19,11 @@ export const CreateProperty = () => {
 
       <CustomForm {...customFormProps}>
         <Description />
-        <CreatePropertyTextInput name="address" placeholder="Direccion" />
+        <Address />
 
-        <Form.Row>
-          <Col>
-            <CreatePropertyTextInput
-              name="squareFoot"
-              placeholder="Metros cuadrados"
-            />
-          </Col>
-          <Col>
-            <CreatePropertyTextInput
-              name="constructionDate"
-              placeholder="Fecha de construccion"
-              type="date"
-            />
-          </Col>
-        </Form.Row>
+        <Characteristics />
 
-        <CreatePropertyTextInput
-          name="rooms"
-          placeholder="Cantidad de habitaciones"
-        />
-
-        <Form.Row>
-          <Col>
-            <CreatePropertyTextInput name="halfBaths" placeholder="half bath" />
-          </Col>
-          <Col>
-            <CreatePropertyTextInput
-              name="quarterBaths"
-              placeholder="quarter bath"
-            />
-          </Col>
-
-          <Col>
-            <CreatePropertyTextInput
-              name="threeQuarterBaths"
-              placeholder="three quarter bath"
-            />
-          </Col>
-
-          <Col>
-            <CreatePropertyTextInput name="fullBaths" placeholder="full bath" />
-          </Col>
-        </Form.Row>
-
-        <Form.Row>
-          <Col>
-            <CreatePropertyTextInput name="price" placeholder="Precio" />
-          </Col>
-          <Col>
-            <CreatePropertyTextInput
-              name="expenses"
-              placeholder="Precio de expensas"
-            />
-          </Col>
-        </Form.Row>
+        <Price />
 
         <CreatePropertyTextInput
           name="availabilitiesIncluded"

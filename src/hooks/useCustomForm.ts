@@ -1,6 +1,5 @@
 import { AnyObjectSchema } from "yup";
 import { SubmitHandler, useForm, UseFormReturn } from "react-hook-form";
-import React from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export interface UseCustomFormArgs<T> {
