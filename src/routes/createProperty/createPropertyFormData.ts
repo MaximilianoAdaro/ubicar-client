@@ -2,13 +2,13 @@ import * as yup from "yup";
 
 type Condition = "sale" | "rental";
 
-export interface FormData {
+export interface CreatePropertyFormData {
   title: string;
   price: number;
   condition: Condition;
   address: string;
   squareFoot: number;
-  constructionDate: string;
+  constructionDate: Date;
   style: string;
   rooms: number;
   quarterBaths: number;
@@ -16,6 +16,14 @@ export interface FormData {
   threeQuarterBaths: number;
   fullBaths: number;
   expenses: number;
+  availabilitiesIncluded?: string;
+  constructionMaterial?: string;
+  securityMeasures?: string;
+  parkCharacteristics?: string;
+  youtubeLink?: string;
+  sellerContact?: string;
+  openHouseDays?: string;
+  additionalComments?: string;
 }
 
 export const schema = yup.object().shape({
@@ -32,4 +40,12 @@ export const schema = yup.object().shape({
   threeQuarterBaths: yup.number().positive().integer().required(),
   fullBaths: yup.number().positive().integer().required(),
   expenses: yup.number().positive().required(),
+  availabilitiesIncluded: yup.string(),
+  constructionMaterial: yup.string(),
+  securityMeasures: yup.string(),
+  parkCharacteristics: yup.string(),
+  youtubeLink: yup.string(),
+  sellerContact: yup.string(),
+  openHouseDays: yup.string(),
+  additionalComments: yup.string(),
 });

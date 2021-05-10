@@ -1,12 +1,12 @@
 import { Button, Col, Container, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { TextInput } from "../../components/input/TextInput";
-import { FormData, schema } from "./formData";
+import { CreatePropertyFormData, schema } from "./createPropertyFormData";
 import { SelectInput } from "../../components/input/SelectInput";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export const CreateProperty = () => {
-  const { handleSubmit, control } = useForm<FormData>({
+  const { handleSubmit, control } = useForm<CreatePropertyFormData>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
@@ -33,8 +33,8 @@ export const CreateProperty = () => {
               name="condition"
               placeholder="Condicion"
               options={[
-                { value: "sale", name: "Venta" },
-                { value: "rental", name: "Alquiler" },
+                { value: "sale", displayName: "Venta" },
+                { value: "rental", displayName: "Alquiler" },
               ]}
             />
           </Col>
@@ -112,8 +112,53 @@ export const CreateProperty = () => {
           </Col>
         </Form.Row>
 
+        <TextInput
+          control={control}
+          name="availabilitiesIncluded"
+          placeholder="Disponibilidades incluidas"
+        />
+        <TextInput
+          control={control}
+          name="constructionMaterial"
+          placeholder="Material de construccion"
+        />
+        <TextInput
+          control={control}
+          name="securityMeasures"
+          placeholder="Medidas de seguridad"
+        />
+        <TextInput
+          control={control}
+          name="parkCharacteristics"
+          placeholder="Caracteristicas del parque"
+        />
+        <TextInput
+          control={control}
+          name="youtubeLink"
+          placeholder="Link de Youtube"
+        />
+        <TextInput
+          control={control}
+          name="sellerContact"
+          placeholder="Contacto de vendedor"
+        />
+
+        <TextInput
+          control={control}
+          name="openHouseDays"
+          placeholder="Dias y Horarios para una Open House"
+        />
+
+        <TextInput
+          control={control}
+          name="additionalComments"
+          placeholder="Comentarios Adicionales"
+        />
+
         <Button type="submit">Submit form</Button>
       </Form>
     </Container>
   );
 };
+
+// additionalComments?: string;
