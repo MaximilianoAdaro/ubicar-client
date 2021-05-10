@@ -13,6 +13,13 @@ export const CustomForm = <T,>({
   children,
 }: CustomFormProps<T>) => (
   <FormProvider {...methods}>
-    <Form onSubmit={onSubmit}>{children}</Form>
+    <Form
+      onSubmit={onSubmit}
+      onKeyPress={(e) => {
+        if (e.key === "Enter") e.preventDefault();
+      }}
+    >
+      {children}
+    </Form>
   </FormProvider>
 );

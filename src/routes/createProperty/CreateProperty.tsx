@@ -2,16 +2,25 @@ import { Button, Container } from "react-bootstrap";
 import { CreatePropertyFormData, schema } from "./createPropertyFormData";
 import { useCustomForm } from "../../hooks/useCustomForm";
 import { CustomForm } from "../../components/forms/CustomForm";
-import { CreatePropertyTextInput } from "./createPropertyFormInputs";
 import { Description } from "./Description";
 import { Address } from "./Address";
 import { Price } from "./Price";
 import { Characteristics } from "./Characteristics";
+import { VideoInput } from "./VideoInput";
+import { useAppSelector } from "../../store";
+import { Amenities } from "./Amenities";
+import { Materials } from "./Materials";
+import { Contacts } from "./Contacts";
+import { Securities } from "./Securities";
+import { ExtraDescriptions } from "./ExtraDescriptions";
 
 export const CreateProperty = () => {
+  const createPropertyState = useAppSelector(
+    (state) => state.createPropertyForm
+  );
   const customFormProps = useCustomForm<CreatePropertyFormData>({
     schema,
-    onSubmit: (data) => console.log(data),
+    onSubmit: (data) => console.log({ ...data, ...createPropertyState }),
   });
   return (
     <Container>
@@ -20,46 +29,14 @@ export const CreateProperty = () => {
       <CustomForm {...customFormProps}>
         <Description />
         <Address />
-
         <Characteristics />
-
         <Price />
-
-        <CreatePropertyTextInput
-          name="availabilitiesIncluded"
-          placeholder="Disponibilidades incluidas"
-        />
-        <CreatePropertyTextInput
-          name="constructionMaterial"
-          placeholder="Material de construccion"
-        />
-        <CreatePropertyTextInput
-          name="securityMeasures"
-          placeholder="Medidas de seguridad"
-        />
-        <CreatePropertyTextInput
-          name="parkCharacteristics"
-          placeholder="Caracteristicas del parque"
-        />
-        <CreatePropertyTextInput
-          name="youtubeLink"
-          placeholder="Link de Youtube"
-        />
-        <CreatePropertyTextInput
-          name="sellerContact"
-          placeholder="Contacto de vendedor"
-        />
-
-        <CreatePropertyTextInput
-          name="openHouseDays"
-          placeholder="Dias y Horarios para una Open House"
-        />
-
-        <CreatePropertyTextInput
-          name="additionalComments"
-          placeholder="Comentarios Adicionales"
-        />
-
+        <Amenities />
+        <Materials />
+        <Securities />
+        <ExtraDescriptions />
+        <VideoInput />
+        <Contacts />
         <Button type="submit">Submit form</Button>
       </CustomForm>
     </Container>

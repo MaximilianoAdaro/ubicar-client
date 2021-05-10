@@ -27,47 +27,41 @@ export interface CreatePropertyFormData {
   threeQuarterBaths: number;
   fullBaths: number;
   expenses: number;
-  availabilitiesIncluded?: string;
-  constructionMaterial?: string;
-  securityMeasures?: string;
-  parkCharacteristics?: string;
-  youtubeLink?: string;
-  sellerContact?: string;
-  openHouseDays?: string;
-  additionalComments?: string;
+  parkDescription?: string;
+  comments?: string;
 }
 
-const text = "Este campo es requerido";
+const requiredMessage = "Este campo es requerido";
 
 export const schema = yup.object().shape({
-  title: yup.string().required(text),
-  price: yup.number().positive().required(text),
-  condition: yup.string().oneOf(["sale", "rental"]).required(text),
+  title: yup.string().required(requiredMessage),
+  price: yup.number().positive().required(requiredMessage),
+  condition: yup.string().oneOf(["sale", "rental"]).required(requiredMessage),
   address: yup.object({
-    country: yup.string().required(text),
-    state: yup.string().required(text),
-    city: yup.string().required(text),
-    neighbourhood: yup.string().required(text),
-    postalCode: yup.string().required(text),
-    street: yup.string().required(text),
-    number: yup.string().required(text),
-    department: yup.string().required(text),
+    country: yup.string().required(requiredMessage),
+    state: yup.string().required(requiredMessage),
+    city: yup.string().required(requiredMessage),
+    neighbourhood: yup.string().required(requiredMessage),
+    postalCode: yup.string().required(requiredMessage),
+    street: yup.string().required(requiredMessage),
+    number: yup.string().required(requiredMessage),
+    department: yup.string().required(requiredMessage),
   }),
-  squareFoot: yup.number().positive().required(text),
-  constructionDate: yup.date().required(text),
-  style: yup.string().required(text),
-  rooms: yup.number().positive().integer().required(text),
-  quarterBaths: yup.number().positive().integer().required(text),
-  halfBaths: yup.number().positive().integer().required(text),
-  threeQuarterBaths: yup.number().positive().integer().required(text),
-  fullBaths: yup.number().positive().integer().required(text),
-  expenses: yup.number().positive().required(text),
-  availabilitiesIncluded: yup.string(),
-  constructionMaterial: yup.string(),
-  securityMeasures: yup.string(),
-  parkCharacteristics: yup.string(),
-  youtubeLink: yup.string(),
-  sellerContact: yup.string(),
-  openHouseDays: yup.string(),
-  additionalComments: yup.string(),
+  squareFoot: yup.number().positive().required(requiredMessage),
+  constructionDate: yup.date().required(requiredMessage),
+  style: yup.string().required(requiredMessage),
+  rooms: yup.number().positive().integer().required(requiredMessage),
+  quarterBaths: yup.number().positive().integer().required(requiredMessage),
+  halfBaths: yup.number().positive().integer().required(requiredMessage),
+  threeQuarterBaths: yup
+    .number()
+    .positive()
+    .integer()
+    .required(requiredMessage),
+  fullBaths: yup.number().positive().integer().required(requiredMessage),
+  expenses: yup.number().positive().required(requiredMessage),
+
+  ///// non required fields
+  parkDescription: yup.string(),
+  comments: yup.string(),
 });
