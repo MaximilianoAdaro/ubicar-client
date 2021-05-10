@@ -14,7 +14,7 @@ interface TextInputProps<T> {
   defaultValue?: string;
 }
 
-const TextInput = <T,>({
+export const TextInput = <T,>({
   name,
   placeholder,
   type = "text",

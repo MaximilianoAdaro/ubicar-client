@@ -9,6 +9,19 @@ interface CreatePropertyState {
   securities: Label[];
   contacts: Contact[];
   openHouses: OpenHouse[];
+  propertyTypes: string[];
+  address: AddressFormData;
+}
+
+export interface AddressFormData {
+  country: string;
+  state: string;
+  city: string;
+  neighbourhood: string;
+  postalCode: string;
+  street: string;
+  number: string;
+  department: string;
 }
 
 interface Label {
@@ -34,6 +47,17 @@ const initialState: CreatePropertyState = {
   securities: [],
   contacts: [],
   openHouses: [],
+  propertyTypes: [],
+  address: {
+    country: "",
+    state: "",
+    street: "",
+    city: "",
+    number: "",
+    neighbourhood: "",
+    postalCode: "",
+    department: "",
+  },
 };
 
 export const createPropertyFormSlice = createSlice({
@@ -58,6 +82,18 @@ export const createPropertyFormSlice = createSlice({
     },
     addOpenHouse: (state, action: PayloadAction<OpenHouse>) => {
       state.openHouses.push(action.payload);
+    },
+    addPropertyType: (state, action: PayloadAction<string>) => {
+      if (!state.propertyTypes.includes(action.payload))
+        state.propertyTypes.push(action.payload);
+    },
+    removePropertyType: (state, action: PayloadAction<string>) => {
+      state.propertyTypes = state.propertyTypes.filter(
+        (e) => e !== action.payload
+      );
+    },
+    setAddress: (state, action: PayloadAction<AddressFormData>) => {
+      state.address = action.payload;
     },
   },
 });
@@ -85,3 +121,9 @@ export const selectSecurities = (state: RootState) =>
 
 export const selectContacts = (state: RootState) =>
   state.createPropertyForm.contacts;
+
+export const selectPropertyTypes = (state: RootState) =>
+  state.createPropertyForm.propertyTypes;
+
+export const selectAddress = (state: RootState) =>
+  state.createPropertyForm.address;

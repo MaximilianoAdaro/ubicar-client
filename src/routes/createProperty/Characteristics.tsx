@@ -1,51 +1,102 @@
-import { Col, Form, Jumbotron } from "react-bootstrap";
-import { CreatePropertyTextInput } from "./createPropertyFormInputs";
+import { Button, Col, Form } from "react-bootstrap";
+import * as yup from "yup";
+import { createCustomTextInput } from "../../components/forms/TextInput";
+import { useCustomForm } from "../../hooks/useCustomForm";
+import { CustomForm } from "../../components/forms/CustomForm";
 
-export const Characteristics = () => (
-  <Jumbotron>
-    <h3>Caracteristicas</h3>
-    <Form.Row>
-      <Col>
-        <CreatePropertyTextInput
-          name="squareFoot"
-          placeholder="Metros cuadrados"
-        />
-      </Col>
-      <Col>
-        <CreatePropertyTextInput
-          name="constructionDate"
-          placeholder="Fecha de construccion"
-          type="date"
-        />
-      </Col>
-    </Form.Row>
+const requiredMessage = "Este campo es requerido";
 
-    <CreatePropertyTextInput
-      name="rooms"
-      placeholder="Cantidad de habitaciones"
-    />
+const schema = yup.object({
+  totalSurface: yup.number().required(requiredMessage),
+  coveredSurface: yup.number().required(requiredMessage),
+  rooms: yup.number().positive().integer().required(requiredMessage),
+  quarterBaths: yup.number().positive().integer().required(requiredMessage),
+  halfBaths: yup.number().positive().integer().required(requiredMessage),
+  threeQuarterBaths: yup
+    .number()
+    .positive()
+    .integer()
+    .required(requiredMessage),
+  fullBaths: yup.number().positive().integer().required(requiredMessage),
+  constructionYear: yup.number().required(requiredMessage),
+  floors: yup.number().required(),
+  parkDescription: yup.string(),
+});
 
-    <Form.Row>
-      <Col>
-        <CreatePropertyTextInput name="halfBaths" placeholder="half bath" />
-      </Col>
-      <Col>
-        <CreatePropertyTextInput
-          name="quarterBaths"
-          placeholder="quarter bath"
-        />
-      </Col>
+type CharacteristicsFormData = yup.InferType<typeof schema>;
 
-      <Col>
-        <CreatePropertyTextInput
-          name="threeQuarterBaths"
-          placeholder="three quarter bath"
-        />
-      </Col>
+const CharacteristicsTextInput = createCustomTextInput<CharacteristicsFormData>();
 
-      <Col>
-        <CreatePropertyTextInput name="fullBaths" placeholder="full bath" />
-      </Col>
-    </Form.Row>
-  </Jumbotron>
-);
+export const Characteristics = () => {
+  const customForm = useCustomForm<CharacteristicsFormData>({
+    schema,
+    onSubmit: (data) => console.log(data),
+  });
+  return (
+    <CustomForm {...customForm}>
+      <h3>Caracteristicas</h3>
+      <Form.Row>
+        <Col>
+          <CharacteristicsTextInput
+            name="totalSurface"
+            placeholder="Superficie total"
+          />
+        </Col>
+        <Col>
+          <CharacteristicsTextInput
+            name="coveredSurface"
+            placeholder="Superficie cubierta"
+          />
+        </Col>
+        <Col>
+          <CharacteristicsTextInput
+            name="constructionYear"
+            placeholder="Fecha de construccion"
+          />
+        </Col>
+      </Form.Row>
+
+      <Form.Row>
+        <Col>
+          <CharacteristicsTextInput
+            name="rooms"
+            placeholder="Cantidad de habitaciones"
+          />
+        </Col>
+        <Col>
+          <CharacteristicsTextInput
+            name="floors"
+            placeholder="Cantidad de Pisos"
+          />
+        </Col>
+      </Form.Row>
+      <Form.Row>
+        <Col>
+          <CharacteristicsTextInput name="halfBaths" placeholder="half bath" />
+        </Col>
+        <Col>
+          <CharacteristicsTextInput
+            name="quarterBaths"
+            placeholder="quarter bath"
+          />
+        </Col>
+
+        <Col>
+          <CharacteristicsTextInput
+            name="threeQuarterBaths"
+            placeholder="three quarter bath"
+          />
+        </Col>
+
+        <Col>
+          <CharacteristicsTextInput name="fullBaths" placeholder="full bath" />
+        </Col>
+      </Form.Row>
+      <CharacteristicsTextInput
+        name="parkDescription"
+        placeholder="Descripcion del parque"
+      />
+      <Button type={"submit"}>Siguiente</Button>
+    </CustomForm>
+  );
+};

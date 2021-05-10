@@ -1,52 +1,72 @@
-import { CreatePropertyTextInput } from "./createPropertyFormInputs";
-import { Col, Form, Jumbotron } from "react-bootstrap";
+import { CustomForm } from "../../components/forms/CustomForm";
+import { useCustomForm } from "../../hooks/useCustomForm";
+import * as yup from "yup";
+import { Button, Col, Form } from "react-bootstrap";
+import { createCustomTextInput } from "../../components/forms/TextInput";
+import { AddressFormData } from "../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { actions, useAppDispatch } from "../../store";
 
-export const Address = () => (
-  <Jumbotron>
-    <h4>Ubicacion</h4>
-    <Form.Row>
-      <Col>
-        <CreatePropertyTextInput name="address.country" placeholder="Pais" />
-      </Col>
-      <Col>
-        <CreatePropertyTextInput name="address.state" placeholder="Provincia" />
-      </Col>
-    </Form.Row>
+const requiredMessage = "Este campo es requerido";
 
-    <Form.Row>
-      <Col>
-        <CreatePropertyTextInput name="address.city" placeholder="Ciudad" />
-      </Col>
-      <Col>
-        <CreatePropertyTextInput
-          name="address.neighbourhood"
-          placeholder="Barrio"
-        />
-      </Col>
-    </Form.Row>
+const schema = yup.object({
+  country: yup.string().required(requiredMessage),
+  state: yup.string().required(requiredMessage),
+  city: yup.string().required(requiredMessage),
+  neighbourhood: yup.string().required(requiredMessage),
+  postalCode: yup.string().required(requiredMessage),
+  street: yup.string().required(requiredMessage),
+  number: yup.string().required(requiredMessage),
+  department: yup.string().required(requiredMessage),
+});
 
-    <Form.Row>
-      <Col>
-        <CreatePropertyTextInput name="address.street" placeholder="Calle" />
-      </Col>
-      <Col>
-        <CreatePropertyTextInput name="address.number" placeholder="Numero" />
-      </Col>
-    </Form.Row>
+const AddressTextInput = createCustomTextInput<AddressFormData>();
 
-    <Form.Row>
-      <Col>
-        <CreatePropertyTextInput
-          name="address.postalCode"
-          placeholder="Codigo postal"
-        />{" "}
-      </Col>
-      <Col>
-        <CreatePropertyTextInput
-          name="address.department"
-          placeholder="Departamento"
-        />
-      </Col>
-    </Form.Row>
-  </Jumbotron>
-);
+export const Address = () => {
+  const dispatch = useAppDispatch();
+  const customForm = useCustomForm<AddressFormData>({
+    schema,
+    onSubmit: (data) => dispatch(actions.createPropertyForm.setAddress(data)),
+  });
+
+  return (
+    <CustomForm {...customForm}>
+      <h4>Ubicacion</h4>
+      <Form.Row>
+        <Col>
+          <AddressTextInput name="country" placeholder="Pais" />
+        </Col>
+        <Col>
+          <AddressTextInput name="state" placeholder="Provincia" />
+        </Col>
+      </Form.Row>
+
+      <Form.Row>
+        <Col>
+          <AddressTextInput name="city" placeholder="Ciudad" />
+        </Col>
+        <Col>
+          <AddressTextInput name="neighbourhood" placeholder="Barrio" />
+        </Col>
+      </Form.Row>
+
+      <Form.Row>
+        <Col>
+          <AddressTextInput name="street" placeholder="Calle" />
+        </Col>
+        <Col>
+          <AddressTextInput name="number" placeholder="Numero" />
+        </Col>
+      </Form.Row>
+
+      <Form.Row>
+        <Col>
+          <AddressTextInput name="postalCode" placeholder="Codigo postal" />
+        </Col>
+        <Col>
+          <AddressTextInput name="department" placeholder="Departamento" />
+        </Col>
+      </Form.Row>
+      <Button type={"submit"}>Siguiente paso</Button>
+    </CustomForm>
+  );
+};

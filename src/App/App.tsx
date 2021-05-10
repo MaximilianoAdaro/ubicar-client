@@ -10,7 +10,7 @@ export default function App() {
   return (
     <Switch>
       <Route exact path="/" component={WorkInProgress} />
-      <Route exact path="/create-property" component={CreateProperty} />
+      <Route path="/create-property" component={CreateProperty} />
       <Route component={ErrorPage} />
     </Switch>
   );

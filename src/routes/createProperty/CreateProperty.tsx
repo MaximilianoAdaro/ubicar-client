@@ -1,44 +1,27 @@
-import { Button, Container } from "react-bootstrap";
-import { CreatePropertyFormData, schema } from "./createPropertyFormData";
-import { useCustomForm } from "../../hooks/useCustomForm";
-import { CustomForm } from "../../components/forms/CustomForm";
-import { Description } from "./Description";
+import { Container } from "react-bootstrap";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { BasicInfo } from "../../components/createPropertyForm/basicInfo/BasicInfo";
+import { ErrorPage } from "../../components/ErrorPage";
 import { Address } from "./Address";
-import { Price } from "./Price";
 import { Characteristics } from "./Characteristics";
-import { VideoInput } from "./VideoInput";
-import { useAppSelector } from "../../store";
-import { Amenities } from "./Amenities";
-import { Materials } from "./Materials";
-import { Contacts } from "./Contacts";
-import { Securities } from "./Securities";
-import { ExtraDescriptions } from "./ExtraDescriptions";
 
 export const CreateProperty = () => {
-  const createPropertyState = useAppSelector(
-    (state) => state.createPropertyForm
-  );
-  const customFormProps = useCustomForm<CreatePropertyFormData>({
-    schema,
-    onSubmit: (data) => console.log({ ...data, ...createPropertyState }),
-  });
+  const { path } = useRouteMatch(); // in this case it will be /create-property
+
   return (
     <Container>
       <h1>Publicar una propiedad</h1>
 
-      <CustomForm {...customFormProps}>
-        <Description />
-        <Address />
-        <Characteristics />
-        <Price />
-        <Amenities />
-        <Materials />
-        <Securities />
-        <ExtraDescriptions />
-        <VideoInput />
-        <Contacts />
-        <Button type="submit">Submit form</Button>
-      </CustomForm>
+      <Switch>
+        <Route exact path={`${path}/basicInfo`} component={BasicInfo} />
+        <Route exact path={`${path}/address`} component={Address} />
+        <Route
+          exact
+          path={`${path}/characteristics`}
+          component={Characteristics}
+        />
+        <Route component={ErrorPage} />
+      </Switch>
     </Container>
   );
 };
