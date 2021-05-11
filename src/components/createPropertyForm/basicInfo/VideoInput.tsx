@@ -1,7 +1,7 @@
-import { Button, Col, Form, Jumbotron } from "react-bootstrap";
+import { Button, Col, Form } from "react-bootstrap";
 import React, { useRef, useState } from "react";
-import { actions, useAppDispatch, useAppSelector } from "../../store";
-import { selectYoutubeLinks } from "../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
+import { selectYoutubeLinks } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 
 export const VideoInput = () => {
   const [error, setError] = useState("");
@@ -29,7 +29,7 @@ export const VideoInput = () => {
     }
   };
   return (
-    <Jumbotron>
+    <>
       <h1>Videos</h1>
       <Form.Row>
         <Col>
@@ -50,6 +50,6 @@ export const VideoInput = () => {
       {youtubeLinks.map((link) => (
         <div key={link}>{link}</div>
       ))}
-    </Jumbotron>
+    </>
   );
 };

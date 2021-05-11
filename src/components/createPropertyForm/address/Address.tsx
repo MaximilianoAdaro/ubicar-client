@@ -1,10 +1,10 @@
-import { CustomForm } from "../../components/forms/CustomForm";
-import { useCustomForm } from "../../hooks/useCustomForm";
+import { CustomForm } from "../../forms/CustomForm";
+import { useCustomForm } from "../../../hooks/useCustomForm";
 import * as yup from "yup";
 import { Button, Col, Form } from "react-bootstrap";
-import { createCustomTextInput } from "../../components/forms/TextInput";
-import { AddressFormData } from "../../store/slices/createPropetyForm/createPropertyFormSlice";
-import { actions, useAppDispatch } from "../../store";
+import { createCustomTextInput } from "../../forms/TextInput";
+import { AddressFormData } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { actions, useAppDispatch } from "../../../store";
 
 const requiredMessage = "Este campo es requerido";
 

@@ -1,8 +1,9 @@
 import { Button, Col, Form } from "react-bootstrap";
 import * as yup from "yup";
-import { createCustomTextInput } from "../../components/forms/TextInput";
-import { useCustomForm } from "../../hooks/useCustomForm";
-import { CustomForm } from "../../components/forms/CustomForm";
+import { createCustomTextInput } from "../../forms/TextInput";
+import { useCustomForm } from "../../../hooks/useCustomForm";
+import { CustomForm } from "../../forms/CustomForm";
+import { actions, useAppDispatch } from "../../../store";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -23,14 +24,16 @@ const schema = yup.object({
   parkDescription: yup.string(),
 });
 
-type CharacteristicsFormData = yup.InferType<typeof schema>;
+export type CharacteristicsFormData = yup.InferType<typeof schema>;
 
 const CharacteristicsTextInput = createCustomTextInput<CharacteristicsFormData>();
 
 export const Characteristics = () => {
+  const dispatch = useAppDispatch();
   const customForm = useCustomForm<CharacteristicsFormData>({
     schema,
-    onSubmit: (data) => console.log(data),
+    onSubmit: (data) =>
+      dispatch(actions.createPropertyForm.setCharacteristics(data)),
   });
   return (
     <CustomForm {...customForm}>

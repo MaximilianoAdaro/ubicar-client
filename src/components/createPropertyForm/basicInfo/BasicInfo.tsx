@@ -10,21 +10,15 @@ import {
 import { ChangeEventHandler } from "react";
 import { actions, useAppDispatch } from "../../../store";
 
-const schema = yup.object().shape({
+const schema = yup.object({
   operationType: yup.string().required(),
   price: yup.number().positive().required(),
-  // expenses: yup.number().positive().required(),
+  expenses: yup.number().positive().required(),
   title: yup.string().required(),
   description: yup.string(),
 });
 
-interface BasicInfoFormData {
-  operationType: string;
-  price: number;
-  expenses: number;
-  title: string;
-  description: string;
-}
+export type BasicInfoFormData = yup.InferType<typeof schema>;
 
 const BasicInfoTextInput = createCustomTextInput<BasicInfoFormData>();
 const BasicInfoRadioInput = createCustomRadioInput<BasicInfoFormData>();
@@ -41,9 +35,10 @@ const operationTypes: RadioOption[] = [
 ];
 
 export const BasicInfo = () => {
-  const customForm = useCustomForm({
+  const dispatch = useAppDispatch();
+  const customForm = useCustomForm<BasicInfoFormData>({
     schema,
-    onSubmit: (data) => console.log({ data }),
+    onSubmit: (data) => dispatch(actions.createPropertyForm.setBasicInfo(data)),
   });
   return (
     <Container>

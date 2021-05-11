@@ -1,16 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
+import { BasicInfoFormData } from "../../../components/createPropertyForm/basicInfo/BasicInfo";
+import { CharacteristicsFormData } from "../../../components/createPropertyForm/basicInfo/Characteristics";
 
 // Define a type for the slice state
 interface CreatePropertyState {
   youtubeLinks: string[];
-  amenities: Label[];
-  materials: Label[];
-  securities: Label[];
+  amenities: number[];
+  materials: number[];
+  securities: number[];
   contacts: Contact[];
   openHouses: OpenHouse[];
   propertyTypes: string[];
   address: AddressFormData;
+  basicInfo: BasicInfoFormData;
+  characteristics: CharacteristicsFormData;
+  currentStep: Step;
+}
+
+export enum Step {
+  BasicInfo,
+  Address,
+  Characteristics,
+  OptionalInfo,
+  Multimedia,
+  Additional,
 }
 
 export interface AddressFormData {
@@ -22,10 +36,6 @@ export interface AddressFormData {
   street: string;
   number: string;
   department: string;
-}
-
-interface Label {
-  label: string;
 }
 
 interface OpenHouse {
@@ -58,6 +68,26 @@ const initialState: CreatePropertyState = {
     postalCode: "",
     department: "",
   },
+  basicInfo: {
+    description: "",
+    expenses: 0,
+    operationType: "",
+    price: 0,
+    title: "",
+  },
+  characteristics: {
+    constructionYear: 0,
+    coveredSurface: 0,
+    floors: 0,
+    fullBaths: 0,
+    halfBaths: 0,
+    parkDescription: "",
+    quarterBaths: 0,
+    rooms: 0,
+    threeQuarterBaths: 0,
+    totalSurface: 0,
+  },
+  currentStep: Step.BasicInfo,
 };
 
 export const createPropertyFormSlice = createSlice({
@@ -65,17 +95,20 @@ export const createPropertyFormSlice = createSlice({
 
   initialState,
   reducers: {
+    setStep: (state, action: PayloadAction<Step>) => {
+      state.currentStep = action.payload;
+    },
     addYoutubeLink: (state, action: PayloadAction<string>) => {
       state.youtubeLinks.push(action.payload);
     },
-    addAmenity: (state, action: PayloadAction<string>) => {
-      state.amenities.push({ label: action.payload });
+    addAmenity: (state, action: PayloadAction<number>) => {
+      state.amenities.push(action.payload);
     },
-    addMaterial: (state, action: PayloadAction<string>) => {
-      state.materials.push({ label: action.payload });
+    addMaterial: (state, action: PayloadAction<number>) => {
+      state.materials.push(action.payload);
     },
-    addSecurity: (state, action: PayloadAction<string>) => {
-      state.securities.push({ label: action.payload });
+    addSecurity: (state, action: PayloadAction<number>) => {
+      state.securities.push(action.payload);
     },
     addContact: (state, action: PayloadAction<Contact>) => {
       state.contacts.push(action.payload);
@@ -95,6 +128,24 @@ export const createPropertyFormSlice = createSlice({
     setAddress: (state, action: PayloadAction<AddressFormData>) => {
       state.address = action.payload;
     },
+    setBasicInfo: (state, action: PayloadAction<BasicInfoFormData>) => {
+      state.basicInfo = action.payload;
+    },
+    removeAmenity: (state, action: PayloadAction<number>) => {
+      state.amenities = state.amenities.filter((id) => id !== action.payload);
+    },
+    removeSecurity: (state, action: PayloadAction<number>) => {
+      state.securities = state.securities.filter((id) => id !== action.payload);
+    },
+    removeMaterial: (state, action: PayloadAction<number>) => {
+      state.materials = state.materials.filter((id) => id !== action.payload);
+    },
+    setCharacteristics: (
+      state,
+      action: PayloadAction<CharacteristicsFormData>
+    ) => {
+      state.characteristics = action.payload;
+    },
   },
 });
 
@@ -107,17 +158,20 @@ export const createPropertyFormActions = {
 };
 
 // Other code such as selectors can use the imported `RootState` type
+export const selectCurrentStep = (state: RootState) =>
+  state.createPropertyForm.currentStep;
+
 export const selectYoutubeLinks = (state: RootState) =>
   state.createPropertyForm.youtubeLinks;
 
 export const selectAmenities = (state: RootState) =>
-  state.createPropertyForm.amenities.map((a) => a.label);
+  state.createPropertyForm.amenities;
 
 export const selectMaterials = (state: RootState) =>
-  state.createPropertyForm.materials.map((a) => a.label);
+  state.createPropertyForm.materials;
 
 export const selectSecurities = (state: RootState) =>
-  state.createPropertyForm.securities.map((a) => a.label);
+  state.createPropertyForm.securities;
 
 export const selectContacts = (state: RootState) =>
   state.createPropertyForm.contacts;

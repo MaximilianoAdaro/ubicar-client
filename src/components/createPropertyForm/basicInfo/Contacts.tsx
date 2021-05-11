@@ -1,7 +1,7 @@
-import { Button, Col, Form, Jumbotron } from "react-bootstrap";
+import { Button, Col, Form } from "react-bootstrap";
 import { useRef, useState } from "react";
-import { actions, useAppDispatch, useAppSelector } from "../../store";
-import { selectContacts } from "../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
+import { selectContacts } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 
 export const Contacts = () => {
   const [error, setError] = useState("");
@@ -25,7 +25,7 @@ export const Contacts = () => {
     }
   };
   return (
-    <Jumbotron>
+    <>
       <h1>Agrega los Contactos</h1>
       <Form.Row>
         <Col>
@@ -55,6 +55,6 @@ export const Contacts = () => {
           <span>{label}</span> <span>{email}</span>
         </div>
       ))}
-    </Jumbotron>
+    </>
   );
 };
