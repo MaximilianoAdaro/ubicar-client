@@ -10,6 +10,7 @@ import { Container, Nav } from "react-bootstrap";
 import { OptionalInfo } from "../../components/createPropertyForm/basicInfo/OptionalInfo";
 import { Multimedia } from "../../components/createPropertyForm/basicInfo/Multimedia";
 import { Additional } from "../../components/createPropertyForm/basicInfo/Additional";
+import { Confirmation } from "../../components/createPropertyForm/Confirmation";
 
 export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
@@ -48,6 +49,10 @@ const steps = [
   {
     step: Step.Additional,
     displayName: "Adicional",
+  },
+  {
+    step: Step.Confirmation,
+    displayName: "Confirmacion",
   },
 ];
 
@@ -95,5 +100,7 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
       return <Multimedia />;
     case Step.Additional:
       return <Additional />;
+    case Step.Confirmation:
+      return <Confirmation />;
   }
 };

@@ -3,6 +3,7 @@ import { RootState } from "../../store";
 import { BasicInfoFormData } from "../../../components/createPropertyForm/basicInfo/BasicInfo";
 import { CharacteristicsFormData } from "../../../components/createPropertyForm/basicInfo/Characteristics";
 import { AdditionalFormData } from "../../../components/createPropertyForm/basicInfo/Additional";
+import { AddressFormData } from "../../../components/createPropertyForm/address/Address";
 
 // Define a type for the slice state
 interface CreatePropertyState {
@@ -14,6 +15,11 @@ interface CreatePropertyState {
   contacts: Contact[];
   openHouses: OpenHouse[];
   propertyType: number;
+  addressDropdowns: {
+    state: number;
+    city: number;
+    town: number;
+  };
   address: AddressFormData;
   basicInfo: BasicInfoFormData;
   characteristics: CharacteristicsFormData;
@@ -28,17 +34,7 @@ export enum Step {
   OptionalInfo,
   Multimedia,
   Additional,
-}
-
-export interface AddressFormData {
-  country: string;
-  state: string;
-  city: string;
-  neighbourhood: string;
-  postalCode: string;
-  street: string;
-  number: string;
-  department: string;
+  Confirmation,
 }
 
 interface OpenHouse {
@@ -63,14 +59,15 @@ const initialState: CreatePropertyState = {
   openHouses: [],
   propertyType: 0,
   address: {
-    country: "",
-    state: "",
     street: "",
-    city: "",
     number: "",
-    neighbourhood: "",
     postalCode: "",
     department: "",
+  },
+  addressDropdowns: {
+    state: 0,
+    city: 0,
+    town: 0,
   },
   basicInfo: {
     expenses: 0,
@@ -132,6 +129,15 @@ export const createPropertyFormSlice = createSlice({
     setAddress: (state, action: PayloadAction<AddressFormData>) => {
       state.address = action.payload;
     },
+    setState: (state, action: PayloadAction<number>) => {
+      state.addressDropdowns.state = action.payload;
+    },
+    setCity: (state, action: PayloadAction<number>) => {
+      state.addressDropdowns.city = action.payload;
+    },
+    setTown: (state, action: PayloadAction<number>) => {
+      state.addressDropdowns.town = action.payload;
+    },
     setBasicInfo: (state, action: PayloadAction<BasicInfoFormData>) => {
       state.basicInfo = action.payload;
     },
@@ -149,6 +155,10 @@ export const createPropertyFormSlice = createSlice({
       action: PayloadAction<CharacteristicsFormData>
     ) => {
       state.characteristics = action.payload;
+    },
+
+    setAdditional: (state, action: PayloadAction<AdditionalFormData>) => {
+      state.additional = action.payload;
     },
   },
 });
@@ -185,3 +195,6 @@ export const selectPropertyTypes = (state: RootState) =>
 
 export const selectAddress = (state: RootState) =>
   state.createPropertyForm.address;
+
+export const selectCreatePropertyState = (state: RootState) =>
+  state.createPropertyForm;

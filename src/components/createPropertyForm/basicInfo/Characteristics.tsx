@@ -1,10 +1,12 @@
 import { Button, Col, Form } from "react-bootstrap";
 import * as yup from "yup";
-import { createCustomTextInput } from "../../forms/TextInput";
+import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import { useCustomForm } from "../../../hooks/useCustomForm";
-import { CustomForm } from "../../forms/CustomForm";
+import { CustomForm } from "../../forms/customForm/CustomForm";
 import { actions, useAppDispatch } from "../../../store";
-import { createCustomTextInputArea } from "../../forms/TextAreaInput";
+import { createCustomTextInputArea } from "../../forms/customForm/TextAreaInput";
+import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { Select } from "../../forms/Select";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -35,8 +37,10 @@ export const Characteristics = () => {
   const dispatch = useAppDispatch();
   const customForm = useCustomForm<CharacteristicsFormData>({
     schema,
-    onSubmit: (data) =>
-      dispatch(actions.createPropertyForm.setCharacteristics(data)),
+    onSubmit: (data) => {
+      dispatch(actions.createPropertyForm.setCharacteristics(data));
+      dispatch(actions.createPropertyForm.setStep(Step.OptionalInfo));
+    },
   });
   return (
     <CustomForm {...customForm}>
@@ -49,11 +53,10 @@ export const Characteristics = () => {
                 placeholder="Superficie total"
               />
             </Col>
-
             <Col>
               <CharacteristicsTextInput
-                name="totalSurface"
-                placeholder="Superficie total"
+                name="coveredSurface"
+                placeholder="Superficie cubiertaf"
               />
             </Col>
           </Form.Row>
@@ -116,16 +119,20 @@ export const Characteristics = () => {
             <Col>
               <CharacteristicsTextInput
                 name="constructionYear"
-                placeholder="Fecha de construccion"
+                placeholder="Año de construccion"
               />
             </Col>
           </Form.Row>
 
           <Form.Row>
             <Col>
-              <CharacteristicsTextInput
-                name="constructionYear"
-                placeholder="Fecha de construccion"
+              <Select
+                name={"style"}
+                placeholder={"Estilo"}
+                options={styles}
+                onSelect={(id) =>
+                  dispatch(actions.createPropertyForm.setStyle(id))
+                }
               />
             </Col>
           </Form.Row>
@@ -133,7 +140,7 @@ export const Characteristics = () => {
           <Form.Row>
             <Col>
               <CharacteristicsTextArea
-                name={"parkDescription"}
+                name="parkDescription"
                 placeholder={"Caracteristicas del parque"}
               />
             </Col>
@@ -144,3 +151,11 @@ export const Characteristics = () => {
     </CustomForm>
   );
 };
+
+const styles = [
+  "Colonial",
+  "askdf",
+  "adsgasgaf",
+  "sagasfko",
+  "aksdjnf",
+].map((displayName, id) => ({ displayName, id }));

@@ -1,18 +1,19 @@
-import { CustomForm } from "../../forms/CustomForm";
+import { CustomForm } from "../../forms/customForm/CustomForm";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import * as yup from "yup";
 import { Button, Col, Container, Form } from "react-bootstrap";
-import { createCustomTextInput } from "../../forms/TextInput";
+import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import {
   createCustomRadioInput,
   RadioOption,
 } from "../../forms/ComposedRadioInput";
 import { ChangeEventHandler } from "react";
 import { actions, useAppDispatch } from "../../../store";
+import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 
 const schema = yup.object({
   operationType: yup.string().required(),
-  price: "l" ? yup.number().positive().required() : yup.string(),
+  price: yup.number().positive().required(),
   expenses: yup.number().positive().required(),
   title: yup.string().required(),
 });
@@ -37,7 +38,10 @@ export const BasicInfo = () => {
   const dispatch = useAppDispatch();
   const customForm = useCustomForm<BasicInfoFormData>({
     schema,
-    onSubmit: (data) => dispatch(actions.createPropertyForm.setBasicInfo(data)),
+    onSubmit: (data) => {
+      dispatch(actions.createPropertyForm.setBasicInfo(data));
+      dispatch(actions.createPropertyForm.setStep(Step.Address));
+    },
   });
   return (
     <Container>
@@ -127,7 +131,7 @@ const RadioInputList = ({ items, name, onSelected }: RadioInputListProps) => {
       {items.map(({ id, label }) => (
         <Form.Check
           key={id}
-          id={id.toString()}
+          id={`${name}-radio-${id}`}
           type={"radio"}
           label={label}
           value={id}
@@ -140,11 +144,12 @@ const RadioInputList = ({ items, name, onSelected }: RadioInputListProps) => {
 };
 
 const radios: RadioInputOption[] = [
-  "Aasdhf",
-  "asdaaaaaa",
-  "asdf",
-  "asdf",
-  "Aasdhf",
-  "naosdhfpoias",
-  "akjdsh",
+  "Casa",
+  "Departamento",
+  "Cabaña",
+  "Quinta",
+  "Oficina",
+  "Edificio",
+  "Cochera",
+  "Galpon",
 ].map((name, id) => ({ label: name, id }));

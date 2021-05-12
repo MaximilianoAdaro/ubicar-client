@@ -1,6 +1,7 @@
 import { actions, useAppDispatch } from "../../../store";
 import { CheckInputList } from "../../forms/CheckInputList";
-import { Col, Form } from "react-bootstrap";
+import { Button, Col, Form } from "react-bootstrap";
+import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 
 const amenities = [
   { id: 18, name: "Lavaplatos" },
@@ -71,6 +72,12 @@ const Materials = () => {
 };
 
 export const OptionalInfo = () => {
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(actions.createPropertyForm.setStep(Step.Multimedia));
+  };
+
   return (
     <div>
       <Form.Row>
@@ -94,6 +101,7 @@ export const OptionalInfo = () => {
           </Form.Row>
         </Col>
       </Form.Row>
+      <Button onClick={handleClick}>Siguiente</Button>
     </div>
   );
 };
