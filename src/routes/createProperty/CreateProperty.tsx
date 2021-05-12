@@ -6,18 +6,20 @@ import {
   selectCurrentStep,
   Step,
 } from "../../store/slices/createPropetyForm/createPropertyFormSlice";
-import { Container, Nav } from "react-bootstrap";
 import { OptionalInfo } from "../../components/createPropertyForm/OptionalInfo/OptionalInfo";
 import { Multimedia } from "../../components/createPropertyForm/Multimedia/Multimedia";
 import { Additional } from "../../components/createPropertyForm/Additional/Additional";
-import { Confirmation } from "../../components/createPropertyForm/Confirmation";
+import { Confirmation } from "../../components/createPropertyForm/Confirmation/Confirmation";
+import styles from "./CreateProperty.module.scss";
+import classNames from "classnames";
+import { Container } from "react-bootstrap";
 
 export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
   return (
     <>
-      <Container>
-        <h1>Publica tu propiedad</h1>
+      <Container fluid>
+        <h1 className={styles.title}>Publica tu propiedad</h1>
         <StepBar currentStep={currentStep} />
         <CurrentStep currentStep={currentStep} />
       </Container>
@@ -64,20 +66,21 @@ const StepBar = ({ currentStep }: StepBarProps) => {
   const dispatch = useAppDispatch();
   return (
     <>
-      <Nav
-        activeKey={currentStep}
-        onSelect={(selectedStep) =>
-          dispatch(
-            actions.createPropertyForm.setStep(Number(selectedStep) as Step)
-          )
-        }
-      >
+      <div className={styles.stepBarContainer}>
         {steps.map(({ displayName, step }) => (
-          <Nav.Item>
-            <Nav.Link eventKey={step}>{displayName}</Nav.Link>
-          </Nav.Item>
+          <div
+            className={styles.stepBarItem}
+            onClick={() => dispatch(actions.createPropertyForm.setStep(step))}
+          >
+            <span>{displayName}</span>
+            <div
+              className={classNames(styles.highlighter, {
+                [styles.active]: step === currentStep,
+              })}
+            />
+          </div>
         ))}
-      </Nav>
+      </div>
     </>
   );
 };

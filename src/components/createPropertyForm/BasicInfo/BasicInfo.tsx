@@ -1,18 +1,18 @@
 import { CustomForm } from "../../forms/customForm/CustomForm";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import * as yup from "yup";
-import { Button, Col, Container, Form } from "react-bootstrap";
+import { Col, Container, Form } from "react-bootstrap";
 import { createCustomTextInput } from "../../forms/customForm/TextInput";
-import {
-  createCustomRadioInput,
-  RadioOption,
-} from "../../forms/ComposedRadioInput";
-import { ChangeEventHandler } from "react";
+import { RadioOption } from "../../forms/ComposedRadioInput";
 import { actions, useAppDispatch } from "../../../store";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { RadioInput, RadioInputOption } from "../../forms/RadioInput";
+import styles from "./BasicInfo.module.scss";
+import classNames from "classnames";
+import { useState } from "react";
+import { StepButtons } from "../StepButtons/StepButtons";
 
 const schema = yup.object({
-  operationType: yup.string().required(),
   price: yup.number().positive().required(),
   expenses: yup.number().positive().required(),
   title: yup.string().required(),
@@ -21,7 +21,6 @@ const schema = yup.object({
 export type BasicInfoFormData = yup.InferType<typeof schema>;
 
 const BasicInfoTextInput = createCustomTextInput<BasicInfoFormData>();
-const BasicInfoRadioInput = createCustomRadioInput<BasicInfoFormData>();
 
 const operationTypes: RadioOption[] = [
   {
@@ -48,17 +47,16 @@ export const BasicInfo = () => {
       <CustomForm {...customForm}>
         <Form.Row>
           <Col>
-            <Form.Row>
-              <Col>
-                <h4>Tipo de operacion</h4>
-              </Col>
-              <Col>
-                <BasicInfoRadioInput
-                  name="operationType"
-                  options={operationTypes}
-                />
-              </Col>
-            </Form.Row>
+            <div className={styles.operationTypeContainer}>
+              <Form.Row>
+                <Col>
+                  <h3>Tipo de operacion</h3>
+                </Col>
+                <Col>
+                  <OperationTypeRadio />
+                </Col>
+              </Form.Row>
+            </div>
           </Col>
           <Col>
             <Form.Row>
@@ -92,54 +90,50 @@ export const BasicInfo = () => {
             </Form.Row>
             <Form.Row>
               <Col>
-                <RadioInputList
-                  items={radios}
-                  name={"propertyType"}
-                  onSelected={(id) =>
-                    dispatch(actions.createPropertyForm.setPropertyType(id))
-                  }
-                />
+                <div className={styles.typeContainer}>
+                  <RadioInput
+                    items={radios}
+                    name={"propertyType"}
+                    onSelected={(id) =>
+                      dispatch(actions.createPropertyForm.setPropertyType(id))
+                    }
+                  />
+                </div>
               </Col>
             </Form.Row>
           </Col>
         </Form.Row>
-        <Button type="submit">Siguiente</Button>
+        <Form.Row>
+          <StepButtons type={"submit"} showPrevious={false} />
+        </Form.Row>
       </CustomForm>
     </Container>
   );
 };
 
-interface RadioInputOption {
-  id: number;
-  label: string;
-}
+const OperationTypeRadio = () => {
+  const [currentValue, setCurrentValue] = useState(operationTypes[0].value);
+  const dispatch = useAppDispatch();
 
-interface RadioInputListProps {
-  items: RadioInputOption[];
-  onSelected: (id: RadioInputOption["id"]) => void;
-  name: string;
-}
-
-const RadioInputList = ({ items, name, onSelected }: RadioInputListProps) => {
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    console.log(e);
-    const { checked, value: id } = e.target;
-    if (checked) onSelected(Number(id));
+  const handleSelect = (value: string) => {
+    setCurrentValue(value);
+    dispatch(actions.createPropertyForm.setOperationType(value));
   };
   return (
-    <div>
-      {items.map(({ id, label }) => (
-        <Form.Check
-          key={id}
-          id={`${name}-radio-${id}`}
-          type={"radio"}
-          label={label}
-          value={id}
-          name={name}
-          onChange={handleChange}
-        />
-      ))}
-    </div>
+    <>
+      <div className={styles.itemContainer}>
+        {operationTypes.map(({ displayName, value }) => (
+          <div className={styles.item} onClick={() => handleSelect(value)}>
+            <span>{displayName}</span>
+            <div
+              className={classNames(styles.highlighter, {
+                [styles.active]: value === currentValue,
+              })}
+            />
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
@@ -149,6 +143,15 @@ const radios: RadioInputOption[] = [
   "Cabaña",
   "Quinta",
   "Oficina",
+  "Edificio",
+  "Edificio",
+  "Edificio",
+  "Edificio",
+  "Edificio",
+  "Edificio",
+  "Edificio",
+  "Edificio",
+  "Edificio",
   "Edificio",
   "Cochera",
   "Galpon",

@@ -7,6 +7,7 @@ import { AddressFormData } from "../../../components/createPropertyForm/Address/
 
 // Define a type for the slice state
 interface CreatePropertyState {
+  operationType: string;
   style: number;
   youtubeLinks: string[];
   amenities: number[];
@@ -50,6 +51,7 @@ interface Contact {
 
 // Define the initial state using that type
 const initialState: CreatePropertyState = {
+  operationType: "SALE",
   style: 0,
   youtubeLinks: [],
   amenities: [],
@@ -71,7 +73,6 @@ const initialState: CreatePropertyState = {
   },
   basicInfo: {
     expenses: 0,
-    operationType: "",
     price: 0,
     title: "",
   },
@@ -80,11 +81,9 @@ const initialState: CreatePropertyState = {
     coveredSurface: 0,
     floors: 0,
     fullBaths: 0,
-    halfBaths: 0,
     parkDescription: "",
-    quarterBaths: 0,
     rooms: 0,
-    threeQuarterBaths: 0,
+    toilets: 0,
     totalSurface: 0,
     ambiences: 0,
   },
@@ -159,6 +158,9 @@ export const createPropertyFormSlice = createSlice({
 
     setAdditional: (state, action: PayloadAction<AdditionalFormData>) => {
       state.additional = action.payload;
+    },
+    setOperationType: (state, action: PayloadAction<string>) => {
+      state.operationType = action.payload;
     },
   },
 });

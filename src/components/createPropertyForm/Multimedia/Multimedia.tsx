@@ -1,5 +1,5 @@
 import { VideoInput } from "./VideoInput";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { actions, useAppDispatch } from "../../../store";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 
@@ -11,9 +11,9 @@ export const Multimedia = () => {
   };
 
   return (
-    <div>
+    <Container>
       <VideoInput />
       <Button onClick={handleClick}>Siguiente</Button>
-    </div>
+    </Container>
   );
 };

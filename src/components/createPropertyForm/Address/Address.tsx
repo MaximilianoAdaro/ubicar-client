@@ -1,12 +1,13 @@
 import { CustomForm } from "../../forms/customForm/CustomForm";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import * as yup from "yup";
-import { Button, Col, Form } from "react-bootstrap";
+import { Col, Container, Form } from "react-bootstrap";
 import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { actions, useAppDispatch } from "../../../store";
 import { Select } from "../../forms/Select";
 import React from "react";
+import { StepButtons } from "../StepButtons/StepButtons";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -32,82 +33,90 @@ export const Address = () => {
   });
 
   return (
-    <CustomForm {...customForm}>
-      <Form.Row>
-        <Col>
-          <Form.Row>
-            <Col>
-              <Form.Group>
-                <Form.Label>{"Pais"}</Form.Label>
-                <Form.Control type={"text"} value={"Argentina"} disabled />
-              </Form.Group>
-            </Col>
-          </Form.Row>
+    <Container>
+      <CustomForm {...customForm}>
+        <Form.Row>
+          <Col>
+            <Form.Row>
+              <Col>
+                <Form.Group>
+                  <Form.Label>{"Pais"}</Form.Label>
+                  <Form.Control type={"text"} value={"Argentina"} disabled />
+                </Form.Group>
+              </Col>
+            </Form.Row>
 
-          <Form.Row>
-            <Col>
-              <Select
-                name="state"
-                placeholder="Provincia"
-                options={states}
-                onSelect={(id) =>
-                  dispatch(actions.createPropertyForm.setState(id))
-                }
-              />
-            </Col>
-          </Form.Row>
+            <Form.Row>
+              <Col>
+                <Select
+                  name="state"
+                  placeholder="Provincia"
+                  options={states}
+                  onSelect={(id) =>
+                    dispatch(actions.createPropertyForm.setState(id))
+                  }
+                />
+              </Col>
+            </Form.Row>
 
-          <Form.Row>
-            <Col>
-              <Select
-                name="city"
-                placeholder="Ciudad"
-                options={cities}
-                onSelect={(id) =>
-                  dispatch(actions.createPropertyForm.setCity(id))
-                }
-              />
-            </Col>
-          </Form.Row>
+            <Form.Row>
+              <Col>
+                <Select
+                  name="city"
+                  placeholder="Ciudad"
+                  options={cities}
+                  onSelect={(id) =>
+                    dispatch(actions.createPropertyForm.setCity(id))
+                  }
+                />
+              </Col>
+            </Form.Row>
 
-          <Form.Row>
-            <Col>
-              <Select
-                name="town"
-                placeholder="Barrio"
-                options={towns}
-                onSelect={(id) =>
-                  dispatch(actions.createPropertyForm.setTown(id))
-                }
-              />
-            </Col>
-          </Form.Row>
-        </Col>
-        <Col>
-          <Form.Row>
-            <Col>
-              <AddressTextInput name="postalCode" placeholder="Codigo postal" />
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Col>
-              <AddressTextInput name="street" placeholder="Calle" />
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Col>
-              <AddressTextInput name="number" placeholder="Numero" />
-            </Col>
-          </Form.Row>
-          <Form.Row>
-            <Col>
-              <AddressTextInput name="department" placeholder="Departamento" />
-            </Col>
-          </Form.Row>
-        </Col>
-      </Form.Row>
-      <Button type={"submit"}>Siguiente paso</Button>
-    </CustomForm>
+            <Form.Row>
+              <Col>
+                <Select
+                  name="town"
+                  placeholder="Barrio"
+                  options={towns}
+                  onSelect={(id) =>
+                    dispatch(actions.createPropertyForm.setTown(id))
+                  }
+                />
+              </Col>
+            </Form.Row>
+          </Col>
+          <Col>
+            <Form.Row>
+              <Col>
+                <AddressTextInput
+                  name="postalCode"
+                  placeholder="Codigo postal"
+                />
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Col>
+                <AddressTextInput name="street" placeholder="Calle" />
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Col>
+                <AddressTextInput name="number" placeholder="Numero" />
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Col>
+                <AddressTextInput
+                  name="department"
+                  placeholder="Departamento"
+                />
+              </Col>
+            </Form.Row>
+          </Col>
+        </Form.Row>
+        <StepButtons type={"submit"} />
+      </CustomForm>
+    </Container>
   );
 };
 

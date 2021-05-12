@@ -1,77 +1,50 @@
 import { actions, useAppDispatch } from "../../../store";
 import { CheckInputList } from "../../forms/CheckInputList";
-import { Button, Col, Form } from "react-bootstrap";
+import { Col, Container, Form } from "react-bootstrap";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import styles from "./OptionalInfo.module.scss";
-const amenities = [
-  { id: 18, name: "Lavaplatos" },
-  { id: 19, name: "Lavarropas" },
-  { id: 20, name: "Secarropas" },
-  { id: 21, name: "Aire Acondicionado" },
-  { id: 22, name: "Calefaccion" },
-];
+import { StepButtons } from "../StepButtons/StepButtons";
+import React from "react";
 
-const Amenities = () => {
-  const dispatch = useAppDispatch();
-  return (
-    <div>
-      <h3>Servicio</h3>
-      <div className={styles.checkContainer}>
-        <CheckInputList
-          items={amenities}
-          onCheck={(id) => dispatch(actions.createPropertyForm.addAmenity(id))}
-          onUncheck={(id) =>
-            dispatch(actions.createPropertyForm.removeAmenity(id))
-          }
-        />
-      </div>
-    </div>
-  );
-};
+const amenities = [
+  "Lavaplatos",
+  "Lavarropas",
+  "Lavarropas",
+  "Secarropas",
+  "Secarropas",
+  "Secarropas",
+  "Secarropas",
+  "Aire Acondicionado",
+  "Aire Acondicionado",
+  "Aire Acondicionado",
+  "Aire Acondicionado",
+  "Calefaccion",
+  "Calefaccion",
+  "Calefaccion",
+  "Calefaccion",
+].map((name, id) => ({ name, id }));
 
 const securities = [
-  { id: 23, name: "Rejas" },
-  { id: 24, name: "Camaras" },
-  { id: 25, name: "Alarmas" },
-];
-
-const Securities = () => {
-  const dispatch = useAppDispatch();
-  return (
-    <>
-      <h2>Medidas de seguridad</h2>
-      <CheckInputList
-        items={securities}
-        onCheck={(id) => dispatch(actions.createPropertyForm.addSecurity(id))}
-        onUncheck={(id) =>
-          dispatch(actions.createPropertyForm.removeSecurity(id))
-        }
-      />
-    </>
-  );
-};
+  "Rejas",
+  "Rejas",
+  "Rejas",
+  "Camaras",
+  "Camaras",
+  "Camaras",
+  "Alarmas",
+  "Alarmas",
+  "Alarmas",
+].map((name, id) => ({ name, id }));
 
 const materials = [
-  { id: 26, name: "Ladrillo" },
-  { id: 27, name: "Cemento" },
-  { id: 28, name: "Chapa" },
-];
-
-const Materials = () => {
-  const dispatch = useAppDispatch();
-  return (
-    <>
-      <h2>Materiales de construccion</h2>
-      <CheckInputList
-        items={materials}
-        onCheck={(id) => dispatch(actions.createPropertyForm.addMaterial(id))}
-        onUncheck={(id) =>
-          dispatch(actions.createPropertyForm.removeMaterial(id))
-        }
-      />
-    </>
-  );
-};
+  "Ladrillo",
+  "Ladrillo",
+  "Cemento",
+  "Cemento",
+  "Cemento",
+  "Chapa",
+  "Chapa",
+].map((name, id) => ({ name, id }));
 
 export const OptionalInfo = () => {
   const dispatch = useAppDispatch();
@@ -81,29 +54,68 @@ export const OptionalInfo = () => {
   };
 
   return (
-    <div>
+    <Container>
       <Form.Row>
         <Col>
           <Form.Row>
             <Col>
-              <Amenities />
+              <div>
+                <h3>Servicio</h3>
+                <div className={styles.checkContainer}>
+                  <CheckInputList
+                    items={amenities}
+                    onCheck={(id) =>
+                      dispatch(actions.createPropertyForm.addAmenity(id))
+                    }
+                    onUncheck={(id) =>
+                      dispatch(actions.createPropertyForm.removeAmenity(id))
+                    }
+                  />
+                </div>
+              </div>
             </Col>
           </Form.Row>
         </Col>
         <Col>
           <Form.Row>
             <Col>
-              <Securities />
+              <div>
+                <h3>Medidas de seguridad</h3>
+                <div className={styles.checkContainer}>
+                  <CheckInputList
+                    items={securities}
+                    onCheck={(id) =>
+                      dispatch(actions.createPropertyForm.addSecurity(id))
+                    }
+                    onUncheck={(id) =>
+                      dispatch(actions.createPropertyForm.removeSecurity(id))
+                    }
+                  />
+                </div>
+              </div>
             </Col>
           </Form.Row>
           <Form.Row>
             <Col>
-              <Materials />
+              <div>
+                <h3>Materiales de construccion</h3>
+                <div className={styles.checkContainer}>
+                  <CheckInputList
+                    items={materials}
+                    onCheck={(id) =>
+                      dispatch(actions.createPropertyForm.addMaterial(id))
+                    }
+                    onUncheck={(id) =>
+                      dispatch(actions.createPropertyForm.removeMaterial(id))
+                    }
+                  />
+                </div>
+              </div>
             </Col>
           </Form.Row>
         </Col>
       </Form.Row>
-      <Button onClick={handleClick}>Siguiente</Button>
-    </div>
+      <StepButtons type={"submit"} onNext={handleClick} />
+    </Container>
   );
 };
