@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
-import { BasicInfoFormData } from "../../../components/createPropertyForm/basicInfo/BasicInfo";
-import { CharacteristicsFormData } from "../../../components/createPropertyForm/basicInfo/Characteristics";
-import { AdditionalFormData } from "../../../components/createPropertyForm/basicInfo/Additional";
-import { AddressFormData } from "../../../components/createPropertyForm/address/Address";
+import { BasicInfoFormData } from "../../../components/createPropertyForm/BasicInfo/BasicInfo";
+import { CharacteristicsFormData } from "../../../components/createPropertyForm/Characteristics/Characteristics";
+import { AdditionalFormData } from "../../../components/createPropertyForm/Additional/Additional";
+import { AddressFormData } from "../../../components/createPropertyForm/Address/Address";
 
 // Define a type for the slice state
 interface CreatePropertyState {

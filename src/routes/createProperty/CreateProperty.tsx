@@ -1,15 +1,15 @@
-import { BasicInfo } from "../../components/createPropertyForm/basicInfo/BasicInfo";
-import { Address } from "../../components/createPropertyForm/address/Address";
-import { Characteristics } from "../../components/createPropertyForm/basicInfo/Characteristics";
+import { BasicInfo } from "../../components/createPropertyForm/BasicInfo/BasicInfo";
+import { Address } from "../../components/createPropertyForm/Address/Address";
+import { Characteristics } from "../../components/createPropertyForm/Characteristics/Characteristics";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
 import {
   selectCurrentStep,
   Step,
 } from "../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { Container, Nav } from "react-bootstrap";
-import { OptionalInfo } from "../../components/createPropertyForm/basicInfo/OptionalInfo";
-import { Multimedia } from "../../components/createPropertyForm/basicInfo/Multimedia";
-import { Additional } from "../../components/createPropertyForm/basicInfo/Additional";
+import { OptionalInfo } from "../../components/createPropertyForm/OptionalInfo/OptionalInfo";
+import { Multimedia } from "../../components/createPropertyForm/Multimedia/Multimedia";
+import { Additional } from "../../components/createPropertyForm/Additional/Additional";
 import { Confirmation } from "../../components/createPropertyForm/Confirmation";
 
 export const CreateProperty = () => {

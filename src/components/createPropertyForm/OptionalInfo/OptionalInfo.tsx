@@ -2,7 +2,7 @@ import { actions, useAppDispatch } from "../../../store";
 import { CheckInputList } from "../../forms/CheckInputList";
 import { Button, Col, Form } from "react-bootstrap";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
-
+import styles from "./OptionalInfo.module.scss";
 const amenities = [
   { id: 18, name: "Lavaplatos" },
   { id: 19, name: "Lavarropas" },
@@ -14,16 +14,18 @@ const amenities = [
 const Amenities = () => {
   const dispatch = useAppDispatch();
   return (
-    <>
-      <h3>Disponibilidades</h3>
-      <CheckInputList
-        items={amenities}
-        onCheck={(id) => dispatch(actions.createPropertyForm.addAmenity(id))}
-        onUncheck={(id) =>
-          dispatch(actions.createPropertyForm.removeAmenity(id))
-        }
-      />
-    </>
+    <div>
+      <h3>Servicio</h3>
+      <div className={styles.checkContainer}>
+        <CheckInputList
+          items={amenities}
+          onCheck={(id) => dispatch(actions.createPropertyForm.addAmenity(id))}
+          onUncheck={(id) =>
+            dispatch(actions.createPropertyForm.removeAmenity(id))
+          }
+        />
+      </div>
+    </div>
   );
 };
 
