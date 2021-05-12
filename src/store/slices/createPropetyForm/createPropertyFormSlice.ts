@@ -2,19 +2,22 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { BasicInfoFormData } from "../../../components/createPropertyForm/basicInfo/BasicInfo";
 import { CharacteristicsFormData } from "../../../components/createPropertyForm/basicInfo/Characteristics";
+import { AdditionalFormData } from "../../../components/createPropertyForm/basicInfo/Additional";
 
 // Define a type for the slice state
 interface CreatePropertyState {
+  style: number;
   youtubeLinks: string[];
   amenities: number[];
   materials: number[];
   securities: number[];
   contacts: Contact[];
   openHouses: OpenHouse[];
-  propertyTypes: string[];
+  propertyType: number;
   address: AddressFormData;
   basicInfo: BasicInfoFormData;
   characteristics: CharacteristicsFormData;
+  additional: AdditionalFormData;
   currentStep: Step;
 }
 
@@ -51,13 +54,14 @@ interface Contact {
 
 // Define the initial state using that type
 const initialState: CreatePropertyState = {
+  style: 0,
   youtubeLinks: [],
   amenities: [],
   materials: [],
   securities: [],
   contacts: [],
   openHouses: [],
-  propertyTypes: [],
+  propertyType: 0,
   address: {
     country: "",
     state: "",
@@ -69,7 +73,6 @@ const initialState: CreatePropertyState = {
     department: "",
   },
   basicInfo: {
-    description: "",
     expenses: 0,
     operationType: "",
     price: 0,
@@ -86,6 +89,10 @@ const initialState: CreatePropertyState = {
     rooms: 0,
     threeQuarterBaths: 0,
     totalSurface: 0,
+    ambiences: 0,
+  },
+  additional: {
+    description: "",
   },
   currentStep: Step.BasicInfo,
 };
@@ -97,6 +104,9 @@ export const createPropertyFormSlice = createSlice({
   reducers: {
     setStep: (state, action: PayloadAction<Step>) => {
       state.currentStep = action.payload;
+    },
+    setStyle: (state, action: PayloadAction<number>) => {
+      state.style = action.payload;
     },
     addYoutubeLink: (state, action: PayloadAction<string>) => {
       state.youtubeLinks.push(action.payload);
@@ -116,14 +126,8 @@ export const createPropertyFormSlice = createSlice({
     addOpenHouse: (state, action: PayloadAction<OpenHouse>) => {
       state.openHouses.push(action.payload);
     },
-    addPropertyType: (state, action: PayloadAction<string>) => {
-      if (!state.propertyTypes.includes(action.payload))
-        state.propertyTypes.push(action.payload);
-    },
-    removePropertyType: (state, action: PayloadAction<string>) => {
-      state.propertyTypes = state.propertyTypes.filter(
-        (e) => e !== action.payload
-      );
+    setPropertyType: (state, action: PayloadAction<number>) => {
+      state.propertyType = action.payload;
     },
     setAddress: (state, action: PayloadAction<AddressFormData>) => {
       state.address = action.payload;
@@ -177,7 +181,7 @@ export const selectContacts = (state: RootState) =>
   state.createPropertyForm.contacts;
 
 export const selectPropertyTypes = (state: RootState) =>
-  state.createPropertyForm.propertyTypes;
+  state.createPropertyForm.propertyType;
 
 export const selectAddress = (state: RootState) =>
   state.createPropertyForm.address;

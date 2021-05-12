@@ -30,40 +30,53 @@ export const Address = () => {
 
   return (
     <CustomForm {...customForm}>
-      <h4>Ubicacion</h4>
       <Form.Row>
         <Col>
-          <AddressTextInput name="country" placeholder="Pais" />
-        </Col>
-        <Col>
-          <AddressTextInput name="state" placeholder="Provincia" />
-        </Col>
-      </Form.Row>
+          <Form.Row>
+            <Col>
+              <AddressTextInput name="country" placeholder="Pais" />
+            </Col>
+          </Form.Row>
 
-      <Form.Row>
-        <Col>
-          <AddressTextInput name="city" placeholder="Ciudad" />
-        </Col>
-        <Col>
-          <AddressTextInput name="neighbourhood" placeholder="Barrio" />
-        </Col>
-      </Form.Row>
+          <Form.Row>
+            <Col>
+              <AddressTextInput name="state" placeholder="Provincia" />
+            </Col>
+          </Form.Row>
 
-      <Form.Row>
-        <Col>
-          <AddressTextInput name="street" placeholder="Calle" />
-        </Col>
-        <Col>
-          <AddressTextInput name="number" placeholder="Numero" />
-        </Col>
-      </Form.Row>
+          <Form.Row>
+            <Col>
+              <AddressTextInput name="city" placeholder="Ciudad" />
+            </Col>
+          </Form.Row>
 
-      <Form.Row>
-        <Col>
-          <AddressTextInput name="postalCode" placeholder="Codigo postal" />
+          <Form.Row>
+            <Col>
+              <AddressTextInput name="neighbourhood" placeholder="Barrio" />
+            </Col>
+          </Form.Row>
         </Col>
         <Col>
-          <AddressTextInput name="department" placeholder="Departamento" />
+          <Form.Row>
+            <Col>
+              <AddressTextInput name="postalCode" placeholder="Codigo postal" />
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <AddressTextInput name="street" placeholder="Calle" />
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <AddressTextInput name="number" placeholder="Numero" />
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <AddressTextInput name="department" placeholder="Departamento" />
+            </Col>
+          </Form.Row>
         </Col>
       </Form.Row>
       <Button type={"submit"}>Siguiente paso</Button>

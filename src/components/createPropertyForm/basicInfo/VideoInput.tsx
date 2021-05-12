@@ -30,7 +30,7 @@ export const VideoInput = () => {
   };
   return (
     <>
-      <h1>Videos</h1>
+      <h4>Videos</h4>
       <Form.Row>
         <Col>
           <Form.Group>

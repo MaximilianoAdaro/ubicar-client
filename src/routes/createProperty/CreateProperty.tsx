@@ -6,7 +6,7 @@ import {
   selectCurrentStep,
   Step,
 } from "../../store/slices/createPropetyForm/createPropertyFormSlice";
-import { Nav } from "react-bootstrap";
+import { Container, Nav } from "react-bootstrap";
 import { OptionalInfo } from "../../components/createPropertyForm/basicInfo/OptionalInfo";
 import { Multimedia } from "../../components/createPropertyForm/basicInfo/Multimedia";
 import { Additional } from "../../components/createPropertyForm/basicInfo/Additional";
@@ -15,8 +15,11 @@ export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
   return (
     <>
-      <StepBar currentStep={currentStep} />
-      <CurrentStep currentStep={currentStep} />
+      <Container>
+        <h1>Publica tu propiedad</h1>
+        <StepBar currentStep={currentStep} />
+        <CurrentStep currentStep={currentStep} />
+      </Container>
     </>
   );
 };

@@ -1,38 +1,6 @@
-import { ChangeEventHandler } from "react";
-import { Form } from "react-bootstrap";
 import { actions, useAppDispatch } from "../../../store";
-
-interface CheckOption {
-  id: number;
-  name: string;
-}
-
-interface CheckInputProps {
-  checks: CheckOption[];
-  onCheck: (id: CheckOption["id"]) => void;
-  onUnCheck: (id: CheckOption["id"]) => void;
-}
-
-const CheckInput = ({ checks, onCheck, onUnCheck }: CheckInputProps) => {
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { checked, value: id } = e.target;
-    if (checked) onCheck(Number(id));
-    else onUnCheck(Number(id));
-  };
-  return (
-    <>
-      {checks.map(({ id, name }) => (
-        <Form.Check
-          key={id}
-          type={"checkbox"}
-          label={name}
-          value={id}
-          onChange={handleChange}
-        />
-      ))}
-    </>
-  );
-};
+import { CheckInputList } from "../../forms/CheckInputList";
+import { Col, Form } from "react-bootstrap";
 
 const amenities = [
   { id: 18, name: "Lavaplatos" },
@@ -47,10 +15,10 @@ const Amenities = () => {
   return (
     <>
       <h3>Disponibilidades</h3>
-      <CheckInput
-        checks={amenities}
+      <CheckInputList
+        items={amenities}
         onCheck={(id) => dispatch(actions.createPropertyForm.addAmenity(id))}
-        onUnCheck={(id) =>
+        onUncheck={(id) =>
           dispatch(actions.createPropertyForm.removeAmenity(id))
         }
       />
@@ -69,10 +37,10 @@ const Securities = () => {
   return (
     <>
       <h2>Medidas de seguridad</h2>
-      <CheckInput
-        checks={securities}
+      <CheckInputList
+        items={securities}
         onCheck={(id) => dispatch(actions.createPropertyForm.addSecurity(id))}
-        onUnCheck={(id) =>
+        onUncheck={(id) =>
           dispatch(actions.createPropertyForm.removeSecurity(id))
         }
       />
@@ -91,10 +59,10 @@ const Materials = () => {
   return (
     <>
       <h2>Materiales de construccion</h2>
-      <CheckInput
-        checks={materials}
+      <CheckInputList
+        items={materials}
         onCheck={(id) => dispatch(actions.createPropertyForm.addMaterial(id))}
-        onUnCheck={(id) =>
+        onUncheck={(id) =>
           dispatch(actions.createPropertyForm.removeMaterial(id))
         }
       />
@@ -105,9 +73,27 @@ const Materials = () => {
 export const OptionalInfo = () => {
   return (
     <div>
-      <Amenities />
-      <Securities />
-      <Materials />
+      <Form.Row>
+        <Col>
+          <Form.Row>
+            <Col>
+              <Amenities />
+            </Col>
+          </Form.Row>
+        </Col>
+        <Col>
+          <Form.Row>
+            <Col>
+              <Securities />
+            </Col>
+          </Form.Row>
+          <Form.Row>
+            <Col>
+              <Materials />
+            </Col>
+          </Form.Row>
+        </Col>
+      </Form.Row>
     </div>
   );
 };

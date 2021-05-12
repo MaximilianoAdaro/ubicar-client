@@ -12,10 +12,9 @@ import { actions, useAppDispatch } from "../../../store";
 
 const schema = yup.object({
   operationType: yup.string().required(),
-  price: yup.number().positive().required(),
+  price: "l" ? yup.number().positive().required() : yup.string(),
   expenses: yup.number().positive().required(),
   title: yup.string().required(),
-  description: yup.string(),
 });
 
 export type BasicInfoFormData = yup.InferType<typeof schema>;
@@ -42,27 +41,62 @@ export const BasicInfo = () => {
   });
   return (
     <Container>
-      <h4>Informacion basica</h4>
       <CustomForm {...customForm}>
         <Form.Row>
           <Col>
-            <BasicInfoRadioInput
-              name="operationType"
-              options={operationTypes}
-            />
-            <RadioInputList />
             <Form.Row>
               <Col>
-                <BasicInfoTextInput name="price" placeholder="Precio" />
+                <h4>Tipo de operacion</h4>
               </Col>
               <Col>
-                <BasicInfoTextInput name="expenses" placeholder="Expensas" />
+                <BasicInfoRadioInput
+                  name="operationType"
+                  options={operationTypes}
+                />
               </Col>
             </Form.Row>
           </Col>
           <Col>
-            <BasicInfoTextInput name="title" placeholder="Titulo" />
-            <BasicInfoTextInput name="description" placeholder="Descripcion" />
+            <Form.Row>
+              <Col>
+                <BasicInfoTextInput name="title" placeholder="Titulo" />
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Col>
+                <Form.Row>
+                  <Col>
+                    <BasicInfoTextInput name="price" placeholder="Precio" />
+                  </Col>
+                  <Col>
+                    <BasicInfoTextInput
+                      name="expenses"
+                      placeholder="Expensas"
+                    />
+                  </Col>
+                </Form.Row>
+              </Col>
+            </Form.Row>
+          </Col>
+        </Form.Row>
+        <Form.Row>
+          <Col>
+            <Form.Row>
+              <Col>
+                <h3>Tipo de inmueble</h3>
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Col>
+                <RadioInputList
+                  items={radios}
+                  name={"propertyType"}
+                  onSelected={(id) =>
+                    dispatch(actions.createPropertyForm.setPropertyType(id))
+                  }
+                />
+              </Col>
+            </Form.Row>
           </Col>
         </Form.Row>
         <Button type="submit">Siguiente</Button>
@@ -71,40 +105,46 @@ export const BasicInfo = () => {
   );
 };
 
-const RadioInputList = () => {
-  const dispatch = useAppDispatch();
+interface RadioInputOption {
+  id: number;
+  label: string;
+}
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { checked, value } = e.target;
-    if (checked) dispatch(actions.createPropertyForm.addPropertyType(value));
-    else dispatch(actions.createPropertyForm.removePropertyType(value));
-  };
-  return (
-    <>
-      {radios.map(({ value, name }) => (
-        <Form.Check
-          key={value}
-          type={"checkbox"}
-          label={name}
-          value={value}
-          onChange={handleChange}
-        />
-      ))}
-    </>
-  );
-};
-
-interface CheckBoxInputOption {
-  value: string;
+interface RadioInputListProps {
+  items: RadioInputOption[];
+  onSelected: (id: RadioInputOption["id"]) => void;
   name: string;
 }
 
-const radios: CheckBoxInputOption[] = [
-  { value: "asd", name: "Aasdhf" },
-  { value: "ads;hf", name: "asdaaaaaa" },
-  { value: "asd fioh", name: "asdf" },
-  { value: "alsdbflj oa", name: "asdf" },
-  { value: "aaaa", name: "Aasdhf" },
-  { value: "aklsdsa", name: "naosdhfpoias" },
-  { value: "a ooi oi", name: "akjdsh" },
-];
+const RadioInputList = ({ items, name, onSelected }: RadioInputListProps) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    console.log(e);
+    const { checked, value: id } = e.target;
+    if (checked) onSelected(Number(id));
+  };
+  return (
+    <div>
+      {items.map(({ id, label }) => (
+        <Form.Check
+          key={id}
+          id={id.toString()}
+          type={"radio"}
+          label={label}
+          value={id}
+          name={name}
+          onChange={handleChange}
+        />
+      ))}
+    </div>
+  );
+};
+
+const radios: RadioInputOption[] = [
+  "Aasdhf",
+  "asdaaaaaa",
+  "asdf",
+  "asdf",
+  "Aasdhf",
+  "naosdhfpoias",
+  "akjdsh",
+].map((name, id) => ({ label: name, id }));
