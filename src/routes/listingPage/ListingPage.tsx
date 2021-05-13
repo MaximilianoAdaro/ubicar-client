@@ -1,7 +1,7 @@
 import styles from './ListingPage.module.scss'
 import { Col, Container, Row } from "react-bootstrap";
-import {ListingFilters} from "../listingFilters";
-import {House} from "../house";
+import {ListingFilters} from "../../components/listingFilters";
+import {ListingHouse} from "../../components/listingHouse";
 
 
 const casa = {
@@ -78,7 +78,7 @@ export function ListingPage() {
             <Col className={styles.listingPageCol} md={4}>
                 {
                     casas.map(casa => (
-                        <House house={casa}/>
+                        <ListingHouse house={casa}/>
                         )
                     )
                 }

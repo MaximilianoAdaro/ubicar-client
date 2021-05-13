@@ -146,7 +146,7 @@ export const CreateProperty = () => {
         <TextInput
           control={control}
           name="openHouseDays"
-          placeholder="Dias y Horarios para una Open House"
+          placeholder="Dias y Horarios para una Open ListingHouse"
         />
 
         <TextInput

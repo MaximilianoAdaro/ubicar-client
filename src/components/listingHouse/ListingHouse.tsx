@@ -1,9 +1,9 @@
-import styles from './House.module.scss'
+import styles from './ListingHouse.module.scss'
 import {Col, Image, Row} from "react-bootstrap";
 import React from 'react'
 
 
-export function House(props:any) {
+export function ListingHouse(props:any) {
 
   return (
         <a href='https://google.com/' className={styles.aTagHref}>
