@@ -1,0 +1,28 @@
+@import "src/styles/common";
+
+.titleContainer {
+  margin-bottom: 30px;
+}
+
+.buttonContainer {
+  margin-top: 32px;
+}
+
+.linksContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.link {
+  margin-top: 10px;
+  background-color: $theme-light-yellow;
+  padding: 10px;
+  font-size: 1em;
+}
+
+.deleteButton {
+  cursor: pointer;
+  font-size: 1.3em;
+  margin-left: 10px;
+}

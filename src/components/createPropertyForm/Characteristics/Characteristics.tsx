@@ -9,6 +9,7 @@ import { Step } from "../../../store/slices/createPropetyForm/createPropertyForm
 import { Select } from "../../forms/Select";
 import { StepButtons } from "../StepButtons/StepButtons";
 import React from "react";
+import styles from "./Characteristics.module.scss";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -45,86 +46,106 @@ export const Characteristics = () => {
           <Col>
             <Form.Row>
               <Col>
-                <CharacteristicsTextInput
-                  name="totalSurface"
-                  placeholder="Superficie total"
-                />
+                <div className={styles.inputContainer}>
+                  <CharacteristicsTextInput
+                    name="totalSurface"
+                    label="Superficie total"
+                  />
+                </div>
               </Col>
+              <Col xs={1} />
               <Col>
-                <CharacteristicsTextInput
-                  name="coveredSurface"
-                  placeholder="Superficie cubiertaf"
-                />
-              </Col>
-            </Form.Row>
-
-            <Form.Row>
-              <Col>
-                <CharacteristicsTextInput
-                  name="ambiences"
-                  placeholder="Cantidad de ambientes"
-                />
-              </Col>
-              <Col>
-                <CharacteristicsTextInput
-                  name="rooms"
-                  placeholder="Cantidad de habitaciones"
-                />
+                <div className={styles.inputContainer}>
+                  <CharacteristicsTextInput
+                    name="coveredSurface"
+                    label="Superficie cubiertaf"
+                  />
+                </div>
               </Col>
             </Form.Row>
 
             <Form.Row>
               <Col>
-                <CharacteristicsTextInput
-                  name="fullBaths"
-                  placeholder="Baños completos"
-                />
+                <div className={styles.inputContainer}>
+                  <CharacteristicsTextInput
+                    name="ambiences"
+                    label="Cantidad de ambientes"
+                  />
+                </div>
               </Col>
+              <Col xs={1} />
               <Col>
-                <CharacteristicsTextInput
-                  name="toilets"
-                  placeholder="Toilettes"
-                />
+                <div className={styles.inputContainer}>
+                  <CharacteristicsTextInput
+                    name="rooms"
+                    label="Cantidad de habitaciones"
+                  />
+                </div>
+              </Col>
+            </Form.Row>
+
+            <Form.Row>
+              <Col>
+                <div className={styles.inputContainer}>
+                  <CharacteristicsTextInput
+                    name="fullBaths"
+                    label="Baños completos"
+                  />
+                </div>
+              </Col>
+              <Col xs={1} />
+              <Col>
+                <div className={styles.inputContainer}>
+                  <CharacteristicsTextInput name="toilets" label="Toilettes" />
+                </div>
               </Col>
             </Form.Row>
           </Col>
-
+          <Col xs={1} />
           <Col>
             <Form.Row>
               <Col>
-                <CharacteristicsTextInput
-                  name="floors"
-                  placeholder="Cantidad de Pisos"
-                />
+                <div className={styles.inputContainer}>
+                  <CharacteristicsTextInput
+                    name="floors"
+                    label="Cantidad de Pisos"
+                  />
+                </div>
               </Col>
-
-              <Col>
-                <CharacteristicsTextInput
-                  name="constructionYear"
-                  placeholder="Año de construccion"
-                />
-              </Col>
-            </Form.Row>
-
-            <Form.Row>
-              <Col>
-                <Select
-                  name={"style"}
-                  placeholder={"Estilo"}
-                  options={styles}
-                  onSelect={(id) =>
-                    dispatch(actions.createPropertyForm.setStyle(id))
-                  }
-                />
+              <Col xs={1} />
+              <Col xs={7}>
+                <div className={styles.inputContainer}>
+                  <CharacteristicsTextInput
+                    name="constructionYear"
+                    label="Año de construccion"
+                  />
+                </div>
               </Col>
             </Form.Row>
 
             <Form.Row>
               <Col>
-                <CharacteristicsTextArea
-                  name="parkDescription"
-                  placeholder={"Caracteristicas del parque"}
-                />
+                <div className={styles.inputContainer}>
+                  <Select
+                    name={"style"}
+                    placeholder={"Estilo"}
+                    options={propStyles}
+                    onSelect={(id) =>
+                      dispatch(actions.createPropertyForm.setStyle(id))
+                    }
+                  />
+                </div>
+              </Col>
+            </Form.Row>
+
+            <Form.Row>
+              <Col>
+                <div className={styles.inputContainer}>
+                  <CharacteristicsTextArea
+                    name="parkDescription"
+                    placeholder={"Caracteristicas del parque"}
+                  />
+                </div>
               </Col>
             </Form.Row>
           </Col>
@@ -135,7 +156,7 @@ export const Characteristics = () => {
   );
 };
 
-const styles = [
+const propStyles = [
   "Colonial",
   "askdf",
   "adsgasgaf",

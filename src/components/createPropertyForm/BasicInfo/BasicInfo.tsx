@@ -61,20 +61,17 @@ export const BasicInfo = () => {
           <Col>
             <Form.Row>
               <Col>
-                <BasicInfoTextInput name="title" placeholder="Titulo" />
+                <BasicInfoTextInput name="title" label="Titulo" />
               </Col>
             </Form.Row>
             <Form.Row>
               <Col>
                 <Form.Row>
                   <Col>
-                    <BasicInfoTextInput name="price" placeholder="Precio" />
+                    <BasicInfoTextInput name="price" label="Precio" />
                   </Col>
                   <Col>
-                    <BasicInfoTextInput
-                      name="expenses"
-                      placeholder="Expensas"
-                    />
+                    <BasicInfoTextInput name="expenses" label="Expensas" />
                   </Col>
                 </Form.Row>
               </Col>

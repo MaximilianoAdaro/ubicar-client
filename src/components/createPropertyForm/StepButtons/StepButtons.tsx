@@ -45,7 +45,13 @@ const CustomButton = ({
   type = "button",
 }: CustomButtonProps) => {
   return (
-    <Button variant={"outline-dark"} type={type} onClick={onClick}>
+    <Button
+      // style={{ marginRight: 20 }}
+      className={styles.customButton}
+      variant={"outline-dark"}
+      type={type}
+      onClick={onClick}
+    >
       {children}
     </Button>
   );

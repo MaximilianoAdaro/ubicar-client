@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import { createCustomTextInputArea } from "../../forms/customForm/TextAreaInput";
 import { CustomForm } from "../../forms/customForm/CustomForm";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { actions, useAppDispatch } from "../../../store";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 
@@ -25,12 +25,12 @@ export const Additional = () => {
     },
   });
   return (
-    <>
+    <Container>
       <CustomForm {...customForm}>
         <Contacts />
         <AdditionalTextArea name="description" placeholder="Descripcion" />
         <Button type={"submit"}>Siguiente</Button>
       </CustomForm>
-    </>
+    </Container>
   );
 };

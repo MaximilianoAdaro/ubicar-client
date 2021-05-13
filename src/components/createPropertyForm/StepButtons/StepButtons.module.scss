@@ -1,18 +1,19 @@
 .stepButtonsContainer {
   margin-top: 1em;
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  //display: flex;
+  //flex-direction: row;
+  //justify-content: flex-end;
 
 }
 
 .stepButtons {
-  display: flex;
-  justify-content: space-evenly;
-  width: 300px;
+  //display: flex;
+  //justify-content: space-evenly;
+  //width: 300px;
+  float: right;
 }
 
 .customButton {
-
+  margin-right: 30px;
 }

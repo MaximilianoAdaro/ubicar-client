@@ -9,6 +9,8 @@ import { Select } from "../../forms/Select";
 import React from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
 
+import styles from "./Address.module.scss";
+
 const requiredMessage = "Este campo es requerido";
 
 const schema = yup.object({
@@ -39,77 +41,88 @@ export const Address = () => {
           <Col>
             <Form.Row>
               <Col>
-                <Form.Group>
-                  <Form.Label>{"Pais"}</Form.Label>
-                  <Form.Control type={"text"} value={"Argentina"} disabled />
-                </Form.Group>
+                <div className={styles.input}>
+                  <Form.Group>
+                    <Form.Label>{"Pais"}</Form.Label>
+                    <Form.Control type={"text"} value={"Argentina"} disabled />
+                  </Form.Group>
+                </div>
               </Col>
             </Form.Row>
 
             <Form.Row>
               <Col>
-                <Select
-                  name="state"
-                  placeholder="Provincia"
-                  options={states}
-                  onSelect={(id) =>
-                    dispatch(actions.createPropertyForm.setState(id))
-                  }
-                />
+                <div className={styles.input}>
+                  <Select
+                    name="state"
+                    placeholder="Provincia"
+                    options={states}
+                    onSelect={(id) =>
+                      dispatch(actions.createPropertyForm.setState(id))
+                    }
+                  />
+                </div>
               </Col>
             </Form.Row>
 
             <Form.Row>
               <Col>
-                <Select
-                  name="city"
-                  placeholder="Ciudad"
-                  options={cities}
-                  onSelect={(id) =>
-                    dispatch(actions.createPropertyForm.setCity(id))
-                  }
-                />
+                <div className={styles.input}>
+                  <Select
+                    name="city"
+                    placeholder="Ciudad"
+                    options={cities}
+                    onSelect={(id) =>
+                      dispatch(actions.createPropertyForm.setCity(id))
+                    }
+                  />
+                </div>
               </Col>
             </Form.Row>
 
             <Form.Row>
               <Col>
-                <Select
-                  name="town"
-                  placeholder="Barrio"
-                  options={towns}
-                  onSelect={(id) =>
-                    dispatch(actions.createPropertyForm.setTown(id))
-                  }
-                />
+                <div className={styles.input}>
+                  <Select
+                    name="town"
+                    placeholder="Barrio"
+                    options={towns}
+                    onSelect={(id) =>
+                      dispatch(actions.createPropertyForm.setTown(id))
+                    }
+                  />
+                </div>
               </Col>
             </Form.Row>
           </Col>
+          <Col xs={2} />
           <Col>
             <Form.Row>
               <Col>
-                <AddressTextInput
-                  name="postalCode"
-                  placeholder="Codigo postal"
-                />
+                <div className={styles.input}>
+                  <AddressTextInput name="postalCode" label="Codigo postal" />
+                </div>
               </Col>
             </Form.Row>
             <Form.Row>
               <Col>
-                <AddressTextInput name="street" placeholder="Calle" />
+                <div className={styles.input}>
+                  <AddressTextInput name="street" label="Calle" />
+                </div>
               </Col>
             </Form.Row>
             <Form.Row>
               <Col>
-                <AddressTextInput name="number" placeholder="Numero" />
+                <div className={styles.input}>
+                  <AddressTextInput name="number" label="Numero" />
+                </div>
               </Col>
             </Form.Row>
             <Form.Row>
               <Col>
-                <AddressTextInput
-                  name="department"
-                  placeholder="Departamento"
-                />
+                <div className={styles.input}>
+                  <AddressTextInput name="department" label="Departamento" />
+                </div>
               </Col>
             </Form.Row>
           </Col>

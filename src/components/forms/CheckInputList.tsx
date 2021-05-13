@@ -27,6 +27,7 @@ export const CheckInputList = ({
       {items.map(({ id, name }) => (
         <Form.Check
           key={id}
+          id={`${name}-check-${id}`}
           type={"checkbox"}
           label={name}
           value={id}

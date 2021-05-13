@@ -1,7 +1,9 @@
-import { Button, Col, Form } from "react-bootstrap";
-import React, { useRef, useState } from "react";
+import { Badge, Button, Col, Form } from "react-bootstrap";
+import { useRef, useState } from "react";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { selectYoutubeLinks } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import styles from "./VideoInput.module.scss";
+import { FiTrash2 } from "react-icons/all";
 
 export const VideoInput = () => {
   const [error, setError] = useState("");
@@ -23,14 +25,24 @@ export const VideoInput = () => {
         setError("El video no existe");
         return;
       }
+
+      const json = await res.json();
+      console.log(json);
       setError("");
       dispatch(actions.createPropertyForm.addYoutubeLink(link));
       ref.current.value = "";
     }
   };
+
+  const onRemoveVideo = (link: string) => {
+    dispatch(actions.createPropertyForm.removeYoutubeLink(link));
+  };
+
   return (
-    <>
-      <h4>Videos</h4>
+    <div>
+      <div className={styles.titleContainer}>
+        <h4>Videos</h4>
+      </div>
       <Form.Row>
         <Col>
           <Form.Group>
@@ -42,14 +54,28 @@ export const VideoInput = () => {
           </Form.Group>
         </Col>
         <Col>
-          <Button onClick={onAddVideo} type="button">
-            Agregar video
-          </Button>
+          <div className={styles.buttonContainer}>
+            <Button onClick={onAddVideo} type="button" variant={"outline-dark"}>
+              Agregar video
+            </Button>
+          </div>
         </Col>
       </Form.Row>
-      {youtubeLinks.map((link) => (
-        <div key={link}>{link}</div>
-      ))}
-    </>
+      <div className={styles.linksContainer}>
+        {youtubeLinks.map((link) => (
+          <Badge key={link} pill className={styles.link}>
+            <span>{link}</span>
+            <Badge
+              pill
+              variant={"danger"}
+              className={styles.deleteButton}
+              onClick={() => onRemoveVideo(link)}
+            >
+              <FiTrash2 />
+            </Badge>
+          </Badge>
+        ))}
+      </div>
+    </div>
   );
 };

@@ -162,6 +162,11 @@ export const createPropertyFormSlice = createSlice({
     setOperationType: (state, action: PayloadAction<string>) => {
       state.operationType = action.payload;
     },
+    removeYoutubeLink: (state, action: PayloadAction<string>) => {
+      state.youtubeLinks = state.youtubeLinks.filter(
+        (link) => link !== action.payload
+      );
+    },
   },
 });
 

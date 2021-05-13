@@ -9,16 +9,18 @@ import React from "react";
 
 interface TextInputProps<T> {
   name: Path<T>;
-  placeholder: string;
+  label?: string;
+  placeholder?: string;
   type?: "text" | "date";
   defaultValue?: string;
 }
 
 export const TextInput = <T,>({
   name,
-  placeholder,
+  label,
   type = "text",
   defaultValue = "",
+  placeholder = "",
 }: TextInputProps<T>) => {
   const { control } = useFormContext();
 
@@ -32,7 +34,7 @@ export const TextInput = <T,>({
   });
   return (
     <Form.Group>
-      <Form.Label>{placeholder}</Form.Label>
+      <Form.Label>{label}</Form.Label>
       <Form.Control
         type={type}
         placeholder={placeholder}
