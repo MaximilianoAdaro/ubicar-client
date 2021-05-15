@@ -10,12 +10,14 @@ export interface RadioInputListProps {
   items: RadioInputOption[];
   onSelected: (id: RadioInputOption["id"]) => void;
   name: string;
+  defaultValue?: RadioInputOption["id"];
 }
 
 export const RadioInput = ({
   items,
   name,
   onSelected,
+  defaultValue = items[0]?.id,
 }: RadioInputListProps) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { checked, value: id } = e.target;
@@ -32,6 +34,8 @@ export const RadioInput = ({
           value={id}
           name={name}
           onChange={handleChange}
+          defaultValue={defaultValue}
+          checked={id === defaultValue}
         />
       ))}
     </>

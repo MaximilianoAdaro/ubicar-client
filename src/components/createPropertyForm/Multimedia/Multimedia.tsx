@@ -13,6 +13,10 @@ export const Multimedia = () => {
     dispatch(actions.createPropertyForm.setStep(Step.Additional));
   };
 
+  const handlePreviousButton = () => {
+    dispatch(actions.createPropertyForm.setStep(Step.OptionalInfo));
+  };
+
   return (
     <Container>
       <Row>
@@ -29,7 +33,7 @@ export const Multimedia = () => {
           </div>
         </Col>
       </Row>
-      <StepButtons onNext={handleClick} />
+      <StepButtons onNext={handleClick} onPrevious={handlePreviousButton} />
     </Container>
   );
 };

@@ -10,12 +10,14 @@ interface CheckInputListProps {
   items: CheckOption[];
   onCheck: (id: CheckOption["id"]) => void;
   onUncheck: (id: CheckOption["id"]) => void;
+  defaultValues?: CheckOption["id"][];
 }
 
 export const CheckInputList = ({
   items,
   onCheck,
   onUncheck,
+  defaultValues = [],
 }: CheckInputListProps) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { checked, value: id } = e.target;
@@ -32,6 +34,7 @@ export const CheckInputList = ({
           label={name}
           value={id}
           onChange={handleChange}
+          checked={defaultValues?.includes(id)}
         />
       ))}
     </>

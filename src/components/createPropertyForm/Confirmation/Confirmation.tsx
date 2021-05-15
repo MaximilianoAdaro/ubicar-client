@@ -1,8 +1,9 @@
 import { Container } from "react-bootstrap";
-import { useAppSelector } from "../../../store";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   CreatePropertyState,
   selectCreatePropertyState,
+  Step,
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import { useMutation } from "react-query";
@@ -50,7 +51,7 @@ const createRequestData = (
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
   condition: data.operationType,
-  type: data.propertyType,
+  type: data.propertyType!,
   address: {
     town: data.addressDropdowns.town,
     department: data.address.department,
@@ -86,6 +87,7 @@ const useCreateProperty = () => {
 };
 
 export const Confirmation = () => {
+  const dispatch = useAppDispatch();
   const { mutate, error } = useCreateProperty();
   const createPropertyState = useAppSelector(selectCreatePropertyState);
   console.log({ error });
@@ -93,11 +95,16 @@ export const Confirmation = () => {
   const handleSend = () => {
     mutate(createRequestData(createPropertyState));
   };
+
+  const handlePreviousButton = () => {
+    dispatch(actions.createPropertyForm.setStep(Step.Additional));
+  };
+
   return (
     <Container>
       <Preview />
       <div className={styles.buttons}>
-        <StepButtons onNext={handleSend} />
+        <StepButtons onNext={handleSend} onPrevious={handlePreviousButton} />
       </div>
     </Container>
   );

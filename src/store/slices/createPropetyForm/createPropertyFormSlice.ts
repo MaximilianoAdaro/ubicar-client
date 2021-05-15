@@ -15,7 +15,7 @@ export interface CreatePropertyState {
   securities: number[];
   contacts: Contact[];
   openHouses: OpenHouse[];
-  propertyType: number;
+  propertyType: number | undefined;
   addressDropdowns: {
     state: number;
     city: number;
@@ -59,7 +59,7 @@ const initialState: CreatePropertyState = {
   securities: [],
   contacts: [],
   openHouses: [],
-  propertyType: 0,
+  propertyType: undefined,
   address: {
     street: "",
     number: "",
@@ -204,6 +204,9 @@ export const selectContacts = (state: RootState) =>
 
 export const selectPropertyTypes = (state: RootState) =>
   state.createPropertyForm.propertyType;
+
+export const selectOperationType = (state: RootState) =>
+  state.createPropertyForm.operationType;
 
 export const selectAddress = (state: RootState) =>
   state.createPropertyForm.address;

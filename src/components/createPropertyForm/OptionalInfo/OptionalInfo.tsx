@@ -1,4 +1,4 @@
-import { actions, useAppDispatch } from "../../../store";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { CheckInputList } from "../../forms/CheckInputList";
 import { Col, Container, Form } from "react-bootstrap";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
@@ -47,10 +47,21 @@ const materials = [
 ].map((name, id) => ({ name, id }));
 
 export const OptionalInfo = () => {
+  const defaults = useAppSelector(
+    ({ createPropertyForm: { amenities, securities, materials } }) => ({
+      amenities,
+      securities,
+      materials,
+    })
+  );
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
     dispatch(actions.createPropertyForm.setStep(Step.Multimedia));
+  };
+
+  const handlePreviousButton = () => {
+    dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
   };
 
   return (
@@ -70,6 +81,7 @@ export const OptionalInfo = () => {
                     onUncheck={(id) =>
                       dispatch(actions.createPropertyForm.removeAmenity(id))
                     }
+                    defaultValues={defaults.amenities}
                   />
                 </div>
               </div>
@@ -90,6 +102,7 @@ export const OptionalInfo = () => {
                     onUncheck={(id) =>
                       dispatch(actions.createPropertyForm.removeSecurity(id))
                     }
+                    defaultValues={defaults.securities}
                   />
                 </div>
               </div>
@@ -108,6 +121,7 @@ export const OptionalInfo = () => {
                     onUncheck={(id) =>
                       dispatch(actions.createPropertyForm.removeMaterial(id))
                     }
+                    defaultValues={defaults.materials}
                   />
                 </div>
               </div>
@@ -115,7 +129,11 @@ export const OptionalInfo = () => {
           </Form.Row>
         </Col>
       </Form.Row>
-      <StepButtons type={"submit"} onNext={handleClick} />
+      <StepButtons
+        type={"submit"}
+        onNext={handleClick}
+        onPrevious={handlePreviousButton}
+      />
     </Container>
   );
 };

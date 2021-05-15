@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { Col, Container, Form } from "react-bootstrap";
 import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
-import { actions, useAppDispatch } from "../../../store";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { Select } from "../../forms/Select";
 import React from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
@@ -25,6 +25,19 @@ export type AddressFormData = yup.InferType<typeof schema>;
 const AddressTextInput = createCustomTextInput<AddressFormData>();
 
 export const Address = () => {
+  const { defaults } = useAppSelector(
+    ({ createPropertyForm: { address, addressDropdowns } }) => ({
+      defaults: {
+        state: addressDropdowns.state,
+        city: addressDropdowns.city,
+        town: addressDropdowns.town,
+        postalCode: address.postalCode,
+        street: address.street,
+        number: address.number,
+        department: address.department,
+      },
+    })
+  );
   const dispatch = useAppDispatch();
   const customForm = useCustomForm<AddressFormData>({
     schema,
@@ -33,6 +46,15 @@ export const Address = () => {
       dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
     },
   });
+
+  const handlePreviousButton = async () => {
+    const isValid = await customForm.methods.trigger();
+    if (isValid) {
+      const data = customForm.methods.getValues();
+      dispatch(actions.createPropertyForm.setAddress(data));
+      dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
+    }
+  };
 
   return (
     <Container>
@@ -60,6 +82,7 @@ export const Address = () => {
                     onSelect={(id) =>
                       dispatch(actions.createPropertyForm.setState(id))
                     }
+                    defaultValue={defaults.state}
                   />
                 </div>
               </Col>
@@ -75,6 +98,7 @@ export const Address = () => {
                     onSelect={(id) =>
                       dispatch(actions.createPropertyForm.setCity(id))
                     }
+                    defaultValue={defaults.city}
                   />
                 </div>
               </Col>
@@ -90,6 +114,7 @@ export const Address = () => {
                     onSelect={(id) =>
                       dispatch(actions.createPropertyForm.setTown(id))
                     }
+                    defaultValue={defaults.town}
                   />
                 </div>
               </Col>
@@ -100,34 +125,50 @@ export const Address = () => {
             <Form.Row>
               <Col>
                 <div className={styles.input}>
-                  <AddressTextInput name="postalCode" label="Codigo postal" />
+                  <AddressTextInput
+                    name="postalCode"
+                    label="Codigo postal"
+                    defaultValue={defaults.postalCode}
+                  />
                 </div>
               </Col>
             </Form.Row>
             <Form.Row>
               <Col>
                 <div className={styles.input}>
-                  <AddressTextInput name="street" label="Calle" />
+                  <AddressTextInput
+                    name="street"
+                    label="Calle"
+                    defaultValue={defaults.street}
+                  />
                 </div>
               </Col>
             </Form.Row>
             <Form.Row>
               <Col>
                 <div className={styles.input}>
-                  <AddressTextInput name="number" label="Numero" />
+                  <AddressTextInput
+                    name="number"
+                    label="Numero"
+                    defaultValue={defaults.number}
+                  />
                 </div>
               </Col>
             </Form.Row>
             <Form.Row>
               <Col>
                 <div className={styles.input}>
-                  <AddressTextInput name="department" label="Departamento" />
+                  <AddressTextInput
+                    name="department"
+                    label="Departamento"
+                    defaultValue={defaults.department}
+                  />
                 </div>
               </Col>
             </Form.Row>
           </Col>
         </Form.Row>
-        <StepButtons type={"submit"} />
+        <StepButtons type={"submit"} onPrevious={handlePreviousButton} />
       </CustomForm>
     </Container>
   );

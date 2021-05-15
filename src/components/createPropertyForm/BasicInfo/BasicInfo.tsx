@@ -4,8 +4,11 @@ import * as yup from "yup";
 import { Col, Container, Form } from "react-bootstrap";
 import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import { RadioOption } from "../../forms/ComposedRadioInput";
-import { actions, useAppDispatch } from "../../../store";
-import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
+import {
+  selectOperationType,
+  Step,
+} from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { RadioInput, RadioInputOption } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
 import classNames from "classnames";
@@ -22,18 +25,18 @@ export type BasicInfoFormData = yup.InferType<typeof schema>;
 
 const BasicInfoTextInput = createCustomTextInput<BasicInfoFormData>();
 
-const operationTypes: RadioOption[] = [
-  {
-    value: "SALE",
-    displayName: "Venta",
-  },
-  {
-    value: "RENT",
-    displayName: "Alquiler",
-  },
-];
-
 export const BasicInfo = () => {
+  const {
+    defaultExpenses,
+    defaultPrice,
+    defaultTitle,
+    defaultType,
+  } = useAppSelector(({ createPropertyForm: { basicInfo, propertyType } }) => ({
+    defaultTitle: basicInfo.title,
+    defaultPrice: basicInfo.price,
+    defaultExpenses: basicInfo.expenses,
+    defaultType: propertyType,
+  }));
   const dispatch = useAppDispatch();
   const customForm = useCustomForm<BasicInfoFormData>({
     schema,
@@ -61,17 +64,30 @@ export const BasicInfo = () => {
           <Col>
             <Form.Row>
               <Col>
-                <BasicInfoTextInput name="title" label="Titulo" />
+                <BasicInfoTextInput
+                  name="title"
+                  label="Titulo"
+                  placeholder={"Increible casa en la playa..."}
+                  defaultValue={defaultTitle.toString()}
+                />
               </Col>
             </Form.Row>
             <Form.Row>
               <Col>
                 <Form.Row>
                   <Col>
-                    <BasicInfoTextInput name="price" label="Precio" />
+                    <BasicInfoTextInput
+                      name="price"
+                      label="Precio"
+                      defaultValue={defaultPrice.toString()}
+                    />
                   </Col>
                   <Col>
-                    <BasicInfoTextInput name="expenses" label="Expensas" />
+                    <BasicInfoTextInput
+                      name="expenses"
+                      label="Expensas"
+                      defaultValue={defaultExpenses.toString()}
+                    />
                   </Col>
                 </Form.Row>
               </Col>
@@ -94,6 +110,7 @@ export const BasicInfo = () => {
                     onSelected={(id) =>
                       dispatch(actions.createPropertyForm.setPropertyType(id))
                     }
+                    defaultValue={defaultType}
                   />
                 </div>
               </Col>
@@ -108,8 +125,20 @@ export const BasicInfo = () => {
   );
 };
 
+const operationTypes: RadioOption[] = [
+  {
+    value: "SALE",
+    displayName: "Venta",
+  },
+  {
+    value: "RENT",
+    displayName: "Alquiler",
+  },
+];
+
 const OperationTypeRadio = () => {
-  const [currentValue, setCurrentValue] = useState(operationTypes[0].value);
+  const defaultOperationType = useAppSelector(selectOperationType);
+  const [currentValue, setCurrentValue] = useState(defaultOperationType);
   const dispatch = useAppDispatch();
 
   const handleSelect = (value: string) => {

@@ -4,7 +4,7 @@ import { useCustomForm } from "../../../hooks/useCustomForm";
 import { createCustomTextInputArea } from "../../forms/customForm/TextAreaInput";
 import { CustomForm } from "../../forms/customForm/CustomForm";
 import { Col, Container, Form } from "react-bootstrap";
-import { actions, useAppDispatch } from "../../../store";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Additional.module.scss";
@@ -18,6 +18,15 @@ export type AdditionalFormData = yup.InferType<typeof schema>;
 const AdditionalTextArea = createCustomTextInputArea<AdditionalFormData>();
 
 export const Additional = () => {
+  const defaults = useAppSelector(
+    ({
+      createPropertyForm: {
+        additional: { description },
+      },
+    }) => ({
+      description,
+    })
+  );
   const dispatch = useAppDispatch();
   const customForm = useCustomForm<AdditionalFormData>({
     schema,
@@ -26,6 +35,11 @@ export const Additional = () => {
       dispatch(actions.createPropertyForm.setStep(Step.Confirmation));
     },
   });
+
+  const handlePreviousButton = () => {
+    dispatch(actions.createPropertyForm.setStep(Step.Multimedia));
+  };
+
   return (
     <Container>
       <CustomForm {...customForm}>
@@ -38,10 +52,13 @@ export const Additional = () => {
         <Form.Row>
           <Col className={styles.textContainer}>
             <h5>Contanos qué amas de esta propiedad, ¿qué la hace única...?</h5>
-            <AdditionalTextArea name="description" />
+            <AdditionalTextArea
+              name="description"
+              defaultValue={defaults.description}
+            />
           </Col>
         </Form.Row>
-        <StepButtons type={"submit"} />
+        <StepButtons type={"submit"} onPrevious={handlePreviousButton} />
       </CustomForm>
     </Container>
   );
