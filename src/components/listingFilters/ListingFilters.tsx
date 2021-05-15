@@ -2,6 +2,7 @@ import styles from './ListingFilters.module.scss'
 import {Row, Button, DropdownButton, Dropdown, Form, FormControl} from "react-bootstrap";
 import React from "react";
 
+
 export function ListingFilters() {
   return (
             <Row className={styles.OptionsFilters}>
@@ -9,16 +10,16 @@ export function ListingFilters() {
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                 </Form>
                 <DropdownButton title="En Venta" variant='dark' className={styles.dropdownButtons}>
-                    <Dropdown.Item href="#/action-1">En Venta</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">En Alquiler</Dropdown.Item>
+                    <Dropdown.Item href="" value='SALE'>En Venta</Dropdown.Item>
+                    <Dropdown.Item href="" value='RENT'>En Alquiler</Dropdown.Item>
                 </DropdownButton>
                 <DropdownButton title="Precio" variant='dark' className={styles.dropdownButtons}>
-                    <Dropdown.Item href="#/action-1">Orden ascendente</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Orden descendente</Dropdown.Item>
+                    <Dropdown.Item href="">Orden ascendente</Dropdown.Item>
+                    <Dropdown.Item href="">Orden descendente</Dropdown.Item>
                 </DropdownButton>
                 <DropdownButton title="Estilo" variant='dark' className={styles.dropdownButtons}>
-                    <Dropdown.Item href="#/action-1">Colonial</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Clasico</Dropdown.Item>
+                    <Dropdown.Item href="#/action-1" value='Colonial'>Colonial</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2" value='Clasico'>Clasico</Dropdown.Item>
                 </DropdownButton>
                 <DropdownButton title="Numero de habitaciones" variant='dark' className={styles.dropdownButtons}>
                     <Form>

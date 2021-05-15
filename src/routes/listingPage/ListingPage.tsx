@@ -1,7 +1,8 @@
 import styles from './ListingPage.module.scss'
 import { Col, Container, Row } from "react-bootstrap";
-import {ListingFilters} from "../../components/listingFilters";
-import {ListingHouse} from "../../components/listingHouse";
+import { ListingFilters } from "../../components/listingFilters";
+import { ListingHouse } from "../../components/listingHouse";
+import { useEffect, useState } from "react";
 
 
 const casa = {
@@ -67,6 +68,20 @@ const casa6 = {
 
 const casas = [casa,casa2,casa3,casa4,casa5,casa6]
 export function ListingPage() {
+
+    useEffect(() => {
+        fetchItems();
+    },[]);
+
+    const [items, setItems] = useState<any[]>([])
+
+
+    const fetchItems = async () => {
+        const data = await fetch('https://fakestoreapi.com/products?limit=10');
+        const items = await data.json();
+        setItems(items)
+    }
+
   return (
 
     <Container className={styles.listingPageContainer}>
@@ -82,6 +97,11 @@ export function ListingPage() {
                         )
                     )
                 }
+                {/*{items.map(item => (*/}
+                {/*    <h2>*/}
+                {/*        {item.id}. {item.title}*/}
+                {/*    </h2>)*/}
+                {/*)}*/}
             </Col>
         </Row>
     </Container>
