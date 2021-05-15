@@ -6,7 +6,7 @@ import { AdditionalFormData } from "../../../components/createPropertyForm/Addit
 import { AddressFormData } from "../../../components/createPropertyForm/Address/Address";
 
 // Define a type for the slice state
-interface CreatePropertyState {
+export interface CreatePropertyState {
   operationType: string;
   style: number;
   youtubeLinks: string[];
@@ -165,6 +165,11 @@ export const createPropertyFormSlice = createSlice({
     removeYoutubeLink: (state, action: PayloadAction<string>) => {
       state.youtubeLinks = state.youtubeLinks.filter(
         (link) => link !== action.payload
+      );
+    },
+    removeContact: (state, action: PayloadAction<string>) => {
+      state.contacts = state.contacts.filter(
+        ({ email }) => email !== action.payload
       );
     },
   },

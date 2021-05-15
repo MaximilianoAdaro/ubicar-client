@@ -1,14 +1,18 @@
 .checkContainer {
   display: grid;
-  grid-column-gap: 5px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  padding: 10px;
+  //grid-column-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  //padding: 10px;
   justify-items: start;
 
   & > * {
 
-    padding: 10px;
+    padding: 8px;
     font-size: 1em;
     margin-left: 10px;
   }
+}
+
+.constructionContainer {
+  margin-top: 20px;
 }

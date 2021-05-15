@@ -18,7 +18,6 @@ export const RadioInput = ({
   onSelected,
 }: RadioInputListProps) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    console.log(e);
     const { checked, value: id } = e.target;
     if (checked) onSelected(Number(id));
   };

@@ -3,9 +3,11 @@ import * as yup from "yup";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import { createCustomTextInputArea } from "../../forms/customForm/TextAreaInput";
 import { CustomForm } from "../../forms/customForm/CustomForm";
-import { Button, Container } from "react-bootstrap";
+import { Col, Container, Form } from "react-bootstrap";
 import { actions, useAppDispatch } from "../../../store";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { StepButtons } from "../StepButtons/StepButtons";
+import styles from "./Additional.module.scss";
 
 const schema = yup.object({
   description: yup.string(),
@@ -27,9 +29,19 @@ export const Additional = () => {
   return (
     <Container>
       <CustomForm {...customForm}>
-        <Contacts />
-        <AdditionalTextArea name="description" placeholder="Descripcion" />
-        <Button type={"submit"}>Siguiente</Button>
+        <Form.Row>
+          <Col>
+            <Contacts />
+          </Col>
+          <Col />
+        </Form.Row>
+        <Form.Row>
+          <Col className={styles.textContainer}>
+            <h5>Contanos qué amas de esta propiedad, ¿qué la hace única...?</h5>
+            <AdditionalTextArea name="description" />
+          </Col>
+        </Form.Row>
+        <StepButtons type={"submit"} />
       </CustomForm>
     </Container>
   );

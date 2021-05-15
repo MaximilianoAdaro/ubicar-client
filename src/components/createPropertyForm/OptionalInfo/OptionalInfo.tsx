@@ -56,7 +56,7 @@ export const OptionalInfo = () => {
   return (
     <Container>
       <Form.Row>
-        <Col>
+        <Col xs={7}>
           <Form.Row>
             <Col>
               <div>
@@ -97,7 +97,7 @@ export const OptionalInfo = () => {
           </Form.Row>
           <Form.Row>
             <Col>
-              <div>
+              <div className={styles.constructionContainer}>
                 <h3>Materiales de construccion</h3>
                 <div className={styles.checkContainer}>
                   <CheckInputList

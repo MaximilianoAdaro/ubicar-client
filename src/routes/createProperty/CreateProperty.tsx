@@ -69,6 +69,7 @@ const StepBar = ({ currentStep }: StepBarProps) => {
       <div className={styles.stepBarContainer}>
         {steps.map(({ displayName, step }) => (
           <div
+            key={step}
             className={styles.stepBarItem}
             onClick={() => dispatch(actions.createPropertyForm.setStep(step))}
           >

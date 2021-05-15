@@ -28,7 +28,7 @@ const operationTypes: RadioOption[] = [
     displayName: "Venta",
   },
   {
-    value: "RENTAL",
+    value: "RENT",
     displayName: "Alquiler",
   },
 ];
@@ -120,7 +120,11 @@ const OperationTypeRadio = () => {
     <>
       <div className={styles.itemContainer}>
         {operationTypes.map(({ displayName, value }) => (
-          <div className={styles.item} onClick={() => handleSelect(value)}>
+          <div
+            key={value}
+            className={styles.item}
+            onClick={() => handleSelect(value)}
+          >
             <span>{displayName}</span>
             <div
               className={classNames(styles.highlighter, {

@@ -58,7 +58,7 @@ export const Characteristics = () => {
                 <div className={styles.inputContainer}>
                   <CharacteristicsTextInput
                     name="coveredSurface"
-                    label="Superficie cubiertaf"
+                    label="Superficie cubierta"
                   />
                 </div>
               </Col>
@@ -143,7 +143,7 @@ export const Characteristics = () => {
                 <div className={styles.inputContainer}>
                   <CharacteristicsTextArea
                     name="parkDescription"
-                    placeholder={"Caracteristicas del parque"}
+                    label={"Caracteristicas del parque"}
                   />
                 </div>
               </Col>

@@ -9,16 +9,18 @@ import React from "react";
 
 interface TextInputAreaProps<T> {
   name: Path<T>;
-  placeholder: string;
+  label?: string;
+  placeholder?: string;
   type?: "text" | "date";
   defaultValue?: string;
 }
 
 export const TextAreaInput = <T,>({
   name,
-  placeholder,
+  label,
   type = "text",
   defaultValue = "",
+  placeholder = "",
 }: TextInputAreaProps<T>) => {
   const { control } = useFormContext();
 
@@ -32,7 +34,7 @@ export const TextAreaInput = <T,>({
   });
   return (
     <Form.Group>
-      <Form.Label>{placeholder}</Form.Label>
+      <Form.Label>{label}</Form.Label>
       <Form.Control
         as={"textarea"}
         type={type}
