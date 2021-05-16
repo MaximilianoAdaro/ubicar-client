@@ -1,6 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { SelectString } from "../../forms/SelectString";
 import Calendar from "react-calendar";
+import "./Calendar.scss";
 
 const hours = [
   "8:00",
