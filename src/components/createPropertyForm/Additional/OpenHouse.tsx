@@ -2,6 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { SelectString } from "../../forms/SelectString";
 import Calendar from "react-calendar";
 import "./Calendar.scss";
+import { useState } from "react";
 
 const hours = [
   "8:00",
@@ -13,11 +14,25 @@ const hours = [
 ].map((value) => ({ name: value, value }));
 
 export const OpenHouse = () => {
+  const [from, setFrom] = useState(hours[0].value);
+  const [to, setTo] = useState(hours[0].value);
+  const [date, setDate] = useState(new Date());
+
+  console.log({
+    from,
+    to,
+    date,
+  });
+
   return (
     <Container>
       <Row>
         <Col>
-          <Calendar />
+          <Calendar
+            onChange={(date) => {
+              if (date instanceof Date) setDate(date);
+            }}
+          />
         </Col>
         <Col>
           <Row>
@@ -25,7 +40,7 @@ export const OpenHouse = () => {
               name={"hours"}
               placeholder={"Desde"}
               options={hours}
-              onSelect={() => {}}
+              onSelect={(value) => setFrom(value)}
               // defaultValue={}
             />
           </Row>
@@ -35,7 +50,7 @@ export const OpenHouse = () => {
               name={"hours"}
               placeholder={"Hasta"}
               options={hours}
-              onSelect={() => {}}
+              onSelect={(value) => setTo(value)}
               // defaultValue={}
             />
           </Row>
