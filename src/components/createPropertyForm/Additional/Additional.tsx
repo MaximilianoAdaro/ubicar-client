@@ -8,6 +8,7 @@ import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Additional.module.scss";
+import {OpenHouse} from "./OpenHouse";
 
 const schema = yup.object({
   description: yup.string(),
@@ -47,7 +48,9 @@ export const Additional = () => {
           <Col>
             <Contacts />
           </Col>
-          <Col />
+          <Col>
+            <OpenHouse/>
+          </Col>
         </Form.Row>
         <Form.Row>
           <Col className={styles.textContainer}>
