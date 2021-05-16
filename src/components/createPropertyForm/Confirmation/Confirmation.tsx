@@ -21,25 +21,26 @@ const createRequestData = (
   condition: data.operationType,
   type: data.propertyType!,
   address: {
-    town: data.addressDropdowns.town,
+    town: data.addressDropdowns.town!,
     department: data.address.department,
-    number: data.address.number,
+    number: 0,
     postalCode: data.address.postalCode,
     street: data.address.street,
   },
-  coveredSurface: data.characteristics.coveredSurface,
-  totalSurface: data.characteristics.totalSurface,
+  environments: data.characteristics.environments,
+  coveredSquareFoot: data.characteristics.coveredSurface,
+  squareFoot: data.characteristics.totalSurface,
   levels: data.characteristics.floors,
   constructionYear: data.characteristics.constructionYear,
-  style: data.style,
+  style: data.style!,
   rooms: data.characteristics.rooms,
   fullBaths: data.characteristics.fullBaths,
   toilets: data.characteristics.toilets,
   amenities: data.amenities,
   materials: data.materials,
-  securities: data.securities,
+  security: data.securities,
   parkDescription: data.characteristics.parkDescription ?? "",
-  youtubeLinks: data.youtubeLinks,
+  links: data.youtubeLinks,
   contacts: data.contacts,
   openHouses: data.openHouses,
   comments: data.additional.description ?? "",
@@ -47,9 +48,8 @@ const createRequestData = (
 
 export const Confirmation = () => {
   const dispatch = useAppDispatch();
-  const { mutate, error } = useCreateProperty();
+  const { mutate } = useCreateProperty();
   const createPropertyState = useAppSelector(selectCreatePropertyState);
-  console.log({ error });
 
   const handleSend = () => {
     mutate(createRequestData(createPropertyState));

@@ -18,7 +18,7 @@ const schema = yup.object({
   totalSurface: yup.number().required(requiredMessage),
   coveredSurface: yup.number().required(requiredMessage),
   rooms: yup.number().positive().integer().required(requiredMessage),
-  ambiences: yup.number().positive().integer().required(requiredMessage),
+  environments: yup.number().positive().integer().required(requiredMessage),
   toilets: yup.number().positive().integer().required(requiredMessage),
   fullBaths: yup.number().positive().integer().required(requiredMessage),
   constructionYear: yup.number().required(requiredMessage),
@@ -40,7 +40,11 @@ export const Characteristics = () => {
   );
   const dispatch = useAppDispatch();
 
-  const { data: propertyStyles = propStyles } = useFetchPropertyStyles();
+  const { data: propertyStyles } = useFetchPropertyStyles();
+
+  if (defaults.style === undefined && propertyStyles?.[0].id !== undefined) {
+    dispatch(actions.createPropertyForm.setStyle(propertyStyles[0].id));
+  }
 
   const customForm = useCustomForm<CharacteristicsFormData>({
     schema,
@@ -90,9 +94,9 @@ export const Characteristics = () => {
               <Col>
                 <div className={styles.inputContainer}>
                   <CharacteristicsTextInput
-                    name="ambiences"
+                    name="environments"
                     label="Cantidad de ambientes"
-                    defaultValue={defaults.ambiences.toString()}
+                    defaultValue={defaults.environments.toString()}
                   />
                 </div>
               </Col>
@@ -157,15 +161,20 @@ export const Characteristics = () => {
             <Form.Row>
               <Col>
                 <div className={styles.inputContainer}>
-                  <Select
-                    name={"style"}
-                    placeholder={"Estilo"}
-                    options={propertyStyles}
-                    onSelect={(id) =>
-                      dispatch(actions.createPropertyForm.setStyle(id))
-                    }
-                    defaultValue={defaults.style}
-                  />
+                  {propertyStyles && (
+                    <Select
+                      name={"style"}
+                      placeholder={"Estilo"}
+                      options={propertyStyles.map(({ label, id }) => ({
+                        name: label,
+                        id,
+                      }))}
+                      onSelect={(id) =>
+                        dispatch(actions.createPropertyForm.setStyle(id))
+                      }
+                      defaultValue={defaults.style}
+                    />
+                  )}
                 </div>
               </Col>
             </Form.Row>
@@ -188,11 +197,3 @@ export const Characteristics = () => {
     </Container>
   );
 };
-
-const propStyles = [
-  "Colonial",
-  "askdf",
-  "adsgasgaf",
-  "sagasfko",
-  "aksdjnf",
-].map((displayName, id) => ({ displayName, id }));

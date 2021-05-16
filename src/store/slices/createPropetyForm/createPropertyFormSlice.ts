@@ -8,18 +8,18 @@ import { AddressFormData } from "../../../components/createPropertyForm/Address/
 // Define a type for the slice state
 export interface CreatePropertyState {
   operationType: string;
-  style: number;
+  style: number | undefined;
   youtubeLinks: string[];
   amenities: number[];
   materials: number[];
   securities: number[];
   contacts: Contact[];
   openHouses: OpenHouse[];
-  propertyType: number | undefined;
+  propertyType: string | undefined;
   addressDropdowns: {
-    state: number;
-    city: number;
-    town: number;
+    state: number | undefined;
+    city: number | undefined;
+    town: number | undefined;
   };
   address: AddressFormData;
   basicInfo: BasicInfoFormData;
@@ -52,7 +52,7 @@ interface Contact {
 // Define the initial state using that type
 const initialState: CreatePropertyState = {
   operationType: "SALE",
-  style: 0,
+  style: undefined,
   youtubeLinks: [],
   amenities: [],
   materials: [],
@@ -67,9 +67,9 @@ const initialState: CreatePropertyState = {
     department: "",
   },
   addressDropdowns: {
-    state: 0,
-    city: 0,
-    town: 0,
+    state: undefined,
+    city: undefined,
+    town: undefined,
   },
   basicInfo: {
     expenses: 0,
@@ -85,7 +85,7 @@ const initialState: CreatePropertyState = {
     rooms: 0,
     toilets: 0,
     totalSurface: 0,
-    ambiences: 0,
+    environments: 0,
   },
   additional: {
     description: "",
@@ -122,7 +122,7 @@ export const createPropertyFormSlice = createSlice({
     addOpenHouse: (state, action: PayloadAction<OpenHouse>) => {
       state.openHouses.push(action.payload);
     },
-    setPropertyType: (state, action: PayloadAction<number>) => {
+    setPropertyType: (state, action: PayloadAction<string>) => {
       state.propertyType = action.payload;
     },
     setAddress: (state, action: PayloadAction<AddressFormData>) => {
@@ -131,10 +131,10 @@ export const createPropertyFormSlice = createSlice({
     setState: (state, action: PayloadAction<number>) => {
       state.addressDropdowns.state = action.payload;
     },
-    setCity: (state, action: PayloadAction<number>) => {
+    setCity: (state, action: PayloadAction<number | undefined>) => {
       state.addressDropdowns.city = action.payload;
     },
-    setTown: (state, action: PayloadAction<number>) => {
+    setTown: (state, action: PayloadAction<number | undefined>) => {
       state.addressDropdowns.town = action.payload;
     },
     setBasicInfo: (state, action: PayloadAction<BasicInfoFormData>) => {

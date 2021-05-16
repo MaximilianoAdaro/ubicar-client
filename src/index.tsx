@@ -9,6 +9,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ ReactDOM.render(
             <App />
           </ErrorBoundary>
         </Provider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,

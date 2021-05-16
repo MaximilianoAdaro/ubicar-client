@@ -4,7 +4,7 @@ import { baseUrl } from "../config";
 
 interface Data {
   id: number;
-  displayName: string;
+  name: string;
 }
 
 export const useFetchStates = () => {
@@ -14,16 +14,28 @@ export const useFetchStates = () => {
   });
 };
 
-export const useFetchCities = (stateId: number) => {
-  return useQuery<Data[]>(["cities", stateId], async () => {
-    const { data } = await axios.get<Data[]>(`${baseUrl}/cities/${stateId}`);
-    return data;
-  });
+export const useFetchCities = (stateId: number | undefined) => {
+  return useQuery<Data[]>(
+    ["cities", stateId],
+    async () => {
+      const { data } = await axios.get<Data[]>(`${baseUrl}/cities/${stateId}`);
+      return data;
+    },
+    {
+      enabled: !!stateId,
+    }
+  );
 };
 
-export const useFetchTowns = (cityId: number) => {
-  return useQuery<Data[]>(["towns", cityId], async () => {
-    const { data } = await axios.get<Data[]>(`${baseUrl}/towns/${cityId}`);
-    return data;
-  });
+export const useFetchTowns = (cityId: number | undefined) => {
+  return useQuery<Data[]>(
+    ["towns", cityId],
+    async () => {
+      const { data } = await axios.get<Data[]>(`${baseUrl}/towns/${cityId}`);
+      return data;
+    },
+    {
+      enabled: !!cityId,
+    }
+  );
 };

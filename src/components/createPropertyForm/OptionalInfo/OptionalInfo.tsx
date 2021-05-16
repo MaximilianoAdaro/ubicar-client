@@ -11,46 +11,6 @@ import {
   useFetchPropertySecurities,
 } from "../../../api/property/propertyInfo";
 
-const dummyAmenities = [
-  "Lavaplatos",
-  "Lavarropas",
-  "Lavarropas",
-  "Secarropas",
-  "Secarropas",
-  "Secarropas",
-  "Secarropas",
-  "Aire Acondicionado",
-  "Aire Acondicionado",
-  "Aire Acondicionado",
-  "Aire Acondicionado",
-  "Calefaccion",
-  "Calefaccion",
-  "Calefaccion",
-  "Calefaccion",
-].map((name, id) => ({ name, id }));
-
-const dummySecurities = [
-  "Rejas",
-  "Rejas",
-  "Rejas",
-  "Camaras",
-  "Camaras",
-  "Camaras",
-  "Alarmas",
-  "Alarmas",
-  "Alarmas",
-].map((name, id) => ({ name, id }));
-
-const dummyMaterials = [
-  "Ladrillo",
-  "Ladrillo",
-  "Cemento",
-  "Cemento",
-  "Cemento",
-  "Chapa",
-  "Chapa",
-].map((name, id) => ({ name, id }));
-
 export const OptionalInfo = () => {
   const defaults = useAppSelector(
     ({ createPropertyForm: { amenities, securities, materials } }) => ({
@@ -61,9 +21,9 @@ export const OptionalInfo = () => {
   );
   const dispatch = useAppDispatch();
 
-  const { data: amenities = dummyAmenities } = useFetchPropertyAmenities();
-  const { data: securities = dummySecurities } = useFetchPropertySecurities();
-  const { data: materials = dummyMaterials } = useFetchPropertyMaterials();
+  const { data: amenities } = useFetchPropertyAmenities();
+  const { data: securities } = useFetchPropertySecurities();
+  const { data: materials } = useFetchPropertyMaterials();
 
   const handleClick = () => {
     dispatch(actions.createPropertyForm.setStep(Step.Multimedia));
@@ -82,16 +42,18 @@ export const OptionalInfo = () => {
               <div>
                 <h3>Servicio</h3>
                 <div className={styles.checkContainer}>
-                  <CheckInputList
-                    items={amenities}
-                    onCheck={(id) =>
-                      dispatch(actions.createPropertyForm.addAmenity(id))
-                    }
-                    onUncheck={(id) =>
-                      dispatch(actions.createPropertyForm.removeAmenity(id))
-                    }
-                    defaultValues={defaults.amenities}
-                  />
+                  {amenities && (
+                    <CheckInputList
+                      items={amenities}
+                      onCheck={(id) =>
+                        dispatch(actions.createPropertyForm.addAmenity(id))
+                      }
+                      onUncheck={(id) =>
+                        dispatch(actions.createPropertyForm.removeAmenity(id))
+                      }
+                      defaultValues={defaults.amenities}
+                    />
+                  )}
                 </div>
               </div>
             </Col>
@@ -103,16 +65,18 @@ export const OptionalInfo = () => {
               <div>
                 <h3>Medidas de seguridad</h3>
                 <div className={styles.checkContainer}>
-                  <CheckInputList
-                    items={securities}
-                    onCheck={(id) =>
-                      dispatch(actions.createPropertyForm.addSecurity(id))
-                    }
-                    onUncheck={(id) =>
-                      dispatch(actions.createPropertyForm.removeSecurity(id))
-                    }
-                    defaultValues={defaults.securities}
-                  />
+                  {securities && (
+                    <CheckInputList
+                      items={securities}
+                      onCheck={(id) =>
+                        dispatch(actions.createPropertyForm.addSecurity(id))
+                      }
+                      onUncheck={(id) =>
+                        dispatch(actions.createPropertyForm.removeSecurity(id))
+                      }
+                      defaultValues={defaults.securities}
+                    />
+                  )}
                 </div>
               </div>
             </Col>
@@ -122,16 +86,18 @@ export const OptionalInfo = () => {
               <div className={styles.constructionContainer}>
                 <h3>Materiales de construccion</h3>
                 <div className={styles.checkContainer}>
-                  <CheckInputList
-                    items={materials}
-                    onCheck={(id) =>
-                      dispatch(actions.createPropertyForm.addMaterial(id))
-                    }
-                    onUncheck={(id) =>
-                      dispatch(actions.createPropertyForm.removeMaterial(id))
-                    }
-                    defaultValues={defaults.materials}
-                  />
+                  {materials && (
+                    <CheckInputList
+                      items={materials}
+                      onCheck={(id) =>
+                        dispatch(actions.createPropertyForm.addMaterial(id))
+                      }
+                      onUncheck={(id) =>
+                        dispatch(actions.createPropertyForm.removeMaterial(id))
+                      }
+                      defaultValues={defaults.materials}
+                    />
+                  )}
                 </div>
               </div>
             </Col>

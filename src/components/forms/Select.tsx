@@ -11,7 +11,7 @@ interface SelectProps {
 
 interface SelectOption {
   id: number;
-  displayName: string;
+  name: string;
 }
 
 export const Select = ({
@@ -38,9 +38,9 @@ export const Select = ({
         onChange={handleChange}
         value={value}
       >
-        {options.map(({ displayName, id }) => (
+        {options.map(({ name, id }) => (
           <option key={id} value={id}>
-            {displayName}
+            {name}
           </option>
         ))}
       </Form.Control>

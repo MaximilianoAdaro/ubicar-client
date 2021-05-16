@@ -9,7 +9,7 @@ import {
   selectOperationType,
   Step,
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
-import { RadioInput, RadioInputOption } from "../../forms/RadioInput";
+import { RadioInput } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
 import classNames from "classnames";
 import { useState } from "react";
@@ -27,20 +27,19 @@ export type BasicInfoFormData = yup.InferType<typeof schema>;
 const BasicInfoTextInput = createCustomTextInput<BasicInfoFormData>();
 
 export const BasicInfo = () => {
-  const {
-    defaultExpenses,
-    defaultPrice,
-    defaultTitle,
-    defaultType,
-  } = useAppSelector(({ createPropertyForm: { basicInfo, propertyType } }) => ({
-    defaultTitle: basicInfo.title,
-    defaultPrice: basicInfo.price,
-    defaultExpenses: basicInfo.expenses,
-    defaultType: propertyType,
-  }));
+  const defaults = useAppSelector(
+    ({ createPropertyForm: { basicInfo, propertyType } }) => ({
+      ...basicInfo,
+      type: propertyType,
+    })
+  );
   const dispatch = useAppDispatch();
 
-  const { data: propertyTypes = radios } = useFetchPropertyTypes();
+  const { data: types } = useFetchPropertyTypes();
+
+  if (defaults.type === undefined && types?.[0] !== undefined) {
+    dispatch(actions.createPropertyForm.setPropertyType(types[0]));
+  }
 
   const customForm = useCustomForm<BasicInfoFormData>({
     schema,
@@ -72,7 +71,7 @@ export const BasicInfo = () => {
                   name="title"
                   label="Titulo"
                   placeholder={"Increible casa en la playa..."}
-                  defaultValue={defaultTitle.toString()}
+                  defaultValue={defaults.title}
                 />
               </Col>
             </Form.Row>
@@ -83,14 +82,14 @@ export const BasicInfo = () => {
                     <BasicInfoTextInput
                       name="price"
                       label="Precio"
-                      defaultValue={defaultPrice.toString()}
+                      defaultValue={defaults.price.toString()}
                     />
                   </Col>
                   <Col>
                     <BasicInfoTextInput
                       name="expenses"
                       label="Expensas"
-                      defaultValue={defaultExpenses.toString()}
+                      defaultValue={defaults.expenses.toString()}
                     />
                   </Col>
                 </Form.Row>
@@ -108,14 +107,19 @@ export const BasicInfo = () => {
             <Form.Row>
               <Col>
                 <div className={styles.typeContainer}>
-                  <RadioInput
-                    items={propertyTypes}
-                    name={"propertyType"}
-                    onSelected={(id) =>
-                      dispatch(actions.createPropertyForm.setPropertyType(id))
-                    }
-                    defaultValue={defaultType}
-                  />
+                  {types && (
+                    <RadioInput
+                      items={types}
+                      name={"propertyType"}
+                      onSelected={(label) => {
+                        if (types)
+                          dispatch(
+                            actions.createPropertyForm.setPropertyType(label)
+                          );
+                      }}
+                      defaultValue={defaults.type}
+                    />
+                  )}
                 </div>
               </Col>
             </Form.Row>
@@ -170,23 +174,3 @@ const OperationTypeRadio = () => {
     </>
   );
 };
-
-const radios: RadioInputOption[] = [
-  "Casa",
-  "Departamento",
-  "Cabaña",
-  "Quinta",
-  "Oficina",
-  "Edificio",
-  "Edificio",
-  "Edificio",
-  "Edificio",
-  "Edificio",
-  "Edificio",
-  "Edificio",
-  "Edificio",
-  "Edificio",
-  "Edificio",
-  "Cochera",
-  "Galpon",
-].map((name, id) => ({ label: name, id }));

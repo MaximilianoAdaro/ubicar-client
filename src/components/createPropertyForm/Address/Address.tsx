@@ -30,24 +30,27 @@ export type AddressFormData = yup.InferType<typeof schema>;
 const AddressTextInput = createCustomTextInput<AddressFormData>();
 
 export const Address = () => {
-  const { defaults } = useAppSelector(
+  const defaults = useAppSelector(
     ({ createPropertyForm: { address, addressDropdowns } }) => ({
-      defaults: {
-        state: addressDropdowns.state,
-        city: addressDropdowns.city,
-        town: addressDropdowns.town,
-        postalCode: address.postalCode,
-        street: address.street,
-        number: address.number,
-        department: address.department,
-      },
+      ...addressDropdowns,
+      ...address,
     })
   );
   const dispatch = useAppDispatch();
 
-  const { data: states = dummyStates } = useFetchStates();
-  const { data: cities = dummyCities } = useFetchCities(defaults.state);
-  const { data: towns = dumyTowns } = useFetchTowns(defaults.city);
+  const { data: states } = useFetchStates();
+  const { data: cities } = useFetchCities(defaults.state);
+  const { data: towns } = useFetchTowns(defaults.city);
+
+  if (defaults.state === undefined && states?.[0]?.id !== undefined) {
+    dispatch(actions.createPropertyForm.setState(states[0]?.id));
+  }
+  if (defaults.city === undefined && cities?.[0]?.id !== undefined) {
+    dispatch(actions.createPropertyForm.setCity(cities[0]?.id));
+  }
+  if (defaults.town === undefined && towns?.[0]?.id !== undefined) {
+    dispatch(actions.createPropertyForm.setTown(towns[0]?.id));
+  }
 
   const customForm = useCustomForm<AddressFormData>({
     schema,
@@ -85,15 +88,19 @@ export const Address = () => {
             <Form.Row>
               <Col>
                 <div className={styles.input}>
-                  <Select
-                    name="state"
-                    placeholder="Provincia"
-                    options={states}
-                    onSelect={(id) =>
-                      dispatch(actions.createPropertyForm.setState(id))
-                    }
-                    defaultValue={defaults.state}
-                  />
+                  {states && (
+                    <Select
+                      name="state"
+                      placeholder="Provincia"
+                      options={states}
+                      onSelect={(id) => {
+                        dispatch(actions.createPropertyForm.setState(id));
+                        dispatch(actions.createPropertyForm.setCity(undefined));
+                        dispatch(actions.createPropertyForm.setTown(undefined));
+                      }}
+                      defaultValue={defaults.state}
+                    />
+                  )}
                 </div>
               </Col>
             </Form.Row>
@@ -101,15 +108,18 @@ export const Address = () => {
             <Form.Row>
               <Col>
                 <div className={styles.input}>
-                  <Select
-                    name="city"
-                    placeholder="Ciudad"
-                    options={cities}
-                    onSelect={(id) =>
-                      dispatch(actions.createPropertyForm.setCity(id))
-                    }
-                    defaultValue={defaults.city}
-                  />
+                  {cities && (
+                    <Select
+                      name="city"
+                      placeholder="Ciudad"
+                      options={cities}
+                      onSelect={(id) => {
+                        dispatch(actions.createPropertyForm.setCity(id));
+                        dispatch(actions.createPropertyForm.setTown(undefined));
+                      }}
+                      defaultValue={defaults.city}
+                    />
+                  )}
                 </div>
               </Col>
             </Form.Row>
@@ -117,15 +127,17 @@ export const Address = () => {
             <Form.Row>
               <Col>
                 <div className={styles.input}>
-                  <Select
-                    name="town"
-                    placeholder="Barrio"
-                    options={towns}
-                    onSelect={(id) =>
-                      dispatch(actions.createPropertyForm.setTown(id))
-                    }
-                    defaultValue={defaults.town}
-                  />
+                  {towns && (
+                    <Select
+                      name="town"
+                      placeholder="Barrio"
+                      options={towns}
+                      onSelect={(id) =>
+                        dispatch(actions.createPropertyForm.setTown(id))
+                      }
+                      defaultValue={defaults.town}
+                    />
+                  )}
                 </div>
               </Col>
             </Form.Row>
@@ -183,29 +195,3 @@ export const Address = () => {
     </Container>
   );
 };
-
-const dummyStates = [
-  { id: 1, displayName: "Buenos Aires" },
-  { id: 2, displayName: "Salta - Jujuy" },
-  { id: 3, displayName: "Rosario" },
-  { id: 4, displayName: "Santa Fé" },
-  { id: 5, displayName: "Córdoba" },
-  { id: 6, displayName: "Mendoza" },
-  { id: 7, displayName: "Mar del Plata" },
-];
-
-const dummyCities = [
-  { id: 8, displayName: "Ciudad Autónoma de Buenos Aires", state_id: 1 },
-  { id: 9, displayName: "GBA Norte", state_id: 1 },
-  { id: 10, displayName: "GBA Sur", state_id: 1 },
-  { id: 11, displayName: "GBA Oeste", state_id: 1 },
-  { id: 12, displayName: "Provincia (Bs. As)", state_id: 1 },
-];
-
-const dumyTowns = [
-  { id: 13, displayName: "Belgrano", city_id: 8 },
-  { id: 14, displayName: "Caballito", city_id: 8 },
-  { id: 15, displayName: "Colegiales", city_id: 8 },
-  { id: 16, displayName: "Recoleta", city_id: 8 },
-  { id: 17, displayName: "Retiro", city_id: 8 },
-];

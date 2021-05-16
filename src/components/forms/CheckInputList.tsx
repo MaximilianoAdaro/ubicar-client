@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 
 interface CheckOption {
   id: number;
-  name: string;
+  label: string;
 }
 
 interface CheckInputListProps {
@@ -26,12 +26,12 @@ export const CheckInputList = ({
   };
   return (
     <>
-      {items.map(({ id, name }) => (
+      {items.map(({ id, label }) => (
         <Form.Check
           key={id}
-          id={`${name}-check-${id}`}
+          id={`${label}-check-${id}`}
           type={"checkbox"}
-          label={name}
+          label={label}
           value={id}
           onChange={handleChange}
           checked={defaultValues?.includes(id)}

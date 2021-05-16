@@ -2,37 +2,28 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { baseUrl } from "../config";
 
-interface PropertyType {
-  id: number;
-  label: string;
-}
-
 export const useFetchPropertyTypes = () => {
-  return useQuery<PropertyType[], Error>("propertyTypes", async () => {
-    const { data } = await axios.get<PropertyType[]>(
-      `${baseUrl}/propertyTypes`
-    );
+  return useQuery<string[], Error>("types", async () => {
+    const { data } = await axios.get<string[]>(`${baseUrl}/types`);
     return data;
   });
 };
 
 interface PropertyStyle {
   id: number;
-  displayName: string;
+  label: string;
 }
 
 export const useFetchPropertyStyles = () => {
-  return useQuery<PropertyStyle[], Error>("propertyStyles", async () => {
-    const { data } = await axios.get<PropertyStyle[]>(
-      `${baseUrl}/propertyStyles`
-    );
+  return useQuery<PropertyStyle[], Error>("styles", async () => {
+    const { data } = await axios.get<PropertyStyle[]>(`${baseUrl}/styles`);
     return data;
   });
 };
 
 interface PropertyOptionalInfo {
   id: number;
-  name: string;
+  label: string;
 }
 
 export const useFetchPropertyAmenities = () => {
