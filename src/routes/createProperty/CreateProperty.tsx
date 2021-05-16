@@ -13,6 +13,7 @@ import { Confirmation } from "../../components/createPropertyForm/Confirmation/C
 import styles from "./CreateProperty.module.scss";
 import classNames from "classnames";
 import { Container } from "react-bootstrap";
+import { getFeatureFlag } from "../../utils/utils";
 
 export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
@@ -64,14 +65,20 @@ interface StepBarProps {
 
 const StepBar = ({ currentStep }: StepBarProps) => {
   const dispatch = useAppDispatch();
+  const enableSuperUser = getFeatureFlag("enableSuperUser");
   return (
     <>
       <div className={styles.stepBarContainer}>
         {steps.map(({ displayName, step }) => (
           <div
             key={step}
-            className={styles.stepBarItem}
-            onClick={() => dispatch(actions.createPropertyForm.setStep(step))}
+            className={classNames(styles.stepBarItem, {
+              [styles.cursorPointer]: enableSuperUser,
+            })}
+            onClick={() => {
+              if (enableSuperUser)
+                dispatch(actions.createPropertyForm.setStep(step));
+            }}
           >
             <span>{displayName}</span>
             <div

@@ -10,6 +10,7 @@ import { Select } from "../../forms/Select";
 import { StepButtons } from "../StepButtons/StepButtons";
 import React from "react";
 import styles from "./Characteristics.module.scss";
+import { useFetchPropertyStyles } from "../../../api/property/propertyInfo";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -38,6 +39,9 @@ export const Characteristics = () => {
     })
   );
   const dispatch = useAppDispatch();
+
+  const { data: propertyStyles = propStyles } = useFetchPropertyStyles();
+
   const customForm = useCustomForm<CharacteristicsFormData>({
     schema,
     onSubmit: (data) => {
@@ -156,7 +160,7 @@ export const Characteristics = () => {
                   <Select
                     name={"style"}
                     placeholder={"Estilo"}
-                    options={propStyles}
+                    options={propertyStyles}
                     onSelect={(id) =>
                       dispatch(actions.createPropertyForm.setStyle(id))
                     }

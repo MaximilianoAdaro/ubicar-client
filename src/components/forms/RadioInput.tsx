@@ -34,7 +34,7 @@ export const RadioInput = ({
           value={id}
           name={name}
           onChange={handleChange}
-          defaultValue={defaultValue}
+          // defaultValue={defaultValue}
           checked={id === defaultValue}
         />
       ))}

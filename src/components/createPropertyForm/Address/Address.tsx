@@ -10,6 +10,11 @@ import React from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
 
 import styles from "./Address.module.scss";
+import {
+  useFetchCities,
+  useFetchStates,
+  useFetchTowns,
+} from "../../../api/property/address";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -39,6 +44,11 @@ export const Address = () => {
     })
   );
   const dispatch = useAppDispatch();
+
+  const { data: states = dummyStates } = useFetchStates();
+  const { data: cities = dummyCities } = useFetchCities(defaults.state);
+  const { data: towns = dumyTowns } = useFetchTowns(defaults.city);
+
   const customForm = useCustomForm<AddressFormData>({
     schema,
     onSubmit: (data) => {
@@ -174,7 +184,7 @@ export const Address = () => {
   );
 };
 
-const states = [
+const dummyStates = [
   { id: 1, displayName: "Buenos Aires" },
   { id: 2, displayName: "Salta - Jujuy" },
   { id: 3, displayName: "Rosario" },
@@ -184,7 +194,7 @@ const states = [
   { id: 7, displayName: "Mar del Plata" },
 ];
 
-const cities = [
+const dummyCities = [
   { id: 8, displayName: "Ciudad Autónoma de Buenos Aires", state_id: 1 },
   { id: 9, displayName: "GBA Norte", state_id: 1 },
   { id: 10, displayName: "GBA Sur", state_id: 1 },
@@ -192,7 +202,7 @@ const cities = [
   { id: 12, displayName: "Provincia (Bs. As)", state_id: 1 },
 ];
 
-const towns = [
+const dumyTowns = [
   { id: 13, displayName: "Belgrano", city_id: 8 },
   { id: 14, displayName: "Caballito", city_id: 8 },
   { id: 15, displayName: "Colegiales", city_id: 8 },

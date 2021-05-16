@@ -5,8 +5,13 @@ import { Step } from "../../../store/slices/createPropetyForm/createPropertyForm
 import styles from "./OptionalInfo.module.scss";
 import { StepButtons } from "../StepButtons/StepButtons";
 import React from "react";
+import {
+  useFetchPropertyAmenities,
+  useFetchPropertyMaterials,
+  useFetchPropertySecurities,
+} from "../../../api/property/propertyInfo";
 
-const amenities = [
+const dummyAmenities = [
   "Lavaplatos",
   "Lavarropas",
   "Lavarropas",
@@ -24,7 +29,7 @@ const amenities = [
   "Calefaccion",
 ].map((name, id) => ({ name, id }));
 
-const securities = [
+const dummySecurities = [
   "Rejas",
   "Rejas",
   "Rejas",
@@ -36,7 +41,7 @@ const securities = [
   "Alarmas",
 ].map((name, id) => ({ name, id }));
 
-const materials = [
+const dummyMaterials = [
   "Ladrillo",
   "Ladrillo",
   "Cemento",
@@ -55,6 +60,10 @@ export const OptionalInfo = () => {
     })
   );
   const dispatch = useAppDispatch();
+
+  const { data: amenities = dummyAmenities } = useFetchPropertyAmenities();
+  const { data: securities = dummySecurities } = useFetchPropertySecurities();
+  const { data: materials = dummyMaterials } = useFetchPropertyMaterials();
 
   const handleClick = () => {
     dispatch(actions.createPropertyForm.setStep(Step.Multimedia));

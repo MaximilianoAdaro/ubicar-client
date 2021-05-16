@@ -6,43 +6,11 @@ import {
   Step,
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
-import { useMutation } from "react-query";
-import axios from "axios";
 import styles from "./Confirmation.module.scss";
-
-type ID = number;
-type Time = string;
-
-interface CreatePropertyRequestData {
-  amenities: ID[];
-  openHouses: { day: Date; initialTime: Time; finalTime: Time }[];
-  rooms: number;
-  address: {
-    town: ID;
-    street: string;
-    postalCode: string;
-    department: string;
-    number: string;
-  };
-  comments: string;
-  constructionYear: number;
-  coveredSurface: number;
-  title: string;
-  type: ID;
-  securities: ID[];
-  youtubeLinks: string[];
-  toilets: number;
-  condition: string;
-  parkDescription: string;
-  materials: ID[];
-  price: number;
-  totalSurface: number;
-  style: ID;
-  fullBaths: number;
-  levels: number;
-  contacts: { label: string; email: string }[];
-  expenses: number;
-}
+import {
+  CreatePropertyRequestData,
+  useCreateProperty,
+} from "../../../api/property/create";
 
 const createRequestData = (
   data: CreatePropertyState
@@ -76,15 +44,6 @@ const createRequestData = (
   openHouses: data.openHouses,
   comments: data.additional.description ?? "",
 });
-
-const useCreateProperty = () => {
-  return useMutation<any, Error, CreatePropertyRequestData>((data) =>
-    axios.post<CreatePropertyRequestData, any>(
-      "http://localhost:8080/create",
-      data
-    )
-  );
-};
 
 export const Confirmation = () => {
   const dispatch = useAppDispatch();

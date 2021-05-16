@@ -14,6 +14,7 @@ import styles from "./BasicInfo.module.scss";
 import classNames from "classnames";
 import { useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
+import { useFetchPropertyTypes } from "../../../api/property/propertyInfo";
 
 const schema = yup.object({
   price: yup.number().positive().required(),
@@ -38,6 +39,9 @@ export const BasicInfo = () => {
     defaultType: propertyType,
   }));
   const dispatch = useAppDispatch();
+
+  const { data: propertyTypes = radios } = useFetchPropertyTypes();
+
   const customForm = useCustomForm<BasicInfoFormData>({
     schema,
     onSubmit: (data) => {
@@ -105,7 +109,7 @@ export const BasicInfo = () => {
               <Col>
                 <div className={styles.typeContainer}>
                   <RadioInput
-                    items={radios}
+                    items={propertyTypes}
                     name={"propertyType"}
                     onSelected={(id) =>
                       dispatch(actions.createPropertyForm.setPropertyType(id))
