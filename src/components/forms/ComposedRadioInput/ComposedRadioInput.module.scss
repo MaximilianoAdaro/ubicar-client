@@ -1,13 +1,6 @@
-@import "../../styles/common";
+@import "./src/styles/common";
 
-.title {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  margin-left: 0.5em;
-  color: $theme-goldish;
-}
-
-.stepBarContainer {
+.container {
   display: flex;
   width: auto;
   flex-wrap: nowrap;
@@ -16,7 +9,7 @@
 
 }
 
-.stepBarItem {
+.item {
   display: flex;
   flex-direction: column;
   height: 35px;
@@ -34,8 +27,4 @@
 
 .active {
   border-color: $theme-darker-blue;
-}
-
-.cursorPointer {
-  cursor: pointer;
 }
