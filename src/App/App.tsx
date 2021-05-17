@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch, Link } from "react-router-dom";
-import { CreateProperty } from "../routes";
+import { CreateProperty, ListingPage } from "../routes";
 import { Counter } from "../components/Counter";
 import styles from "./App.module.scss";
 import { Button } from "react-bootstrap";
@@ -10,7 +10,8 @@ export default function App() {
   return (
     <Switch>
       <Route exact path="/" component={WorkInProgress} />
-      <Route path="/create-property" component={CreateProperty} />
+      <Route exact path="/create-property" component={CreateProperty} />
+      <Route path='/listing-page' component={ListingPage}/>
       <Route component={ErrorPage} />
     </Switch>
   );
