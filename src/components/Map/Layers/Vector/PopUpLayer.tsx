@@ -8,7 +8,6 @@ import {MapBrowserEvent, Overlay} from "ol";
 
 import "./vector.scss"
 import {Circle, Fill, Stroke, Style, Text} from "ol/style";
-import {zoomToFeature} from "../../utils";
 
 class PopUpLayer extends React.PureComponent<TVectorLayerComponentProps> {
     layer: VectorLayer;
@@ -92,8 +91,6 @@ class PopUpLayer extends React.PureComponent<TVectorLayerComponentProps> {
 
             this.popup.setPosition(evt.coordinate)
             this.props.map.addOverlay(this.popup)
-            console.log(feature)
-            zoomToFeature(feature,this.props.map)
 
         } else {
             this.popup.setPosition(undefined)
