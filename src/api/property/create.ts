@@ -7,10 +7,10 @@ export type Time = string;
 
 export interface CreatePropertyRequestData {
   amenities: ID[];
-  openHouses: { day: Date; initialTime: Time; finalTime: Time }[];
+  openHouse: { day: Date; initialTime: Time; finalTime: Time }[];
   rooms: number;
   address: {
-    town: ID;
+    town_id: ID;
     street: string;
     postalCode: string;
     department: string;
@@ -18,7 +18,7 @@ export interface CreatePropertyRequestData {
   };
   environments: number;
   comments: string;
-  constructionYear: number;
+  constructionDate: number;
   coveredSquareFoot: number;
   title: string;
   type: string;

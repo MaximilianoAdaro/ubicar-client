@@ -21,9 +21,9 @@ const createRequestData = (
   condition: data.operationType,
   type: data.propertyType!,
   address: {
-    town: data.addressDropdowns.town!,
+    town_id: data.addressDropdowns.town!,
     department: data.address.department,
-    number: 0,
+    number: data.address.number,
     postalCode: data.address.postalCode,
     street: data.address.street,
   },
@@ -31,7 +31,7 @@ const createRequestData = (
   coveredSquareFoot: data.characteristics.coveredSurface,
   squareFoot: data.characteristics.totalSurface,
   levels: data.characteristics.floors,
-  constructionYear: data.characteristics.constructionYear,
+  constructionDate: data.characteristics.constructionYear,
   style: data.style!,
   rooms: data.characteristics.rooms,
   fullBaths: data.characteristics.fullBaths,
@@ -42,7 +42,7 @@ const createRequestData = (
   parkDescription: data.characteristics.parkDescription ?? "",
   links: data.youtubeLinks,
   contacts: data.contacts,
-  openHouses: data.openHouses,
+  openHouse: data.openHouses,
   comments: data.additional.description ?? "",
 });
 

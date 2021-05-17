@@ -62,7 +62,7 @@ const initialState: CreatePropertyState = {
   propertyType: undefined,
   address: {
     street: "",
-    number: "",
+    number: 0,
     postalCode: "",
     department: "",
   },

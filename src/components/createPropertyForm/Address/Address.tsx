@@ -21,7 +21,7 @@ const requiredMessage = "Este campo es requerido";
 const schema = yup.object({
   postalCode: yup.string().required(requiredMessage),
   street: yup.string().required(requiredMessage),
-  number: yup.string().required(requiredMessage),
+  number: yup.number().required(requiredMessage),
   department: yup.string().required(requiredMessage),
 });
 
@@ -172,7 +172,7 @@ export const Address = () => {
                   <AddressTextInput
                     name="number"
                     label="Numero"
-                    defaultValue={defaults.number}
+                    defaultValue={defaults.number.toString()}
                   />
                 </div>
               </Col>

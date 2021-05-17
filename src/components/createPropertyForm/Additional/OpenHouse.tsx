@@ -3,6 +3,8 @@ import { SelectString } from "../../forms/SelectString";
 import Calendar from "react-calendar";
 import "./Calendar.scss";
 import { useState } from "react";
+// @ts-ignore
+import TimePicker from "react-bootstrap-time-picker";
 
 const hours = [
   "8:00",
@@ -42,6 +44,16 @@ export const OpenHouse = () => {
               options={hours}
               onSelect={(value) => setFrom(value)}
               // defaultValue={}
+            />
+            <input
+              type={"time"}
+              onChange={(e) => console.log(e.target.value)}
+            />
+            <TimePicker
+              start="10:00"
+              end="21:00"
+              step={30}
+              onChange={(e: any) => console.log(e)}
             />
           </Row>
           <br />
