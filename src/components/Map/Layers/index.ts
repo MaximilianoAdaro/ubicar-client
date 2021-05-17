@@ -1,1 +1,1 @@
-export { VectorLayer } from "./Vector";
+export { PopUpLayer } from "./Vector";

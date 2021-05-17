@@ -1,1 +1,1 @@
-export { VectorLayerWithContext as VectorLayer } from "./vector";
+export { PopUpLayerWithContext as PopUpLayer } from "./PopUpLayer";
