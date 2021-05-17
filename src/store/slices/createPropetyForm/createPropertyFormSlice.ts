@@ -172,6 +172,11 @@ export const createPropertyFormSlice = createSlice({
         ({ email }) => email !== action.payload
       );
     },
+    removeOpenHouseDate: (state, action: PayloadAction<Date>) => {
+      state.openHouses = state.openHouses.filter(
+        ({ day }) => day !== action.payload
+      );
+    },
   },
 });
 
@@ -213,3 +218,6 @@ export const selectAddress = (state: RootState) =>
 
 export const selectCreatePropertyState = (state: RootState) =>
   state.createPropertyForm;
+
+export const selectOpenHouses = (state: RootState) =>
+  state.createPropertyForm.openHouses;

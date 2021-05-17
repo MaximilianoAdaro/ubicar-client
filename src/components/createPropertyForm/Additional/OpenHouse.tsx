@@ -1,10 +1,14 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { SelectString } from "../../forms/SelectString";
 import Calendar from "react-calendar";
 import "./Calendar.scss";
 import { useState } from "react";
 // @ts-ignore
 import TimePicker from "react-bootstrap-time-picker";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
+import { selectOpenHouses } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import styles from "./Contacts.module.scss";
+import { FiTrash2 } from "react-icons/all";
 
 const hours = [
   "8:00",
@@ -16,15 +20,24 @@ const hours = [
 ].map((value) => ({ name: value, value }));
 
 export const OpenHouse = () => {
-  const [from, setFrom] = useState(hours[0].value);
-  const [to, setTo] = useState(hours[0].value);
-  const [date, setDate] = useState(new Date());
+  const [initialTime, setInitialTime] = useState(hours[0].value);
+  const [finalTime, setFinalTime] = useState(hours[0].value);
+  const [day, setDay] = useState(new Date());
+  const dispatch = useAppDispatch();
+  const openHouseDates = useAppSelector(selectOpenHouses);
 
-  console.log({
-    from,
-    to,
-    date,
-  });
+  const onAddHouseDate = async () => {
+    if (openHouseDates.map((ohd) => ohd.day).includes(day)) {
+      return;
+    }
+    dispatch(
+      actions.createPropertyForm.addOpenHouse({ initialTime, finalTime, day })
+    );
+  };
+
+  const onRemoveOpenHouseDate = (day: Date) => {
+    dispatch(actions.createPropertyForm.removeOpenHouseDate(day));
+  };
 
   return (
     <Container>
@@ -32,7 +45,7 @@ export const OpenHouse = () => {
         <Col>
           <Calendar
             onChange={(date) => {
-              if (date instanceof Date) setDate(date);
+              if (date instanceof Date) setDay(date);
             }}
           />
         </Col>
@@ -42,18 +55,8 @@ export const OpenHouse = () => {
               name={"hours"}
               placeholder={"Desde"}
               options={hours}
-              onSelect={(value) => setFrom(value)}
+              onSelect={(value) => setInitialTime(value)}
               // defaultValue={}
-            />
-            <input
-              type={"time"}
-              onChange={(e) => console.log(e.target.value)}
-            />
-            <TimePicker
-              start="10:00"
-              end="21:00"
-              step={30}
-              onChange={(e: any) => console.log(e)}
             />
           </Row>
           <br />
@@ -62,10 +65,42 @@ export const OpenHouse = () => {
               name={"hours"}
               placeholder={"Hasta"}
               options={hours}
-              onSelect={(value) => setTo(value)}
+              onSelect={(value) => setFinalTime(value)}
               // defaultValue={}
             />
           </Row>
+          <Button
+            onClick={onAddHouseDate}
+            type="button"
+            variant={"outline-dark"}
+            className={styles.button}
+          >
+            +
+          </Button>
+        </Col>
+      </Row>
+      <Row className={styles.houseDatesCards}>
+        <Col>
+          {openHouseDates.map(({ initialTime, finalTime, day }) => (
+            <Card className={styles.card}>
+              <Card.Body className={styles.cardBody}>
+                <div className={styles.cardLeft}>
+                  <div>
+                    <Card.Title>{day.toString().slice(0, 15)}</Card.Title>
+                    <Card.Subtitle className="text-muted">
+                      Desde: {initialTime}
+                    </Card.Subtitle>
+                    <Card.Subtitle className="text-muted">
+                      Hasta: {finalTime}
+                    </Card.Subtitle>
+                  </div>
+                </div>
+              </Card.Body>
+              <div className={styles.deleteButtonContainer}>
+                <FiTrash2 onClick={() => onRemoveOpenHouseDate(day)} />
+              </div>
+            </Card>
+          ))}
         </Col>
       </Row>
     </Container>
