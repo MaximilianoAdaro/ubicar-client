@@ -42,7 +42,11 @@ const createRequestData = (
   parkDescription: data.characteristics.parkDescription ?? "",
   links: data.youtubeLinks,
   contacts: data.contacts,
-  openHouse: data.openHouses,
+  openHouse: data.openHouses.map(({ day, initialTime, finalTime }) => ({
+    day: new Date(day),
+    initialTime,
+    finalTime,
+  })),
   comments: data.additional.description ?? "",
 });
 

@@ -74,7 +74,7 @@ export const Contacts = () => {
           {contacts.map(({ label, email }) => (
             <Card key={email} className={styles.card}>
               <Card.Body className={styles.cardBody}>
-                <div className={styles.cardLeft}>
+                <div>
                   <div>
                     <Card.Title>{label}</Card.Title>
                     <Card.Subtitle className="text-muted">

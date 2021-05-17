@@ -1,20 +1,18 @@
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import { SelectString } from "../../forms/SelectString";
 import Calendar from "react-calendar";
 import "./Calendar.scss";
 import { useState } from "react";
-// @ts-ignore
-import TimePicker from "react-bootstrap-time-picker";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { selectOpenHouses } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
-import styles from "./Contacts.module.scss";
 import { FiTrash2 } from "react-icons/all";
+import styles from "./OpenHouse.module.scss";
 
 const hours = [
-  "8:00",
-  "8:30",
-  "9:00",
-  "9:30",
+  "08:00",
+  "08:30",
+  "09:00",
+  "09:30",
   "10:00",
   "10:30",
   "11:00",
@@ -38,6 +36,31 @@ const hours = [
   "20:00",
 ].map((value) => ({ name: value, value }));
 
+const months = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
+
+const printDate = (date: Date) => {
+  return (
+    date.getDate() +
+    " de " +
+    months[date.getMonth()] +
+    " de " +
+    date.getFullYear()
+  );
+};
+
 export const OpenHouse = () => {
   const [initialTime, setInitialTime] = useState(hours[0].value);
   const [finalTime, setFinalTime] = useState(hours[0].value);
@@ -47,26 +70,48 @@ export const OpenHouse = () => {
 
   const onAddHouseDate = async () => {
     if (
-      openHouseDates.map((ohd) => ohd.day.getDate()).includes(day.getDate()) &&
-      openHouseDates.map((ohd) => ohd.day.getMonth()).includes(day.getMonth())
+      openHouseDates.find(
+        (openHouse) =>
+          openHouse.day === day.toString() &&
+          openHouse.initialTime === initialTime &&
+          openHouse.finalTime === finalTime
+      )
     ) {
       return;
     }
 
     dispatch(
-      actions.createPropertyForm.addOpenHouse({ initialTime, finalTime, day })
+      actions.createPropertyForm.addOpenHouse({
+        initialTime,
+        finalTime,
+        day: day.toString(),
+      })
     );
   };
 
-  const onRemoveOpenHouseDate = (day: Date) => {
-    dispatch(actions.createPropertyForm.removeOpenHouseDate(day));
+  const onRemoveOpenHouseDate = (
+    day: string,
+    initialTime: string,
+    finalTime: string
+  ) => {
+    dispatch(
+      actions.createPropertyForm.removeOpenHouseDate({
+        day,
+        initialTime,
+        finalTime,
+      })
+    );
   };
 
   return (
-    <Container>
+    <>
+      <div className={styles.titleContainer}>
+        <h4>Open House</h4>
+      </div>
       <Row>
         <Col>
           <Calendar
+            defaultValue={day}
             onChange={(date) => {
               if (date instanceof Date) setDay(date);
             }}
@@ -79,6 +124,7 @@ export const OpenHouse = () => {
               placeholder={"Desde"}
               options={hours}
               onSelect={(value) => setInitialTime(value)}
+              defaultValue={initialTime}
             />
           </Row>
           <br />
@@ -88,7 +134,7 @@ export const OpenHouse = () => {
               placeholder={"Hasta"}
               options={hours}
               onSelect={(value) => setFinalTime(value)}
-              defaultValue={"13:00"}
+              defaultValue={finalTime}
             />
           </Row>
           <Button
@@ -101,30 +147,29 @@ export const OpenHouse = () => {
           </Button>
         </Col>
       </Row>
-      <Row className={styles.houseDatesCards}>
+      <Row className={styles.cardsContainer}>
         <Col>
           {openHouseDates.map(({ initialTime, finalTime, day }) => (
-            <Card className={styles.card}>
+            <Card key={day + initialTime + finalTime} className={styles.card}>
               <Card.Body className={styles.cardBody}>
-                <div className={styles.cardLeft}>
-                  <div>
-                    <Card.Title>{day.toString().slice(0, 15)}</Card.Title>
-                    <Card.Subtitle className="text-muted">
-                      Desde: {initialTime}
-                    </Card.Subtitle>
-                    <Card.Subtitle className="text-muted">
-                      Hasta: {finalTime}
-                    </Card.Subtitle>
-                  </div>
+                <div>
+                  <Card.Title>{printDate(new Date(day))}</Card.Title>
+                  <Card.Subtitle className="text-muted">
+                    Desde {initialTime} hasta {finalTime}
+                  </Card.Subtitle>
                 </div>
               </Card.Body>
               <div className={styles.deleteButtonContainer}>
-                <FiTrash2 onClick={() => onRemoveOpenHouseDate(day)} />
+                <FiTrash2
+                  onClick={() =>
+                    onRemoveOpenHouseDate(day, initialTime, finalTime)
+                  }
+                />
               </div>
             </Card>
           ))}
         </Col>
       </Row>
-    </Container>
+    </>
   );
 };
