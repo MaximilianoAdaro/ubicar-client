@@ -1,11 +1,24 @@
-.dropdownButtons {
-  margin-left: 15px;
-  margin-top: 5px;
-}
 .OptionsFilters {
-  padding:5px;
-  border-bottom: 3px solid black;
+  background: #cddde5;
+  padding: 0.5%;
+  align-items: center;
 }
-.searchBar {
-  margin-top: 5px;
+
+.searchBar{
+  background: white;
 }
+
+.filtersButton{
+  background: white;
+  margin-left: 1.5rem;
+  border: 1px #4a636c solid;
+  padding-left: 0.7em;
+  padding-right: 0.7em;
+  text-transform: none;
+  border-radius: 0;
+}
+
+.filtersButton:hover{
+ background: #f2f2f2;
+}
+
