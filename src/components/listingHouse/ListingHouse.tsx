@@ -1,17 +1,16 @@
 import styles from "./ListingHouse.module.scss";
-import { Col, Image, Row } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 
 export function ListingHouse(props: any) {
-  const toLowerCaseExceptFirst = (data: string) => {
-    return data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
-  };
+  // const toLowerCaseExceptFirst = (data: string) => {
+  //   return data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
+  // };
   const house = props.house;
-  // const houseAddress = house.address;
-  // const address = `${houseAddress.street} ${houseAddress.number}, ${houseAddress.town.name}, ${houseAddress.town.city.name}, ${houseAddress.postalCode}`;
-  const pluralize = require("pluralize");
-  const baths = pluralize("baño", house.toilettes);
+  const houseAddress = house.address;
+  // const pluralize = require("pluralize");
+  // const baths = pluralize("baño", house.fullBaths);
   return (
     <div>
       <Grid container className={styles.propertyList}>
@@ -28,33 +27,39 @@ export function ListingHouse(props: any) {
               <Grid>{house.title}</Grid>
             </Grid>
             <Grid container className={styles.housePriceCondition}>
-              <Grid xs={6}>
-                <Grid>${house.price.toLocaleString()}</Grid>
+              <Grid>
+                <Grid>
+                  ${house.price.toLocaleString()} | En{" "}
+                  {house.condition.toLowerCase()}
+                </Grid>
               </Grid>
-              <Grid xs={6}>
-                <Grid>In {toLowerCaseExceptFirst(house.condition)}</Grid>
-              </Grid>
+              {/*<Grid>*/}
+              {/*  <Grid>*/}
+              {/*    {house.type} in {house.condition.toLowerCase()}*/}
+              {/*  </Grid>*/}
+              {/*</Grid>*/}
             </Grid>
             <Grid container className={styles.houseInformation}>
-              <Grid xs={3}>{house.squareFoot} m²</Grid>
-              <Grid xs={3}>{house.rooms} hab.</Grid>
-              <Grid xs={3}>
-                {house.toilettes} {baths}
+              <Grid>
+                {house.squareFoot} m² |&nbsp; {house.rooms} hab. |&nbsp;{" "}
+                {house.fullBaths} baños
               </Grid>
+              {/*<Grid>{house.rooms} hab. |</Grid>*/}
+              {/*<Grid>{house.fullBaths} baños</Grid>*/}
             </Grid>
             <Grid>
-              {/*<Grid className={styles.propertyStreet}>*/}
-              {/*  {houseAddress.street} {houseAddress.number}*/}
-              {/*</Grid>*/}
               <Grid className={styles.propertyStreet}>
-                {house.street} {house.number}
+                {houseAddress.street} {houseAddress.number}
               </Grid>
-              {/*<Grid className={styles.propertyTownCity}>*/}
-              {/*  {houseAddress.town.name}, {houseAddress.town.city.name}*/}
+              {/*<Grid className={styles.propertyStreet}>*/}
+              {/*  {house.street} {house.number}*/}
               {/*</Grid>*/}
               <Grid className={styles.propertyTownCity}>
-                {house.town}, {house.city}
+                {houseAddress.town.name}, {houseAddress.town.city.name}
               </Grid>
+              {/*<Grid className={styles.propertyTownCity}>*/}
+              {/*  {house.town}, {house.city}*/}
+              {/*</Grid>*/}
             </Grid>
           </Grid>
         </Grid>
