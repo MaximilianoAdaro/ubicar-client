@@ -2,19 +2,18 @@ import styles from "./ListingFilters.module.scss";
 import React, { useState } from "react";
 import {
   Button,
-  FormControl,
   Grid,
   InputBase,
-  InputLabel,
-  MenuItem,
+  List,
+  ListItem,
   Popover,
   StylesProvider,
+  TextField,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import Select from "@material-ui/core/Select";
 
 export function ListingFilters() {
-  const [city, setCity] = useState("Belgrano");
+  // const [city, setCity] = useState();
   const [anchorSale, setAnchorSale] = useState(null);
   const [anchorPrice, setAnchorPrice] = useState(null);
   const [anchorRooms, setAnchorRooms] = useState(null);
@@ -42,7 +41,10 @@ export function ListingFilters() {
       <Grid container className={styles.OptionsFilters}>
         <Grid className={styles.searchBar}>
           <Grid>
-            <InputBase value={city} inputProps={{ "aria-label": "search" }} />
+            <InputBase
+              placeholder="Buscar"
+              inputProps={{ "aria-label": "search" }}
+            />
             <SearchIcon />
           </Grid>
         </Grid>
@@ -106,13 +108,10 @@ export function ListingFilters() {
         }}
         onClose={() => setAnchorSale(null)}
       >
-        <FormControl>
-          <InputLabel id="sale-select">En Venta</InputLabel>
-          <Select labelId="sale-select">
-            <MenuItem>En Venta</MenuItem>
-            <MenuItem>En Alquiler</MenuItem>
-          </Select>
-        </FormControl>
+        <List>
+          <ListItem>En Venta</ListItem>
+          <ListItem>En Alquiler</ListItem>
+        </List>
       </Popover>
       <Popover
         open={Boolean(anchorPrice)}
@@ -127,11 +126,21 @@ export function ListingFilters() {
         }}
         onClose={() => setAnchorPrice(null)}
       >
+        <Grid className={styles.popoversTitles}>Precio</Grid>
         <Grid container className={styles.price}>
-          <label>Desde</label>
-          <input />
-          <label>Hasta</label>
-          <input />
+          <TextField
+            placeholder="Min"
+            className={styles.priceMinInp}
+            variant="outlined"
+            size="small"
+          />
+
+          <TextField
+            placeholder="Max"
+            className={styles.priceMaxInp}
+            variant="outlined"
+            size="small"
+          />
         </Grid>
       </Popover>
       <Popover
@@ -147,7 +156,13 @@ export function ListingFilters() {
         }}
         onClose={() => setAnchorRooms(null)}
       >
-        Rooms
+        <Grid className={styles.popoversTitles}>Habitaciones</Grid>
+        <Grid className={styles.roomsBathsButtons}>
+          <Button>1+</Button>
+          <Button>2+</Button>
+          <Button>3+</Button>
+          <Button>4+</Button>
+        </Grid>
       </Popover>
       <Popover
         open={Boolean(anchorBaths)}
@@ -162,7 +177,13 @@ export function ListingFilters() {
         }}
         onClose={() => setAnchorBaths(null)}
       >
-        Baños
+        <Grid className={styles.popoversTitles}>Baños</Grid>
+        <Grid className={styles.roomsBathsButtons}>
+          <Button>1+</Button>
+          <Button>2+</Button>
+          <Button>3+</Button>
+          <Button>4+</Button>
+        </Grid>
       </Popover>
       <Popover
         open={Boolean(anchorSqMts)}
@@ -177,8 +198,20 @@ export function ListingFilters() {
         }}
         onClose={() => setAnchorSqMts(null)}
       >
-        <Grid className={styles.sqtMtsPopover}>
-          From *label* - Hasta *label
+        <Grid className={styles.popoversTitles}>Metros Cuadrados</Grid>
+        <Grid container className={styles.price}>
+          <TextField
+            placeholder="Min"
+            className={styles.priceMinInp}
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            placeholder="Max"
+            className={styles.priceMaxInp}
+            variant="outlined"
+            size="small"
+          />
         </Grid>
       </Popover>
       {/*<Popover open={}>Otros</Popover>*/}
