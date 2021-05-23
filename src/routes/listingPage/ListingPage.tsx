@@ -45,10 +45,9 @@ import { ListingFilters } from "../../components/listingFilters";
 // const casas = [casa1, casa2, casa3];
 export function ListingPage() {
   const { data, status } = useQuery("propertyPreview", async () => {
-    const { data } = await axios.get("/preview?page=1");
+    const { data } = await axios.get("/preview?page=0");
     return data;
   });
-
   console.log(data);
 
   return (
@@ -58,11 +57,11 @@ export function ListingPage() {
         <Grid item xl={9} sm={8}>
           <h1>Mapa</h1>
         </Grid>
-        <Grid item xl={3} sm={4}>
-          {status == "error" && (
+        <Grid item xl={3} sm={4} className={styles.propertyList}>
+          {status === "error" && (
             <h1>There was an error retrieving the properties</h1>
           )}
-          {status == "success" &&
+          {status === "success" &&
             data.content.map((casa: any) => (
               <ListingHouse key={casa.id} house={casa} />
             ))}
