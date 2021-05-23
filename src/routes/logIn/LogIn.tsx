@@ -6,6 +6,22 @@ import { HookFormTextField } from "../../components/common/forms/HookFormTextFie
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import styles from "./LogIn.module.scss";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
+import {useEffect, useState, memo} from "react";
+
+import {
+  Alert,
+  Button,
+  Nav,
+  Navbar,
+  NavItem,
+  NavbarBrand,
+} from 'reactstrap';
+import { compose } from 'redux';
+import firebase from 'firebase';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import axios from "axios";
+import {baseUrl} from "../../api/config";
+import GoogleLogin from "./GoogleLogin";
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -36,6 +52,7 @@ export const LogIn = () => {
           <Grid container xs={12} spacing={3}>
             <Grid xs />
             <Grid xs={4} className={styles.inputs}>
+              <GoogleLogin/>
               <div className={styles.inputContainer}>
                 <HookFormTextField
                   label={"Email"}
