@@ -3,10 +3,10 @@ import { CreateProperty, ListingPage, LogIn, SignUp } from "../routes";
 import styles from "./App.module.scss";
 import { ErrorPage } from "../components/ErrorPage";
 import { Button } from "@material-ui/core";
-import {initialize} from "../routes/logIn/FirebaseInitialize";
+import { initialize } from "../config/FirebaseInitialize";
 import firebase from "firebase";
 
-initialize()
+initialize();
 
 export default function App() {
   return (
@@ -22,7 +22,7 @@ export default function App() {
 }
 
 function handleLogoutGoogle() {
-    firebase.auth().signOut();
+  firebase.auth().signOut();
 }
 
 const WorkInProgress = () => (
@@ -51,7 +51,9 @@ const WorkInProgress = () => (
     </Link>
     <br />
     <Link
-      component={(props) => <Button variant={"outlined"} {...props} onClick={handleLogoutGoogle}/>}
+      component={(props) => (
+        <Button variant={"outlined"} {...props} onClick={handleLogoutGoogle} />
+      )}
       to={"/log-in"}
     >
       Log out Google
