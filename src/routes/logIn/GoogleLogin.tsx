@@ -24,24 +24,17 @@ export function GoogleLogin() {
     // componentDidMount
     const unregisterAuthObserver = firebase
       .auth()
-      .onAuthStateChanged((firebaseUser) => {
-        if (firebaseUser !== null) {
-          firebase
-            .auth()
-            .currentUser.getIdToken(true)
-            .then((idToken) => {
-              const config = { headers: { Authorization: idToken } };
-              axios
-                .post(
-                  `${baseUrl}/google-login`,
-                  { name: firebaseUser.displayName, email: firebaseUser.email },
-                  config
-                )
-                .then(() => {
-                  history.push("/");
-                });
-            });
-        }
+      .onAuthStateChanged(async (firebaseUser) => {
+        if (firebaseUser === null) return;
+
+        const idToken = await firebaseUser.getIdToken(true);
+
+        const config = { headers: { Authorization: idToken } };
+        const { data } = await axios.post(
+          `${baseUrl}/google-login`,
+          { name: firebaseUser.displayName, email: firebaseUser.email },
+          config
+        );
       });
 
     // componentWillUnmount
