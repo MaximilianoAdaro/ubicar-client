@@ -10,17 +10,22 @@ import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { configureAxios } from "./api/config";
+import { initializeFirebase } from "./config/FirebaseInitialize";
 
 const queryClient = new QueryClient();
+
+configureAxios();
+initializeFirebase();
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          <ErrorBoundary fallback={<ErrorPage />}>
-            <App />
-          </ErrorBoundary>
+          {/*<ErrorBoundary fallback={<ErrorPage />}>*/}
+          <App />
+          {/*</ErrorBoundary>*/}
         </Provider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
