@@ -8,6 +8,9 @@ import { HookFormDatePicker } from "../../components/common/forms/HookFormDatePi
 import { HookFormSelect } from "../../components/common/forms/HookFormSelect";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
+import { useSignUp } from "../../api/auth";
+import { useHistory } from "react-router-dom";
+import { urls } from "../../constants";
 
 const schema = yup.object({
   firstName: yup.string().required(),
@@ -27,7 +30,7 @@ const schema = yup.object({
 
 type SignUpFormData = yup.InferType<typeof schema>;
 
-const items = [
+const userTypes = [
   { value: "normal", label: "Comprador/Vendedor" },
   { value: "inspector", label: "Inspector" },
   { value: "investor", label: "Inversor" },
@@ -35,13 +38,20 @@ const items = [
 ];
 
 export const SignUp = () => {
+  const history = useHistory();
+
+  const { mutateAsync } = useSignUp();
+
   const { control, handleSubmit } = useForm<SignUpFormData>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await mutateAsync(data);
+      history.push(urls.logIn);
+    } catch (e) {}
   });
 
   return (
@@ -95,7 +105,7 @@ export const SignUp = () => {
                 <div className={styles.inputContainer}>
                   <HookFormSelect
                     name={"userType"}
-                    items={items}
+                    items={userTypes}
                     control={control}
                   />
                 </div>
