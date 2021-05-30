@@ -29,7 +29,7 @@ const SelectInput = <T,>({
   } = useController({
     name,
     control,
-    defaultValue: options?.[0]?.value,
+    defaultValue: options?.[0]?.value as any,
   });
   return (
     <Form.Group>
@@ -54,6 +54,7 @@ const SelectInput = <T,>({
   );
 };
 
-export const createCustomSelectInput = <T,>() => (
-  props: SelectInputProps<T>
-) => <SelectInput<T> {...props} />;
+export const createCustomSelectInput =
+  <T,>() =>
+  (props: SelectInputProps<T>) =>
+    <SelectInput<T> {...props} />;
