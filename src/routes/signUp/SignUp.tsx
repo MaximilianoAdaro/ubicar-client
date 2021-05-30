@@ -64,8 +64,7 @@ export const SignUp = () => {
                 Registrate
               </Typography>
             </Grid>
-            <Grid container xs={12} spacing={3} className={styles.inputs}>
-              <Grid xs />
+            <div className={styles.inputs}>
               <Grid xs={4} className={styles.column}>
                 <Typography variant={"h5"}>Datos personales</Typography>
                 <div className={styles.inputContainer}>
@@ -82,7 +81,6 @@ export const SignUp = () => {
                     control={control}
                   />
                 </div>
-                <Grid xs={3} />
                 <Grid xs className={styles.emailAndBirthday}>
                   <div className={styles.inputContainer}>
                     <HookFormTextField
@@ -100,6 +98,11 @@ export const SignUp = () => {
                   </div>
                 </Grid>
               </Grid>
+              <div
+                style={{
+                  width: "2em",
+                }}
+              />
               <Grid xs={4} className={styles.column}>
                 <Typography variant={"h5"}>Tipo de usuario</Typography>
                 <div className={styles.inputContainer}>
@@ -127,12 +130,12 @@ export const SignUp = () => {
                   </div>
                 </div>
               </Grid>
-            </Grid>
-            <Grid container xs={12} className={styles.gridButton}>
+            </div>
+            <div className={styles.gridButton}>
               <div className={styles.buttonContainer}>
                 <RoundedButton type={"submit"}>Crear cuenta</RoundedButton>
               </div>
-            </Grid>
+            </div>
           </Grid>
         </form>
       </Container>
