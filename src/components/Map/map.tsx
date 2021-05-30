@@ -16,6 +16,9 @@ import {
     RailwayLayer, HospitalLayer, PoliceLayer, PrisonLayer, IndustrialAreaLayers
 } from "./Layers/Vector";
 import {XYZ} from "ol/source";
+import {MapView} from "../../store/slices/map/mapSlice";
+import {FullScreen, defaults as defaultControls} from 'ol/control';
+
 
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
@@ -25,15 +28,17 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
     check1BoxRef: React.RefObject<HTMLInputElement>;
     check2BoxRef: React.RefObject<HTMLInputElement>;
     state: TMapState = {};
-
+    zoom:number;
+    view:MapView;
 
     constructor(props: TMapProps) {
         super(props);
         this.mapDivRef = React.createRef<HTMLDivElement>();
-        this.check1BoxRef = React.createRef<HTMLInputElement>()
-        this.check2BoxRef = React.createRef<HTMLInputElement>()
+        this.check1BoxRef = React.createRef<HTMLInputElement>();
+        this.check2BoxRef = React.createRef<HTMLInputElement>();
+        this.zoom=props.zoom;
+        this.view=props.view;
     }
-
     componentDidMount() {
         if (!this.mapDivRef.current) {
             return;
@@ -51,11 +56,24 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
 
 
             ],
+            controls: defaultControls().extend([
+                new FullScreen({
+                    source: 'fullscreen',
+                }) ]),
             view: new View({
-                center: [-6506056.858887733,
-                    -4114291.375798843],
-                zoom: 10,
+                center: [this.view.longitude,this.view.latitude],
+                zoom: this.zoom,
             }),
+        });
+
+        let currZoom = map.getView().getZoom();
+        map.on('moveend', function() {
+            let newZoom = map.getView().getZoom();
+            if (currZoom != newZoom) {
+                if (newZoom != null) {
+
+                }
+            }
         });
 
 

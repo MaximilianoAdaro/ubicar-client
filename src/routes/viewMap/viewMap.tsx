@@ -1,13 +1,16 @@
 import React from "react";
-import {Container} from "react-bootstrap";
 import {MapComponent} from "../../components/Map/map"
+import {selectView, selectZoom} from "../../store/slices/map/mapSlice";
+import {useAppSelector} from "../../store";
 
 
-export const viewMap = () => {
+export const ViewMap = () => {
+    const zoom = useAppSelector(selectZoom)
+    const view = useAppSelector(selectView)
+
+    console.log(view,zoom)
     return (
-        <Container>
-            <MapComponent>
+            <MapComponent zoom={zoom} view={view}>
             </MapComponent>
-        </Container>
     );
 };

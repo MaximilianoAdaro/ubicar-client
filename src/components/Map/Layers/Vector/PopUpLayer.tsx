@@ -87,7 +87,7 @@ class PopUpLayer extends React.PureComponent<TVectorLayerComponentProps> {
         if (feature) {
 
             console.log(this.popUpContentRef)
-            this.popUpContentRef.innerHTML = '<p>' + feature.get('gna') + '</p>';
+            this.popUpContentRef.innerHTML = '<p>' + feature.get('fna') + '</p>';
 
             this.popup.setPosition(evt.coordinate)
             this.props.map.addOverlay(this.popup)
