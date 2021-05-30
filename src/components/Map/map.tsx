@@ -69,9 +69,9 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
         let currZoom = map.getView().getZoom();
         map.on('moveend', function() {
             let newZoom = map.getView().getZoom();
-            if (currZoom != newZoom) {
-                if (newZoom != null) {
-
+            if (currZoom !== newZoom) {
+                if (newZoom !== null) {
+                    //TODO UPDATE DATA
                 }
             }
         });

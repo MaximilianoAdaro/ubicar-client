@@ -47,7 +47,7 @@ class RutasLayer extends React.PureComponent<TVectorLayerComponentProps> {
     }
 
     componentDidUpdate(prevProps: TVectorLayerComponentProps) {
-        if (prevProps.features != this.props.features) {
+        if (prevProps.features !== this.props.features) {
             this.source.clear();
             if (this.props.features) {
                 this.source.addFeatures(this.props.features);

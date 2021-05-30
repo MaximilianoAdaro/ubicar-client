@@ -5,7 +5,6 @@ import { ErrorPage } from "../components/ErrorPage";
 import { Button } from "@material-ui/core";
 import { initialize } from "../config/FirebaseInitialize";
 import firebase from "firebase";
-import {ViewMap} from "../routes/viewMap/viewMap";
 
 initialize();
 
@@ -19,7 +18,6 @@ export default function App() {
       <Route exact path="/listing-page" component={ListingPage} />
       <Route exact path="/sign-up" component={SignUp} />
       <Route exact path="/log-in" component={LogIn} />
-      <Route exact path="/map" component={ViewMap}/>
       <Route component={ErrorPage} />
     </Switch>
   );
