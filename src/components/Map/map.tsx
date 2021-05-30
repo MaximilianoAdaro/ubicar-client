@@ -5,7 +5,6 @@ import TileLayer from "ol/layer/Tile";
 import {TMapProps, IMapContext, TMapState} from "./maptypes";
 import "ol/ol.css";
 import "./map.css"
-import XYZSource from 'ol/source/XYZ'
 import {
     AirportLayer,
     FireLayer,
@@ -16,7 +15,6 @@ import {
     SchoolLayer,
     RailwayLayer, HospitalLayer, PoliceLayer, PrisonLayer, IndustrialAreaLayers
 } from "./Layers/Vector";
-import TileSource from "ol/source/Tile";
 import {XYZ} from "ol/source";
 
 
