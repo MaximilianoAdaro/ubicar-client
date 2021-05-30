@@ -17,7 +17,7 @@ export function ListingPage() {
     <div>
       <ListingFilters />
       <Grid container className={styles.mapAndProperties}>
-        <Grid item xl={9} sm={8}>
+        <Grid item xl={9} sm={8} className={styles.map}>
           <MapComponent zoom={zoom} view={view} />
         </Grid>
         <Grid item xl={3} sm={4} className={styles.propertyList}>
