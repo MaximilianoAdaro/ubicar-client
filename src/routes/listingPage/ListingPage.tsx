@@ -1,16 +1,12 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { ListingHouse } from "../../components/listingHouse";
-import { useQuery } from "react-query";
-import axios from "axios";
 import styles from "./ListingPage.module.scss";
 import { ListingFilters } from "../../components/listingFilters";
+import {useFetchProperties} from "../../api/listingProperties/houses";
 
 export function ListingPage() {
-  const { data, status } = useQuery("propertyPreview", async () => {
-    const { data } = await axios.get("/preview?page=0");
-    return data;
-  });
+  const data = useFetchProperties();
 
   return (
     <div>
@@ -20,11 +16,11 @@ export function ListingPage() {
           <h1>Mapa</h1>
         </Grid>
         <Grid item xl={3} sm={4} className={styles.propertyList}>
-          {status === "error" && (
+          {data.status === "error" && (
             <h1>There was an error retrieving the properties</h1>
           )}
-          {status === "success" &&
-            data.content.map((casa: any) => (
+          {data.status === "success" &&
+            data.data.content.map((casa: any) => (
               <ListingHouse key={casa.id} house={casa} />
             ))}
         </Grid>
