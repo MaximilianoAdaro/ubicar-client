@@ -37,8 +37,13 @@ export const sessionActions = {
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectUser = (state: RootState) => state.session.activeUser;
+
 export const selectRedirectPath = (state: RootState) =>
   state.session.redirectPath;
+
+export const selectIsAuthenticated = (state: RootState) =>
+  state.session.isAuthenticated;
+
 export const selectSession = (state: RootState) => state.session;
 
 export const sessionReducer = {
