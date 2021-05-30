@@ -1,7 +1,5 @@
 @import "src/styles/common";
 
-
-
 .titleContainer {
   display: flex;
   justify-content: center;
@@ -11,7 +9,6 @@
   color: $theme-goldish;
 }
 
-
 .form {
   display: flex;
   justify-content: center;
@@ -19,7 +16,6 @@
   flex-direction: column;
   margin-top: 1em;
 }
-
 
 .buttonContainer {
   margin-top: 2em;
