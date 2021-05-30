@@ -1,0 +1,26 @@
+@import "src/styles/common";
+
+
+
+.titleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4em;
+  width: 100%;
+  color: $theme-goldish;
+}
+
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1em;
+}
+
+
+.buttonContainer {
+  margin-top: 2em;
+}

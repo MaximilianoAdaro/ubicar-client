@@ -1,0 +1,48 @@
+@import "src/styles/common";
+
+.titleContainer {
+  margin-top: 2em;
+}
+
+.title {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0.5em;
+  color: $theme-goldish;
+}
+
+.form {
+  margin-top: 2em;
+}
+
+.column {
+  padding: 20px;
+}
+
+.inputContainer {
+  margin-top: 2em;
+}
+
+.emailAndBirthday {
+  margin-top: 90px;
+}
+
+.password {
+  margin-top: 110px;
+}
+
+.gridButton {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.buttonContainer {
+  margin-right: 30px;;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 10em;
+}
+
