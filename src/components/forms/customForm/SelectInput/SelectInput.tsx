@@ -29,7 +29,7 @@ const SelectInput = <T,>({
   } = useController({
     name,
     control,
-    defaultValue: options?.[0]?.value,
+    defaultValue: options?.[0]?.value as any,
   });
   return (
     <Form.Group>

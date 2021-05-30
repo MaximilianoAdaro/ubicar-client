@@ -3,22 +3,23 @@ import Grid from "@material-ui/core/Grid";
 import { ListingHouse } from "../../components/listingHouse";
 import styles from "./ListingPage.module.scss";
 import { ListingFilters } from "../../components/listingFilters";
-import {useFetchProperties} from "../../api/listingProperties/houses";
-import {useAppSelector} from "../../store";
-import {selectView, selectZoom} from "../../store/slices/map/mapSlice";
-import {MapComponent} from "../../components/Map/map";
+import { useFetchProperties } from "../../api/listingProperties/houses";
+import { useFetchProperties } from "../../api/listingProperties/houses";
+import { useAppSelector } from "../../store";
+import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
+import { MapComponent } from "../../components/Map/map";
 
 export function ListingPage() {
   const data = useFetchProperties();
-    const zoom = useAppSelector(selectZoom)
-    const view = useAppSelector(selectView)
+  const zoom = useAppSelector(selectZoom);
+  const view = useAppSelector(selectView);
 
   return (
     <div>
       <ListingFilters />
       <Grid container className={styles.mapAndProperties}>
         <Grid item xl={9} sm={8}>
-            <MapComponent zoom={zoom} view={view}/>
+          <MapComponent zoom={zoom} view={view} />
         </Grid>
         <Grid item xl={3} sm={4} className={styles.propertyList}>
           {data.status === "error" && (

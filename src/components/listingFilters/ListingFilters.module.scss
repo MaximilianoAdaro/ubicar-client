@@ -4,14 +4,14 @@
   align-items: center;
 }
 
-.searchBar{
+.searchBar {
   background: white;
   padding-left: 0.5%;
   padding-right: 0.2%;
   border-radius: 5px;
 }
 
-.filtersButton{
+.filtersButton {
   background: white;
   margin-left: 1.5rem;
   border: 1px #4a636c solid;
@@ -20,7 +20,7 @@
   text-transform: none;
 }
 
-.selectSale{
+.selectSale {
   background: white;
   margin-left: 1.5rem;
   border: 1px #4a636c solid;
@@ -29,11 +29,11 @@
   text-transform: none;
 }
 
-.filtersButton:hover{
- background: #f2f2f2;
+.filtersButton:hover {
+  background: #f2f2f2;
 }
 
-.sqtMtsPopover{
+.sqtMtsPopover {
   padding: 2%;
   width: 300px;
 }
@@ -42,23 +42,23 @@
   padding: 4%;
 }
 
-.price input{
+.price input {
   width: 46%;
   border-radius: 0.1em;
 }
 
-.priceMinInp{
+.priceMinInp {
   margin-right: 3%;
   width: 46%;
 }
 
-.priceMaxInp{
+.priceMaxInp {
   margin-left: 3%;
   width: 46%;
   height: 20%;
 }
 
-.roomsBathsButtons button{
+.roomsBathsButtons button {
   border: 1px solid black;
   max-width: 1em;
 }
@@ -71,6 +71,3 @@
   padding-top: 2%;
   font-size: 0.8em;
 }
-
-
-

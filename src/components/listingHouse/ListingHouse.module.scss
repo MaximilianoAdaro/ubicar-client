@@ -7,7 +7,7 @@
   margin-bottom: 3%;
   margin-top: 3%;
   border: 3px solid #d9d9d9;
-  background: #F3EEDC;
+  background: #f3eedc;
   padding: 0.5em;
 }
 
@@ -16,14 +16,14 @@ p {
   margin: 0;
 }
 
-.propertyTitle{
+.propertyTitle {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: "...";
   font-weight: bold;
 }
 
-.propertyStreetNumber{
+.propertyStreetNumber {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: "...";
@@ -31,15 +31,15 @@ p {
   font-size: 1em;
 }
 
-.propertyTownCity{
+.propertyTownCity {
   font-size: 0.9em;
 }
 
-.propertySpecifications{
+.propertySpecifications {
   margin-bottom: 1%;
 }
 
-.propertyPriceCondition{
+.propertyPriceCondition {
   font-weight: bold;
 }
 
