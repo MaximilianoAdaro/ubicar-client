@@ -7,7 +7,7 @@ import {MapContext} from "../../map";
 import {IMapContext} from "../../maptypes";
 import {GeoJSON} from "ol/format";
 
-class AirportLayer extends React.PureComponent<TVectorLayerComponentProps> {
+class FireDepartmentLayer extends React.PureComponent<TVectorLayerComponentProps> {
     layer: VectorLayer;
     source: VectorSource;
     state = {visible:false};
@@ -15,7 +15,7 @@ class AirportLayer extends React.PureComponent<TVectorLayerComponentProps> {
     componentDidMount() {
 
         this.source = new VectorSource({
-            url: "./geojson/Aeropuerto.geojson",
+            url: "./geojson/Cuartel de bomberos.geojson",
             format: new GeoJSON(),
 
         });
@@ -28,8 +28,8 @@ class AirportLayer extends React.PureComponent<TVectorLayerComponentProps> {
                 color: 'rgba(0, 100, 240, 0.8)'
             }),
             image: new Icon({
-                src: "./icons/airport.png",
-                scale: 50 / 1024,
+                src: "./icons/fire.png",
+                scale: 10 / 1024,
                 anchor: [1, 1],
             }),
             text: new Text(
@@ -69,21 +69,21 @@ class AirportLayer extends React.PureComponent<TVectorLayerComponentProps> {
     render() {
         return (
             <div className="custom-control custom-checkbox">
-                <input type="checkbox" className="custom-control-input" id="customCheck1" checked={this.state.visible}
+                <input type="checkbox" className="custom-control-input" id="bomberos" checked={this.state.visible}
                        onChange={() => this.setState({visible:!this.state.visible})}/>
-                <label className="custom-control-label" htmlFor="customCheck1">Aeropuertos</label>
+                <label className="custom-control-label" htmlFor="bomberos">Bomberos</label>
             </div>
         )
 
     }
 }
 
-export const AirportLayerWithContext = (props: TVectorLayerProps) => {
+export const FireDepartmentLayerWithContext = (props: TVectorLayerProps) => {
     return (
         <MapContext.Consumer>
             {(mapContext: IMapContext | void) => {
                 if (mapContext) {
-                    return <AirportLayer {...props}
+                    return <FireDepartmentLayer {...props}
                                          map={mapContext.map}
                     />;
                 }

@@ -6,11 +6,16 @@ import {TMapProps, IMapContext, TMapState} from "./maptypes";
 import "ol/ol.css";
 import "./map.css"
 import {OSM} from "ol/source";
-// @ts-ignore
-import sync from 'ol-hashed';
-import {PopUpLayerWithContext} from "./Layers/Vector/PopUpLayer";
-import {AirportLayerWithContext} from "./Layers/Vector/AirportLayer";
-import {PuertosLayerWithContext} from "./Layers/Vector/PuertosLayer";
+import {
+    AirportLayer,
+    FireLayer,
+    NationalRoutesLayer,
+    PopUpLayer,
+    PortLayer,
+    UniversityLayer,
+    SchoolLayer,
+    RailwayLayer, HospitalLayer, PoliceLayer, PrisonLayer, IndustrialAreaLayers
+} from "./Layers/Vector";
 
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
@@ -42,8 +47,9 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
                 }),
             ],
             view: new View({
-                center: [0, 0],
-                zoom: 2,
+                center: [-6506056.858887733,
+                    -4114291.375798843],
+                zoom: 10,
             }),
         });
 
@@ -76,9 +82,18 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
                 {this.state.mapContext && (
                     <div className="form-group">
                         <MapContext.Provider value={this.state.mapContext}>
-                            <PopUpLayerWithContext/>
-                            <AirportLayerWithContext/>
-                            <PuertosLayerWithContext/>
+                            <PopUpLayer/>
+                            <UniversityLayer/>
+                            <NationalRoutesLayer/>
+                            <AirportLayer/>
+                            <PortLayer/>
+                            <FireLayer/>
+                            <SchoolLayer/>
+                            <RailwayLayer/>
+                            <HospitalLayer/>
+                            <PoliceLayer/>
+                            <PrisonLayer/>
+                            <IndustrialAreaLayers/>
                         </MapContext.Provider>
                     </div>
                 )}

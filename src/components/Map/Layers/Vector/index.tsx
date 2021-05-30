@@ -1,1 +1,0 @@
-export { PopUpLayerWithContext as PopUpLayer } from "./PopUpLayer";

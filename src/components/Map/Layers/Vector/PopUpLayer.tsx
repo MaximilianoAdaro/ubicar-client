@@ -6,9 +6,8 @@ import {IMapContext} from "../../maptypes";
 import {TVectorLayerProps, TVectorLayerComponentProps} from "./vector-types";
 import {MapBrowserEvent, Overlay} from "ol";
 
-import "./vector.scss"
+import "./LayerStyles.scss"
 import {Circle, Fill, Stroke, Style, Text} from "ol/style";
-import {zoomToFeature} from "../../utils";
 
 class PopUpLayer extends React.PureComponent<TVectorLayerComponentProps> {
     layer: VectorLayer;
@@ -88,12 +87,10 @@ class PopUpLayer extends React.PureComponent<TVectorLayerComponentProps> {
         if (feature) {
 
             console.log(this.popUpContentRef)
-            this.popUpContentRef.innerHTML = '<p>' + feature.get('fna') + '</p>' + '<p>' + feature.get('gna') + '   </p>';
+            this.popUpContentRef.innerHTML = '<p>' + feature.get('gna') + '</p>';
 
             this.popup.setPosition(evt.coordinate)
             this.props.map.addOverlay(this.popup)
-            console.log(feature)
-            zoomToFeature(feature,this.props.map)
 
         } else {
             this.popup.setPosition(undefined)

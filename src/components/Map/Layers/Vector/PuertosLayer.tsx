@@ -10,7 +10,7 @@ import {GeoJSON} from "ol/format";
 class PuertosLayer extends React.PureComponent<TVectorLayerComponentProps> {
     layer: VectorLayer;
     source: VectorSource;
-    state = {visible:true};
+    state = {visible:false};
 
     componentDidMount() {
 
@@ -47,7 +47,6 @@ class PuertosLayer extends React.PureComponent<TVectorLayerComponentProps> {
         });
 
 
-        this.props.map.addLayer(this.layer);
     }
 
     componentWillUnmount() {
