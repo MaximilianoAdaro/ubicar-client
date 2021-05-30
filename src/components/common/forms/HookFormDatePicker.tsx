@@ -22,7 +22,7 @@ export const HookFormDatePicker = <T,>({
   } = useController({
     control,
     name,
-    defaultValue: defaultValue as any,
+    defaultValue,
   });
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>

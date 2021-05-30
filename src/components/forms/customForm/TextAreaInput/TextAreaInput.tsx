@@ -30,7 +30,7 @@ export const TextAreaInput = <T,>({
   } = useController({
     name,
     control,
-    defaultValue: defaultValue as any,
+    defaultValue,
   });
   return (
     <Form.Group>
@@ -49,7 +49,6 @@ export const TextAreaInput = <T,>({
   );
 };
 
-export const createCustomTextInputArea =
-  <T,>() =>
-  (props: TextInputAreaProps<T>) =>
-    <TextAreaInput<T> {...props} />;
+export const createCustomTextInputArea = <T,>() => (
+  props: TextInputAreaProps<T>
+) => <TextAreaInput<T> {...props} />;

@@ -1,5 +1,6 @@
 import { useMutation } from "react-query";
 import axios from "axios";
+import { baseUrl } from "../config";
 
 export type ID = number;
 export type Time = string;
@@ -38,6 +39,6 @@ export interface CreatePropertyRequestData {
 
 export const useCreateProperty = () => {
   return useMutation<any, Error, CreatePropertyRequestData>((data) =>
-    axios.post<CreatePropertyRequestData, any>(`/create`, data)
+    axios.post<CreatePropertyRequestData, any>(`${baseUrl}/create`, data)
   );
 };
