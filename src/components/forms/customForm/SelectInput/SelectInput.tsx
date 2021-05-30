@@ -54,7 +54,6 @@ const SelectInput = <T,>({
   );
 };
 
-export const createCustomSelectInput =
-  <T,>() =>
-  (props: SelectInputProps<T>) =>
-    <SelectInput<T> {...props} />;
+export const createCustomSelectInput = <T,>() => (
+  props: SelectInputProps<T>
+) => <SelectInput<T> {...props} />;

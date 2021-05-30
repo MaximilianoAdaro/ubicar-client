@@ -48,7 +48,6 @@ export const TextInput = <T,>({
   );
 };
 
-export const createCustomTextInput =
-  <T,>() =>
-  (props: TextInputProps<T>) =>
-    <TextInput<T> {...props} />;
+export const createCustomTextInput = <T,>() => (props: TextInputProps<T>) => (
+  <TextInput<T> {...props} />
+);
