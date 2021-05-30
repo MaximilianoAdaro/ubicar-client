@@ -27,22 +27,8 @@ export function ListingPage() {
             data.content.map((casa: any) => (
               <ListingHouse key={casa.id} house={casa} />
             ))}
-          {/*{casas.map((casa: any) => (*/}
-          {/*  <ListingHouse house={casa} />*/}
-          {/*))}*/}
         </Grid>
       </Grid>
     </div>
   );
-  // <Container className={styles.listingPageContainer}>
-  //     <ListingFilters/>
-  //     <Row>
-  //         <Col className={styles.listingPageCol}  id='RightPhoto' md={7}>
-  //             Aca va el mapa
-  //         </Col>
-  //         <Col className={styles.listingPageCol} md={4}>
-
-  //         </Col>
-  //     </Row>
-  // </Container>
 }

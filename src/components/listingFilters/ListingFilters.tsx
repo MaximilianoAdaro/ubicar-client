@@ -56,12 +56,6 @@ export function ListingFilters() {
         >
           En Venta
         </Button>
-        {/*<FormControl>*/}
-        {/*  <Select className={styles.selectSale}>*/}
-        {/*    <MenuItem>En Venta</MenuItem>*/}
-        {/*    <MenuItem>En Alquiler</MenuItem>*/}
-        {/*  </Select>*/}
-        {/*</FormControl>*/}
         <Button
           className={styles.filtersButton}
           size="small"
