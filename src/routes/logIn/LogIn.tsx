@@ -8,10 +8,6 @@ import styles from "./LogIn.module.scss";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import GoogleLogin from "./GoogleLogin";
 import { DividerWithText } from "../../components/common/DividerWithText";
-import { useHistory } from "react-router-dom";
-import { actions, useAppDispatch, useAppSelector } from "../../store";
-import { selectRedirectPath } from "../../store/slices/session";
-import { useSignIn } from "../../api/auth";
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -21,27 +17,13 @@ const schema = yup.object({
 type LogInFormData = yup.InferType<typeof schema>;
 
 export const LogIn = () => {
-  const history = useHistory();
-  const dispatch = useAppDispatch();
-  const redirectPath = useAppSelector(selectRedirectPath);
-
-  const { mutateAsync, isLoading } = useSignIn();
-
   const { control, handleSubmit } = useForm<LogInFormData>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
 
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      // const signInRes = await mutateAsync(data);
-      const signInRes = {
-        email: "asdf",
-        id: 86896,
-      };
-      dispatch(actions.session.setUser(signInRes));
-      history.push(redirectPath);
-    } catch (e) {}
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
   });
 
   return (
@@ -68,9 +50,7 @@ export const LogIn = () => {
               />
             </div>
             <div className={styles.buttonContainer}>
-              <RoundedButton type={"submit"}>
-                {isLoading ? "..." : "Entrar"}
-              </RoundedButton>
+              <RoundedButton type={"submit"}>Entrar</RoundedButton>
             </div>
             <div className="mt-3">
               <DividerWithText>O</DividerWithText>

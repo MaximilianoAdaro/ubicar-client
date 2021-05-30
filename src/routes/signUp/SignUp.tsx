@@ -8,9 +8,6 @@ import { HookFormDatePicker } from "../../components/common/forms/HookFormDatePi
 import { HookFormSelect } from "../../components/common/forms/HookFormSelect";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
-import { useSignUp } from "../../api/auth";
-import { useHistory } from "react-router-dom";
-import { urls } from "../../constants";
 
 const schema = yup.object({
   firstName: yup.string().required(),
@@ -30,7 +27,7 @@ const schema = yup.object({
 
 type SignUpFormData = yup.InferType<typeof schema>;
 
-const userTypes = [
+const items = [
   { value: "normal", label: "Comprador/Vendedor" },
   { value: "inspector", label: "Inspector" },
   { value: "investor", label: "Inversor" },
@@ -38,20 +35,13 @@ const userTypes = [
 ];
 
 export const SignUp = () => {
-  const history = useHistory();
-
-  const { mutateAsync } = useSignUp();
-
   const { control, handleSubmit } = useForm<SignUpFormData>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
 
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      await mutateAsync(data);
-      history.push(urls.logIn);
-    } catch (e) {}
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
   });
 
   return (
@@ -64,7 +54,8 @@ export const SignUp = () => {
                 Registrate
               </Typography>
             </Grid>
-            <div className={styles.inputs}>
+            <Grid container xs={12} spacing={3} className={styles.inputs}>
+              <Grid xs />
               <Grid xs={4} className={styles.column}>
                 <Typography variant={"h5"}>Datos personales</Typography>
                 <div className={styles.inputContainer}>
@@ -81,6 +72,7 @@ export const SignUp = () => {
                     control={control}
                   />
                 </div>
+                <Grid xs={3} />
                 <Grid xs className={styles.emailAndBirthday}>
                   <div className={styles.inputContainer}>
                     <HookFormTextField
@@ -98,17 +90,12 @@ export const SignUp = () => {
                   </div>
                 </Grid>
               </Grid>
-              <div
-                style={{
-                  width: "2em",
-                }}
-              />
               <Grid xs={4} className={styles.column}>
                 <Typography variant={"h5"}>Tipo de usuario</Typography>
                 <div className={styles.inputContainer}>
                   <HookFormSelect
                     name={"userType"}
-                    items={userTypes}
+                    items={items}
                     control={control}
                   />
                 </div>
@@ -130,12 +117,12 @@ export const SignUp = () => {
                   </div>
                 </div>
               </Grid>
-            </div>
-            <div className={styles.gridButton}>
+            </Grid>
+            <Grid container xs={12} className={styles.gridButton}>
               <div className={styles.buttonContainer}>
                 <RoundedButton type={"submit"}>Crear cuenta</RoundedButton>
               </div>
-            </div>
+            </Grid>
           </Grid>
         </form>
       </Container>
