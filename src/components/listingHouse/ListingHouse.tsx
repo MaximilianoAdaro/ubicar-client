@@ -8,8 +8,8 @@ export function ListingHouse(props: any) {
   const house = props.house;
   const houseAddress = house.address;
   const houseStreetNumber = `${houseAddress.street} ${houseAddress.number}`;
-  // const pluralize = require("pluralize");
-  // const baths = pluralize("baño", house.fullBaths);
+  const pluralize = require("pluralize");
+  const baths = pluralize("baño", house.fullBaths);
   return (
     <Grid container className={styles.propertyInformation}>
       <Grid xs={6}>
@@ -28,7 +28,7 @@ export function ListingHouse(props: any) {
         </p>
         <p className={styles.propertySpecifications}>
           {house.squareFoot} m² &nbsp;&nbsp;|&nbsp;&nbsp; {house.rooms} hab.
-          &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths} baños
+          &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths} {baths}
         </p>
         <Tooltip title={houseStreetNumber}>
           <p className={styles.propertyStreetNumber}>{houseStreetNumber}</p>
