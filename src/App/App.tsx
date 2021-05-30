@@ -5,6 +5,7 @@ import { ErrorPage } from "../components/ErrorPage";
 import { Button } from "@material-ui/core";
 import { initialize } from "../config/FirebaseInitialize";
 import firebase from "firebase";
+import {MapComponent} from "../components/Map/map";
 
 initialize();
 
@@ -16,6 +17,7 @@ export default function App() {
       <Route exact path="/listing-page" component={ListingPage} />
       <Route exact path="/sign-up" component={SignUp} />
       <Route exact path="/log-in" component={LogIn} />
+      <Route exact path="/map" component={MapComponent} />
       <Route component={ErrorPage} />
     </Switch>
   );
@@ -49,6 +51,14 @@ const WorkInProgress = () => (
     >
       Entrar
     </Link>
+      <br/>
+      <Link
+          component={(props) => <Button variant={"outlined"} {...props} />}
+          to={"/map"}
+      >
+          Mapa
+      </Link>
+
     <br />
     <Link
       component={(props) => (

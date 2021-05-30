@@ -5,7 +5,7 @@ import TileLayer from "ol/layer/Tile";
 import {TMapProps, IMapContext, TMapState} from "./maptypes";
 import "ol/ol.css";
 import "./map.css"
-import {OSM} from "ol/source";
+import XYZSource from 'ol/source/XYZ'
 import {
     AirportLayer,
     FireLayer,
@@ -16,6 +16,8 @@ import {
     SchoolLayer,
     RailwayLayer, HospitalLayer, PoliceLayer, PrisonLayer, IndustrialAreaLayers
 } from "./Layers/Vector";
+import TileSource from "ol/source/Tile";
+import {XYZ} from "ol/source";
 
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
@@ -43,8 +45,13 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
             target: this.mapDivRef.current,
             layers: [
                 new TileLayer({
-                    source: new OSM()
+                    source: new XYZ({
+                        attributions:"© OpenStreetMap",
+                        url: "https://{a-c}.tile.osm.org/{z}/{x}/{y}.png"
+                    })
                 }),
+
+
             ],
             view: new View({
                 center: [-6506056.858887733,
