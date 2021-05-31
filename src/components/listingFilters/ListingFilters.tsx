@@ -84,9 +84,9 @@ export function ListingFilters() {
         >
           Metros Cuadrados
         </Button>
-        <Button className={styles.filtersButton} size="small">
-          Otros
-        </Button>
+        {/*<Button className={styles.filtersButton} size="small">*/}
+        {/*  Otros*/}
+        {/*</Button>*/}
       </Grid>
       {/*<Popover open={}>En Venta</Popover>*/}
       <Popover
