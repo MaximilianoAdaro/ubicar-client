@@ -74,14 +74,9 @@ const WorkInProgress = () => (
       Entrar
     </Link>
     <br />
-    <Link
-      component={(props) => (
-        <Button variant={"outlined"} {...props} onClick={handleLogoutGoogle} />
-      )}
-      to={urls.logIn}
-    >
+    <Button variant={"outlined"} onClick={handleLogoutGoogle}>
       Log out Google
-    </Link>
+    </Button>
     <Link
       component={(props) => <Button variant={"outlined"} {...props} />}
       to={"/listing-page"}

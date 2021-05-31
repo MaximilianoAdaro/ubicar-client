@@ -6,7 +6,10 @@ import axios, { AxiosResponse } from "axios";
 import "./firebaseui-styling.global.scss";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
 import { User } from "../../entities/entities";
-import { selectRedirectPath } from "../../store/slices/session";
+import {
+  selectIsAuthenticated,
+  selectRedirectPath,
+} from "../../store/slices/session";
 
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
@@ -23,17 +26,20 @@ export function GoogleLogin() {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const redirectPath = useAppSelector(selectRedirectPath);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   useEffect(() => {
     // componentDidMount
     const unregisterAuthObserver = firebase
       .auth()
       .onAuthStateChanged(async (firebaseUser) => {
-        if (firebaseUser === null) {
+        console.log({ firebaseUser });
+        if (firebaseUser === null || isAuthenticated) {
           return;
         }
 
         const idToken = await firebaseUser.getIdToken(true);
+        console.log({ idToken });
 
         const config = { headers: { Authorization: idToken } };
         try {

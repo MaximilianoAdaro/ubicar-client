@@ -22,7 +22,7 @@ export const useSignUp = () => {
     const { data: signUpRes } = await axios.post<
       SignUpReq,
       AxiosResponse<SignUpRes>
-    >("/user/auth/register", data);
+    >("register", data);
     return signUpRes;
   });
 };
@@ -37,7 +37,7 @@ export const useSignIn = () => {
     const { data: signInRes } = await axios.post<
       SignInReq,
       AxiosResponse<User>
-    >("/user/auth/login", data);
+    >("login", data);
     console.log(signInRes);
     return signInRes;
   });
@@ -65,9 +65,9 @@ export const useSignIn = () => {
 
 export const useLoggedUser = () => {
   return useQuery<User, Error>(
-    "loggedUser",
+    "me",
     async () => {
-      const { data } = await axios.get<User>("/user/users/loggedUser");
+      const { data } = await axios.get<User>("users/me");
       return data;
     },
     {

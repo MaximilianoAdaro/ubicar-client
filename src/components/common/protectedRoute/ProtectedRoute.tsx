@@ -19,7 +19,7 @@ export default function ProtectedRoute({
 
   useEffect(() => {
     if (!isAuthenticated) {
-      setRedirectPath(currentLocation.pathname);
+      setRedirectPath(currentLocation.pathname + currentLocation.search);
     }
   }, [isAuthenticated, setRedirectPath, currentLocation]);
 
