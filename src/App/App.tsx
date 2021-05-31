@@ -11,7 +11,6 @@ import { useLoggedUser, useLogOut } from "../api/auth";
 import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
-import { MouseEventHandler } from "react";
 
 export default function App() {
   const session = useAppSelector(selectSession);
