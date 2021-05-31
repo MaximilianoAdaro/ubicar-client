@@ -1,4 +1,4 @@
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, useHistory } from "react-router-dom";
 import { CreateProperty, ListingPage, LogIn, SignUp } from "../routes";
 import styles from "./App.module.scss";
 import { ErrorPage } from "../components/ErrorPage";
@@ -7,7 +7,7 @@ import firebase from "firebase";
 import { urls } from "../constants";
 import { actions, useAppDispatch, useAppSelector } from "../store";
 import { selectSession } from "../store/slices/session";
-import { useLoggedUser } from "../api/auth";
+import { useLoggedUser, useLogOut } from "../api/auth";
 import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
@@ -45,43 +45,50 @@ export default function App() {
   );
 }
 
-function handleLogoutGoogle() {
-  firebase.auth().signOut();
-}
+const WorkInProgress = () => {
+  const history = useHistory();
+  const dispatch = useAppDispatch();
 
-const WorkInProgress = () => (
-  <div className={styles.app}>
-    <h1>App in progress...</h1>
-    <br />
-    <Link
-      component={(props) => <Button variant={"outlined"} {...props} />}
-      to={urls.createProperty}
-    >
-      Crear publicacion
-    </Link>
-    <br />
-    <Link
-      component={(props) => <Button variant={"outlined"} {...props} />}
-      to={urls.signUp}
-    >
-      Registrarse
-    </Link>
-    <br />
-    <Link
-      component={(props) => <Button variant={"outlined"} {...props} />}
-      to={urls.logIn}
-    >
-      Entrar
-    </Link>
-    <br />
-    <Button variant={"outlined"} onClick={handleLogoutGoogle}>
-      Log out Google
-    </Button>
-    <Link
-      component={(props) => <Button variant={"outlined"} {...props} />}
-      to={"/listing-page"}
-    >
-      Listing Page
-    </Link>
-  </div>
-);
+  const { mutateAsync: logOut } = useLogOut();
+
+  const handleLogout = async () => {
+    await logOut();
+    await firebase.auth().signOut();
+    dispatch(actions.session.setUser(null));
+    history.push(urls.home);
+  };
+  return (
+    <div className={styles.app}>
+      <h1>App in progress...</h1>
+      <br />
+
+      <Link to={urls.createProperty}>
+        <Button variant={"outlined"}>Crear publicacion</Button>
+      </Link>
+
+      <br />
+
+      <Link to={urls.signUp}>
+        <Button variant={"outlined"}>Registrarse</Button>
+      </Link>
+
+      <br />
+
+      <Link to={urls.logIn}>
+        <Button variant={"outlined"}>Entrar</Button>
+      </Link>
+
+      <br />
+
+      <Button variant={"outlined"} onClick={handleLogout}>
+        Log out
+      </Button>
+
+      <br />
+
+      <Link to={urls.listingPage}>
+        <Button variant={"outlined"}>Listing Page</Button>
+      </Link>
+    </div>
+  );
+};
