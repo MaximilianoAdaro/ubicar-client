@@ -1,4 +1,4 @@
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, useHistory } from "react-router-dom";
 import { CreateProperty, ListingPage, LogIn, SignUp } from "../routes";
 import styles from "./App.module.scss";
 import { ErrorPage } from "../components/ErrorPage";
@@ -45,43 +45,52 @@ export default function App() {
   );
 }
 
-function handleLogoutGoogle() {
-  firebase.auth().signOut();
-}
+const WorkInProgress = () => {
+  const history = useHistory();
+  const dispatch = useAppDispatch();
 
-const WorkInProgress = () => (
-  <div className={styles.app}>
-    <h1>App in progress...</h1>
-    <br />
-    <Link
-      component={(props) => <Button variant={"outlined"} {...props} />}
-      to={urls.createProperty}
-    >
-      Crear publicacion
-    </Link>
-    <br />
-    <Link
-      component={(props) => <Button variant={"outlined"} {...props} />}
-      to={urls.signUp}
-    >
-      Registrarse
-    </Link>
-    <br />
-    <Link
-      component={(props) => <Button variant={"outlined"} {...props} />}
-      to={urls.logIn}
-    >
-      Entrar
-    </Link>
-    <br />
-    <Button variant={"outlined"} onClick={handleLogoutGoogle}>
-      Log out Google
-    </Button>
-    <Link
-      component={(props) => <Button variant={"outlined"} {...props} />}
-      to={"/listing-page"}
-    >
-      Listing Page
-    </Link>
-  </div>
-);
+  // const { mutateAsync } = useLogOut();
+
+  const handleLogut = async () => {
+    // await mutateAsync();
+    await firebase.auth().signOut();
+    dispatch(actions.session.setUser(null));
+    history.push(urls.home);
+  };
+  return (
+    <div className={styles.app}>
+      <h1>App in progress...</h1>
+      <br />
+      <Link
+        component={(props) => <Button variant={"outlined"} {...props} />}
+        to={urls.createProperty}
+      >
+        Crear publicacion
+      </Link>
+      <br />
+      <Link
+        component={(props) => <Button variant={"outlined"} {...props} />}
+        to={urls.signUp}
+      >
+        Registrarse
+      </Link>
+      <br />
+      <Link
+        component={(props) => <Button variant={"outlined"} {...props} />}
+        to={urls.logIn}
+      >
+        Entrar
+      </Link>
+      <br />
+      <Button variant={"outlined"} onClick={handleLogut}>
+        Log out
+      </Button>
+      <Link
+        component={(props) => <Button variant={"outlined"} {...props} />}
+        to={"/listing-page"}
+      >
+        Listing Page
+      </Link>
+    </div>
+  );
+};

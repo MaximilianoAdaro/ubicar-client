@@ -80,3 +80,9 @@ export const useLoggedUser = () => {
     }
   );
 };
+//
+// export const useLogOut = () => {
+//   return useMutation<void, Error, void>(async () => {
+//     await axios.post<void>("logout");
+//   });
+// };
