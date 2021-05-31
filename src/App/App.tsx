@@ -16,10 +16,10 @@ export default function App() {
   const session = useAppSelector(selectSession);
   const dispatch = useAppDispatch();
 
-  // const { data: user, isLoading } = useLoggedUser();
+  const { data: user, isLoading } = useLoggedUser();
 
-  // if (isLoading) return <span>Loading...</span>;
-  // if (user) dispatch(actions.session.setUser(user));
+  if (isLoading) return <span>Loading...</span>;
+  if (user) dispatch(actions.session.setUser(user));
 
   const defaultProtectedRouteProps: ProtectedRouteProps = {
     isAuthenticated: session.isAuthenticated,

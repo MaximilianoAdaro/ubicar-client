@@ -5,7 +5,6 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import React from "react";
 
 interface TextInputProps<T> {
   name: Path<T>;
