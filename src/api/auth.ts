@@ -47,7 +47,7 @@ export const useSignIn = () => {
     {
       async onSuccess() {
         queryClient.removeQueries("me");
-        // await queryClient.invalidateQueries("me");
+        await queryClient.cancelQueries("me");
       },
     }
   );
@@ -62,6 +62,7 @@ interface GoogleSignInReq {
 }
 
 export const useGoogleSignIn = () => {
+  const queryClient = useQueryClient();
   return useMutation<User, Error, GoogleSignInReq>(
     async ({ idToken, data }) => {
       const { data: signInRes } = await axios.post<void, AxiosResponse<User>>(
@@ -72,6 +73,12 @@ export const useGoogleSignIn = () => {
         }
       );
       return signInRes;
+    },
+    {
+      async onSuccess() {
+        queryClient.removeQueries("me");
+        await queryClient.cancelQueries("me");
+      },
     }
   );
 };
@@ -108,14 +115,24 @@ export const useLoggedUser = () => {
       refetchInterval: false,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
-      // refetchOnReconnect: false,
+      refetchOnReconnect: false,
       retryOnMount: false,
+      refetchIntervalInBackground: false,
     }
   );
 };
 
 export const useLogOut = () => {
-  return useMutation<void, Error, void>(async () => {
-    await axios.post<void>("auth/logout");
-  });
+  const queryClient = useQueryClient();
+  return useMutation<void, Error, void>(
+    async () => {
+      await axios.post<void>("auth/logout");
+    },
+    {
+      async onSuccess() {
+        queryClient.removeQueries("me");
+        await queryClient.cancelQueries("me");
+      },
+    }
+  );
 };

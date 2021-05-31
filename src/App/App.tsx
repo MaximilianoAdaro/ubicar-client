@@ -11,6 +11,7 @@ import { useLoggedUser, useLogOut } from "../api/auth";
 import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
+import { MouseEventHandler } from "react";
 
 export default function App() {
   const session = useAppSelector(selectSession);
@@ -51,10 +52,13 @@ const WorkInProgress = () => {
 
   const { mutateAsync: logOut } = useLogOut();
 
-  const handleLogout = async () => {
+  const handleLogout = async (e: any) => {
+    e.preventDefault();
+    console.log("signing out");
     await logOut();
     await firebase.auth().signOut();
     dispatch(actions.session.setUser(null));
+    console.log("dispatched user null");
     history.push(urls.home);
   };
   return (
