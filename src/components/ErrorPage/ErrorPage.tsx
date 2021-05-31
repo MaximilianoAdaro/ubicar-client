@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 
 const ErrorPage = () => (
   <Container>
-    <h1 className={styles.header}>La pagina no existe</h1>
+    <h1 className={styles.header}>Hubo un error</h1>
   </Container>
 );
 

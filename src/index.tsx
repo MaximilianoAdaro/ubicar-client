@@ -23,9 +23,9 @@ ReactDOM.render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          {/*<ErrorBoundary fallback={<ErrorPage />}>*/}
-          <App />
-          {/*</ErrorBoundary>*/}
+          <ErrorBoundary fallback={<ErrorPage />}>
+            <App />
+          </ErrorBoundary>
         </Provider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

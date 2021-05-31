@@ -11,6 +11,7 @@ import { useLoggedUser, useLogOut } from "../api/auth";
 import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
+import { NotFound } from "../components/NotFound";
 
 export default function App() {
   const session = useAppSelector(selectSession);
@@ -40,7 +41,7 @@ export default function App() {
       <Route exact path={urls.listingPage} component={ListingPage} />
       <Route exact path={urls.signUp} component={SignUp} />
       <Route exact path={urls.logIn} component={LogIn} />
-      <Route component={ErrorPage} />
+      <Route component={NotFound} />
     </Switch>
   );
 }
