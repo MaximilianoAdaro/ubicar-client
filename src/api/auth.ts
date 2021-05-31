@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios, { AxiosResponse } from "axios";
 import { User } from "../entities/entities";
 
@@ -22,7 +22,7 @@ export const useSignUp = () => {
     const { data: signUpRes } = await axios.post<
       SignUpReq,
       AxiosResponse<SignUpRes>
-    >("register", data);
+    >("auth/register", data);
     return signUpRes;
   });
 };
@@ -33,14 +33,47 @@ export type SignInReq = {
 };
 
 export const useSignIn = () => {
-  return useMutation<User, Error, SignInReq>(async (data) => {
-    const { data: signInRes } = await axios.post<
-      SignInReq,
-      AxiosResponse<User>
-    >("login", data);
-    console.log(signInRes);
-    return signInRes;
-  });
+  const queryClient = useQueryClient();
+
+  return useMutation<User, Error, SignInReq>(
+    async (data) => {
+      const { data: signInRes } = await axios.post<
+        SignInReq,
+        AxiosResponse<User>
+      >("auth/login", data);
+      console.log(signInRes);
+      return signInRes;
+    },
+    {
+      async onSuccess() {
+        queryClient.removeQueries("me");
+        // await queryClient.invalidateQueries("me");
+      },
+    }
+  );
+};
+
+interface GoogleSignInReq {
+  data: {
+    name: string;
+    email: string;
+  };
+  idToken: string;
+}
+
+export const useGoogleSignIn = () => {
+  return useMutation<User, Error, GoogleSignInReq>(
+    async ({ idToken, data }) => {
+      const { data: signInRes } = await axios.post<void, AxiosResponse<User>>(
+        "auth/google-login",
+        data,
+        {
+          headers: { Authorization: idToken },
+        }
+      );
+      return signInRes;
+    }
+  );
 };
 
 // export type ChangePasswordReq = {
@@ -67,7 +100,7 @@ export const useLoggedUser = () => {
   return useQuery<User, Error>(
     "me",
     async () => {
-      const { data } = await axios.get<User>("users/me");
+      const { data } = await axios.get<User>("auth/me");
       return data;
     },
     {
@@ -80,9 +113,9 @@ export const useLoggedUser = () => {
     }
   );
 };
-//
-// export const useLogOut = () => {
-//   return useMutation<void, Error, void>(async () => {
-//     await axios.post<void>("logout");
-//   });
-// };
+
+export const useLogOut = () => {
+  return useMutation<void, Error, void>(async () => {
+    await axios.post<void>("auth/logout");
+  });
+};
