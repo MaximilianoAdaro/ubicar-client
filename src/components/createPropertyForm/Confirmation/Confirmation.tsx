@@ -11,6 +11,8 @@ import {
   CreatePropertyRequestData,
   useCreateProperty,
 } from "../../../api/property/create";
+import { useHistory } from "react-router-dom";
+import { urls } from "../../../constants";
 
 const createRequestData = (
   data: CreatePropertyState
@@ -52,11 +54,17 @@ const createRequestData = (
 
 export const Confirmation = () => {
   const dispatch = useAppDispatch();
-  const { mutate } = useCreateProperty();
+  const history = useHistory();
+  const { mutateAsync } = useCreateProperty();
   const createPropertyState = useAppSelector(selectCreatePropertyState);
 
-  const handleSend = () => {
-    mutate(createRequestData(createPropertyState));
+  const handleSend = async () => {
+    try {
+      await mutateAsync(createRequestData(createPropertyState));
+      history.push(urls.home);
+    } catch (e) {
+      throw Error;
+    }
   };
 
   const handlePreviousButton = () => {

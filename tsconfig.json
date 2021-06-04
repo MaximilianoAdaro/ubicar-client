@@ -16,6 +16,7 @@
     "noEmit": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
+    "strictPropertyInitialization": false,
     "strictNullChecks": true,
     "jsx": "react-jsx"
   },

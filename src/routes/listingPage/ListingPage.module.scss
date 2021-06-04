@@ -1,37 +1,10 @@
-.listingPageContainer{
-  max-width: 100%;
-  background: #F3EEDC;
+.mapAndProperties {
+  padding-left: 1.5rem;
 }
-
-.listingPageCol {
-  margin-left: 2%;
+.propertyList {
+  padding-right: 0.5em;
 }
-
-.mapImage{
-  height: 50%;
+.map {
+  padding-right: 1em;
+  padding-top: 1em;
 }
-.propertiesImages {
-  max-height: 100%;
-  max-width: 100%;
-  padding: 0;
-  align-items: center;
-}
-.propertyInformation {
-  margin-bottom: 3%;
-  border-bottom: 4px solid #CDDDE5;
-}
-.propertyImageCol{
-  padding: 0;
-}
-.propertyCharacteristics{
-  margin-left: 2%;
-  margin-bottom: 3%;
-  font-weight: bold;
-  font-style: italic
-;
-}
-
-.dropdownButtons {
-  margin: 5px;
-}
-

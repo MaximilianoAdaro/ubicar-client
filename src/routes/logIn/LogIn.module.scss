@@ -1,24 +1,22 @@
 @import "src/styles/common";
 
-
 .titleContainer {
-  margin-top: 2em;
-}
-
-.title {
-  margin-bottom: 1em;
-  margin-left: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4em;
+  width: 100%;
   color: $theme-goldish;
 }
 
-.inputs {
-  margin-top: 10em;
-}
-
-.inputContainer {
-  margin-top: 2em;
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1em;
 }
 
 .buttonContainer {
-  margin-top: 3em;
+  margin-top: 2em;
 }
