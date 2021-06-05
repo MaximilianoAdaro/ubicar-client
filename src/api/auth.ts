@@ -1,58 +1,33 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import axios, { AxiosResponse } from "axios";
-import { User } from "../entities/entities";
+import {
+  AuthControllerApi,
+  GoogleLoginUserDTO,
+  LogInUserDTO,
+  UserCreationDTO,
+} from "../generated/api";
 
-export type SignUpReq = {
-  userName: string;
-  email: string;
-  password: string;
-  birthDay: Date;
-  userRole: string;
-};
-
-export type SignUpRes = {
-  id: string;
-  email: string;
-  password: string;
-};
+const authControllerApi = new AuthControllerApi(undefined, "");
 
 export const useSignUp = () => {
-  return useMutation<SignUpRes, Error, SignUpReq>(async (data) => {
-    const { data: signUpRes } = await axios.post<
-      SignUpReq,
-      AxiosResponse<SignUpRes>
-    >("auth/register", data);
+  return useMutation(async (data: UserCreationDTO) => {
+    const { data: signUpRes } = await authControllerApi.registerUsingPOST(data);
     return signUpRes;
   });
 };
 
-export interface Role {
-  id: string;
-  title: string;
-}
-
 export const useGetRoles = () => {
   return useQuery("roles", async () => {
-    const { data } = await axios.get<Role[]>("/auth/roles");
+    const { data } = await authControllerApi.getPropertiesUsingGET();
     return data;
   });
-};
-
-export type SignInReq = {
-  email: string;
-  password: string;
 };
 
 export const useSignIn = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<User, Error, SignInReq>(
-    async (data) => {
-      const { data: signInRes } = await axios.post<
-        SignInReq,
-        AxiosResponse<User>
-      >("auth/login", data);
-      console.log(signInRes);
+  return useMutation(
+    async (data: LogInUserDTO) => {
+      const { data: signInRes } = await authControllerApi.loginUsingPOST(data);
       return signInRes;
     },
     {
@@ -64,25 +39,12 @@ export const useSignIn = () => {
   );
 };
 
-interface GoogleSignInReq {
-  data: {
-    name: string;
-    email: string;
-  };
-  idToken: string;
-}
-
 export const useGoogleSignIn = () => {
   const queryClient = useQueryClient();
-  return useMutation<User, Error, GoogleSignInReq>(
-    async ({ idToken, data }) => {
-      const { data: signInRes } = await axios.post<void, AxiosResponse<User>>(
-        "auth/google-login",
-        data,
-        {
-          headers: { Authorization: idToken },
-        }
-      );
+  return useMutation(
+    async ({ token, data }: { token: string; data: GoogleLoginUserDTO }) => {
+      const { data: signInRes } =
+        await authControllerApi.loginWithGoogleUsingPOST(token, data);
       return signInRes;
     },
     {
@@ -115,10 +77,10 @@ export const useGoogleSignIn = () => {
 // };
 
 export const useLoggedUser = () => {
-  return useQuery<User, Error>(
+  return useQuery(
     "me",
     async () => {
-      const { data } = await axios.get<User>("auth/me");
+      const { data } = await authControllerApi.getLoggedUsingGET();
       return data;
     },
     {
@@ -135,9 +97,9 @@ export const useLoggedUser = () => {
 
 export const useLogOut = () => {
   const queryClient = useQueryClient();
-  return useMutation<void, Error, void>(
+  return useMutation(
     async () => {
-      await axios.post<void>("auth/logout");
+      await authControllerApi.logOutUsingPOST();
     },
     {
       async onSuccess() {

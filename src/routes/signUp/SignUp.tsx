@@ -8,10 +8,11 @@ import { HookFormDatePicker } from "../../components/common/forms/HookFormDatePi
 import { HookFormSelect } from "../../components/common/forms/HookFormSelect";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
-import { Role, useGetRoles, useSignUp } from "../../api/auth";
+import { useGetRoles, useSignUp } from "../../api/auth";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../constants";
 import { GoogleLogin } from "../logIn/GoogleLogin";
+import { RoleDTO } from "../../generated/api";
 
 const schema = yup.object({
   firstName: yup.string().required(),
@@ -28,7 +29,7 @@ const schema = yup.object({
 
 type SignUpFormData = yup.InferType<typeof schema>;
 
-const buildItems = (roles: Role[]) =>
+const buildItems = (roles: RoleDTO[]) =>
   roles.map(({ title, id }) => ({
     value: id,
     label: title,
@@ -60,13 +61,13 @@ export const SignUp = () => {
       <Container>
         <form onSubmit={onSubmit}>
           <Grid container spacing={3}>
-            <Grid xs={12} className={styles.titleContainer}>
+            <Grid item xs={12} className={styles.titleContainer}>
               <Typography variant={"h3"} className={styles.title}>
                 Registrate
               </Typography>
             </Grid>
             <div className={styles.inputs}>
-              <Grid xs={4} className={styles.column}>
+              <Grid item xs={4} className={styles.column}>
                 <Typography variant={"h5"}>Datos personales</Typography>
                 <div className={styles.inputContainer}>
                   <HookFormTextField
@@ -104,7 +105,7 @@ export const SignUp = () => {
                   width: "2em",
                 }}
               />
-              <Grid xs={4} className={styles.column}>
+              <Grid item xs={4} className={styles.column}>
                 <Typography variant={"h5"}>Tipo de usuario</Typography>
                 <div className={styles.inputContainer}>
                   {roles && (
