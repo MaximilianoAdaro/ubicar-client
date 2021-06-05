@@ -13,8 +13,7 @@ import { useHistory } from "react-router-dom";
 import { urls } from "../../constants";
 
 const schema = yup.object({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
+  userName: yup.string().required(),
   email: yup.string().email().required(),
   birthDay: yup.date().required(),
   userType: yup
@@ -70,14 +69,7 @@ export const SignUp = () => {
                 <div className={styles.inputContainer}>
                   <HookFormTextField
                     label={"Nombre"}
-                    name={"firstName"}
-                    control={control}
-                  />
-                </div>
-                <div className={styles.inputContainer}>
-                  <HookFormTextField
-                    label={"Apellido"}
-                    name={"lastName"}
+                    name={"userName"}
                     control={control}
                   />
                 </div>
