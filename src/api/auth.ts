@@ -3,8 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import { User } from "../entities/entities";
 
 export type SignUpReq = {
-  firstName: string;
-  lastName: string;
+  userName: string;
   email: string;
   password: string;
   birthDay: Date;
