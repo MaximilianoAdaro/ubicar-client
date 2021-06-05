@@ -8,7 +8,7 @@ export type SignUpReq = {
   email: string;
   password: string;
   birthDay: Date;
-  userType: string;
+  role: string;
 };
 
 export type SignUpRes = {
@@ -24,6 +24,18 @@ export const useSignUp = () => {
       AxiosResponse<SignUpRes>
     >("auth/register", data);
     return signUpRes;
+  });
+};
+
+export interface Role {
+  id: string;
+  title: string;
+}
+
+export const useGetRoles = () => {
+  return useQuery("roles", async () => {
+    const { data } = await axios.get<Role[]>("/auth/roles");
+    return data;
   });
 };
 

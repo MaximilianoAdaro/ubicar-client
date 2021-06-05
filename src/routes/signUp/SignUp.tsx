@@ -8,7 +8,7 @@ import { HookFormDatePicker } from "../../components/common/forms/HookFormDatePi
 import { HookFormSelect } from "../../components/common/forms/HookFormSelect";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
-import { useSignUp } from "../../api/auth";
+import { Role, useGetRoles, useSignUp } from "../../api/auth";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../constants";
 
@@ -17,10 +17,7 @@ const schema = yup.object({
   lastName: yup.string().required(),
   email: yup.string().email().required(),
   birthDay: yup.date().required(),
-  userType: yup
-    .string()
-    .oneOf(["normal", "inspector", "investor", "realState"])
-    .required(),
+  role: yup.string().required(),
   password: yup.string().required(),
   confirmPassword: yup
     .string()
@@ -30,16 +27,16 @@ const schema = yup.object({
 
 type SignUpFormData = yup.InferType<typeof schema>;
 
-const userTypes = [
-  { value: "normal", label: "Comprador/Vendedor" },
-  { value: "inspector", label: "Inspector" },
-  { value: "investor", label: "Inversor" },
-  { value: "realState", label: "Inmobiliaria" },
-];
+const buildItems = (roles: Role[]) =>
+  roles.map(({ title, id }) => ({
+    value: id,
+    label: title,
+  }));
 
 export const SignUp = () => {
   const history = useHistory();
 
+  const { data: roles, isLoading: rolesLoading } = useGetRoles();
   const { mutateAsync } = useSignUp();
 
   const { control, handleSubmit } = useForm<SignUpFormData>({
@@ -106,11 +103,13 @@ export const SignUp = () => {
               <Grid xs={4} className={styles.column}>
                 <Typography variant={"h5"}>Tipo de usuario</Typography>
                 <div className={styles.inputContainer}>
-                  <HookFormSelect
-                    name={"userType"}
-                    items={userTypes}
-                    control={control}
-                  />
+                  {roles && (
+                    <HookFormSelect
+                      name={"role"}
+                      items={buildItems(roles)}
+                      control={control}
+                    />
+                  )}
                 </div>
                 <div className={styles.password}>
                   <Typography variant={"h5"}>Contraseña</Typography>
