@@ -63,7 +63,7 @@ const WorkInProgress = () => {
   };
   return (
     <div className={styles.app}>
-      <h1>App in progress...</h1>
+      <h1>Ubicar in progress...</h1>
       <br />
 
       <Link to={urls.createProperty}>
