@@ -1,28 +1,72 @@
-import { Grid } from "@material-ui/core";
+import { Button, Grid, List, ListItem, Popover } from "@material-ui/core";
 import styles from "./NavBar.module.scss";
+import React, { useState } from "react";
 
 export function NavBar() {
+  const [anchorAccount, setAnchorAccount] = useState(null);
+
+  const openAccountPopover = (event: any) => {
+    setAnchorAccount(event.currentTarget);
+  };
+
   return (
-    <Grid container className={styles.navBarContainer}>
-      <Grid xs container className={styles.navBarLogo}>
-        {/*<Grid xs>*/}
-        {/*  <img alt="UbicarLogo" src="UbicarLogo2.png" />*/}
-        {/*</Grid>*/}
-        <Grid xs>Ubicar</Grid>
+    <div>
+      <Grid container className={styles.navBarContainer}>
+        <Grid xs container className={styles.navBarLogo}>
+          <Grid xs>Ubicar</Grid>
+        </Grid>
+        <Grid xs={9} container className={styles.navBarOptions}>
+          <Grid xs></Grid>
+          <Grid xs={2}>
+            <a href="https://www.google.com" className={styles.navBarTags}>
+              Compra
+            </a>
+          </Grid>
+          <Grid xs={2}>
+            <a href="https://www.google.com" className={styles.navBarTags}>
+              Alquiler
+            </a>
+          </Grid>
+          <Grid xs={2}>
+            <a href="https://www.google.com" className={styles.navBarTags}>
+              Publicar
+            </a>
+          </Grid>
+          <Grid xs></Grid>
+        </Grid>
+        <Grid xs className={styles.navBarAccount}>
+          <div>
+            <Button
+              className={styles.filtersButton}
+              id="buttonForm"
+              size="small"
+              onClick={openAccountPopover}
+            >
+              Mi cuenta
+            </Button>
+            <Popover
+              open={Boolean(anchorAccount)}
+              anchorEl={anchorAccount}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              onClose={() => setAnchorAccount(null)}
+            >
+              <List>
+                <ListItem>Propiedades</ListItem>
+                <ListItem>Favoritos</ListItem>
+                <ListItem>Perfil</ListItem>
+                <ListItem>Cerrar sesión</ListItem>
+              </List>
+            </Popover>
+          </div>
+        </Grid>
       </Grid>
-      <Grid xs={5} container className={styles.navBarOptions}>
-        <Grid xs>Compra</Grid>
-        <Grid xs>Renta</Grid>
-        <Grid xs>Publicar</Grid>
-        <Grid xs>Datos geoespaciales</Grid>
-      </Grid>
-      <Grid xs>
-        <img
-          alt='Profile'
-          src="https://www.tekportal.net/wp-content/uploads/2019/02/f-1256.jpg"
-          className={styles.navBarProfile}
-        />
-      </Grid>
-    </Grid>
+    </div>
   );
 }

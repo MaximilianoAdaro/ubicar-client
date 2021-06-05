@@ -1,19 +1,42 @@
 .navBarContainer {
   background: #80979c;
-  height: 4em;
+  height: 3.5em;
   text-align: center;
+  padding-left: 10%;
+  padding-right: 10%;
 }
-.navBarLogo{
-  margin-top: 1em;
+
+.navBarLogo {
   font-weight: bold;
+  margin-top: 0.45em;
+  font-size: 1.5em;
 }
 
-.navBarOptions{
-  margin-top: 1em;
+.navBarOptions {
+  margin-top: 0.9em;
 }
 
-.navBarProfile{
-  height: 3em;
-  width: 3em;
-  margin-top: 0.5em;
+.navBarAccount {
+  margin-top: 0.8em;
+}
+
+.navBarTags {
+  text-decoration: none;
+  color: black;
+  margin-top: 0.6em;
+}
+.navBarTags:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.faker {
+  margin-top: 0.9em;
+}
+
+.gridTags {
+  margin-top: 0.15em;
+}
+.myAccountButton {
+  text-decoration: none;
 }
