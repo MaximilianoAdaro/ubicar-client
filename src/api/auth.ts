@@ -7,7 +7,7 @@ export type SignUpReq = {
   email: string;
   password: string;
   birthDay: Date;
-  role: string;
+  userRole: string;
 };
 
 export type SignUpRes = {

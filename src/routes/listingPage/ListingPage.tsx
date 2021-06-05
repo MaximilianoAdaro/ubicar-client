@@ -1,12 +1,11 @@
-import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { ListingHouse } from "../../components/listingHouse";
 import styles from "./ListingPage.module.scss";
 import { ListingFilters } from "../../components/listingFilters";
-import { useFetchProperties } from "../../api/listingProperties/houses";
 import { useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import { MapComponent } from "../../components/Map/map";
+import { useFetchProperties } from "../../api/property";
 
 export function ListingPage() {
   const data = useFetchProperties();

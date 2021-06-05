@@ -1,7 +1,6 @@
 import { Link, Route, Switch, useHistory } from "react-router-dom";
 import { CreateProperty, ListingPage, LogIn, SignUp } from "../routes";
 import styles from "./App.module.scss";
-import { ErrorPage } from "../components/ErrorPage";
 import { Button } from "@material-ui/core";
 import firebase from "firebase";
 import { urls } from "../constants";
@@ -30,25 +29,29 @@ export default function App() {
   };
 
   return (
-    <Switch>
-      <Route exact path={urls.home} component={WorkInProgress} />
-      <ProtectedRoute
-        {...defaultProtectedRouteProps}
-        exact
-        path={urls.createProperty}
-        component={CreateProperty}
-      />
-      <Route exact path={urls.listingPage} component={ListingPage} />
-      <Route exact path={urls.signUp} component={SignUp} />
-      <Route exact path={urls.logIn} component={LogIn} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <Switch>
+        <Route exact path={urls.home} component={WorkInProgress} />
+        <ProtectedRoute
+          {...defaultProtectedRouteProps}
+          exact
+          path={urls.createProperty}
+          component={CreateProperty}
+        />
+        <Route exact path={urls.listingPage} component={ListingPage} />
+        <Route exact path={urls.signUp} component={SignUp} />
+        <Route exact path={urls.logIn} component={LogIn} />
+        <Route component={NotFound} />
+      </Switch>
+    </>
   );
 }
 
 const WorkInProgress = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+
+  const { data: user } = useLoggedUser();
 
   const { mutateAsync: logOut } = useLogOut();
 
@@ -63,6 +66,15 @@ const WorkInProgress = () => {
   };
   return (
     <div className={styles.app}>
+      {user && (
+        <div
+          style={{
+            marginBottom: 20,
+          }}
+        >
+          <h4>Bienvenido {user.userName}</h4>
+        </div>
+      )}
       <h1>Ubicar in progress...</h1>
       <br />
 

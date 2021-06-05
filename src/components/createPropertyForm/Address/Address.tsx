@@ -14,7 +14,7 @@ import {
   useFetchCities,
   useFetchStates,
   useFetchTowns,
-} from "../../../api/property/address";
+} from "../../../api/property";
 
 const requiredMessage = "Este campo es requerido";
 

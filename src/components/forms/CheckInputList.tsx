@@ -2,7 +2,7 @@ import { ChangeEventHandler } from "react";
 import { Form } from "react-bootstrap";
 
 interface CheckOption {
-  id: number;
+  id: string;
   label: string;
 }
 
@@ -21,8 +21,8 @@ export const CheckInputList = ({
 }: CheckInputListProps) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { checked, value: id } = e.target;
-    if (checked) onCheck(Number(id));
-    else onUncheck(Number(id));
+    if (checked) onCheck(id);
+    else onUncheck(id);
   };
   return (
     <>

@@ -14,7 +14,7 @@ import styles from "./BasicInfo.module.scss";
 import classNames from "classnames";
 import { useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
-import { useFetchPropertyTypes } from "../../../api/property/propertyInfo";
+import { useFetchPropertyTypes } from "../../../api/property";
 
 const schema = yup.object({
   price: yup.number().positive().required(),

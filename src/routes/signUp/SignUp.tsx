@@ -11,12 +11,14 @@ import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import { Role, useGetRoles, useSignUp } from "../../api/auth";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../constants";
+import { GoogleLogin } from "../logIn/GoogleLogin";
 
 const schema = yup.object({
-  userName: yup.string().required(),
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
   email: yup.string().email().required(),
   birthDay: yup.date().required(),
-  role: yup.string().required(),
+  userRole: yup.string().required(),
   password: yup.string().required(),
   confirmPassword: yup
     .string()
@@ -35,7 +37,7 @@ const buildItems = (roles: Role[]) =>
 export const SignUp = () => {
   const history = useHistory();
 
-  const { data: roles, isLoading: rolesLoading } = useGetRoles();
+  const { data: roles } = useGetRoles();
   const { mutateAsync } = useSignUp();
 
   const { control, handleSubmit } = useForm<SignUpFormData>({
@@ -45,7 +47,10 @@ export const SignUp = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await mutateAsync(data);
+      await mutateAsync({
+        ...data,
+        userName: `${data.firstName} ${data.lastName}`,
+      });
       history.push(urls.logIn);
     } catch (e) {}
   });
@@ -66,7 +71,14 @@ export const SignUp = () => {
                 <div className={styles.inputContainer}>
                   <HookFormTextField
                     label={"Nombre"}
-                    name={"userName"}
+                    name={"firstName"}
+                    control={control}
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <HookFormTextField
+                    label={"Apellido"}
+                    name={"lastName"}
                     control={control}
                   />
                 </div>
@@ -97,7 +109,7 @@ export const SignUp = () => {
                 <div className={styles.inputContainer}>
                   {roles && (
                     <HookFormSelect
-                      name={"role"}
+                      name={"userRole"}
                       items={buildItems(roles)}
                       control={control}
                     />
@@ -123,6 +135,9 @@ export const SignUp = () => {
               </Grid>
             </div>
             <div className={styles.gridButton}>
+              <div>
+                <GoogleLogin />
+              </div>
               <div className={styles.buttonContainer}>
                 <RoundedButton type={"submit"}>Crear cuenta</RoundedButton>
               </div>

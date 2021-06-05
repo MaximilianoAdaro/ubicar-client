@@ -10,7 +10,7 @@ import { Select } from "../../forms/Select";
 import { StepButtons } from "../StepButtons/StepButtons";
 import React from "react";
 import styles from "./Characteristics.module.scss";
-import { useFetchPropertyStyles } from "../../../api/property/propertyInfo";
+import { useFetchPropertyStyles } from "../../../api/property";
 
 const requiredMessage = "Este campo es requerido";
 
