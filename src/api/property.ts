@@ -5,7 +5,7 @@ const propertyControllerApi = new PropertyControllerApi(undefined, "");
 
 export const useFetchProperties = () => {
   return useQuery("propertyPreview", async () => {
-    const { data } = await propertyControllerApi.getPropertiesUsingGET1(0);
+    const { data } = await propertyControllerApi.getPropertiesUsingGET(0);
     return data;
   });
 };

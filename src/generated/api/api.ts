@@ -258,50 +258,19 @@ export interface Contact {
 /**
  *
  * @export
- * @interface ContactReq
+ * @interface ContactDto
  */
-export interface ContactReq {
+export interface ContactDto {
   /**
    *
    * @type {string}
-   * @memberof ContactReq
+   * @memberof ContactDto
    */
   email: string;
   /**
    *
    * @type {string}
-   * @memberof ContactReq
-   */
-  id: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ContactReq
-   */
-  label: string;
-}
-/**
- *
- * @export
- * @interface ContactRes
- */
-export interface ContactRes {
-  /**
-   *
-   * @type {string}
-   * @memberof ContactRes
-   */
-  email: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ContactRes
-   */
-  id: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ContactRes
+   * @memberof ContactDto
    */
   label: string;
 }
@@ -362,10 +331,10 @@ export interface CreatePropertyDTO {
   constructionDate?: number;
   /**
    *
-   * @type {Array<ContactReq>}
+   * @type {Array<ContactDto>}
    * @memberof CreatePropertyDTO
    */
-  contacts: Array<ContactReq>;
+  contacts: Array<ContactDto>;
   /**
    *
    * @type {number}
@@ -410,10 +379,10 @@ export interface CreatePropertyDTO {
   materials: Array<string>;
   /**
    *
-   * @type {Array<OpenHouseDateReq>}
+   * @type {Array<OpenHouseDateDto>}
    * @memberof CreatePropertyDTO
    */
-  openHouse: Array<OpenHouseDateReq>;
+  openHouse: Array<OpenHouseDateDto>;
   /**
    *
    * @type {string}
@@ -778,64 +747,27 @@ export interface OpenHouseDate {
 /**
  *
  * @export
- * @interface OpenHouseDateReq
+ * @interface OpenHouseDateDto
  */
-export interface OpenHouseDateReq {
+export interface OpenHouseDateDto {
   /**
    *
    * @type {string}
-   * @memberof OpenHouseDateReq
+   * @memberof OpenHouseDateDto
    */
   day: string;
   /**
    *
    * @type {LocalTimeReq}
-   * @memberof OpenHouseDateReq
+   * @memberof OpenHouseDateDto
    */
   finalTime: LocalTimeReq;
   /**
    *
-   * @type {string}
-   * @memberof OpenHouseDateReq
-   */
-  id: string;
-  /**
-   *
    * @type {LocalTimeReq}
-   * @memberof OpenHouseDateReq
+   * @memberof OpenHouseDateDto
    */
   initialTime: LocalTimeReq;
-}
-/**
- *
- * @export
- * @interface OpenHouseDateRes
- */
-export interface OpenHouseDateRes {
-  /**
-   *
-   * @type {string}
-   * @memberof OpenHouseDateRes
-   */
-  day: string;
-  /**
-   *
-   * @type {LocalTimeRes}
-   * @memberof OpenHouseDateRes
-   */
-  finalTime: LocalTimeRes;
-  /**
-   *
-   * @type {string}
-   * @memberof OpenHouseDateRes
-   */
-  id: string;
-  /**
-   *
-   * @type {LocalTimeRes}
-   * @memberof OpenHouseDateRes
-   */
-  initialTime: LocalTimeRes;
 }
 /**
  *
@@ -1722,7 +1654,7 @@ export interface User {
    * @type {string}
    * @memberof User
    */
-  password: string;
+  password?: string;
   /**
    *
    * @type {string}
@@ -1769,7 +1701,7 @@ export interface UserCreationDTO {
    * @type {string}
    * @memberof UserCreationDTO
    */
-  password: string;
+  password?: string;
   /**
    *
    * @type {string}
@@ -1918,11 +1850,11 @@ export const AuthControllerApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary getProperties
+     * @summary getRoles
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getPropertiesUsingGET: async (options: any = {}): Promise<RequestArgs> => {
+    getRolesUsingGET: async (options: any = {}): Promise<RequestArgs> => {
       const localVarPath = `/auth/roles`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2185,17 +2117,17 @@ export const AuthControllerApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary getProperties
+     * @summary getRoles
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async getPropertiesUsingGET(
+    async getRolesUsingGET(
       options?: any
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleDTO>>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.getPropertiesUsingGET(options);
+        await localVarAxiosParamCreator.getRolesUsingGET(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -2328,13 +2260,13 @@ export const AuthControllerApiFactory = function (
     },
     /**
      *
-     * @summary getProperties
+     * @summary getRoles
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getPropertiesUsingGET(options?: any): AxiosPromise<Array<RoleDTO>> {
+    getRolesUsingGET(options?: any): AxiosPromise<Array<RoleDTO>> {
       return localVarFp
-        .getPropertiesUsingGET(options)
+        .getRolesUsingGET(options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -2415,12 +2347,12 @@ export interface AuthControllerApiInterface {
 
   /**
    *
-   * @summary getProperties
+   * @summary getRoles
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof AuthControllerApiInterface
    */
-  getPropertiesUsingGET(options?: any): AxiosPromise<Array<RoleDTO>>;
+  getRolesUsingGET(options?: any): AxiosPromise<Array<RoleDTO>>;
 
   /**
    *
@@ -2495,14 +2427,14 @@ export class AuthControllerApi
 
   /**
    *
-   * @summary getProperties
+   * @summary getRoles
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof AuthControllerApi
    */
-  public getPropertiesUsingGET(options?: any) {
+  public getRolesUsingGET(options?: any) {
     return AuthControllerApiFp(this.configuration)
-      .getPropertiesUsingGET(options)
+      .getRolesUsingGET(options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -4313,12 +4245,12 @@ export const PropertyControllerApiAxiosParamCreator = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getPropertiesUsingGET1: async (
+    getPropertiesUsingGET: async (
       page: number,
       options: any = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'page' is not null or undefined
-      assertParamExists("getPropertiesUsingGET1", "page", page);
+      assertParamExists("getPropertiesUsingGET", "page", page);
       const localVarPath = `/preview`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4426,7 +4358,7 @@ export const PropertyControllerApiFp = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async getPropertiesUsingGET1(
+    async getPropertiesUsingGET(
       page: number,
       options?: any
     ): Promise<
@@ -4436,7 +4368,7 @@ export const PropertyControllerApiFp = function (
       ) => AxiosPromise<PagePropertyPreviewDTO>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.getPropertiesUsingGET1(page, options);
+        await localVarAxiosParamCreator.getPropertiesUsingGET(page, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -4497,12 +4429,12 @@ export const PropertyControllerApiFactory = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getPropertiesUsingGET1(
+    getPropertiesUsingGET(
       page: number,
       options?: any
     ): AxiosPromise<PagePropertyPreviewDTO> {
       return localVarFp
-        .getPropertiesUsingGET1(page, options)
+        .getPropertiesUsingGET(page, options)
         .then((request) => request(axios, basePath));
     },
   };
@@ -4550,7 +4482,7 @@ export interface PropertyControllerApiInterface {
    * @throws {RequiredError}
    * @memberof PropertyControllerApiInterface
    */
-  getPropertiesUsingGET1(
+  getPropertiesUsingGET(
     page: number,
     options?: any
   ): AxiosPromise<PagePropertyPreviewDTO>;
@@ -4610,9 +4542,9 @@ export class PropertyControllerApi
    * @throws {RequiredError}
    * @memberof PropertyControllerApi
    */
-  public getPropertiesUsingGET1(page: number, options?: any) {
+  public getPropertiesUsingGET(page: number, options?: any) {
     return PropertyControllerApiFp(this.configuration)
-      .getPropertiesUsingGET1(page, options)
+      .getPropertiesUsingGET(page, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

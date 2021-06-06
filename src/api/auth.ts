@@ -17,7 +17,7 @@ export const useSignUp = () => {
 
 export const useGetRoles = () => {
   return useQuery("roles", async () => {
-    const { data } = await authControllerApi.getPropertiesUsingGET();
+    const { data } = await authControllerApi.getRolesUsingGET();
     return data;
   });
 };
@@ -55,26 +55,6 @@ export const useGoogleSignIn = () => {
     }
   );
 };
-
-// export type ChangePasswordReq = {
-//   id: string;
-//   oldPassword: string;
-//   newPassword: string;
-// };
-//
-// export type ChangePasswordRes = {};
-//
-// export const useChangePassword = () => {
-//   return useMutation<ChangePasswordRes, Error, ChangePasswordReq>(
-//     async (data) => {
-//       const { data: changePasswordRes } = await axios.put(
-//         "/user/users/editPassword",
-//         data
-//       );
-//       return changePasswordRes;
-//     }
-//   );
-// };
 
 export const useLoggedUser = () => {
   return useQuery(
