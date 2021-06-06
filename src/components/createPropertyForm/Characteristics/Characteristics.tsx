@@ -75,7 +75,7 @@ export const Characteristics = () => {
                 <div className={styles.inputContainer}>
                   <CharacteristicsTextInput
                     name="totalSurface"
-                    label="Superficie total (m2)"
+                    label="Superficie total (m²)"
                     defaultValue={defaults.totalSurface.toString()}
                   />
                 </div>
@@ -85,7 +85,7 @@ export const Characteristics = () => {
                 <div className={styles.inputContainer}>
                   <CharacteristicsTextInput
                     name="coveredSurface"
-                    label="Superficie cubierta (m2)"
+                    label="Superficie cubierta (m²)"
                     defaultValue={defaults.coveredSurface.toString()}
                   />
                 </div>
