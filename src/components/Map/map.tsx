@@ -24,6 +24,7 @@ import {
 import { XYZ } from "ol/source";
 import { MapView } from "../../store/slices/map/mapSlice";
 import LayerSwitcher from "ol-layerswitcher";
+import { PropertiesLayerWithContext } from "./Layers/Vector/PropertiesLayer";
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
@@ -119,6 +120,7 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
             <HospitalLayer />
             <PoliceLayer />
             <PrisonLayer />
+            <PropertiesLayerWithContext />
             <IndustrialAreaLayers />
           </MapContext.Provider>
         )}
