@@ -1,17 +1,18 @@
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Container, Typography } from "@material-ui/core";
+import { Container, Grid, Typography, Link as MLink } from "@material-ui/core";
 import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import styles from "./LogIn.module.scss";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import GoogleLogin from "./GoogleLogin";
 import { DividerWithText } from "../../components/common/DividerWithText";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
 import { selectRedirectPath } from "../../store/slices/session";
 import { useSignIn } from "../../api/auth";
+import { urls } from "../../constants";
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -67,8 +68,15 @@ export const LogIn = () => {
               <RoundedButton type={"submit"}>
                 {isLoading ? "..." : "Entrar"}
               </RoundedButton>
+              <div className={styles.link}>
+                <Link to={urls.signUp}>
+                  <MLink variant="body2" component={"span"}>
+                    {"No tienes una cuenta? Registrate"}
+                  </MLink>
+                </Link>
+              </div>
             </div>
-            <div className="mt-3">
+            <div className="mt-2">
               <DividerWithText>O</DividerWithText>
             </div>
           </form>

@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Container, Grid, Link as MLink, Typography } from "@material-ui/core";
 import styles from "./SignUp.module.scss";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -9,7 +9,7 @@ import { HookFormSelect } from "../../components/common/forms/HookFormSelect";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import { useGetRoles, useSignUp } from "../../api/auth";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { urls } from "../../constants";
 import { GoogleLogin } from "../logIn/GoogleLogin";
 import { RoleDTO } from "../../generated/api";
@@ -135,12 +135,23 @@ export const SignUp = () => {
                 </div>
               </Grid>
             </div>
-            <div className={styles.gridButton}>
-              <div>
-                <GoogleLogin />
+            <div className={styles.buttonSection}>
+              <div className={styles.gridButton}>
+                <div>
+                  <GoogleLogin />
+                </div>
+                <div className={styles.buttonContainer}>
+                  <RoundedButton type={"submit"}>Crear cuenta</RoundedButton>
+                </div>
               </div>
-              <div className={styles.buttonContainer}>
-                <RoundedButton type={"submit"}>Crear cuenta</RoundedButton>
+              <div>
+                <div className={styles.link}>
+                  <Link to={urls.logIn}>
+                    <MLink variant="body2" component={"span"}>
+                      {"Ya tienes una cuenta? Entra"}
+                    </MLink>
+                  </Link>
+                </div>
               </div>
             </div>
           </Grid>

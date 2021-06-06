@@ -11,8 +11,9 @@ import styles from "./Confirmation.module.scss";
 import { useHistory } from "react-router-dom";
 import { useCreateProperty } from "../../../api/property";
 import { urls } from "../../../constants";
+import { CreatePropertyDTO } from "../../../generated/api";
 
-const createRequestData = (data: CreatePropertyState) => ({
+const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
@@ -41,9 +42,9 @@ const createRequestData = (data: CreatePropertyState) => ({
   links: data.youtubeLinks,
   contacts: data.contacts,
   openHouse: data.openHouses.map(({ day, initialTime, finalTime }) => ({
-    day: new Date(day),
-    initialTime,
-    finalTime,
+    day,
+    initialTime: initialTime as any,
+    finalTime: finalTime as any,
   })),
   comments: data.additional.description ?? "",
 });
@@ -56,7 +57,7 @@ export const Confirmation = () => {
 
   const handleSend = async () => {
     try {
-      await mutateAsync(createRequestData(createPropertyState) as any);
+      await mutateAsync(createRequestData(createPropertyState));
       history.push(urls.home);
     } catch (e) {
       throw Error;
