@@ -47,7 +47,7 @@ export function GoogleLogin() {
               name: firebaseUser.displayName ?? "",
               email: firebaseUser.email ?? "",
             },
-            idToken,
+            token: idToken,
           });
 
           dispatch(actions.session.setUser(user));

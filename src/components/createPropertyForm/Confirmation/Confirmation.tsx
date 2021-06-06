@@ -10,14 +10,9 @@ import styles from "./Confirmation.module.scss";
 
 import { useHistory } from "react-router-dom";
 import { urls } from "../../../constants";
-import {
-  CreatePropertyRequestData,
-  useCreateProperty,
-} from "../../../api/property";
+import { useCreateProperty } from "../../../api/property";
 
-const createRequestData = (
-  data: CreatePropertyState
-): CreatePropertyRequestData => ({
+const createRequestData = (data: CreatePropertyState) => ({
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
@@ -61,7 +56,7 @@ export const Confirmation = () => {
 
   const handleSend = async () => {
     try {
-      await mutateAsync(createRequestData(createPropertyState));
+      await mutateAsync(createRequestData(createPropertyState) as any);
       history.push(urls.home);
     } catch (e) {
       throw Error;

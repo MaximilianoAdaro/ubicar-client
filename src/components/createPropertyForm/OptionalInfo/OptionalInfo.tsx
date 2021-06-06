@@ -9,7 +9,7 @@ import {
   useFetchPropertyAmenities,
   useFetchPropertyMaterials,
   useFetchPropertySecurities,
-} from "../../../api/property";
+} from "../../../api/propertyOptionals";
 
 export const OptionalInfo = () => {
   const defaults = useAppSelector(
