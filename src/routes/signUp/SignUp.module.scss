@@ -39,20 +39,28 @@
   margin-top: 110px;
 }
 
-.gridButton {
-  margin-top: 2em;
+.buttonSection {
+  margin-right: 13em;
   width: 100%;
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.gridButton {
   display: flex;
   flex-direction: row;
   align-items: baseline;
   justify-content: flex-end;
+  gap: 1.4em;
 }
 
 .buttonContainer {
-  margin-right: 13em;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  width: 15em;
-  padding: 1em;
+  width: 13em;
+  //padding: 1em;
 }
