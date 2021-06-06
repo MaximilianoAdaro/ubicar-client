@@ -72,7 +72,7 @@ const WorkInProgress = () => {
             marginBottom: 20,
           }}
         >
-          <h4>Bienvenido {user.userName}</h4>
+          <h4>Bienvenido {firebase.auth().currentUser?.displayName}</h4>
         </div>
       )}
       <h1>Ubicar in progress...</h1>
