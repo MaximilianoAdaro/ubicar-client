@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { MdSearch as SearchIcon } from "react-icons/md";
+import { useLoggedUser } from "../../api/auth";
 
 export function ListingFilters() {
   // const [city, setCity] = useState();
@@ -35,6 +36,8 @@ export function ListingFilters() {
   const openSqMtsPopover = (event: any) => {
     setAnchorSqMts(event.currentTarget);
   };
+
+  const { data: user } = useLoggedUser();
 
   return (
     <StylesProvider injectFirst>
@@ -84,6 +87,11 @@ export function ListingFilters() {
         >
           Metros Cuadrados
         </Button>
+        <div style={{ marginLeft: "auto", marginRight: 0 }}>
+          {user && (
+            <h5 style={{ color: "dimgrey", margin: 0 }}>{user.userName}</h5>
+          )}
+        </div>
         {/*<Button className={styles.filtersButton} size="small">*/}
         {/*  Otros*/}
         {/*</Button>*/}
@@ -151,7 +159,13 @@ export function ListingFilters() {
         onClose={() => setAnchorRooms(null)}
       >
         <Grid className={styles.popoversTitles}>Habitaciones</Grid>
-        <Grid className={styles.roomsBathsButtons}>
+        <Grid
+          className={styles.roomsBathsButtons}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <Button>1+</Button>
           <Button>2+</Button>
           <Button>3+</Button>
@@ -172,7 +186,13 @@ export function ListingFilters() {
         onClose={() => setAnchorBaths(null)}
       >
         <Grid className={styles.popoversTitles}>Baños</Grid>
-        <Grid className={styles.roomsBathsButtons}>
+        <Grid
+          className={styles.roomsBathsButtons}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <Button>1+</Button>
           <Button>2+</Button>
           <Button>3+</Button>
