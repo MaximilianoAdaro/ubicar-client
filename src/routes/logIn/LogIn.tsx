@@ -35,10 +35,6 @@ export const LogIn = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const signInRes = await mutateAsync(data);
-      // const signInRes = {
-      //   email: "asdf",
-      //   id: 86896,
-      // };
       dispatch(actions.session.setUser(signInRes));
       history.push(redirectPath);
     } catch (e) {}

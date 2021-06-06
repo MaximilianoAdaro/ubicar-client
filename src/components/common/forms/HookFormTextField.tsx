@@ -20,7 +20,7 @@ export const HookFormTextField = <T,>({
   } = useController({
     control,
     name,
-    defaultValue: defaultValue as any,
+    defaultValue,
   });
   return (
     <div>

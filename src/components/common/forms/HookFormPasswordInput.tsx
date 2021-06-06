@@ -29,7 +29,7 @@ export const HookFormPasswordInput = <T,>({
   } = useController({
     control,
     name,
-    defaultValue: defaultValue as any,
+    defaultValue,
   });
   const [isVisible, setIsVisible] = useState(false);
   return (

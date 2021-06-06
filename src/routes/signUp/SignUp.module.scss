@@ -2,7 +2,6 @@
 
 .titleContainer {
   margin-top: 2em;
-  margin-bottom: 2em;
 }
 
 .title {
@@ -20,13 +19,6 @@
   padding: 20px;
 }
 
-.inputs {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
 .inputContainer {
   margin-top: 2em;
 }
@@ -40,8 +32,7 @@
 }
 
 .gridButton {
-  margin-top: 2em;
-  width: 100%;
+  margin-top: 40px;
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -49,7 +40,7 @@
 }
 
 .buttonContainer {
-  margin-right: 13em;
+  margin-right: 30px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

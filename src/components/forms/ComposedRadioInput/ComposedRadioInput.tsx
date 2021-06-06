@@ -16,7 +16,7 @@ const ComposedRadioInput = <T,>({ name, options }: RadioInputProps<T>) => {
   const { field } = useController({
     name,
     control,
-    defaultValue: options?.[0]?.value as any,
+    defaultValue: options?.[0]?.value,
   });
 
   return (
@@ -30,6 +30,7 @@ const ComposedRadioInput = <T,>({ name, options }: RadioInputProps<T>) => {
   );
 };
 
-export const createCustomRadioInput = <T,>() => (props: RadioInputProps<T>) => (
-  <ComposedRadioInput<T> {...props} />
-);
+export const createCustomRadioInput =
+  <T,>() =>
+  (props: RadioInputProps<T>) =>
+    <ComposedRadioInput<T> {...props} />;

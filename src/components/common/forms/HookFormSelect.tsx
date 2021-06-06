@@ -23,7 +23,7 @@ export const HookFormSelect = <ValueType extends number | string, T>({
   } = useController({
     control,
     name,
-    defaultValue: items?.[0]?.value as any,
+    defaultValue: items?.[0]?.value,
   });
   return (
     <FormControl fullWidth variant="outlined">
