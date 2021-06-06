@@ -1,15 +1,25 @@
+@import "src/styles/common";
+
 .navBarContainer {
-  background: #80979c;
   height: 3.5em;
   text-align: center;
-  padding-left: 10%;
-  padding-right: 10%;
+  //background: rgba(205, 221, 229, 0.68);
+}
+
+.imageLogo {
+  height: 1.75em;
+  padding-left: 5%;
+  margin-right: 0.5em;
 }
 
 .navBarLogo {
   font-weight: bold;
-  margin-top: 0.45em;
   font-size: 1.5em;
+  margin-top: 0.25em;
+}
+
+.navBarLogo p {
+  margin-top: 0.1em;
 }
 
 .navBarOptions {
@@ -22,8 +32,9 @@
 
 .navBarTags {
   text-decoration: none;
-  color: black;
+  color: $theme-goldish;
   margin-top: 0.6em;
+  font-weight: bold;
 }
 .navBarTags:hover {
   text-decoration: none;
@@ -36,7 +47,4 @@
 
 .gridTags {
   margin-top: 0.15em;
-}
-.myAccountButton {
-  text-decoration: none;
 }

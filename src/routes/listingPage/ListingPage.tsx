@@ -8,7 +8,7 @@ import { useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import { MapComponent } from "../../components/Map/map";
 import { NavBar } from "../../components/navbar/NavBar";
-import { NavBar2 } from "../../components/navbar/NavBar2";
+import { Footer } from "../../components/footer/Footer";
 
 export function ListingPage() {
   const data = useFetchProperties();
@@ -18,8 +18,6 @@ export function ListingPage() {
   return (
     <div>
       <NavBar />
-      <Grid>..</Grid>
-      <NavBar2 />
       <ListingFilters />
       <Grid container className={styles.mapAndProperties}>
         <Grid item xl={9} sm={8} className={styles.map}>
@@ -35,6 +33,7 @@ export function ListingPage() {
             ))}
         </Grid>
       </Grid>
+      <Footer />
     </div>
   );
 }

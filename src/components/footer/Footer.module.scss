@@ -1,0 +1,32 @@
+@import "src/styles/common";
+
+.footerContainer {
+  //background: #80979c;
+  padding: 1em 5%;
+  border-top: 3px solid $theme-goldish;
+}
+
+.footerContainer h4 {
+  font-weight: bold;
+}
+
+.footerUbicar {
+  padding-right: 5em;
+}
+
+.footerUbicar p {
+  font-size: 1.2em;
+}
+
+.footerContact p {
+  font-size: 1.2em;
+  margin-bottom: 1.5em;
+}
+
+.footerOptions p {
+  padding-top: 0.5em;
+}
+
+.footerOptions {
+  margin-left: 2em;
+}
