@@ -23,13 +23,13 @@ export const HookFormSelect = <ValueType extends number | string, T>({
   } = useController({
     control,
     name,
-    defaultValue: items?.[0]?.value,
+    defaultValue: items?.[0]?.value as any,
   });
   return (
     <FormControl fullWidth variant="outlined">
       <Select {...field} error={invalid}>
         {items.map(({ label, value }) => (
-          <MenuItem key={`${label} ${value} ${Math.random()}`} value={value}>
+          <MenuItem key={value} value={value}>
             {label}
           </MenuItem>
         ))}

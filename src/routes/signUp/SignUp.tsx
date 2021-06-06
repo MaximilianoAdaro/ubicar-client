@@ -8,16 +8,18 @@ import { HookFormDatePicker } from "../../components/common/forms/HookFormDatePi
 import { HookFormSelect } from "../../components/common/forms/HookFormSelect";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
+import { useGetRoles, useSignUp } from "../../api/auth";
+import { useHistory } from "react-router-dom";
+import { urls } from "../../constants";
+import { GoogleLogin } from "../logIn/GoogleLogin";
+import { RoleDTO } from "../../generated/api";
 
 const schema = yup.object({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
   birthDay: yup.date().required(),
-  userType: yup
-    .string()
-    .oneOf(["normal", "inspector", "investor", "realState"])
-    .required(),
+  userRole: yup.string().required(),
   password: yup.string().required(),
   confirmPassword: yup
     .string()
@@ -27,21 +29,31 @@ const schema = yup.object({
 
 type SignUpFormData = yup.InferType<typeof schema>;
 
-const items = [
-  { value: "normal", label: "Comprador/Vendedor" },
-  { value: "inspector", label: "Inspector" },
-  { value: "investor", label: "Inversor" },
-  { value: "realState", label: "Inmobiliaria" },
-];
+const buildItems = (roles: RoleDTO[]) =>
+  roles.map(({ title, id }) => ({
+    value: id,
+    label: title,
+  }));
 
 export const SignUp = () => {
+  const history = useHistory();
+
+  const { data: roles } = useGetRoles();
+  const { mutateAsync } = useSignUp();
+
   const { control, handleSubmit } = useForm<SignUpFormData>({
     resolver: yupResolver(schema),
     mode: "onBlur",
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await mutateAsync({
+        ...data,
+        userName: `${data.firstName} ${data.lastName}`,
+      });
+      history.push(urls.logIn);
+    } catch (e) {}
   });
 
   return (
@@ -49,14 +61,13 @@ export const SignUp = () => {
       <Container>
         <form onSubmit={onSubmit}>
           <Grid container spacing={3}>
-            <Grid xs={12} className={styles.titleContainer}>
+            <Grid item xs={12} className={styles.titleContainer}>
               <Typography variant={"h3"} className={styles.title}>
                 Registrate
               </Typography>
             </Grid>
-            <Grid container xs={12} spacing={3} className={styles.inputs}>
-              <Grid xs />
-              <Grid xs={4} className={styles.column}>
+            <div className={styles.inputs}>
+              <Grid item xs={4} className={styles.column}>
                 <Typography variant={"h5"}>Datos personales</Typography>
                 <div className={styles.inputContainer}>
                   <HookFormTextField
@@ -72,7 +83,6 @@ export const SignUp = () => {
                     control={control}
                   />
                 </div>
-                <Grid xs={3} />
                 <Grid xs className={styles.emailAndBirthday}>
                   <div className={styles.inputContainer}>
                     <HookFormTextField
@@ -90,14 +100,21 @@ export const SignUp = () => {
                   </div>
                 </Grid>
               </Grid>
-              <Grid xs={4} className={styles.column}>
+              <div
+                style={{
+                  width: "2em",
+                }}
+              />
+              <Grid item xs={4} className={styles.column}>
                 <Typography variant={"h5"}>Tipo de usuario</Typography>
                 <div className={styles.inputContainer}>
-                  <HookFormSelect
-                    name={"userType"}
-                    items={items}
-                    control={control}
-                  />
+                  {roles && (
+                    <HookFormSelect
+                      name={"userRole"}
+                      items={buildItems(roles)}
+                      control={control}
+                    />
+                  )}
                 </div>
                 <div className={styles.password}>
                   <Typography variant={"h5"}>Contraseña</Typography>
@@ -117,12 +134,15 @@ export const SignUp = () => {
                   </div>
                 </div>
               </Grid>
-            </Grid>
-            <Grid container xs={12} className={styles.gridButton}>
+            </div>
+            <div className={styles.gridButton}>
+              <div>
+                <GoogleLogin />
+              </div>
               <div className={styles.buttonContainer}>
                 <RoundedButton type={"submit"}>Crear cuenta</RoundedButton>
               </div>
-            </Grid>
+            </div>
           </Grid>
         </form>
       </Container>

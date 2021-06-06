@@ -7,21 +7,19 @@ import {
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Confirmation.module.scss";
-import {
-  CreatePropertyRequestData,
-  useCreateProperty,
-} from "../../../api/property/create";
 
-const createRequestData = (
-  data: CreatePropertyState
-): CreatePropertyRequestData => ({
+import { useHistory } from "react-router-dom";
+import { useCreateProperty } from "../../../api/property";
+import { urls } from "../../../constants";
+
+const createRequestData = (data: CreatePropertyState) => ({
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
   condition: data.operationType,
-  type: data.propertyType!,
+  type: data.propertyType ?? "",
   address: {
-    town_id: data.addressDropdowns.town!,
+    town_id: data.addressDropdowns.town ?? "",
     department: data.address.department,
     number: data.address.number,
     postalCode: data.address.postalCode,
@@ -32,7 +30,7 @@ const createRequestData = (
   squareFoot: data.characteristics.totalSurface,
   levels: data.characteristics.floors,
   constructionDate: data.characteristics.constructionYear,
-  style: data.style!,
+  style: data.style ?? "",
   rooms: data.characteristics.rooms,
   fullBaths: data.characteristics.fullBaths,
   toilets: data.characteristics.toilets,
@@ -52,11 +50,17 @@ const createRequestData = (
 
 export const Confirmation = () => {
   const dispatch = useAppDispatch();
-  const { mutate } = useCreateProperty();
+  const history = useHistory();
+  const { mutateAsync } = useCreateProperty();
   const createPropertyState = useAppSelector(selectCreatePropertyState);
 
-  const handleSend = () => {
-    mutate(createRequestData(createPropertyState));
+  const handleSend = async () => {
+    try {
+      await mutateAsync(createRequestData(createPropertyState) as any);
+      history.push(urls.home);
+    } catch (e) {
+      throw Error;
+    }
   };
 
   const handlePreviousButton = () => {

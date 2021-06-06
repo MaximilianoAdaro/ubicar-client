@@ -10,8 +10,11 @@ import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { initializeFirebase } from "./config/FirebaseInitialize";
 
 const queryClient = new QueryClient();
+
+initializeFirebase();
 
 ReactDOM.render(
   <React.StrictMode>

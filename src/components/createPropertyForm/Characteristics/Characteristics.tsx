@@ -10,7 +10,7 @@ import { Select } from "../../forms/Select";
 import { StepButtons } from "../StepButtons/StepButtons";
 import React from "react";
 import styles from "./Characteristics.module.scss";
-import { useFetchPropertyStyles } from "../../../api/property/propertyInfo";
+import { useFetchPropertyStyles } from "../../../api/propertyOptionals";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -28,8 +28,10 @@ const schema = yup.object({
 
 export type CharacteristicsFormData = yup.InferType<typeof schema>;
 
-const CharacteristicsTextInput = createCustomTextInput<CharacteristicsFormData>();
-const CharacteristicsTextArea = createCustomTextInputArea<CharacteristicsFormData>();
+const CharacteristicsTextInput =
+  createCustomTextInput<CharacteristicsFormData>();
+const CharacteristicsTextArea =
+  createCustomTextInputArea<CharacteristicsFormData>();
 
 export const Characteristics = () => {
   const defaults = useAppSelector(
