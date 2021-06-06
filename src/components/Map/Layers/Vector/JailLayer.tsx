@@ -7,14 +7,14 @@ import { MapContext } from "../../map";
 import { IMapContext } from "../../maptypes";
 import { GeoJSON } from "ol/format";
 
-class PoliceLayer extends React.PureComponent<TVectorLayerComponentProps> {
+class JailLayer extends React.PureComponent<TVectorLayerComponentProps> {
   layer: VectorLayer;
   source: VectorSource;
   state = { visible: false };
 
   componentDidMount() {
     this.source = new VectorSource({
-      url: "./geojson/Edificio_de_seguridad.geojson",
+      url: "./geojson/Jails.geojson",
       format: new GeoJSON(),
     });
     const style = new Style({
@@ -26,8 +26,8 @@ class PoliceLayer extends React.PureComponent<TVectorLayerComponentProps> {
         color: "rgba(0, 100, 240, 0.8)",
       }),
       image: new Icon({
-        src: "./icons/police.png",
-        scale: 30 / 1024,
+        src: "./icons/prison.png",
+        scale: 300 / 1024,
         anchor: [1, 1],
       }),
       text: new Text(),
@@ -41,7 +41,7 @@ class PoliceLayer extends React.PureComponent<TVectorLayerComponentProps> {
       },
     });
 
-    this.layer.set("title", "Estaciones Policiales");
+    this.layer.set("title", "Carceles");
     this.props.map.addLayer(this.layer);
   }
 
@@ -63,12 +63,12 @@ class PoliceLayer extends React.PureComponent<TVectorLayerComponentProps> {
   }
 }
 
-export const PoliceLayerWithContext = (props: TVectorLayerProps) => {
+export const CarcelesLayerWithContext = (props: TVectorLayerProps) => {
   return (
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          return <PoliceLayer {...props} map={mapContext.map} />;
+          return <JailLayer {...props} map={mapContext.map} />;
         }
       }}
     </MapContext.Consumer>
