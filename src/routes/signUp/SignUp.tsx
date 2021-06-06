@@ -18,7 +18,7 @@ const schema = yup.object({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
-  birthDay: yup.date().required(),
+  birthDate: yup.date().required(),
   userRole: yup.string().required(),
   password: yup.string().required(),
   confirmPassword: yup
@@ -94,7 +94,7 @@ export const SignUp = () => {
                   <div className={styles.inputContainer}>
                     <HookFormDatePicker
                       label={"Fecha de nacimiento"}
-                      name={"birthDay"}
+                      name={"birthDate"}
                       control={control}
                     />
                   </div>

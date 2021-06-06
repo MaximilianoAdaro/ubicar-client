@@ -11,12 +11,13 @@ import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
 import { NotFound } from "../components/NotFound";
+import { useGetLoggedUsingGET } from "../api/generated/auth-controller/auth-controller";
 
 export default function App() {
   const session = useAppSelector(selectSession);
   const dispatch = useAppDispatch();
 
-  const { data: user, isLoading } = useLoggedUser();
+  const { data: user, isLoading } = useGetLoggedUsingGET();
 
   if (isLoading) return <span>Loading...</span>;
   if (user) dispatch(actions.session.setUser(user));
