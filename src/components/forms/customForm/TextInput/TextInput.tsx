@@ -29,7 +29,7 @@ export const TextInput = <T,>({
   } = useController({
     name,
     control,
-    defaultValue,
+    defaultValue: defaultValue as any,
   });
   return (
     <Form.Group>

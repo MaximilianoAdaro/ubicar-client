@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../entities/entities";
 import { RootState } from "../store";
+import { UserDTO } from "../../generated/api";
 
 // Define a type for the slice state
 interface SessionState {
-  activeUser: User | null;
+  activeUser: UserDTO | null;
   isAuthenticated: boolean;
   redirectPath: string;
 }
@@ -21,7 +21,7 @@ export const counterSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User | null>) => {
+    setUser: (state, action: PayloadAction<UserDTO | null>) => {
       state.activeUser = action.payload;
       state.isAuthenticated = action.payload !== null;
     },

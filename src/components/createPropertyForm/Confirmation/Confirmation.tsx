@@ -9,8 +9,8 @@ import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Confirmation.module.scss";
 
 import { useHistory } from "react-router-dom";
-import { urls } from "../../../constants";
 import { useCreateProperty } from "../../../api/property";
+import { urls } from "../../../constants";
 
 const createRequestData = (data: CreatePropertyState) => ({
   title: data.basicInfo.title,

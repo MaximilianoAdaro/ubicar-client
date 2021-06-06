@@ -10,8 +10,7 @@ import {
   StylesProvider,
   TextField,
 } from "@material-ui/core";
-// import SearchIcon from "@material-ui/icons/Search";
-import { MdSearch as SearchIcon } from "react-icons/md/index";
+import { MdSearch as SearchIcon } from "react-icons/md";
 
 export function ListingFilters() {
   // const [city, setCity] = useState();
