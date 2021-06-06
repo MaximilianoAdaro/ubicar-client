@@ -81,14 +81,14 @@ export const BasicInfo = () => {
                   <Col>
                     <BasicInfoTextInput
                       name="price"
-                      label="Precio"
+                      label="Precio (ARS)"
                       defaultValue={defaults.price.toString()}
                     />
                   </Col>
                   <Col>
                     <BasicInfoTextInput
                       name="expenses"
-                      label="Expensas"
+                      label="Expensas (ARS)"
                       defaultValue={defaults.expenses.toString()}
                     />
                   </Col>
