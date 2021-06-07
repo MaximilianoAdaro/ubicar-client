@@ -1,17 +1,28 @@
 import styles from "./ListingHouse.module.scss";
 import { Image } from "react-bootstrap";
-import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { Tooltip } from "@material-ui/core";
+import pluralize from "pluralize";
+import { useHistory } from "react-router-dom";
+import { urls } from "../../constants";
+import { PropertyPreviewDTO } from "../../generated/api";
 
-export function ListingHouse(props: any) {
+interface ListingHouseProps {
+  house: PropertyPreviewDTO;
+}
+
+export function ListingHouse(props: ListingHouseProps) {
+  const history = useHistory();
   const house = props.house;
   const houseAddress = house.address;
   const houseStreetNumber = `${houseAddress.street} ${houseAddress.number}`;
-  const pluralize = require("pluralize");
   const baths = pluralize("baño", house.fullBaths);
   return (
-    <Grid container className={styles.propertyInformation}>
+    <Grid
+      container
+      className={styles.propertyInformation}
+      onClick={() => history.push(urls.viewProperty.byId(house.id))}
+    >
       <Grid xs={6}>
         <Image
           className={styles.propertiesImages}

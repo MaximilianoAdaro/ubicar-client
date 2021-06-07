@@ -1636,6 +1636,12 @@ export interface User {
    * @type {string}
    * @memberof User
    */
+  birthDate?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof User
+   */
   email: string;
   /**
    *
@@ -1690,6 +1696,12 @@ export enum UserUserOriginEnum {
  * @interface UserCreationDTO
  */
 export interface UserCreationDTO {
+  /**
+   *
+   * @type {string}
+   * @memberof UserCreationDTO
+   */
+  birthDate?: string;
   /**
    *
    * @type {string}
@@ -4285,6 +4297,52 @@ export const PropertyControllerApiAxiosParamCreator = function (
         options: localVarRequestOptions,
       };
     },
+    /**
+     *
+     * @summary getProperty
+     * @param {string} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPropertyUsingGET: async (
+      id: string,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("getPropertyUsingGET", "id", id);
+      const localVarPath = `/property/{id}`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
   };
 };
 
@@ -4376,6 +4434,28 @@ export const PropertyControllerApiFp = function (
         configuration
       );
     },
+    /**
+     *
+     * @summary getProperty
+     * @param {string} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getPropertyUsingGET(
+      id: string,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PropertyDTO>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getPropertyUsingGET(id, options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
   };
 };
 
@@ -4437,6 +4517,18 @@ export const PropertyControllerApiFactory = function (
         .getPropertiesUsingGET(page, options)
         .then((request) => request(axios, basePath));
     },
+    /**
+     *
+     * @summary getProperty
+     * @param {string} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPropertyUsingGET(id: string, options?: any): AxiosPromise<PropertyDTO> {
+      return localVarFp
+        .getPropertyUsingGET(id, options)
+        .then((request) => request(axios, basePath));
+    },
   };
 };
 
@@ -4486,6 +4578,16 @@ export interface PropertyControllerApiInterface {
     page: number,
     options?: any
   ): AxiosPromise<PagePropertyPreviewDTO>;
+
+  /**
+   *
+   * @summary getProperty
+   * @param {string} id id
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof PropertyControllerApiInterface
+   */
+  getPropertyUsingGET(id: string, options?: any): AxiosPromise<PropertyDTO>;
 }
 
 /**
@@ -4545,6 +4647,20 @@ export class PropertyControllerApi
   public getPropertiesUsingGET(page: number, options?: any) {
     return PropertyControllerApiFp(this.configuration)
       .getPropertiesUsingGET(page, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary getProperty
+   * @param {string} id id
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof PropertyControllerApi
+   */
+  public getPropertyUsingGET(id: string, options?: any) {
+    return PropertyControllerApiFp(this.configuration)
+      .getPropertyUsingGET(id, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

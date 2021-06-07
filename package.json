@@ -73,6 +73,7 @@
     "@types/jest": "^26.0.23",
     "@types/node": "^15.12.1",
     "@types/ol": "^6.5.0",
+    "@types/pluralize": "^0.0.29",
     "@types/react": "^17.0.9",
     "@types/react-calendar": "^3.1.4",
     "@types/react-dom": "^17.0.6",

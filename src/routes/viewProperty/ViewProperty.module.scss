@@ -1,0 +1,34 @@
+@import "src/styles/common";
+
+.container {
+  border: 1px solid $theme-dark-blue;
+  padding: 30px;
+  border-radius: 30px;
+  height: 200px;
+}
+
+.comingSoon {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.tabsBarContainerAdditional {
+  justify-content: flex-start;
+  gap: 20px;
+  margin-bottom: 1em;
+}
+
+.characteristicsItemsContainer {
+  display: grid;
+  //grid-column-gap: 5px;
+  //grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  //padding: 10px;
+  justify-items: start;
+
+  & > * {
+    padding: 8px;
+    font-size: 1em;
+    //margin-left: 10px;
+  }
+}

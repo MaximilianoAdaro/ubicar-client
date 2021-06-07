@@ -24,7 +24,7 @@ export function ListingPage() {
             <h1>There was an error retrieving the properties</h1>
           )}
           {data.status === "success" &&
-            data?.data.content?.map((casa: any) => (
+            data?.data.content?.map((casa) => (
               <ListingHouse key={casa.id} house={casa} />
             ))}
         </Grid>

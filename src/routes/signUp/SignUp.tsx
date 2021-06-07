@@ -50,6 +50,7 @@ export const SignUp = () => {
     try {
       await mutateAsync({
         ...data,
+        birthDate: data.birthDate.toUTCString(),
         userName: `${data.firstName} ${data.lastName}`,
       });
       history.push(urls.logIn);

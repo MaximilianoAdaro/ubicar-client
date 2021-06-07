@@ -1,7 +1,13 @@
 import { Link, Route, Switch, useHistory } from "react-router-dom";
-import { CreateProperty, ListingPage, LogIn, SignUp } from "../routes";
+import {
+  CreateProperty,
+  ListingPage,
+  LogIn,
+  SignUp,
+  ViewProperty,
+} from "../routes";
 import styles from "./App.module.scss";
-import { Button, CardMedia } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import firebase from "firebase";
 import { urls } from "../constants";
 import { actions, useAppDispatch, useAppSelector } from "../store";
@@ -40,6 +46,7 @@ export default function App() {
           component={CreateProperty}
         />
         <Route exact path={urls.listingPage} component={ListingPage} />
+        <Route exact path={urls.viewProperty.path} component={ViewProperty} />
         <Route exact path={urls.signUp} component={SignUp} />
         <Route exact path={urls.logIn} component={LogIn} />
         <Route component={NotFound} />

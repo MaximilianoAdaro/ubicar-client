@@ -10,8 +10,17 @@ export const useFetchProperties = () => {
   });
 };
 
+export const useGetPropertyById = (id: string) =>
+  useQuery(["property", id], async () => {
+    const { data } = await propertyControllerApi.getPropertyUsingGET(id);
+    return data;
+  });
+
 export const useCreateProperty = () => {
-  return useMutation((data: CreatePropertyDTO) =>
-    propertyControllerApi.createPropertyUsingPOST(data)
-  );
+  return useMutation(async (data: CreatePropertyDTO) => {
+    const { data: res } = await propertyControllerApi.createPropertyUsingPOST(
+      data
+    );
+    return res;
+  });
 };

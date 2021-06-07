@@ -1,0 +1,30 @@
+@import "src/styles/common";
+
+.tabsBarContainer {
+  display: flex;
+  width: auto;
+  flex-wrap: nowrap;
+}
+
+.tabsBarItem {
+  display: flex;
+  flex-direction: column;
+  height: 35px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.highlighter {
+  height: 4px;
+  width: 80%;
+  border: 1px solid $theme-light-blue;
+  border-radius: 30px;
+}
+
+.active {
+  border-color: $theme-darker-blue;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}

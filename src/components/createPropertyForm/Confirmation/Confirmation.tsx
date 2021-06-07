@@ -42,7 +42,7 @@ const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   links: data.youtubeLinks,
   contacts: data.contacts,
   openHouse: data.openHouses.map(({ day, initialTime, finalTime }) => ({
-    day,
+    day: new Date(day).toISOString(),
     initialTime: initialTime as any,
     finalTime: finalTime as any,
   })),
