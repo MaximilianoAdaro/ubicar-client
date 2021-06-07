@@ -13,7 +13,7 @@ export function NavBar() {
   };
 
   return (
-    <div>
+    <div className={styles.divNavBarContainer}>
       <Grid container className={styles.navBarContainer}>
         <Grid container xs>
           <Grid xs={4} className={styles.navBarLogo} container>

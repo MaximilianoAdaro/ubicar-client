@@ -12,6 +12,7 @@ import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
 import { NotFound } from "../components/NotFound";
+import { EditProperty } from "../components/editProperty/editProperty";
 
 export default function App() {
   const session = useAppSelector(selectSession);
@@ -41,6 +42,7 @@ export default function App() {
       <Route exact path={urls.listingPage} component={ListingPage} />
       <Route exact path={urls.signUp} component={SignUp} />
       <Route exact path={urls.logIn} component={LogIn} />
+      <Route exact path={"/editProperty"} component={EditProperty} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -93,6 +95,12 @@ const WorkInProgress = () => {
       <Link to={urls.listingPage}>
         <Button variant={"outlined"}>Listing Page</Button>
       </Link>
+
+      <Link to={"/editProperty"}>
+        <Button variant={"outlined"}>Edit Property</Button>
+      </Link>
+
+      <br />
     </div>
   );
 };

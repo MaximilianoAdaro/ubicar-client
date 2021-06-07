@@ -4,7 +4,7 @@ $theme-goldish-changed: #cd863d;
 .navBarContainer {
   height: 3.5em;
   text-align: center;
-  //background: rgba(205, 221, 229, 0.68);
+  border-bottom: 2px solid $theme-goldish-changed;
 }
 
 .imageLogo {
