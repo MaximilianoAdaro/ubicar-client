@@ -6,15 +6,16 @@ import { useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import { MapComponent } from "../../components/Map/map";
 import { useFetchProperties } from "../../api/property";
+import { AddFavorite } from "../../components/addFavorite/addFavorite";
 
 export function ListingPage() {
   const data = useFetchProperties();
   const zoom = useAppSelector(selectZoom);
   const view = useAppSelector(selectView);
-
   return (
     <div>
       <ListingFilters />
+      <AddFavorite />
       <Grid container className={styles.mapAndProperties}>
         <Grid item xl={9} sm={8} className={styles.map}>
           <MapComponent zoom={zoom} view={view} />

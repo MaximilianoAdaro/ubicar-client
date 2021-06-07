@@ -1,31 +1,18 @@
 import styles from "./addFavorite.module.scss";
 import { Button, Grid } from "@material-ui/core";
-import axios from "axios";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import StarIcon from "@material-ui/icons/Star";
-import { useQuery } from "react-query";
+import { likeProperty, dislikeProperty } from "../../api/propertyUser";
 
-const propertyId = 5;
-
-// const likeProperty = () => {
-//     axios.put("https://localhost:8080/like/" + propertyId, propertyId);
-// };
-//
-// const unlikeProperty = () => {
-//     return useQuery("unlikeProperty", async () => {
-//         const { data } = await axios.put("https://localhost:8080/dislike/" + propertyId, propertyId);
-//         return data;
-//     });
-// };
-
+const id = "4028803e79e80cd40179e823a67b004b";
 export function AddFavorite() {
   return (
     <div>
       <Grid>
-        <Button>
+        <Button onClick={() => likeProperty(id)}>
           <StarBorderIcon className={styles.unfavorite} />
         </Button>
-        <Button>
+        <Button onClick={() => dislikeProperty(id)}>
           <StarIcon className={styles.favorite} />
         </Button>
       </Grid>

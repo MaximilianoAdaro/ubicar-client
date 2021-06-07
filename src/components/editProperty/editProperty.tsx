@@ -2,6 +2,7 @@ import styles from "./editProperty.module.scss";
 import React from "react";
 import { Form } from "react-bootstrap";
 import {
+  Button,
   Checkbox,
   FormControlLabel,
   Grid,
@@ -255,6 +256,7 @@ export function EditProperty() {
                 label="Chapa"
               />
             </Grid>
+            <Button variant={"outlined"}>Submit</Button>
           </Grid>
         </Form>
       </div>
