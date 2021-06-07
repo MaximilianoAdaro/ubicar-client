@@ -11,10 +11,10 @@ import {
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { RadioInput } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
-import classNames from "classnames";
+import clsx from "clsx";
 import { useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
-import { useFetchPropertyTypes } from "../../../api/property/propertyInfo";
+import { useFetchPropertyTypes } from "../../../api/propertyOptionals";
 
 const schema = yup.object({
   price: yup.number().positive().required(),
@@ -81,14 +81,14 @@ export const BasicInfo = () => {
                   <Col>
                     <BasicInfoTextInput
                       name="price"
-                      label="Precio"
+                      label="Precio (ARS)"
                       defaultValue={defaults.price.toString()}
                     />
                   </Col>
                   <Col>
                     <BasicInfoTextInput
                       name="expenses"
-                      label="Expensas"
+                      label="Expensas (ARS)"
                       defaultValue={defaults.expenses.toString()}
                     />
                   </Col>
@@ -164,7 +164,7 @@ const OperationTypeRadio = () => {
           >
             <span>{displayName}</span>
             <div
-              className={classNames(styles.highlighter, {
+              className={clsx(styles.highlighter, {
                 [styles.active]: value === currentValue,
               })}
             />

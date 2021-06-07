@@ -10,7 +10,7 @@ interface SelectProps {
 }
 
 interface SelectOption {
-  id: number;
+  id: string;
   name: string;
 }
 
@@ -24,7 +24,7 @@ export const Select = ({
   const [value, setValue] = useState(defaultValue);
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const id = Number(e.target.value);
+    const id = e.target.value;
     setValue(id);
     onSelect(id);
   };

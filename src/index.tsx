@@ -10,12 +10,10 @@ import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { configureAxios } from "./api/config";
 import { initializeFirebase } from "./config/FirebaseInitialize";
 
 const queryClient = new QueryClient();
 
-configureAxios();
 initializeFirebase();
 
 ReactDOM.render(
@@ -27,7 +25,7 @@ ReactDOM.render(
             <App />
           </ErrorBoundary>
         </Provider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/*<ReactQueryDevtools initialIsOpen={false} />*/}
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,

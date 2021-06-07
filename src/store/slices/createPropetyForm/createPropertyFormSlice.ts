@@ -9,18 +9,18 @@ import { isEqualObjects } from "../../../utils/utils";
 // Define a type for the slice state
 export interface CreatePropertyState {
   operationType: string;
-  style: number | undefined;
+  style: string | undefined;
   youtubeLinks: string[];
-  amenities: number[];
-  materials: number[];
-  securities: number[];
+  amenities: string[];
+  materials: string[];
+  securities: string[];
   contacts: Contact[];
   openHouses: OpenHouse[];
   propertyType: string | undefined;
   addressDropdowns: {
-    state: number | undefined;
-    city: number | undefined;
-    town: number | undefined;
+    state: string | undefined;
+    city: string | undefined;
+    town: string | undefined;
   };
   address: AddressFormData;
   basicInfo: BasicInfoFormData;
@@ -102,19 +102,19 @@ export const createPropertyFormSlice = createSlice({
     setStep: (state, action: PayloadAction<Step>) => {
       state.currentStep = action.payload;
     },
-    setStyle: (state, action: PayloadAction<number>) => {
+    setStyle: (state, action: PayloadAction<string>) => {
       state.style = action.payload;
     },
     addYoutubeLink: (state, action: PayloadAction<string>) => {
       state.youtubeLinks.push(action.payload);
     },
-    addAmenity: (state, action: PayloadAction<number>) => {
+    addAmenity: (state, action: PayloadAction<string>) => {
       state.amenities.push(action.payload);
     },
-    addMaterial: (state, action: PayloadAction<number>) => {
+    addMaterial: (state, action: PayloadAction<string>) => {
       state.materials.push(action.payload);
     },
-    addSecurity: (state, action: PayloadAction<number>) => {
+    addSecurity: (state, action: PayloadAction<string>) => {
       state.securities.push(action.payload);
     },
     addContact: (state, action: PayloadAction<Contact>) => {
@@ -129,25 +129,25 @@ export const createPropertyFormSlice = createSlice({
     setAddress: (state, action: PayloadAction<AddressFormData>) => {
       state.address = action.payload;
     },
-    setState: (state, action: PayloadAction<number>) => {
+    setState: (state, action: PayloadAction<string>) => {
       state.addressDropdowns.state = action.payload;
     },
-    setCity: (state, action: PayloadAction<number | undefined>) => {
+    setCity: (state, action: PayloadAction<string | undefined>) => {
       state.addressDropdowns.city = action.payload;
     },
-    setTown: (state, action: PayloadAction<number | undefined>) => {
+    setTown: (state, action: PayloadAction<string | undefined>) => {
       state.addressDropdowns.town = action.payload;
     },
     setBasicInfo: (state, action: PayloadAction<BasicInfoFormData>) => {
       state.basicInfo = action.payload;
     },
-    removeAmenity: (state, action: PayloadAction<number>) => {
+    removeAmenity: (state, action: PayloadAction<string>) => {
       state.amenities = state.amenities.filter((id) => id !== action.payload);
     },
-    removeSecurity: (state, action: PayloadAction<number>) => {
+    removeSecurity: (state, action: PayloadAction<string>) => {
       state.securities = state.securities.filter((id) => id !== action.payload);
     },
-    removeMaterial: (state, action: PayloadAction<number>) => {
+    removeMaterial: (state, action: PayloadAction<string>) => {
       state.materials = state.materials.filter((id) => id !== action.payload);
     },
     setCharacteristics: (

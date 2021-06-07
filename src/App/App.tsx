@@ -1,8 +1,7 @@
 import { Link, Route, Switch, useHistory } from "react-router-dom";
 import { CreateProperty, ListingPage, LogIn, SignUp } from "../routes";
 import styles from "./App.module.scss";
-import { ErrorPage } from "../components/ErrorPage";
-import { Button } from "@material-ui/core";
+import { Button, CardMedia } from "@material-ui/core";
 import firebase from "firebase";
 import { urls } from "../constants";
 import { actions, useAppDispatch, useAppSelector } from "../store";
@@ -12,7 +11,7 @@ import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
 import { NotFound } from "../components/NotFound";
-import { EditProperty } from "../components/editProperty/editProperty";
+import logo from "../assets/Logo-Ubicar.png";
 
 export default function App() {
   const session = useAppSelector(selectSession);
@@ -31,26 +30,29 @@ export default function App() {
   };
 
   return (
-    <Switch>
-      <Route exact path={urls.home} component={WorkInProgress} />
-      <ProtectedRoute
-        {...defaultProtectedRouteProps}
-        exact
-        path={urls.createProperty}
-        component={CreateProperty}
-      />
-      <Route exact path={urls.listingPage} component={ListingPage} />
-      <Route exact path={urls.signUp} component={SignUp} />
-      <Route exact path={urls.logIn} component={LogIn} />
-      <Route exact path={"/editProperty"} component={EditProperty} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <Switch>
+        <Route exact path={urls.home} component={WorkInProgress} />
+        <ProtectedRoute
+          {...defaultProtectedRouteProps}
+          exact
+          path={urls.createProperty}
+          component={CreateProperty}
+        />
+        <Route exact path={urls.listingPage} component={ListingPage} />
+        <Route exact path={urls.signUp} component={SignUp} />
+        <Route exact path={urls.logIn} component={LogIn} />
+        <Route component={NotFound} />
+      </Switch>
+    </>
   );
 }
 
 const WorkInProgress = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+
+  const { data: user } = useLoggedUser();
 
   const { mutateAsync: logOut } = useLogOut();
 
@@ -65,42 +67,69 @@ const WorkInProgress = () => {
   };
   return (
     <div className={styles.app}>
-      <h1>App in progress...</h1>
+      {user && (
+        <div
+          style={{
+            marginBottom: 20,
+          }}
+        >
+          <h4>Bienvenido {user.userName}</h4>
+        </div>
+      )}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 20,
+        }}
+      >
+        <img src={logo} height={90} alt={"logo"} />
+        <h1>Ubicar in progress...</h1>
+      </div>
       <br />
 
-      <Link to={urls.createProperty}>
-        <Button variant={"outlined"}>Crear publicacion</Button>
-      </Link>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Link to={urls.createProperty}>
+          <Button variant={"outlined"}>Crear publicacion</Button>
+        </Link>
 
-      <br />
+        <br />
 
-      <Link to={urls.signUp}>
-        <Button variant={"outlined"}>Registrarse</Button>
-      </Link>
+        <Link to={urls.listingPage}>
+          <Button variant={"outlined"}>Listar publicaciones</Button>
+        </Link>
 
-      <br />
+        <br />
 
-      <Link to={urls.logIn}>
-        <Button variant={"outlined"}>Entrar</Button>
-      </Link>
-
-      <br />
-
-      <Button variant={"outlined"} onClick={handleLogout}>
-        Log out
-      </Button>
-
-      <br />
-
-      <Link to={urls.listingPage}>
-        <Button variant={"outlined"}>Listing Page</Button>
-      </Link>
-
-      <Link to={"/editProperty"}>
-        <Button variant={"outlined"}>Edit Property</Button>
-      </Link>
-
-      <br />
+        {!user ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Link to={urls.signUp}>
+              <Button variant={"outlined"}>Registrarse</Button>
+            </Link>
+            <div style={{ height: 24 }} />
+            <Link to={urls.logIn}>
+              <Button variant={"outlined"}>Iniciar sesión</Button>
+            </Link>
+          </div>
+        ) : (
+          <Button variant={"outlined"} onClick={handleLogout}>
+            Cerrar sesión
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

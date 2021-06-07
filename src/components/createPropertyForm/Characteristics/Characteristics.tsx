@@ -10,7 +10,7 @@ import { Select } from "../../forms/Select";
 import { StepButtons } from "../StepButtons/StepButtons";
 import React from "react";
 import styles from "./Characteristics.module.scss";
-import { useFetchPropertyStyles } from "../../../api/property/propertyInfo";
+import { useFetchPropertyStyles } from "../../../api/propertyOptionals";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -73,7 +73,7 @@ export const Characteristics = () => {
                 <div className={styles.inputContainer}>
                   <CharacteristicsTextInput
                     name="totalSurface"
-                    label="Superficie total"
+                    label="Superficie total (m²)"
                     defaultValue={defaults.totalSurface.toString()}
                   />
                 </div>
@@ -83,7 +83,7 @@ export const Characteristics = () => {
                 <div className={styles.inputContainer}>
                   <CharacteristicsTextInput
                     name="coveredSurface"
-                    label="Superficie cubierta"
+                    label="Superficie cubierta (m²)"
                     defaultValue={defaults.coveredSurface.toString()}
                   />
                 </div>
