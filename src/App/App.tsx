@@ -73,7 +73,7 @@ const WorkInProgress = () => {
             marginBottom: 20,
           }}
         >
-          <h4>Bienvenido {user.userName}</h4>
+          <h4>Bienvenido {firebase.auth().currentUser?.displayName}</h4>
         </div>
       )}
       <div
@@ -87,6 +87,7 @@ const WorkInProgress = () => {
         <img src={logo} height={90} alt={"logo"} />
         <h1>Ubicar in progress...</h1>
       </div>
+
       <br />
 
       <div
@@ -96,18 +97,6 @@ const WorkInProgress = () => {
           alignItems: "center",
         }}
       >
-        <Link to={urls.createProperty}>
-          <Button variant={"outlined"}>Crear publicacion</Button>
-        </Link>
-
-        <br />
-
-        <Link to={urls.listingPage}>
-          <Button variant={"outlined"}>Listar publicaciones</Button>
-        </Link>
-
-        <br />
-
         {!user ? (
           <div
             style={{
@@ -129,6 +118,18 @@ const WorkInProgress = () => {
             Cerrar sesión
           </Button>
         )}
+
+        <br />
+
+        <Link to={urls.createProperty}>
+          <Button variant={"outlined"}>Crear publicacion</Button>
+        </Link>
+
+        <br />
+
+        <Link to={urls.listingPage}>
+          <Button variant={"outlined"}>Listar publicaciones</Button>
+        </Link>
       </div>
     </div>
   );
