@@ -1,8 +1,9 @@
-import { Button, Grid, List, ListItem, Popover } from "@material-ui/core";
+import { Grid, List, ListItem, Popover } from "@material-ui/core";
 import styles from "./NavBar.module.scss";
 import React, { useState } from "react";
 import logo from "./Logo/Logo-Ubicar.png";
 import { Image } from "react-bootstrap";
+import { IoMdArrowDropdown } from "react-icons/all";
 
 export function NavBar() {
   const [anchorAccount, setAnchorAccount] = useState(null);
@@ -39,16 +40,16 @@ export function NavBar() {
                 Publicar
               </a>
             </Grid>
-            <Grid xs={3} xl={2} className={styles.navBar2Account}>
+            <Grid xs={3} xl={2} className={styles.navBarAccount}>
               <div>
-                <Button
+                <button
                   className={styles.myAccountButton}
                   id="buttonForm"
-                  size="small"
                   onClick={openAccountPopover}
                 >
                   Mi cuenta
-                </Button>
+                  <IoMdArrowDropdown className={styles.myAccountDropdownIcon} />
+                </button>
                 <Popover
                   open={Boolean(anchorAccount)}
                   anchorEl={anchorAccount}
