@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import { useCreateProperty } from "../../../api/property";
 import { urls } from "../../../constants";
 import { CreatePropertyDTO } from "../../../generated/api";
+import { useCreatePropertyUsingPOST } from "../../../api/generated/property-controller/property-controller";
 
 const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
@@ -52,12 +53,12 @@ const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
 export const Confirmation = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { mutateAsync } = useCreateProperty();
+  const { mutateAsync } = useCreatePropertyUsingPOST();
   const createPropertyState = useAppSelector(selectCreatePropertyState);
 
   const handleSend = async () => {
     try {
-      await mutateAsync(createRequestData(createPropertyState));
+      await mutateAsync({ data: createRequestData(createPropertyState) });
       history.push(urls.home);
     } catch (e) {
       throw Error;

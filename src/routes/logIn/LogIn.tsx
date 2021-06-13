@@ -13,6 +13,8 @@ import { actions, useAppDispatch, useAppSelector } from "../../store";
 import { selectRedirectPath } from "../../store/slices/session";
 import { useSignIn } from "../../api/auth";
 import { urls } from "../../constants";
+import { useLoginUsingPOST } from "../../api/generated/auth-controller/auth-controller";
+import { UserDTO } from "../../api/generated/endpoints.schemas";
 
 const schema = yup.object({
   email: yup.string().email().required(),

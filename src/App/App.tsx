@@ -18,12 +18,13 @@ import ProtectedRoute, {
 } from "../components/common/protectedRoute/ProtectedRoute";
 import { NotFound } from "../components/NotFound";
 import logo from "../assets/Logo-Ubicar.png";
+import { useGetLoggedUsingGET } from "../api/generated/auth-controller/auth-controller";
 
 export default function App() {
   const session = useAppSelector(selectSession);
   const dispatch = useAppDispatch();
 
-  const { data: user, isLoading } = useLoggedUser();
+  const { data: user, isLoading } = useGetLoggedUsingGET();
 
   if (isLoading) return <span>Loading...</span>;
   if (user) dispatch(actions.session.setUser(user));
@@ -80,7 +81,7 @@ const WorkInProgress = () => {
             marginBottom: 20,
           }}
         >
-          <h4>Bienvenido {firebase.auth().currentUser?.displayName}</h4>
+          <h4>Bienvenido {user.userName}</h4>
         </div>
       )}
       <div
