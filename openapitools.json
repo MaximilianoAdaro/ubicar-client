@@ -9,7 +9,7 @@
         "inputSpec": "http://localhost:8080/v2/api-docs",
         "output": "#{cwd}/src/generated/api",
         "additionalProperties": {
-          "supportsES6": "true",
+          "supportsES6": true,
           "withInterfaces": true,
           "nullSafeAdditionalProps": true
         }

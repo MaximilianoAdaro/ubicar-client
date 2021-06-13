@@ -1,7 +1,4 @@
 const faker = require("faker");
-/**
- * Example config for `yarn example:advanced`
- */
 
 module.exports = {
   ubicar: {
@@ -11,6 +8,7 @@ module.exports = {
       client: "react-query",
       mock: true,
       override: {
+        operationName: (operation, route, verb) => operation.summary,
         mutator: {
           path: "./src/api/mutator/custom-instance.ts",
           name: "customInstance",
