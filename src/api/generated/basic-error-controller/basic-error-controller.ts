@@ -11,14 +11,7 @@ import {
   UseQueryOptions,
   UseMutationOptions,
 } from "react-query";
-import type {
-  ErrorUsingGET200,
-  ErrorUsingHEAD200,
-  ErrorUsingPOST200,
-  ErrorUsingPUT200,
-  ErrorUsingDELETE200,
-  ErrorUsingPATCH200,
-} from "../endpoints.schemas";
+import type { ModelAndView } from "../endpoints.schemas";
 import { customInstance } from "../../mutator/custom-instance";
 
 type AsyncReturnType<T extends (...args: any) => Promise<any>> = T extends (
@@ -34,7 +27,7 @@ type SecondParameter<T extends (...args: any) => any> = T extends (
   ? P
   : never;
 
-export const errorUsingGET = <TData = ErrorUsingGET200>(
+export const errorHtmlUsingGET = <TData = ModelAndView>(
   options?: SecondParameter<typeof customInstance>
 ) => {
   return customInstance<TData>(
@@ -45,23 +38,31 @@ export const errorUsingGET = <TData = ErrorUsingGET200>(
   );
 };
 
-export const getErrorUsingGETQueryKey = () => [`/error`];
+export const getErrorHtmlUsingGETQueryKey = () => [`/error`];
 
-export const useErrorUsingGET = <
-  TQueryFnData = ErrorUsingGET200,
+export const useErrorHtmlUsingGET = <
+  TQueryFnData = ModelAndView,
   TError = unknown,
   TData = TQueryFnData
 >(options?: {
-  query?: UseQueryOptions<AsyncReturnType<typeof errorUsingGET>, TError, TData>;
+  query?: UseQueryOptions<
+    AsyncReturnType<typeof errorHtmlUsingGET>,
+    TError,
+    TData
+  >;
   request?: SecondParameter<typeof customInstance>;
 }) => {
   const { query: queryOptions, request: requestOptions } = options || {};
 
-  const queryKey = queryOptions?.queryKey ?? getErrorUsingGETQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getErrorHtmlUsingGETQueryKey();
 
-  const query = useQuery<AsyncReturnType<typeof errorUsingGET>, TError, TData>(
+  const query = useQuery<
+    AsyncReturnType<typeof errorHtmlUsingGET>,
+    TError,
+    TData
+  >(
     queryKey,
-    () => errorUsingGET<TQueryFnData>(requestOptions),
+    () => errorHtmlUsingGET<TQueryFnData>(requestOptions),
     queryOptions
   );
 
@@ -71,7 +72,7 @@ export const useErrorUsingGET = <
   };
 };
 
-export const errorUsingHEAD = <TData = ErrorUsingHEAD200 | unknown>(
+export const errorHtmlUsingHEAD = <TData = ModelAndView | unknown>(
   options?: SecondParameter<typeof customInstance>
 ) => {
   return customInstance<TData>(
@@ -82,14 +83,14 @@ export const errorUsingHEAD = <TData = ErrorUsingHEAD200 | unknown>(
   );
 };
 
-export const useErrorUsingHEAD = <
-  TData = ErrorUsingHEAD200 | unknown,
+export const useErrorHtmlUsingHEAD = <
+  TData = ModelAndView | unknown,
   TError = unknown,
   TVariables = void,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<
-    AsyncReturnType<typeof errorUsingHEAD>,
+    AsyncReturnType<typeof errorHtmlUsingHEAD>,
     TError,
     TVariables,
     TContext
@@ -99,15 +100,15 @@ export const useErrorUsingHEAD = <
   const { mutation: mutationOptions, request: requestOptions } = options || {};
 
   return useMutation<
-    AsyncReturnType<typeof errorUsingHEAD>,
+    AsyncReturnType<typeof errorHtmlUsingHEAD>,
     TError,
     TVariables,
     TContext
   >(() => {
-    return errorUsingHEAD<TData>(requestOptions);
+    return errorHtmlUsingHEAD<TData>(requestOptions);
   }, mutationOptions);
 };
-export const errorUsingPOST = <TData = ErrorUsingPOST200 | unknown>(
+export const errorHtmlUsingPOST = <TData = ModelAndView | unknown>(
   options?: SecondParameter<typeof customInstance>
 ) => {
   return customInstance<TData>(
@@ -118,14 +119,14 @@ export const errorUsingPOST = <TData = ErrorUsingPOST200 | unknown>(
   );
 };
 
-export const useErrorUsingPOST = <
-  TData = ErrorUsingPOST200 | unknown,
+export const useErrorHtmlUsingPOST = <
+  TData = ModelAndView | unknown,
   TError = unknown,
   TVariables = void,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<
-    AsyncReturnType<typeof errorUsingPOST>,
+    AsyncReturnType<typeof errorHtmlUsingPOST>,
     TError,
     TVariables,
     TContext
@@ -135,15 +136,15 @@ export const useErrorUsingPOST = <
   const { mutation: mutationOptions, request: requestOptions } = options || {};
 
   return useMutation<
-    AsyncReturnType<typeof errorUsingPOST>,
+    AsyncReturnType<typeof errorHtmlUsingPOST>,
     TError,
     TVariables,
     TContext
   >(() => {
-    return errorUsingPOST<TData>(requestOptions);
+    return errorHtmlUsingPOST<TData>(requestOptions);
   }, mutationOptions);
 };
-export const errorUsingPUT = <TData = ErrorUsingPUT200 | unknown>(
+export const errorHtmlUsingPUT = <TData = ModelAndView | unknown>(
   options?: SecondParameter<typeof customInstance>
 ) => {
   return customInstance<TData>(
@@ -154,14 +155,14 @@ export const errorUsingPUT = <TData = ErrorUsingPUT200 | unknown>(
   );
 };
 
-export const useErrorUsingPUT = <
-  TData = ErrorUsingPUT200 | unknown,
+export const useErrorHtmlUsingPUT = <
+  TData = ModelAndView | unknown,
   TError = unknown,
   TVariables = void,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<
-    AsyncReturnType<typeof errorUsingPUT>,
+    AsyncReturnType<typeof errorHtmlUsingPUT>,
     TError,
     TVariables,
     TContext
@@ -171,15 +172,15 @@ export const useErrorUsingPUT = <
   const { mutation: mutationOptions, request: requestOptions } = options || {};
 
   return useMutation<
-    AsyncReturnType<typeof errorUsingPUT>,
+    AsyncReturnType<typeof errorHtmlUsingPUT>,
     TError,
     TVariables,
     TContext
   >(() => {
-    return errorUsingPUT<TData>(requestOptions);
+    return errorHtmlUsingPUT<TData>(requestOptions);
   }, mutationOptions);
 };
-export const errorUsingDELETE = <TData = ErrorUsingDELETE200 | unknown>(
+export const errorHtmlUsingDELETE = <TData = ModelAndView | unknown>(
   options?: SecondParameter<typeof customInstance>
 ) => {
   return customInstance<TData>(
@@ -190,14 +191,14 @@ export const errorUsingDELETE = <TData = ErrorUsingDELETE200 | unknown>(
   );
 };
 
-export const useErrorUsingDELETE = <
-  TData = ErrorUsingDELETE200 | unknown,
+export const useErrorHtmlUsingDELETE = <
+  TData = ModelAndView | unknown,
   TError = unknown,
   TVariables = void,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<
-    AsyncReturnType<typeof errorUsingDELETE>,
+    AsyncReturnType<typeof errorHtmlUsingDELETE>,
     TError,
     TVariables,
     TContext
@@ -207,15 +208,15 @@ export const useErrorUsingDELETE = <
   const { mutation: mutationOptions, request: requestOptions } = options || {};
 
   return useMutation<
-    AsyncReturnType<typeof errorUsingDELETE>,
+    AsyncReturnType<typeof errorHtmlUsingDELETE>,
     TError,
     TVariables,
     TContext
   >(() => {
-    return errorUsingDELETE<TData>(requestOptions);
+    return errorHtmlUsingDELETE<TData>(requestOptions);
   }, mutationOptions);
 };
-export const errorUsingPATCH = <TData = ErrorUsingPATCH200 | unknown>(
+export const errorHtmlUsingPATCH = <TData = ModelAndView | unknown>(
   options?: SecondParameter<typeof customInstance>
 ) => {
   return customInstance<TData>(
@@ -226,14 +227,14 @@ export const errorUsingPATCH = <TData = ErrorUsingPATCH200 | unknown>(
   );
 };
 
-export const useErrorUsingPATCH = <
-  TData = ErrorUsingPATCH200 | unknown,
+export const useErrorHtmlUsingPATCH = <
+  TData = ModelAndView | unknown,
   TError = unknown,
   TVariables = void,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<
-    AsyncReturnType<typeof errorUsingPATCH>,
+    AsyncReturnType<typeof errorHtmlUsingPATCH>,
     TError,
     TVariables,
     TContext
@@ -243,11 +244,11 @@ export const useErrorUsingPATCH = <
   const { mutation: mutationOptions, request: requestOptions } = options || {};
 
   return useMutation<
-    AsyncReturnType<typeof errorUsingPATCH>,
+    AsyncReturnType<typeof errorHtmlUsingPATCH>,
     TError,
     TVariables,
     TContext
   >(() => {
-    return errorUsingPATCH<TData>(requestOptions);
+    return errorHtmlUsingPATCH<TData>(requestOptions);
   }, mutationOptions);
 };

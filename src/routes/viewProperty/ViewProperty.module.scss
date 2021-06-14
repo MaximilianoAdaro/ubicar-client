@@ -1,16 +1,141 @@
 @import "src/styles/common";
 
 .container {
+  margin-top: 1em;
+  margin-bottom: 5em;
+}
+
+.mediaContainer {
   border: 1px solid $theme-dark-blue;
   padding: 30px;
   border-radius: 30px;
   height: 200px;
+  margin: 0 0.5em;
 }
 
 .comingSoon {
   margin-top: 30px;
   display: flex;
   justify-content: center;
+}
+
+.divider {
+  width: 98%;
+  height: 2px;
+  background-color: #ecb97e;
+  margin: auto auto 15px;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin: 2em 2.2em 0;
+}
+
+.leftInfo {
+  width: 70%;
+
+  .firstSection {
+    .mainTitle {
+      margin-top: 10px;
+      font-size: 2.6em;
+      color: #8e5b50;
+    }
+
+    .facts {
+      margin: 20px 20px 0;
+      display: flex;
+      flex-wrap: wrap;
+
+      & > * {
+        margin-right: 70px;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+.sectionTitle {
+  font-size: 1.7em;
+  font-weight: 400;
+}
+
+.secondSection {
+  margin-top: 10px;
+
+  .body {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    font-size: 1em;
+    line-height: 30px;
+    font-weight: 300;
+
+    & > * {
+      margin-top: 10px;
+    }
+  }
+}
+
+.thirdSection {
+  //margin-top: 20px;
+  .tabSection {
+    margin: 40px 15px 0;
+
+    .tabBodyItem {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-weight: 300;
+
+      .bulletPoint {
+        $size: 8px;
+        width: $size;
+        height: $size;
+        border: 1px solid $theme-goldish;
+        background-color: rgba(209, 167, 125, 0.14);
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.addressSection {
+  .addressItemsSection {
+    margin: 20px 15px 0;
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+
+    .addressLeft {
+    }
+
+    .addressItem {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: row;
+      margin-right: 20px;
+      width: 250px;
+      //justify-content: space-between;
+      //width: 250px;
+
+      .addressItemLabel {
+        //width: 200px;
+
+        h5 {
+          font-weight: 400;
+        }
+      }
+
+      .addressItemValue {
+        margin-left: auto;
+        //display: flex;
+        width: 100px;
+        //align-items: flex-start;
+      }
+    }
+  }
 }
 
 .tabsBarContainerAdditional {
@@ -20,15 +145,19 @@
 }
 
 .characteristicsItemsContainer {
-  display: grid;
-  //grid-column-gap: 5px;
-  //grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  //padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 150px;
   justify-items: start;
+  align-content: flex-start;
 
   & > * {
+    //width: 100%;
     padding: 8px;
     font-size: 1em;
+    margin-right: 60px;
+    color: #484141;
     //margin-left: 10px;
   }
 }

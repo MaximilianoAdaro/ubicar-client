@@ -17,12 +17,13 @@
 .highlighter {
   height: 4px;
   width: 80%;
-  border: 1px solid $theme-light-blue;
+  border: 1px solid rgba(209, 167, 125, 0.4);
   border-radius: 30px;
 }
 
 .active {
-  border-color: $theme-darker-blue;
+  border-color: #d1a77d;
+  border-width: 1px;
 }
 
 .cursorPointer {

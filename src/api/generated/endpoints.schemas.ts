@@ -643,18 +643,6 @@ export interface PagePropertyPreviewDTO {
 
 export type CreatePropertyDTOBody = CreatePropertyDTO;
 
-export type ErrorUsingGET200 = { [key: string]: {} };
-
-export type ErrorUsingHEAD200 = { [key: string]: {} };
-
-export type ErrorUsingPOST200 = { [key: string]: {} };
-
-export type ErrorUsingPUT200 = { [key: string]: {} };
-
-export type ErrorUsingDELETE200 = { [key: string]: {} };
-
-export type ErrorUsingPATCH200 = { [key: string]: {} };
-
 export type GetPropertiesUsingGETParams = { page: number };
 
 export type GetTypesUsingGET200Item =
