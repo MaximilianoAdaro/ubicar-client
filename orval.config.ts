@@ -8,39 +8,19 @@ module.exports = {
       client: "react-query",
       mock: true,
       override: {
-        operationName: (operation, route, verb) => operation.summary,
         mutator: {
           path: "./src/api/mutator/custom-instance.ts",
           name: "customInstance",
         },
-        query: {
-          useQuery: true,
+        mock: {
+          properties: {
+            "/.*id$/": () => faker.datatype.uuid(),
+            "/email/": () => faker.internet.email(),
+          },
         },
         operations: {
-          getLoggedUsingGET: {
-            query: {
-              options: {
-                retry: false,
-                refetchInterval: false,
-                refetchOnMount: false,
-                refetchOnWindowFocus: false,
-                refetchOnReconnect: false,
-                retryOnMount: false,
-                refetchIntervalInBackground: false,
-              },
-            },
-          },
-          getPropertiesUsingGET: {
-            mock: {
-              properties: () => ({
-                "content.[].id": () => faker.datatype.uuid(),
-              }),
-            },
-            query: {
-              useInfinite: true,
-              useInfiniteQueryParam: "page",
-            },
-          },
+          ...getLoggedUsingGET(),
+          ...getPropertiesUsingGET(),
         },
       },
     },
@@ -49,3 +29,34 @@ module.exports = {
     },
   },
 };
+
+function getLoggedUsingGET() {
+  return {
+    getLoggedUsingGET: {
+      query: {
+        options: {
+          retry: false,
+          refetchInterval: false,
+          refetchOnMount: false,
+          refetchOnWindowFocus: false,
+          refetchOnReconnect: false,
+          retryOnMount: false,
+          refetchIntervalInBackground: false,
+          staleTime: Infinity,
+        },
+      },
+    },
+  };
+}
+
+function getPropertiesUsingGET() {
+  return {
+    getPropertiesUsingGET: {
+      query: {
+        useQuery: true,
+        useInfinite: true,
+        useInfiniteQueryParam: "page",
+      },
+    },
+  };
+}

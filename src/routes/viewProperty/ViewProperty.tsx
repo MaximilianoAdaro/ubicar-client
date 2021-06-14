@@ -1,16 +1,16 @@
 import { useParams } from "react-router-dom";
-import { useGetPropertyById } from "../../api/property";
 import styles from "./ViewProperty.module.scss";
 import { Divider, Grid, Typography } from "@material-ui/core";
 import { TabsBar } from "../../components/common/tabsBar/TabsBar";
 import { useState } from "react";
+import pluralize from "pluralize";
+import { useGetPropertyUsingGET } from "../../api/generated/property-controller/property-controller";
 import {
   Amenity,
   ConstructionMaterial,
-  PropertyDTOConditionEnum,
+  PropertyDTOCondition,
   SecurityMeasure,
-} from "../../generated/api";
-import pluralize from "pluralize";
+} from "../../api/generated/endpoints.schemas";
 
 const buildSingleTab = ({
   value,
@@ -67,7 +67,7 @@ const buildTabs = (
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { data: property, isLoading } = useGetPropertyById(id);
+  const { data: property, isLoading } = useGetPropertyUsingGET(id);
 
   if (isLoading) return <h4>Loading...</h4>;
   if (!property) return <h4>Error</h4>;
@@ -144,11 +144,11 @@ export const ViewProperty = () => {
 };
 
 const translations = {
-  [PropertyDTOConditionEnum.Rent]: "Alquiler",
-  [PropertyDTOConditionEnum.Sale]: "Venta",
+  [PropertyDTOCondition.RENT]: "Alquiler",
+  [PropertyDTOCondition.SALE]: "Venta",
 };
 
-const translate = (condition: PropertyDTOConditionEnum): string => {
+const translate = (condition: PropertyDTOCondition): string => {
   return translations[condition];
 };
 

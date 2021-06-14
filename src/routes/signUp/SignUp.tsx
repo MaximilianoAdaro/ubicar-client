@@ -8,11 +8,12 @@ import { HookFormDatePicker } from "../../components/common/forms/HookFormDatePi
 import { HookFormSelect } from "../../components/common/forms/HookFormSelect";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
-import { useGetRoles, useSignUp } from "../../api/auth";
+import { useSignUp } from "../../api/auth";
 import { Link, useHistory } from "react-router-dom";
 import { urls } from "../../constants";
 import { GoogleLogin } from "../logIn/GoogleLogin";
-import { RoleDTO } from "../../generated/api";
+import { useGetRolesUsingGET } from "../../api/generated/auth-controller/auth-controller";
+import { RoleDTO } from "../../api/generated/endpoints.schemas";
 
 const schema = yup.object({
   firstName: yup.string().required(),
@@ -38,7 +39,7 @@ const buildItems = (roles: RoleDTO[]) =>
 export const SignUp = () => {
   const history = useHistory();
 
-  const { data: roles } = useGetRoles();
+  const { data: roles } = useGetRolesUsingGET();
   const { mutateAsync } = useSignUp();
 
   const { control, handleSubmit } = useForm<SignUpFormData>({
@@ -50,7 +51,7 @@ export const SignUp = () => {
     try {
       await mutateAsync({
         ...data,
-        birthDate: data.birthDate.toUTCString(),
+        birthDate: data.birthDate.toISOString(),
         userName: `${data.firstName} ${data.lastName}`,
       });
       history.push(urls.logIn);

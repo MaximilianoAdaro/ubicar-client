@@ -8,7 +8,7 @@
     "@hookform/resolvers": "^2.5.2",
     "@material-ui/core": "^4.11.4",
     "@material-ui/pickers": "^3.3.10",
-    "@reduxjs/toolkit": "^1.5.1",
+    "@reduxjs/toolkit": "^1.6.0",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
     "clsx": "^1.1.1",
@@ -22,9 +22,9 @@
     "react-calendar": "^3.4.0",
     "react-dom": "^17.0.2",
     "react-firebaseui": "^5.0.2",
-    "react-hook-form": "^7.8.1",
+    "react-hook-form": "^7.8.4",
     "react-icons": "^4.2.0",
-    "react-query": "^3.16.1",
+    "react-query": "^3.17.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -39,8 +39,7 @@
     "eject": "react-scripts eject",
     "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|css|scss|md)\"",
     "format:check": "prettier --check \"**/*.+(js|jsx|ts|ts|json|yml|yaml|css|scss|md)\"",
-    "api:gen": "openapi-generator-cli generate",
-    "generate-api": "orval --config orval.config.ts && prettier --write src/api/generated",
+    "api:gen": "orval --config orval.config.ts && prettier --write src/api/generated",
     "prepare": "husky install"
   },
   "eslintConfig": {
@@ -67,26 +66,28 @@
     ]
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.3.3",
-    "@testing-library/jest-dom": "^5.13.0",
+    "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
     "@types/faker": "^5.5.6",
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.12.1",
-    "@types/ol": "^6.5.0",
+    "@types/node": "^15.12.2",
+    "@types/ol": "^6.5.1",
     "@types/pluralize": "^0.0.29",
-    "@types/react": "^17.0.9",
+    "@types/react": "^17.0.11",
     "@types/react-calendar": "^3.1.4",
-    "@types/react-dom": "^17.0.6",
+    "@types/react-dom": "^17.0.7",
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "faker": "^5.5.3",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "msw": "^0.29.0",
-    "orval": "^5.4.6",
+    "orval": "^5.4.7",
     "prettier": "^2.3.1",
     "typescript": "^4.3.2"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

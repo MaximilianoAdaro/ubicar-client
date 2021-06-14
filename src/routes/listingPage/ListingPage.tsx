@@ -5,10 +5,12 @@ import { ListingFilters } from "../../components/listingFilters/";
 import { useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import { MapComponent } from "../../components/Map/map";
-import { useFetchProperties } from "../../api/property";
+import { useGetPropertiesUsingGET } from "../../api/generated/property-controller/property-controller";
 
 export function ListingPage() {
-  const data = useFetchProperties();
+  const data = useGetPropertiesUsingGET({
+    page: 0,
+  });
   const zoom = useAppSelector(selectZoom);
   const view = useAppSelector(selectView);
 

@@ -1,5 +1,5 @@
 import styles from "./ListingFilters.module.scss";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Grid,
@@ -11,7 +11,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { MdSearch as SearchIcon } from "react-icons/md";
-import { useLoggedUser } from "../../api/auth";
+import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
 
 export function ListingFilters() {
   // const [city, setCity] = useState();
@@ -37,7 +37,7 @@ export function ListingFilters() {
     setAnchorSqMts(event.currentTarget);
   };
 
-  const { data: user } = useLoggedUser();
+  const { data: user } = useGetLoggedUsingGET();
 
   return (
     <StylesProvider injectFirst>

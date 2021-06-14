@@ -11,8 +11,8 @@ import { Button } from "@material-ui/core";
 import firebase from "firebase";
 import { urls } from "../constants";
 import { actions, useAppDispatch, useAppSelector } from "../store";
-import { selectSession } from "../store/slices/session";
-import { useLoggedUser, useLogOut } from "../api/auth";
+import { selectRedirectPath } from "../store/slices/session";
+import { useLogOut } from "../api/auth";
 import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
@@ -21,18 +21,17 @@ import logo from "../assets/Logo-Ubicar.png";
 import { useGetLoggedUsingGET } from "../api/generated/auth-controller/auth-controller";
 
 export default function App() {
-  const session = useAppSelector(selectSession);
+  const redirectPath = useAppSelector(selectRedirectPath);
   const dispatch = useAppDispatch();
 
   const { data: user, isLoading } = useGetLoggedUsingGET();
 
   if (isLoading) return <span>Loading...</span>;
-  if (user) dispatch(actions.session.setUser(user));
 
   const defaultProtectedRouteProps: ProtectedRouteProps = {
-    isAuthenticated: session.isAuthenticated,
+    isAuthenticated: !!user,
     authenticationPath: urls.logIn,
-    redirectPath: session.redirectPath,
+    redirectPath,
     setRedirectPath: (path) => dispatch(actions.session.setRedirectPath(path)),
   };
 
@@ -58,10 +57,8 @@ export default function App() {
 
 const WorkInProgress = () => {
   const history = useHistory();
-  const dispatch = useAppDispatch();
 
-  const { data: user } = useLoggedUser();
-
+  const { data: user } = useGetLoggedUsingGET();
   const { mutateAsync: logOut } = useLogOut();
 
   const handleLogout = async (e: any) => {
@@ -69,10 +66,10 @@ const WorkInProgress = () => {
     console.log("signing out");
     await logOut();
     await firebase.auth().signOut();
-    dispatch(actions.session.setUser(null));
     console.log("dispatched user null");
     history.push(urls.home);
   };
+
   return (
     <div className={styles.app}>
       {user && (

@@ -7,12 +7,10 @@ import {
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Confirmation.module.scss";
-
 import { useHistory } from "react-router-dom";
 import { useCreateProperty } from "../../../api/property";
 import { urls } from "../../../constants";
-import { CreatePropertyDTO } from "../../../generated/api";
-import { useCreatePropertyUsingPOST } from "../../../api/generated/property-controller/property-controller";
+import { CreatePropertyDTO } from "../../../api/generated/endpoints.schemas";
 
 const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
@@ -53,12 +51,12 @@ const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
 export const Confirmation = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { mutateAsync } = useCreatePropertyUsingPOST();
+  const { mutateAsync } = useCreateProperty();
   const createPropertyState = useAppSelector(selectCreatePropertyState);
 
   const handleSend = async () => {
     try {
-      await mutateAsync({ data: createRequestData(createPropertyState) });
+      await mutateAsync(createRequestData(createPropertyState));
       history.push(urls.home);
     } catch (e) {
       throw Error;

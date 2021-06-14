@@ -3,12 +3,10 @@ import { useHistory } from "react-router-dom";
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import "./firebaseui-styling.global.scss";
-import { actions, useAppDispatch, useAppSelector } from "../../store";
-import {
-  selectIsAuthenticated,
-  selectRedirectPath,
-} from "../../store/slices/session";
+import { useAppSelector } from "../../store";
+import { selectRedirectPath } from "../../store/slices/session";
 import { useGoogleSignIn } from "../../api/auth";
+import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
 
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
@@ -23,11 +21,10 @@ const uiConfig = {
 
 export function GoogleLogin() {
   const history = useHistory();
-  const dispatch = useAppDispatch();
   const redirectPath = useAppSelector(selectRedirectPath);
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
-  const { mutateAsync: googleLogIn } = useGoogleSignIn();
+  const { data: user } = useGetLoggedUsingGET();
+  const { mutateAsync: googleSignIn } = useGoogleSignIn();
 
   useEffect(() => {
     // componentDidMount
@@ -35,22 +32,20 @@ export function GoogleLogin() {
       .auth()
       .onAuthStateChanged(async (firebaseUser) => {
         console.log({ firebaseUser });
-        if (firebaseUser === null || isAuthenticated) {
+        if (firebaseUser === null || !!user) {
           return;
         }
 
         const idToken = await firebaseUser.getIdToken(true);
 
         try {
-          const user = await googleLogIn({
+          await googleSignIn({
             data: {
               name: firebaseUser.displayName ?? "",
               email: firebaseUser.email ?? "",
             },
             token: idToken,
           });
-
-          dispatch(actions.session.setUser(user));
           history.push(redirectPath);
         } catch (e) {}
       });

@@ -1,39 +1,32 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import {
-  AuthControllerApi,
   GoogleLoginUserDTO,
   LogInUserDTO,
   UserCreationDTO,
-} from "../generated/api";
-
-const authControllerApi = new AuthControllerApi(undefined, "");
+  UserDTO,
+} from "./generated/endpoints.schemas";
+import {
+  getGetLoggedUsingGETQueryKey,
+  loginUsingPOST,
+  loginWithGoogleUsingPOST,
+  logOutUsingPOST,
+  registerUsingPOST,
+} from "./generated/auth-controller/auth-controller";
 
 export const useSignUp = () => {
-  return useMutation(async (data: UserCreationDTO) => {
-    const { data: signUpRes } = await authControllerApi.registerUsingPOST(data);
-    return signUpRes;
-  });
-};
-
-export const useGetRoles = () => {
-  return useQuery("roles", async () => {
-    const { data } = await authControllerApi.getRolesUsingGET();
-    return data;
-  });
+  return useMutation(
+    async (data: UserCreationDTO) => (await registerUsingPOST(data)) as UserDTO
+  );
 };
 
 export const useSignIn = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    async (data: LogInUserDTO) => {
-      const { data: signInRes } = await authControllerApi.loginUsingPOST(data);
-      return signInRes;
-    },
+    async (data: LogInUserDTO) => (await loginUsingPOST(data)) as UserDTO,
     {
-      async onSuccess() {
-        queryClient.removeQueries("me");
-        await queryClient.cancelQueries("me");
+      onSuccess(user) {
+        queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), user);
       },
     }
   );
@@ -42,50 +35,25 @@ export const useSignIn = () => {
 export const useGoogleSignIn = () => {
   const queryClient = useQueryClient();
   return useMutation(
-    async ({ token, data }: { token: string; data: GoogleLoginUserDTO }) => {
-      const { data: signInRes } =
-        await authControllerApi.loginWithGoogleUsingPOST(token, data);
-      return signInRes;
-    },
+    async ({ token, data }: { token: string; data: GoogleLoginUserDTO }) =>
+      (await loginWithGoogleUsingPOST(data, {
+        headers: {
+          Authorization: token,
+        },
+      })) as UserDTO,
     {
-      async onSuccess() {
-        queryClient.removeQueries("me");
-        await queryClient.cancelQueries("me");
+      onSuccess(user) {
+        queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), user);
       },
-    }
-  );
-};
-
-export const useLoggedUser = () => {
-  return useQuery(
-    "me",
-    async () => {
-      const { data } = await authControllerApi.getLoggedUsingGET();
-      return data;
-    },
-    {
-      retry: false,
-      refetchInterval: false,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-      retryOnMount: false,
-      refetchIntervalInBackground: false,
     }
   );
 };
 
 export const useLogOut = () => {
   const queryClient = useQueryClient();
-  return useMutation(
-    async () => {
-      await authControllerApi.logOutUsingPOST();
+  return useMutation(() => logOutUsingPOST(), {
+    onSuccess() {
+      queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), null);
     },
-    {
-      async onSuccess() {
-        queryClient.removeQueries("me");
-        await queryClient.cancelQueries("me");
-      },
-    }
-  );
+  });
 };

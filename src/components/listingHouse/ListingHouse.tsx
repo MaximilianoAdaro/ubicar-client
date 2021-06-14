@@ -5,7 +5,7 @@ import { Tooltip } from "@material-ui/core";
 import pluralize from "pluralize";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../constants";
-import { PropertyPreviewDTO } from "../../generated/api";
+import { PropertyPreviewDTO } from "../../api/generated/endpoints.schemas";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
