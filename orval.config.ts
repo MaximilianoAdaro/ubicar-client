@@ -1,7 +1,22 @@
 const faker = require("faker");
+// const orval = require("orval");
 
-module.exports = {
-  ubicar: {
+// type FirstParameter<T extends (...args: any) => any> = T extends (
+//   config: infer P,
+//   args: any
+// ) => any
+//   ? P
+//   : never;
+//
+// type FirstArg = FirstParameter<typeof orval.generate>;
+// type GetOptions<T> = T extends string | undefined | infer P ? P : {};
+// type Options = GetOptions<FirstArg>;
+// declare type Config = {
+//   [backend: string]: Options;
+// };
+
+const config = () /*: Config*/ => ({
+  "ubicar-api": {
     output: {
       mode: "tags-split",
       target: "src/api/generated/endpoints.ts",
@@ -13,6 +28,7 @@ module.exports = {
           name: "customInstance",
         },
         mock: {
+          required: true,
           properties: {
             "/.*id$/": () => faker.datatype.uuid(),
             "/email/": () => faker.internet.email(),
@@ -26,9 +42,31 @@ module.exports = {
     },
     input: {
       target: "http://localhost:8080/v2/api-docs",
+      // override: {
+      //   transformer: (spec) => {
+      //     return {
+      //       ...spec,
+      //       paths: Object.entries(spec.paths).reduce(
+      //         (acc, [path, pathItem]) => ({
+      //           ...acc,
+      //           [path]: Object.entries(pathItem).reduce(
+      //             (pathItemAcc, [verb, operation]) => ({
+      //               ...pathItemAcc,
+      //               [verb]: {
+      //                 ...operation,
+      //               },
+      //             }),
+      //             {}
+      //           ),
+      //         }),
+      //         {}
+      //       ),
+      //     };
+      //   },
+      // },
     },
   },
-};
+});
 
 function getLoggedUsingGET() {
   return {
@@ -60,3 +98,5 @@ function getPropertiesUsingGET() {
     },
   };
 }
+
+module.exports = config();
