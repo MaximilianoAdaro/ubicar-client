@@ -82,10 +82,7 @@ export const getDislikePropertyUsingPUTMock = () =>
             levels: faker.datatype.number(),
             likes: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
               () => ({
-                birthDate: faker.helpers.randomize([
-                  faker.date.recent(),
-                  undefined,
-                ]),
+                birthDate: faker.date.recent(),
                 email: (() => faker.internet.email())(),
                 id: (() => faker.datatype.uuid())(),
                 likedProperties: [
@@ -144,41 +141,17 @@ export const getDislikePropertyUsingPUTMock = () =>
                   ].map(() => ({
                     day: faker.date.recent(),
                     finalTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                     id: (() => faker.datatype.uuid())(),
                     initialTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                   })),
                   parkDescription: faker.random.word(),
@@ -216,10 +189,7 @@ export const getDislikePropertyUsingPUTMock = () =>
                     "Terreno",
                   ]),
                 })),
-                password: faker.helpers.randomize([
-                  faker.random.word(),
-                  undefined,
-                ]),
+                password: faker.random.word(),
                 userName: faker.random.word(),
                 userOrigin: faker.helpers.randomize(["GOOGLE", "UBICAR"]),
                 userRole: {
@@ -266,41 +236,17 @@ export const getDislikePropertyUsingPUTMock = () =>
             ].map(() => ({
               day: faker.date.recent(),
               finalTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
               id: (() => faker.datatype.uuid())(),
               initialTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
             })),
             parkDescription: faker.random.word(),
@@ -413,10 +359,7 @@ export const getDislikePropertyUsingPUTMock = () =>
             levels: faker.datatype.number(),
             likes: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
               () => ({
-                birthDate: faker.helpers.randomize([
-                  faker.date.recent(),
-                  undefined,
-                ]),
+                birthDate: faker.date.recent(),
                 email: (() => faker.internet.email())(),
                 id: (() => faker.datatype.uuid())(),
                 likedProperties: [
@@ -475,41 +418,17 @@ export const getDislikePropertyUsingPUTMock = () =>
                   ].map(() => ({
                     day: faker.date.recent(),
                     finalTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                     id: (() => faker.datatype.uuid())(),
                     initialTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                   })),
                   parkDescription: faker.random.word(),
@@ -547,10 +466,7 @@ export const getDislikePropertyUsingPUTMock = () =>
                     "Terreno",
                   ]),
                 })),
-                password: faker.helpers.randomize([
-                  faker.random.word(),
-                  undefined,
-                ]),
+                password: faker.random.word(),
                 userName: faker.random.word(),
                 userOrigin: faker.helpers.randomize(["GOOGLE", "UBICAR"]),
                 userRole: {
@@ -591,41 +507,17 @@ export const getDislikePropertyUsingPUTMock = () =>
             ].map(() => ({
               day: faker.date.recent(),
               finalTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
               id: (() => faker.datatype.uuid())(),
               initialTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
             })),
             parkDescription: faker.random.word(),
@@ -669,29 +561,17 @@ export const getDislikePropertyUsingPUTMock = () =>
         () => ({
           day: faker.date.recent(),
           finalTime: {
-            hour: faker.helpers.randomize([faker.datatype.number(), undefined]),
-            minute: faker.helpers.randomize([
-              faker.datatype.number(),
-              undefined,
-            ]),
-            nano: faker.helpers.randomize([faker.datatype.number(), undefined]),
-            second: faker.helpers.randomize([
-              faker.datatype.number(),
-              undefined,
-            ]),
+            hour: faker.datatype.number(),
+            minute: faker.datatype.number(),
+            nano: faker.datatype.number(),
+            second: faker.datatype.number(),
           },
           id: (() => faker.datatype.uuid())(),
           initialTime: {
-            hour: faker.helpers.randomize([faker.datatype.number(), undefined]),
-            minute: faker.helpers.randomize([
-              faker.datatype.number(),
-              undefined,
-            ]),
-            nano: faker.helpers.randomize([faker.datatype.number(), undefined]),
-            second: faker.helpers.randomize([
-              faker.datatype.number(),
-              undefined,
-            ]),
+            hour: faker.datatype.number(),
+            minute: faker.datatype.number(),
+            nano: faker.datatype.number(),
+            second: faker.datatype.number(),
           },
         })
       ),
@@ -752,10 +632,7 @@ export const getDislikePropertyUsingPUTMock = () =>
             levels: faker.datatype.number(),
             likes: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
               () => ({
-                birthDate: faker.helpers.randomize([
-                  faker.date.recent(),
-                  undefined,
-                ]),
+                birthDate: faker.date.recent(),
                 email: (() => faker.internet.email())(),
                 id: (() => faker.datatype.uuid())(),
                 likedProperties: [
@@ -820,41 +697,17 @@ export const getDislikePropertyUsingPUTMock = () =>
                   ].map(() => ({
                     day: faker.date.recent(),
                     finalTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                     id: (() => faker.datatype.uuid())(),
                     initialTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                   })),
                   parkDescription: faker.random.word(),
@@ -886,10 +739,7 @@ export const getDislikePropertyUsingPUTMock = () =>
                     "Terreno",
                   ]),
                 })),
-                password: faker.helpers.randomize([
-                  faker.random.word(),
-                  undefined,
-                ]),
+                password: faker.random.word(),
                 userName: faker.random.word(),
                 userOrigin: faker.helpers.randomize(["GOOGLE", "UBICAR"]),
                 userRole: {
@@ -936,41 +786,17 @@ export const getDislikePropertyUsingPUTMock = () =>
             ].map(() => ({
               day: faker.date.recent(),
               finalTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
               id: (() => faker.datatype.uuid())(),
               initialTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
             })),
             parkDescription: faker.random.word(),
@@ -1107,10 +933,7 @@ export const getLikePropertyUsingPUTMock = () =>
             levels: faker.datatype.number(),
             likes: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
               () => ({
-                birthDate: faker.helpers.randomize([
-                  faker.date.recent(),
-                  undefined,
-                ]),
+                birthDate: faker.date.recent(),
                 email: (() => faker.internet.email())(),
                 id: (() => faker.datatype.uuid())(),
                 likedProperties: [
@@ -1169,41 +992,17 @@ export const getLikePropertyUsingPUTMock = () =>
                   ].map(() => ({
                     day: faker.date.recent(),
                     finalTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                     id: (() => faker.datatype.uuid())(),
                     initialTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                   })),
                   parkDescription: faker.random.word(),
@@ -1241,10 +1040,7 @@ export const getLikePropertyUsingPUTMock = () =>
                     "Terreno",
                   ]),
                 })),
-                password: faker.helpers.randomize([
-                  faker.random.word(),
-                  undefined,
-                ]),
+                password: faker.random.word(),
                 userName: faker.random.word(),
                 userOrigin: faker.helpers.randomize(["GOOGLE", "UBICAR"]),
                 userRole: {
@@ -1291,41 +1087,17 @@ export const getLikePropertyUsingPUTMock = () =>
             ].map(() => ({
               day: faker.date.recent(),
               finalTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
               id: (() => faker.datatype.uuid())(),
               initialTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
             })),
             parkDescription: faker.random.word(),
@@ -1438,10 +1210,7 @@ export const getLikePropertyUsingPUTMock = () =>
             levels: faker.datatype.number(),
             likes: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
               () => ({
-                birthDate: faker.helpers.randomize([
-                  faker.date.recent(),
-                  undefined,
-                ]),
+                birthDate: faker.date.recent(),
                 email: (() => faker.internet.email())(),
                 id: (() => faker.datatype.uuid())(),
                 likedProperties: [
@@ -1500,41 +1269,17 @@ export const getLikePropertyUsingPUTMock = () =>
                   ].map(() => ({
                     day: faker.date.recent(),
                     finalTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                     id: (() => faker.datatype.uuid())(),
                     initialTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                   })),
                   parkDescription: faker.random.word(),
@@ -1572,10 +1317,7 @@ export const getLikePropertyUsingPUTMock = () =>
                     "Terreno",
                   ]),
                 })),
-                password: faker.helpers.randomize([
-                  faker.random.word(),
-                  undefined,
-                ]),
+                password: faker.random.word(),
                 userName: faker.random.word(),
                 userOrigin: faker.helpers.randomize(["GOOGLE", "UBICAR"]),
                 userRole: {
@@ -1616,41 +1358,17 @@ export const getLikePropertyUsingPUTMock = () =>
             ].map(() => ({
               day: faker.date.recent(),
               finalTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
               id: (() => faker.datatype.uuid())(),
               initialTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
             })),
             parkDescription: faker.random.word(),
@@ -1694,29 +1412,17 @@ export const getLikePropertyUsingPUTMock = () =>
         () => ({
           day: faker.date.recent(),
           finalTime: {
-            hour: faker.helpers.randomize([faker.datatype.number(), undefined]),
-            minute: faker.helpers.randomize([
-              faker.datatype.number(),
-              undefined,
-            ]),
-            nano: faker.helpers.randomize([faker.datatype.number(), undefined]),
-            second: faker.helpers.randomize([
-              faker.datatype.number(),
-              undefined,
-            ]),
+            hour: faker.datatype.number(),
+            minute: faker.datatype.number(),
+            nano: faker.datatype.number(),
+            second: faker.datatype.number(),
           },
           id: (() => faker.datatype.uuid())(),
           initialTime: {
-            hour: faker.helpers.randomize([faker.datatype.number(), undefined]),
-            minute: faker.helpers.randomize([
-              faker.datatype.number(),
-              undefined,
-            ]),
-            nano: faker.helpers.randomize([faker.datatype.number(), undefined]),
-            second: faker.helpers.randomize([
-              faker.datatype.number(),
-              undefined,
-            ]),
+            hour: faker.datatype.number(),
+            minute: faker.datatype.number(),
+            nano: faker.datatype.number(),
+            second: faker.datatype.number(),
           },
         })
       ),
@@ -1777,10 +1483,7 @@ export const getLikePropertyUsingPUTMock = () =>
             levels: faker.datatype.number(),
             likes: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
               () => ({
-                birthDate: faker.helpers.randomize([
-                  faker.date.recent(),
-                  undefined,
-                ]),
+                birthDate: faker.date.recent(),
                 email: (() => faker.internet.email())(),
                 id: (() => faker.datatype.uuid())(),
                 likedProperties: [
@@ -1845,41 +1548,17 @@ export const getLikePropertyUsingPUTMock = () =>
                   ].map(() => ({
                     day: faker.date.recent(),
                     finalTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                     id: (() => faker.datatype.uuid())(),
                     initialTime: {
-                      hour: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      minute: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      nano: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
-                      second: faker.helpers.randomize([
-                        faker.datatype.number(),
-                        undefined,
-                      ]),
+                      hour: faker.datatype.number(),
+                      minute: faker.datatype.number(),
+                      nano: faker.datatype.number(),
+                      second: faker.datatype.number(),
                     },
                   })),
                   parkDescription: faker.random.word(),
@@ -1911,10 +1590,7 @@ export const getLikePropertyUsingPUTMock = () =>
                     "Terreno",
                   ]),
                 })),
-                password: faker.helpers.randomize([
-                  faker.random.word(),
-                  undefined,
-                ]),
+                password: faker.random.word(),
                 userName: faker.random.word(),
                 userOrigin: faker.helpers.randomize(["GOOGLE", "UBICAR"]),
                 userRole: {
@@ -1961,41 +1637,17 @@ export const getLikePropertyUsingPUTMock = () =>
             ].map(() => ({
               day: faker.date.recent(),
               finalTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
               id: (() => faker.datatype.uuid())(),
               initialTime: {
-                hour: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                minute: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                nano: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
-                second: faker.helpers.randomize([
-                  faker.datatype.number(),
-                  undefined,
-                ]),
+                hour: faker.datatype.number(),
+                minute: faker.datatype.number(),
+                nano: faker.datatype.number(),
+                second: faker.datatype.number(),
               },
             })),
             parkDescription: faker.random.word(),

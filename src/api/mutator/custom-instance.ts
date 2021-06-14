@@ -4,9 +4,9 @@ export const AXIOS_INSTANCE = Axios.create({ baseURL: "" });
 
 export const customInstance = async <T>(
   config: AxiosRequestConfig,
-  options: AxiosRequestConfig
+  options?: AxiosRequestConfig
 ): Promise<T> => {
-  const { data } = await AXIOS_INSTANCE({ ...config, ...options });
+  const { data } = await AXIOS_INSTANCE({ ...config, ...(options ?? {}) });
   return data;
 };
 
