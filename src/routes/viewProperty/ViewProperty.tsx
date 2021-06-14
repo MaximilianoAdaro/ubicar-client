@@ -76,9 +76,12 @@ export const ViewProperty = () => {
               <div>
                 <span>{property.comments}</span>
               </div>
-              <div>
-                <span>{property.parkDescription}</span>
-              </div>
+              {property.parkDescription.length !== 0 && (
+                <div className={styles.parkDescription}>
+                  <h6>Descripcion del parque</h6>
+                  <span>{property.parkDescription}</span>
+                </div>
+              )}
             </div>
           </div>
 
