@@ -12,6 +12,7 @@ import {
   translateCondition,
 } from "./viewPropertyUtils";
 import { Address } from "../../api/generated/endpoints.schemas";
+import { formatPrice } from "../../utils/utils";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -95,10 +96,29 @@ export const ViewProperty = () => {
             <AddressSection address={property.address} />
           </div>
         </div>
-        <div>
+        <div className={styles.rightSide}>
+          <div className={styles.priceSection}>
+            <h2 className={styles.condition}>
+              {translateCondition(property.condition)}
+            </h2>
+            <h3 className={styles.price}>
+              <span className={styles.priceSymbol}>$</span>{" "}
+              <span className={styles.priceColor}>
+                {formatPrice(property.price)}
+              </span>
+            </h3>
+            <div className={styles.expenses}>
+              <span>Expensas </span>{" "}
+              <div>
+                <span className={styles.priceSymbol}>$</span>
+                <span className={styles.priceColor}>
+                  {formatPrice(property.expenses)}
+                </span>
+              </div>
+            </div>
+          </div>
           <div>
-            <Typography>{translateCondition(property.condition)}</Typography>
-            <Typography>$ {property.price}</Typography>
+            <ContactSection />
           </div>
         </div>
       </div>
@@ -162,7 +182,7 @@ const AddressSection = ({ address }: AddressSectionProps) => {
     <div>
       <h4 className={styles.sectionTitle}>Direccion</h4>
       <div className={styles.addressItemsSection}>
-        <div className={styles.addressLeft}>
+        <div>
           {getAddressItem("Pais", address.town.city.state.country.name)}
           {getAddressItem("Provincia", address.town.city.state.name)}
           {getAddressItem("Ciudad", address.town.city.name)}
@@ -190,4 +210,8 @@ const getAddressItem = (name: string, value: string) => {
       </div>
     </div>
   );
+};
+
+const ContactSection = () => {
+  return <div className={styles.contactSection}>contacts</div>;
 };

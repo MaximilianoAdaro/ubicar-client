@@ -29,6 +29,7 @@
 .infoContainer {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   gap: 30px;
   margin: 2em 2.2em 0;
 }
@@ -108,9 +109,6 @@
     flex-direction: row;
     gap: 100px;
 
-    .addressLeft {
-    }
-
     .addressItem {
       margin-top: 15px;
       display: flex;
@@ -124,17 +122,57 @@
         //width: 200px;
 
         h5 {
-          font-weight: 400;
+          font-weight: 300;
+          font-size: 1.2em;
         }
       }
 
       .addressItemValue {
         margin-left: auto;
-        //display: flex;
         width: 100px;
-        //align-items: flex-start;
+
+        font-size: 1em;
       }
     }
+  }
+}
+
+.rightSide {
+  width: 26%;
+}
+
+.priceSection {
+  $font-weight: 400;
+  width: 100%;
+  margin: auto;
+
+  .condition {
+    font-size: 2.3em;
+    font-weight: $font-weight;
+  }
+
+  .priceColor {
+    color: #dc9e65;
+  }
+
+  .price {
+    font-size: 3em;
+    font-weight: $font-weight;
+  }
+
+  .expenses {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.3em;
+
+    & > * {
+      margin-right: 20px;
+    }
+  }
+
+  .priceSymbol {
+    color: #767069;
   }
 }
 
@@ -160,4 +198,15 @@
     color: #484141;
     //margin-left: 10px;
   }
+}
+
+.contactSection {
+  margin-top: 40px;
+  width: 100%;
+  height: 500px;
+  border-radius: 40px;
+  border: 1px solid #dc9e65;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
