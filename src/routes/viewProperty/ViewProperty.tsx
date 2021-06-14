@@ -100,23 +100,25 @@ export const ViewProperty = () => {
           </div>
         </div>
         <div className={styles.rightSide}>
-          <div className={styles.priceSection}>
-            <h2 className={styles.condition}>
-              {translateCondition(property.condition)}
-            </h2>
-            <h3 className={styles.price}>
-              <span className={styles.priceSymbol}>$</span>{" "}
-              <span className={styles.priceColor}>
-                {formatPrice(property.price)}
-              </span>
-            </h3>
-            <div className={styles.expenses}>
-              <span>Expensas </span>{" "}
-              <div>
-                <span className={styles.priceSymbol}>$</span>
+          <div className={styles.priceInfo}>
+            <div className={styles.priceSection}>
+              <h2 className={styles.condition}>
+                {translateCondition(property.condition)}
+              </h2>
+              <h3 className={styles.price}>
+                <span className={styles.priceSymbol}>$</span>{" "}
                 <span className={styles.priceColor}>
-                  {formatPrice(property.expenses)}
+                  {formatPrice(property.price)}
                 </span>
+              </h3>
+              <div className={styles.expenses}>
+                <span>Expensas </span>{" "}
+                <div>
+                  <span className={styles.priceSymbol}>$</span>
+                  <span className={styles.priceColor}>
+                    {formatPrice(property.expenses)}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
