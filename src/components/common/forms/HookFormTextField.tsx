@@ -1,18 +1,32 @@
 import { Control, FieldPath, useController } from "react-hook-form";
-import { TextField } from "@material-ui/core";
+import { makeStyles, TextField } from "@material-ui/core";
+import { TextFieldProps } from "@material-ui/core/TextField/TextField";
+import clsx from "clsx";
 
-interface HookFormTextFieldProps<T> {
+type HookFormTextFieldProps<T> = TextFieldProps & {
   label: string;
   name: FieldPath<T>;
   control: Control<T>;
   defaultValue?: string;
-}
+  additionalStyles?: { [key: string]: string };
+};
+
+const useStyles = makeStyles((p) => ({
+  root: (props) => ({
+    "& div.MuiInputBase-formControl": {
+      backgroundColor: "white",
+      ...props,
+    },
+  }),
+}));
 
 export const HookFormTextField = <T,>({
   label,
   name,
   control,
   defaultValue = "",
+  additionalStyles,
+  ...rest
 }: HookFormTextFieldProps<T>) => {
   const {
     field,
@@ -22,6 +36,7 @@ export const HookFormTextField = <T,>({
     name,
     defaultValue: defaultValue as any,
   });
+  const classes = useStyles(additionalStyles);
   return (
     <div>
       <TextField
@@ -29,8 +44,12 @@ export const HookFormTextField = <T,>({
         variant={"outlined"}
         label={label}
         error={invalid}
-        helperText={error?.message}
+        helperText={error?.message ?? " "}
+        classes={{
+          root: classes.root,
+        }}
         {...field}
+        {...rest}
       />
     </div>
   );

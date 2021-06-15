@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import styles from "./ViewProperty.module.scss";
 import { Typography } from "@material-ui/core";
 import { TabsBar } from "../../components/common/tabsBar/TabsBar";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import pluralize from "pluralize";
 import { useGetPropertyUsingGET } from "../../api/generated/property-controller/property-controller";
 import {
@@ -13,13 +13,34 @@ import {
 } from "./viewPropertyUtils";
 import { Address } from "../../api/generated/endpoints.schemas";
 import { formatPrice } from "../../utils/utils";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { errorMessages } from "../../constants";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
+import { RoundedButton } from "../../components/common/buttons/RoundedButton";
+import { Loading } from "../../components/common/loading/Loading";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
+  return (
+    <Suspense fallback={<Loading />}>
+      <View id={id} />;
+    </Suspense>
+  );
+};
 
-  const { data: property, isLoading } = useGetPropertyUsingGET(id);
+type ViewProps = {
+  id: string;
+};
 
-  if (isLoading) return <h4>Loading...</h4>;
+const View = ({ id }: ViewProps) => {
+  const { data: property } = useGetPropertyUsingGET(id, {
+    query: {
+      suspense: true,
+    },
+  });
+
   if (!property) return <h4>Error</h4>;
 
   const characteristicsTabs = buildTabs(
@@ -27,6 +48,7 @@ export const ViewProperty = () => {
     property.materials,
     property.security
   );
+
   return (
     <div className={styles.container}>
       <div className={styles.mediaContainer}>
@@ -41,7 +63,7 @@ export const ViewProperty = () => {
           <div className={styles.firstSection}>
             <Typography variant={"h5"} className={styles.mainTitle}>
               {property.address.street} {property.address.number}{" "}
-              {property.address?.department ?? ""} {property.address.town.name}
+              {property.address?.department ?? ""}, {property.address.town.name}
             </Typography>
             <div className={styles.facts}>
               <Typography>{property.type}</Typography>
@@ -122,9 +144,7 @@ export const ViewProperty = () => {
               </div>
             </div>
           </div>
-          <div>
-            <ContactSection />
-          </div>
+          <ContactSection />
         </div>
       </div>
     </div>
@@ -217,6 +237,81 @@ const getAddressItem = (name: string, value: string) => {
   );
 };
 
+const schema = yup.object({
+  name: yup.string().required(errorMessages.required),
+  email: yup.string().required(errorMessages.required),
+  phoneNumber: yup.string().required(errorMessages.required),
+  message: yup.string().required(errorMessages.required),
+});
+
+type ContactForm = yup.InferType<typeof schema>;
+
 const ContactSection = () => {
-  return <div className={styles.contactSection}>contacts</div>;
+  const { control, handleSubmit } = useForm<ContactForm>({
+    resolver: yupResolver(schema),
+    mode: "onBlur",
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
+  return (
+    <div className={styles.contactSection}>
+      <div>
+        <h5 className={styles.contactFormTitle}>Escribir un mensaje</h5>
+      </div>
+      <div className={styles.contactForm}>
+        <form onSubmit={onSubmit}>
+          <div className={styles.contactInputContainer}>
+            <HookFormTextField
+              label={"Nombre"}
+              name={"name"}
+              control={control}
+              additionalStyles={{
+                borderRadius: "10px",
+              }}
+            />
+          </div>
+          <div className={styles.contactInputContainer}>
+            <HookFormTextField
+              label={"Email"}
+              name={"email"}
+              control={control}
+              additionalStyles={{
+                borderRadius: "10px",
+              }}
+            />
+          </div>
+          <div className={styles.contactInputContainer}>
+            <HookFormTextField
+              label={"Telefono"}
+              name={"phoneNumber"}
+              control={control}
+              additionalStyles={{
+                borderRadius: "10px",
+              }}
+            />
+          </div>
+          <div className={styles.contactInputContainer}>
+            <HookFormTextField
+              label={"Mensaje"}
+              name={"message"}
+              control={control}
+              multiline
+              rows={4}
+              additionalStyles={{
+                borderRadius: "10px",
+              }}
+            />
+          </div>
+          <div>
+            <RoundedButton className={styles.submitButton} type={"submit"}>
+              Enviar
+            </RoundedButton>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };

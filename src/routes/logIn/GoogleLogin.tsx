@@ -1,12 +1,12 @@
-import React, { memo, useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import "./firebaseui-styling.global.scss";
 import { useAppSelector } from "../../store";
 import { selectRedirectPath } from "../../store/slices/session";
 import { useGoogleSignIn } from "../../api/auth";
 import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
+import { FirebaseAuth } from "react-firebaseui";
 
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
@@ -31,7 +31,6 @@ export function GoogleLogin() {
     const unregisterAuthObserver = firebase
       .auth()
       .onAuthStateChanged(async (firebaseUser) => {
-        console.log({ firebaseUser });
         if (firebaseUser === null || !!user) {
           return;
         }
@@ -57,7 +56,11 @@ export function GoogleLogin() {
 
   return (
     <div>
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+      <FirebaseAuth
+        uiCallback={(ui) => ui.disableAutoSignIn()}
+        uiConfig={uiConfig}
+        firebaseAuth={firebase.auth()}
+      />
     </div>
   );
 }

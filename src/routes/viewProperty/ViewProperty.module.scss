@@ -142,7 +142,7 @@
 }
 
 .rightSide {
-  width: 26%;
+  width: 30%;
 }
 
 .priceInfo {
@@ -209,12 +209,33 @@
 }
 
 .contactSection {
-  margin-top: 40px;
-  width: 100%;
-  height: 500px;
+  margin-top: 4em;
   border-radius: 40px;
-  border: 1px solid #dc9e65;
+  border: 1px solid #eca1a1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  background-color: rgba(227, 238, 243, 0.62);
+  padding: 2em 1.9em;
+
+  .contactFormTitle {
+    margin-top: 0.3em;
+    color: #e0a365;
+    font-size: 2em;
+    font-weight: 350;
+  }
+
+  .contactForm {
+    margin-top: 1.3em;
+    margin-bottom: 2em;
+    width: 100%;
+
+    .contactInputContainer {
+      margin-top: 0.6em;
+    }
+
+    .submitButton {
+      margin-top: 2em;
+    }
+  }
 }

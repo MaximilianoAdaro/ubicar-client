@@ -20,7 +20,7 @@ export const CreateProperty = () => {
   return (
     <>
       <Container fluid>
-        <h1 className={styles.title}>Publica tu propiedad</h1>
+        <h1 className={styles.mainTitle}>Publica tu propiedad</h1>
         <StepBar currentStep={currentStep} />
         <CurrentStep currentStep={currentStep} />
       </Container>

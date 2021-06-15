@@ -64,12 +64,12 @@ export const SignUp = () => {
         <form onSubmit={onSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12} className={styles.titleContainer}>
-              <Typography variant={"h3"} className={styles.title}>
+              <Typography variant={"h3"} className={styles.mainTitle}>
                 Registrate
               </Typography>
             </Grid>
             <div className={styles.inputs}>
-              <Grid item xs={4} className={styles.column}>
+              <div className={styles.column}>
                 <Typography variant={"h5"}>Datos personales</Typography>
                 <div className={styles.inputContainer}>
                   <HookFormTextField
@@ -85,7 +85,7 @@ export const SignUp = () => {
                     control={control}
                   />
                 </div>
-                <Grid xs className={styles.emailAndBirthdate}>
+                <div className={styles.emailAndBirthdate}>
                   <div className={styles.inputContainer}>
                     <HookFormTextField
                       label={"Email"}
@@ -100,48 +100,46 @@ export const SignUp = () => {
                       control={control}
                     />
                   </div>
-                </Grid>
-              </Grid>
-              <div
-                style={{
-                  width: "2em",
-                }}
-              />
-              <Grid item xs={4} className={styles.column}>
-                <Typography variant={"h5"}>Tipo de usuario</Typography>
-                <div className={styles.inputContainer}>
-                  {roles && (
-                    <HookFormSelect
-                      name={"userRole"}
-                      items={buildItems(roles)}
-                      control={control}
-                    />
-                  )}
                 </div>
-                <div className={styles.password}>
-                  <Typography variant={"h5"}>Contraseña</Typography>
+              </div>
+              <div className={styles.column}>
+                <div className={styles.rightColumn}>
+                  <Typography variant={"h5"}>Tipo de usuario</Typography>
                   <div className={styles.inputContainer}>
-                    <HookFormPasswordInput
-                      label={"Contraseña"}
-                      name={"password"}
-                      control={control}
-                    />
+                    {roles && (
+                      <HookFormSelect
+                        name={"userRole"}
+                        items={buildItems(roles)}
+                        control={control}
+                      />
+                    )}
                   </div>
-                  <div className={styles.inputContainer}>
-                    <HookFormPasswordInput
-                      label={"Confirmar contraseña"}
-                      name={"confirmPassword"}
-                      control={control}
-                    />
+                  <div className={styles.password}>
+                    <Typography variant={"h5"}>Contraseña</Typography>
+                    <div className={styles.inputContainer}>
+                      <HookFormPasswordInput
+                        label={"Contraseña"}
+                        name={"password"}
+                        control={control}
+                      />
+                    </div>
+                    <div className={styles.inputContainer}>
+                      <HookFormPasswordInput
+                        label={"Confirmar contraseña"}
+                        name={"confirmPassword"}
+                        control={control}
+                      />
+                    </div>
                   </div>
                 </div>
-              </Grid>
+              </div>
             </div>
             <div className={styles.buttonSection}>
               <div className={styles.gridButton}>
                 <div>
                   <GoogleLogin />
                 </div>
+                <span>O</span>
                 <div className={styles.buttonContainer}>
                   <RoundedButton type={"submit"}>Crear cuenta</RoundedButton>
                 </div>
