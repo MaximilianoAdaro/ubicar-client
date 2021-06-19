@@ -63,10 +63,8 @@ const WorkInProgress = () => {
 
   const handleLogout = async (e: any) => {
     e.preventDefault();
-    console.log("signing out");
     await logOut();
     await firebase.auth().signOut();
-    console.log("dispatched user null");
     history.push(urls.home);
   };
 
