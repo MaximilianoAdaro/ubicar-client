@@ -1,44 +1,43 @@
 // Define a type for the slice state
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {RootState} from "../../store";
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../store";
 
 export interface MapView {
-    longitude: number;
-    latitude: number;
+  longitude: number;
+  latitude: number;
 }
 
 interface MapState {
-    view: MapView;
-    zoom: number
+  view: MapView;
+  zoom: number;
 }
 
 // Define the initial state using that type
 const initialState: MapState = {
-    view: {longitude:-6506056.858887733 ,latitude:-4114291.375798843},
-    zoom: 10,
+  view: { longitude: -6506056.858887733, latitude: -4114291.375798843 },
+  zoom: 10,
 };
 
 export const mapSlice = createSlice({
-    name: "map",
-    // `createSlice` will infer the state type from the `initialState` argument
-    initialState,
-    reducers: {
-        setView: (state, action: PayloadAction<MapState>) => {
-            state.view = action.payload.view
-        },
-        setZoom: (state, action: PayloadAction<number>) => {
-            state.zoom = action.payload
-        },
+  name: "map",
+  // `createSlice` will infer the state type from the `initialState` argument
+  initialState,
+  reducers: {
+    setView: (state, action: PayloadAction<MapState>) => {
+      state.view = action.payload.view;
     },
+    setZoom: (state, action: PayloadAction<number>) => {
+      state.zoom = action.payload;
+    },
+  },
 });
 
 export const createMapReducer = {
-    map: mapSlice.reducer,
+  map: mapSlice.reducer,
 };
 
 export const createMapActions = {
-    map: mapSlice.actions,
+  map: mapSlice.actions,
 };
 
 // Other code such as selectors can use the imported `RootState` type

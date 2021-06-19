@@ -5,11 +5,13 @@ import { ListingFilters } from "../../components/listingFilters/";
 import { useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import { MapComponent } from "../../components/Map/map";
-import { useFetchProperties } from "../../api/property";
 import { AddFavorite } from "../../components/addFavorite/addFavorite";
+import { useGetPropertiesUsingGET } from "../../api/generated/property-controller/property-controller";
 
 export function ListingPage() {
-  const data = useFetchProperties();
+  const data = useGetPropertiesUsingGET({
+    page: 0,
+  });
   const zoom = useAppSelector(selectZoom);
   const view = useAppSelector(selectView);
   return (
@@ -25,7 +27,7 @@ export function ListingPage() {
             <h1>There was an error retrieving the properties</h1>
           )}
           {data.status === "success" &&
-            data?.data.content?.map((casa: any) => (
+            data?.data.content?.map((casa) => (
               <ListingHouse key={casa.id} house={casa} />
             ))}
         </Grid>

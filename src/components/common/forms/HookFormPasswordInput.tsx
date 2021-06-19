@@ -54,7 +54,7 @@ export const HookFormPasswordInput = <T,>({
           label={label}
           fullWidth
         />
-        <FormHelperText>{error?.message}</FormHelperText>
+        <FormHelperText>{error?.message ?? " "}</FormHelperText>
       </FormControl>
     </div>
   );

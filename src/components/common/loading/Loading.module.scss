@@ -1,0 +1,25 @@
+@import "../../../styles/common.scss";
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  //   transform: translateY(-50%, -50%);
+}
+
+.spinner {
+  font-size: 4em;
+  color: $theme-goldish;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    transform: scale(1) rotate(360deg);
+  }
+}

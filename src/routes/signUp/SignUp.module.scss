@@ -5,7 +5,7 @@
   margin-bottom: 2em;
 }
 
-.title {
+.mainTitle {
   margin-top: 1em;
   margin-bottom: 1em;
   margin-left: 0.5em;
@@ -18,31 +18,36 @@
 
 .column {
   padding: 20px;
+  width: 400px;
+}
+
+.rightColumn {
+  //margin-top: 30px;
 }
 
 .inputs {
   display: flex;
   width: 100%;
-  align-items: center;
   justify-content: center;
+  gap: 30px;
 }
 
 .inputContainer {
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 .emailAndBirthdate {
-  margin-top: 90px;
+  margin-top: 30px;
 }
 
 .password {
-  margin-top: 110px;
+  margin-top: 95px;
 }
 
 .buttonSection {
   margin-right: 13em;
+  margin-top: 1em;
   width: 100%;
-  margin-top: 2em;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

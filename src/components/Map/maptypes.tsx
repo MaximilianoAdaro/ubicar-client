@@ -1,15 +1,15 @@
 import Map from "ol/Map";
-import {MapView} from "../../store/slices/map/mapSlice";
+import { MapView } from "../../store/slices/map/mapSlice";
 
 export type TMapProps = {
-    zoom:number
-    view:MapView
+  zoom: number;
+  view: MapView;
 };
 
 export type TMapState = {
-    mapContext?: IMapContext;
+  mapContext?: IMapContext;
 };
 
 export interface IMapContext {
-    map: Map;
+  map: Map;
 }
