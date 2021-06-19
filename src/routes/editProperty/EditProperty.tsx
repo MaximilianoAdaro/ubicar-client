@@ -17,12 +17,9 @@ import { getFeatureFlag } from "../../utils/utils";
 import { NavBar } from "../../components/navbar/NavBar";
 import { useParams } from "react-router-dom";
 import { useFetchProperties, useGetProperty } from "../../api/property";
-import axios from "axios";
+import { useState } from "react";
 // import {useFetchProperties} from "../../api/property";
 
-type propertyType = {
-  propertyId: string;
-};
 export const EditProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
   return (
@@ -107,22 +104,21 @@ interface CurrentStepProps {
 }
 
 const CurrentStep = ({ currentStep }: CurrentStepProps) => {
-  const { propertyId } = useParams<propertyType>();
-  const data = useGetProperty(propertyId);
   switch (currentStep) {
     case Step.BasicInfo:
-      return <>{data.status === "success" && <BasicInfo data={data} />}</>;
+      return <BasicInfo />;
     case Step.Address:
-      return <Address data={data} />;
+      return <Address />;
     case Step.Characteristics:
-      return <Characteristics data={data} />;
+      return <Characteristics />;
     case Step.OptionalInfo:
-      return <OptionalInfo data={data} />;
+      return <OptionalInfo />;
     case Step.Multimedia:
-      return <Multimedia data={data} />;
+      return <Multimedia />;
     case Step.Additional:
-      return <Additional data={data} />;
+      return <Additional />;
     case Step.Confirmation:
-      return <Confirmation data={data} id={propertyId} />;
+      return <Confirmation />;
   }
+  // }
 };

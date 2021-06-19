@@ -15,6 +15,7 @@ import {
   useFetchStates,
   useFetchTowns,
 } from "../../../api/location";
+import { useGetProperty } from "../../../api/property";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -30,6 +31,7 @@ export type AddressFormData = yup.InferType<typeof schema>;
 const AddressTextInput = createCustomTextInput<AddressFormData>();
 
 export const Address = (props: any) => {
+  const data = useGetProperty(props.id);
   const defaults = useAppSelector(
     ({ createPropertyForm: { address, addressDropdowns } }) => ({
       ...addressDropdowns,
@@ -98,7 +100,7 @@ export const Address = (props: any) => {
                         dispatch(actions.createPropertyForm.setCity(undefined));
                         dispatch(actions.createPropertyForm.setTown(undefined));
                       }}
-                      defaultValue={props.data.data.state}
+                      defaultValue={defaults.state}
                     />
                   )}
                 </div>
@@ -150,7 +152,7 @@ export const Address = (props: any) => {
                   <AddressTextInput
                     name="postalCode"
                     label="Codigo postal"
-                    defaultValue={props.data.data.address.postalCode}
+                    // defaultValue={data.data.address.postalCode}
                   />
                 </div>
               </Col>
@@ -161,7 +163,7 @@ export const Address = (props: any) => {
                   <AddressTextInput
                     name="street"
                     label="Calle"
-                    defaultValue={props.data.data.address.street}
+                    // defaultValue={data.data.address.street}
                   />
                 </div>
               </Col>
@@ -172,7 +174,7 @@ export const Address = (props: any) => {
                   <AddressTextInput
                     name="number"
                     label="Numero"
-                    defaultValue={props.data.data.address.number}
+                    // defaultValue={data.data.address.number.toString()}
                   />
                 </div>
               </Col>
@@ -183,7 +185,7 @@ export const Address = (props: any) => {
                   <AddressTextInput
                     name="department"
                     label="Departamento"
-                    defaultValue={props.data.data.address.department}
+                    // defaultValue={data.data.address.department}
                   />
                 </div>
               </Col>
@@ -192,6 +194,7 @@ export const Address = (props: any) => {
         </Form.Row>
         <StepButtons type={"submit"} onPrevious={handlePreviousButton} />
       </CustomForm>
+      )
     </Container>
   );
 };

@@ -1,20 +1,22 @@
-import { CustomForm } from "../../formsEdit/customForm/CustomForm";
+import { CustomForm } from "../../forms/customForm/CustomForm";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import * as yup from "yup";
 import { Col, Container, Form } from "react-bootstrap";
-import { createCustomTextInput } from "../../formsEdit/customForm/TextInput";
-import { RadioOption } from "../../formsEdit/ComposedRadioInput";
+import { createCustomTextInput } from "../../forms/customForm/TextInput";
+import { RadioOption } from "../../forms/ComposedRadioInput";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   selectOperationType,
   Step,
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
-import { RadioInput } from "../../formsEdit/RadioInput";
+import { RadioInput } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
 import clsx from "clsx";
 import { useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
 import { useFetchPropertyTypes } from "../../../api/propertyOptionals";
+import { useGetProperty } from "../../../api/property";
+import { useParams } from "react-router-dom";
 
 const schema = yup.object({
   price: yup.number().positive().required(),
@@ -48,7 +50,7 @@ export const BasicInfo = (props: any) => {
       dispatch(actions.createPropertyForm.setStep(Step.Address));
     },
   });
-  console.log(props.data);
+
   return (
     <Container>
       <CustomForm {...customForm}>
@@ -72,7 +74,7 @@ export const BasicInfo = (props: any) => {
                   name="title"
                   label="Titulo"
                   placeholder={"Increible casa en la playa..."}
-                  defaultValue={props.data.data.title}
+                  // defaultValue={props.data.title}
                 />
               </Col>
             </Form.Row>
@@ -83,14 +85,14 @@ export const BasicInfo = (props: any) => {
                     <BasicInfoTextInput
                       name="price"
                       label="Precio (ARS)"
-                      defaultValue={props.data.data.price}
+                      // defaultValue={data.data.price.toString()}
                     />
                   </Col>
                   <Col>
                     <BasicInfoTextInput
                       name="expenses"
                       label="Expensas (ARS)"
-                      defaultValue={props.data.data.expenses}
+                      // defaultValue={data.data.expenses.toString()}
                     />
                   </Col>
                 </Form.Row>
@@ -130,6 +132,7 @@ export const BasicInfo = (props: any) => {
           <StepButtons type={"submit"} showPrevious={false} />
         </Form.Row>
       </CustomForm>
+      )
     </Container>
   );
 };

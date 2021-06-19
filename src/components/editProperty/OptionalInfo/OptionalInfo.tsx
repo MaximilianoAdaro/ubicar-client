@@ -10,6 +10,7 @@ import {
   useFetchPropertyMaterials,
   useFetchPropertySecurities,
 } from "../../../api/propertyOptionals";
+import { useGetProperty } from "../../../api/property";
 
 export const OptionalInfo = (props: any) => {
   const defaults = useAppSelector(
@@ -32,7 +33,7 @@ export const OptionalInfo = (props: any) => {
   const handlePreviousButton = () => {
     dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
   };
-
+  // const data = useGetProperty(props.propertyId);
   return (
     <Container>
       <Form.Row>
@@ -51,7 +52,7 @@ export const OptionalInfo = (props: any) => {
                       onUncheck={(id) =>
                         dispatch(actions.createPropertyForm.removeAmenity(id))
                       }
-                      defaultValues={defaults.amenities}
+                      // defaultValues={data.amenities}
                     />
                   )}
                 </div>
@@ -74,7 +75,7 @@ export const OptionalInfo = (props: any) => {
                       onUncheck={(id) =>
                         dispatch(actions.createPropertyForm.removeSecurity(id))
                       }
-                      defaultValues={defaults.securities}
+                      // defaultValues={data.securities}
                     />
                   )}
                 </div>
@@ -95,7 +96,7 @@ export const OptionalInfo = (props: any) => {
                       onUncheck={(id) =>
                         dispatch(actions.createPropertyForm.removeMaterial(id))
                       }
-                      defaultValues={defaults.materials}
+                      // defaultValues={data.materials}
                     />
                   )}
                 </div>

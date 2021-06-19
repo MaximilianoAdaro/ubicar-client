@@ -17,7 +17,7 @@ export const useCreateProperty = () => {
 };
 
 export const useGetProperty = (id: string) => {
-  return useQuery("propertyPreview", async () => {
+  return useQuery("propertyById", async () => {
     const { data } = await propertyControllerApi.getPropertyUsingGET(id);
     return data;
   });

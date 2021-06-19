@@ -11,6 +11,7 @@ import { StepButtons } from "../StepButtons/StepButtons";
 import React from "react";
 import styles from "./Characteristics.module.scss";
 import { useFetchPropertyStyles } from "../../../api/propertyOptionals";
+import { useGetProperty } from "../../../api/property";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -34,6 +35,7 @@ const CharacteristicsTextArea =
   createCustomTextInputArea<CharacteristicsFormData>();
 
 export const Characteristics = (props: any) => {
+  const data = useGetProperty(props.id);
   const defaults = useAppSelector(
     ({ createPropertyForm: { characteristics, style } }) => ({
       ...characteristics,
@@ -76,7 +78,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="totalSurface"
                     label="Superficie total (m²)"
-                    defaultValue={props.data.data.squareFoot}
+                    // defaultValue={data.data.squareFoot.toString()}
                   />
                 </div>
               </Col>
@@ -86,7 +88,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="coveredSurface"
                     label="Superficie cubierta (m²)"
-                    defaultValue={props.data.data.coveredSquareFoot}
+                    // defaultValue={data.data.coveredSquareFoot.toString()}
                   />
                 </div>
               </Col>
@@ -98,7 +100,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="environments"
                     label="Cantidad de ambientes"
-                    defaultValue={props.data.data.environments}
+                    // defaultValue={data.data.environments.toString()}
                   />
                 </div>
               </Col>
@@ -108,7 +110,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="rooms"
                     label="Cantidad de habitaciones"
-                    defaultValue={props.data.data.rooms}
+                    // defaultValue={data.data.rooms.toString()}
                   />
                 </div>
               </Col>
@@ -120,7 +122,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="fullBaths"
                     label="Baños completos"
-                    defaultValue={props.data.data.fullBaths}
+                    // defaultValue={data.data.fullBaths.toString()}
                   />
                 </div>
               </Col>
@@ -130,7 +132,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="toilets"
                     label="Toilettes"
-                    defaultValue={props.data.data.toilets}
+                    // defaultValue={data.data.toilets.toString()}
                   />
                 </div>
               </Col>
@@ -144,7 +146,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="floors"
                     label="Cantidad de Pisos"
-                    defaultValue={props.data.data.levels}
+                    // defaultValue={data.data.levels.toString()}
                   />
                 </div>
               </Col>
@@ -154,7 +156,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="constructionYear"
                     label="Año de construccion"
-                    defaultValue={props.data.data.constructionDate}
+                    // defaultValue={data.data.constructionDate.toString()}
                   />
                 </div>
               </Col>
@@ -187,7 +189,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextArea
                     name="parkDescription"
                     label={"Caracteristicas del parque"}
-                    defaultValue={props.data.data.parkDescription}
+                    // defaultValue={data.data.parkDescription}
                   />
                 </div>
               </Col>
@@ -196,6 +198,7 @@ export const Characteristics = (props: any) => {
         </Form.Row>
         <StepButtons type={"submit"} onPrevious={handlePreviousButton} />
       </CustomForm>
+      )
     </Container>
   );
 };
