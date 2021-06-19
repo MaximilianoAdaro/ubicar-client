@@ -1,9 +1,10 @@
 @import "src/styles/common";
 
-.unfavorite {
-  color: $theme-goldish;
-}
+.iconContainer {
+  cursor: pointer;
 
-.favorite {
-  color: $theme-goldish;
+  .icon {
+    font-size: 30px;
+    color: $theme-goldish;
+  }
 }

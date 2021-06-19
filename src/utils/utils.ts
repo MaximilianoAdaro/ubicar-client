@@ -33,3 +33,11 @@ export function isEqualObjects(
   }
   return true;
 }
+
+export const formatPrice = (price: number) =>
+  new Intl.NumberFormat(undefined, {
+    style: "currency",
+    currency: "ARS",
+  })
+    .format(price)
+    .replace("ARS", "");

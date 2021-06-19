@@ -1,24 +1,21 @@
 import Grid from "@material-ui/core/Grid";
-import { ListingHouse } from "../../components/listingHouse/";
-import styles from "./ListingPage.module.scss";
+import { useGetPropertiesUsingGET } from "../../api/generated/property-controller/property-controller";
 import { ListingFilters } from "../../components/listingFilters/";
+import { ListingHouse } from "../../components/listingHouse/";
+import { MapComponent } from "../../components/Map/map";
 import { useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
-import { MapComponent } from "../../components/Map/map";
-import { useFetchProperties } from "../../api/property";
-import { AddFavorite } from "../../components/addFavorite/addFavorite";
-import { Link, Route } from "react-router-dom";
-import { EditProperty } from "../editProperty";
+import styles from "./ListingPage.module.scss";
 
 export function ListingPage() {
-  const data = useFetchProperties();
+  const data = useGetPropertiesUsingGET({
+    page: 0,
+  });
   const zoom = useAppSelector(selectZoom);
   const view = useAppSelector(selectView);
-
   return (
     <div>
       <ListingFilters />
-      <AddFavorite />
       <Grid container className={styles.mapAndProperties}>
         <Grid item xl={9} sm={8} className={styles.map}>
           <MapComponent zoom={zoom} view={view} />
@@ -28,7 +25,7 @@ export function ListingPage() {
             <h1>There was an error retrieving the properties</h1>
           )}
           {data.status === "success" &&
-            data?.data.content?.map((casa: any) => (
+            data?.data.content?.map((casa) => (
               <ListingHouse key={casa.id} house={casa} />
             ))}
         </Grid>

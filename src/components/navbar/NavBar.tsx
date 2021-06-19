@@ -1,9 +1,11 @@
 import { Grid, List, ListItem, Popover } from "@material-ui/core";
 import styles from "./NavBar.module.scss";
-import React, { useState } from "react";
+import { useState } from "react";
 import logo from "./Logo/Logo-Ubicar.png";
 import { Image } from "react-bootstrap";
 import { IoMdArrowDropdown } from "react-icons/all";
+import { Link } from "react-router-dom";
+import { urls } from "../../constants";
 
 export function NavBar() {
   const [anchorAccount, setAnchorAccount] = useState(null);
@@ -15,32 +17,34 @@ export function NavBar() {
   return (
     <div className={styles.divNavBarContainer}>
       <Grid container className={styles.navBarContainer}>
-        <Grid container xs>
-          <Grid xs={4} className={styles.navBarLogo} container>
+        <Grid item xs>
+          <Grid item xs={4} className={styles.navBarLogo} container>
             <Image src={logo} alt="Logo Ubicar" className={styles.imageLogo} />
-            <p>Ubicar</p>
+            <p>
+              <Link to={urls.home}>Ubicar</Link>
+            </p>
           </Grid>
-          <Grid xs></Grid>
+          <Grid item xs></Grid>
         </Grid>
-        <Grid xs>
+        <Grid item xs>
           <Grid container className={styles.faker}>
-            <Grid xs></Grid>
-            <Grid xs={3} xl={2} className={styles.gridTags}>
-              <a href="https://www.google.com" className={styles.navBarTags}>
+            <Grid item xs></Grid>
+            <Grid item xs={3} xl={2} className={styles.gridTags}>
+              <Link to={urls.listingPage} className={styles.navBarTags}>
                 Compra
-              </a>
+              </Link>
             </Grid>
-            <Grid xs={3} xl={2} className={styles.gridTags}>
-              <a href="https://www.google.com" className={styles.navBarTags}>
+            <Grid item xs={3} xl={2} className={styles.gridTags}>
+              <Link to={urls.listingPage} className={styles.navBarTags}>
                 Alquiler
-              </a>
+              </Link>
             </Grid>
-            <Grid xs={3} xl={2} className={styles.gridTags}>
-              <a href="https://www.google.com" className={styles.navBarTags}>
+            <Grid item xs={3} xl={2} className={styles.gridTags}>
+              <Link to={urls.createProperty} className={styles.navBarTags}>
                 Publicar
-              </a>
+              </Link>
             </Grid>
-            <Grid xs={3} xl={2} className={styles.navBarAccount}>
+            <Grid item xs={3} xl={2} className={styles.navBarAccount}>
               <div>
                 <button
                   className={styles.myAccountButton}

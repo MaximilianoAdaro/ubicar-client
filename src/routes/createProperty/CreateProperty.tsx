@@ -14,15 +14,13 @@ import styles from "./CreateProperty.module.scss";
 import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
-import { NavBar } from "../../components/navbar/NavBar";
 
 export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
   return (
     <>
       <Container fluid>
-        <NavBar />
-        <h1 className={styles.title}>Publica tu propiedad</h1>
+        <h1 className={styles.mainTitle}>Publica tu propiedad</h1>
         <StepBar currentStep={currentStep} />
         <CurrentStep currentStep={currentStep} />
       </Container>

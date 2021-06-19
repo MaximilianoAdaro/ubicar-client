@@ -1,92 +1,52 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import {
-  AuthControllerApi,
-  GoogleLoginUserDTO,
-  LogInUserDTO,
-  UserCreationDTO,
-} from "../generated/api";
-
-const authControllerApi = new AuthControllerApi(undefined, "");
+  getGetLoggedUsingGETQueryKey,
+  loginWithGoogleUsingPOST,
+  useLoginUsingPOST,
+  useLogOutUsingPOST,
+  useRegisterUsingPOST,
+} from "./generated/auth-controller/auth-controller";
+import { GoogleLoginUserDTO } from "./generated/endpoints.schemas";
 
 export const useSignUp = () => {
-  return useMutation(async (data: UserCreationDTO) => {
-    const { data: signUpRes } = await authControllerApi.registerUsingPOST(data);
-    return signUpRes;
-  });
-};
-
-export const useGetRoles = () => {
-  return useQuery("roles", async () => {
-    const { data } = await authControllerApi.getRolesUsingGET();
-    return data;
-  });
+  return useRegisterUsingPOST();
 };
 
 export const useSignIn = () => {
   const queryClient = useQueryClient();
-
-  return useMutation(
-    async (data: LogInUserDTO) => {
-      const { data: signInRes } = await authControllerApi.loginUsingPOST(data);
-      return signInRes;
-    },
-    {
-      async onSuccess() {
-        queryClient.removeQueries("me");
-        await queryClient.cancelQueries("me");
+  return useLoginUsingPOST({
+    mutation: {
+      onSuccess(user) {
+        queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), user);
       },
-    }
-  );
+    },
+  });
 };
 
 export const useGoogleSignIn = () => {
   const queryClient = useQueryClient();
   return useMutation(
-    async ({ token, data }: { token: string; data: GoogleLoginUserDTO }) => {
-      const {
-        data: signInRes,
-      } = await authControllerApi.loginWithGoogleUsingPOST(token, data);
-      return signInRes;
-    },
+    ({ token, data }: { token: string; data: GoogleLoginUserDTO }) =>
+      loginWithGoogleUsingPOST(data, {
+        headers: {
+          Authorization: token,
+        },
+      }),
     {
-      async onSuccess() {
-        queryClient.removeQueries("me");
-        await queryClient.cancelQueries("me");
+      onSuccess(user) {
+        queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), user);
       },
-    }
-  );
-};
-
-export const useLoggedUser = () => {
-  return useQuery(
-    "me",
-    async () => {
-      const { data } = await authControllerApi.getLoggedUsingGET();
-      return data;
-    },
-    {
-      retry: false,
-      refetchInterval: false,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-      retryOnMount: false,
-      refetchIntervalInBackground: false,
     }
   );
 };
 
 export const useLogOut = () => {
   const queryClient = useQueryClient();
-  return useMutation(
-    async () => {
-      await authControllerApi.logOutUsingPOST();
-    },
-    {
-      async onSuccess() {
-        queryClient.removeQueries("me");
-        await queryClient.cancelQueries("me");
+  return useLogOutUsingPOST({
+    mutation: {
+      onSuccess() {
+        queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), undefined);
       },
-    }
-  );
+    },
+  });
 };
