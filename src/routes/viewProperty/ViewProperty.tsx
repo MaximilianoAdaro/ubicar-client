@@ -21,6 +21,8 @@ import { HookFormTextField } from "../../components/common/forms/HookFormTextFie
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import { Loading } from "../../components/common/loading/Loading";
 import { FcHome, GiPathDistance } from "react-icons/all";
+import { AddFavorite } from "../../components/addFavorite/addFavorite";
+import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -36,6 +38,7 @@ type ViewProps = {
 };
 
 const View = ({ id }: ViewProps) => {
+  const { data: currentUser } = useGetLoggedUsingGET();
   const { data: property } = useGetPropertyUsingGET(id, {
     query: {
       suspense: true,
@@ -62,10 +65,14 @@ const View = ({ id }: ViewProps) => {
         <div className={styles.leftInfo}>
           <div className={styles.divider} />
           <div className={styles.firstSection}>
-            <Typography variant={"h5"} className={styles.mainTitle}>
-              {property.address.street} {property.address.number}{" "}
-              {property.address.department ?? ""}, {property.address.town.name}
-            </Typography>
+            <div className={styles.titleSection}>
+              <Typography variant={"h5"} className={styles.mainTitle}>
+                {property.address.street} {property.address.number}{" "}
+                {property.address.department ?? ""},{" "}
+                {property.address.town.name}
+              </Typography>
+              {currentUser && <AddFavorite id={id} />}
+            </div>
             <div className={styles.facts}>
               <div>
                 <span>{property.type}</span>
@@ -225,16 +232,20 @@ const AddressSection = ({ address }: AddressSectionProps) => {
       <h4 className={styles.sectionTitle}>Direccion</h4>
       <div className={styles.addressItemsSection}>
         <table>
-          {getAddressItem("Pais", address.town.city.state.country.name)}
-          {getAddressItem("Provincia", address.town.city.state.name)}
-          {getAddressItem("Ciudad", address.town.city.name)}
-          {getAddressItem("Barrio", address.town.name)}
+          <tbody>
+            {getAddressItem("Pais", address.town.city.state.country.name)}
+            {getAddressItem("Provincia", address.town.city.state.name)}
+            {getAddressItem("Ciudad", address.town.city.name)}
+            {getAddressItem("Barrio", address.town.name)}
+          </tbody>
         </table>
         <table>
-          {getAddressItem("Calle", address.street)}
-          {getAddressItem("Numero", address.number.toString())}
-          {getAddressItem("Departamento", address.department)}
-          {getAddressItem("Codigo Postal", address.postalCode)}
+          <tbody>
+            {getAddressItem("Calle", address.street)}
+            {getAddressItem("Numero", address.number.toString())}
+            {getAddressItem("Departamento", address.department)}
+            {getAddressItem("Codigo Postal", address.postalCode)}
+          </tbody>
         </table>
       </div>
     </div>

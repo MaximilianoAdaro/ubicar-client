@@ -1,11 +1,11 @@
 import Grid from "@material-ui/core/Grid";
-import { ListingHouse } from "../../components/listingHouse/";
-import styles from "./ListingPage.module.scss";
+import { useGetPropertiesUsingGET } from "../../api/generated/property-controller/property-controller";
 import { ListingFilters } from "../../components/listingFilters/";
+import { ListingHouse } from "../../components/listingHouse/";
+import { MapComponent } from "../../components/Map/map";
 import { useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
-import { MapComponent } from "../../components/Map/map";
-import { useGetPropertiesUsingGET } from "../../api/generated/property-controller/property-controller";
+import styles from "./ListingPage.module.scss";
 
 export function ListingPage() {
   const data = useGetPropertiesUsingGET({
@@ -13,7 +13,6 @@ export function ListingPage() {
   });
   const zoom = useAppSelector(selectZoom);
   const view = useAppSelector(selectView);
-
   return (
     <div>
       <ListingFilters />

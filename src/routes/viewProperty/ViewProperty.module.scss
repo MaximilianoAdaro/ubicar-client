@@ -38,12 +38,19 @@
   width: 70%;
 
   .firstSection {
-    .mainTitle {
-      margin-top: 10px;
-      font-size: 2.6em;
-      color: #8e5b50;
-    }
+    .titleSection {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
 
+      .mainTitle {
+        margin-top: 10px;
+        font-size: 2.6em;
+        color: #8e5b50;
+        margin-right: 20px;
+      }
+    }
     .facts {
       margin: 20px 10px 0;
       display: flex;
