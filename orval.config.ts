@@ -1,21 +1,6 @@
 const faker = require("faker");
-// const orval = require("orval");
 
-// type FirstParameter<T extends (...args: any) => any> = T extends (
-//   config: infer P,
-//   args: any
-// ) => any
-//   ? P
-//   : never;
-//
-// type FirstArg = FirstParameter<typeof orval.generate>;
-// type GetOptions<T> = T extends string | undefined | infer P ? P : {};
-// type Options = GetOptions<FirstArg>;
-// declare type Config = {
-//   [backend: string]: Options;
-// };
-
-const config = () /*: Config*/ => ({
+const config = () => ({
   "ubicar-api": {
     output: {
       mode: "tags-split",
@@ -28,7 +13,6 @@ const config = () /*: Config*/ => ({
           name: "customInstance",
         },
         mock: {
-          required: true,
           properties: {
             "/.*id$/": () => faker.datatype.uuid(),
             "/email/": () => faker.internet.email(),
@@ -37,33 +21,15 @@ const config = () /*: Config*/ => ({
         operations: {
           ...getLoggedUsingGET(),
           ...getPropertiesUsingGET(),
+          ...getPropertyUsingGET(),
         },
       },
     },
     input: {
       target: "http://localhost:8080/v2/api-docs",
-      // override: {
-      //   transformer: (spec) => {
-      //     return {
-      //       ...spec,
-      //       paths: Object.entries(spec.paths).reduce(
-      //         (acc, [path, pathItem]) => ({
-      //           ...acc,
-      //           [path]: Object.entries(pathItem).reduce(
-      //             (pathItemAcc, [verb, operation]) => ({
-      //               ...pathItemAcc,
-      //               [verb]: {
-      //                 ...operation,
-      //               },
-      //             }),
-      //             {}
-      //           ),
-      //         }),
-      //         {}
-      //       ),
-      //     };
-      //   },
-      // },
+      override: {
+        transformer: "./orvalConfigs/fix-res.js",
+      },
     },
   },
 });
@@ -94,6 +60,19 @@ function getPropertiesUsingGET() {
         useQuery: true,
         useInfinite: true,
         useInfiniteQueryParam: "page",
+      },
+    },
+  };
+}
+
+function getPropertyUsingGET() {
+  return {
+    getPropertyUsingGET: {
+      mock: {
+        properties: {
+          comments: () => faker.lorem.sentences(5),
+          parkDescription: () => faker.lorem.sentences(3),
+        },
       },
     },
   };

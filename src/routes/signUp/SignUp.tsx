@@ -50,9 +50,11 @@ export const SignUp = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       await mutateAsync({
-        ...data,
-        birthDate: data.birthDate.toISOString(),
-        userName: `${data.firstName} ${data.lastName}`,
+        data: {
+          ...data,
+          birthDate: data.birthDate.toISOString(),
+          userName: `${data.firstName} ${data.lastName}`,
+        },
       });
       history.push(urls.logIn);
     } catch (e) {}

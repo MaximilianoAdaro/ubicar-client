@@ -1,7 +1,6 @@
 import { Control, FieldPath, useController } from "react-hook-form";
 import { makeStyles, TextField } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField/TextField";
-import clsx from "clsx";
 
 type HookFormTextFieldProps<T> = TextFieldProps & {
   label: string;

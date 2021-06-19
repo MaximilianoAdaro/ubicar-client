@@ -45,13 +45,13 @@
     }
 
     .facts {
-      margin: 20px 20px 0;
+      margin: 20px 10px 0;
       display: flex;
       flex-wrap: wrap;
 
       & > * {
         margin-right: 70px;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
       }
     }
   }
@@ -60,6 +60,7 @@
 .sectionTitle {
   font-size: 1.7em;
   font-weight: 400;
+  color: #124455;
 }
 
 .secondSection {
@@ -113,30 +114,17 @@
     flex-direction: row;
     gap: 100px;
 
-    .addressItem {
-      margin-top: 15px;
-      display: flex;
-      flex-direction: row;
-      margin-right: 20px;
-      width: 250px;
-      //justify-content: space-between;
-      //width: 250px;
+    tr {
+      height: 40px;
+    }
 
-      .addressItemLabel {
-        //width: 200px;
+    td h5 {
+      font-weight: 400;
+      color: #936538;
+    }
 
-        h5 {
-          font-weight: 300;
-          font-size: 1.2em;
-        }
-      }
-
-      .addressItemValue {
-        margin-left: auto;
-        width: 100px;
-
-        font-size: 1em;
-      }
+    tr > td:first-child {
+      padding-right: 40px;
     }
   }
 }

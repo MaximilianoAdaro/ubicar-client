@@ -1,30 +1,24 @@
 import { useMutation, useQueryClient } from "react-query";
 import {
-  GoogleLoginUserDTO,
-  LogInUserDTO,
-  Unit,
-  UserCreationDTO,
-  UserDTO,
-} from "./generated/endpoints.schemas";
-import {
   getGetLoggedUsingGETQueryKey,
-  loginUsingPOST,
   loginWithGoogleUsingPOST,
-  logOutUsingPOST,
-  registerUsingPOST,
+  useLoginUsingPOST,
+  useLogOutUsingPOST,
+  useRegisterUsingPOST,
 } from "./generated/auth-controller/auth-controller";
+import { GoogleLoginUserDTO } from "./generated/endpoints.schemas";
 
 export const useSignUp = () => {
-  return useMutation((data: UserCreationDTO) =>
-    registerUsingPOST<UserDTO>(data)
-  );
+  return useRegisterUsingPOST();
 };
 
 export const useSignIn = () => {
   const queryClient = useQueryClient();
-  return useMutation((data: LogInUserDTO) => loginUsingPOST<UserDTO>(data), {
-    onSuccess(user) {
-      queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), user);
+  return useLoginUsingPOST({
+    mutation: {
+      onSuccess(user) {
+        queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), user);
+      },
     },
   });
 };
@@ -33,7 +27,7 @@ export const useGoogleSignIn = () => {
   const queryClient = useQueryClient();
   return useMutation(
     ({ token, data }: { token: string; data: GoogleLoginUserDTO }) =>
-      loginWithGoogleUsingPOST<UserDTO>(data, {
+      loginWithGoogleUsingPOST(data, {
         headers: {
           Authorization: token,
         },
@@ -48,9 +42,11 @@ export const useGoogleSignIn = () => {
 
 export const useLogOut = () => {
   const queryClient = useQueryClient();
-  return useMutation(() => logOutUsingPOST<Unit>(), {
-    onSuccess() {
-      queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), undefined);
+  return useLogOutUsingPOST({
+    mutation: {
+      onSuccess() {
+        queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), undefined);
+      },
     },
   });
 };

@@ -34,7 +34,7 @@ export const LogIn = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signIn(data);
+      await signIn({ data });
       history.push(redirectPath);
     } catch (e) {}
   });

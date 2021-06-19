@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import styles from "./ViewProperty.module.scss";
 import { Typography } from "@material-ui/core";
 import { TabsBar } from "../../components/common/tabsBar/TabsBar";
-import { useState, Suspense } from "react";
+import { ReactNode, Suspense, useState } from "react";
 import pluralize from "pluralize";
 import { useGetPropertyUsingGET } from "../../api/generated/property-controller/property-controller";
 import {
@@ -20,6 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import { Loading } from "../../components/common/loading/Loading";
+import { FcHome, GiPathDistance } from "react-icons/all";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -63,32 +64,41 @@ const View = ({ id }: ViewProps) => {
           <div className={styles.firstSection}>
             <Typography variant={"h5"} className={styles.mainTitle}>
               {property.address.street} {property.address.number}{" "}
-              {property.address?.department ?? ""}, {property.address.town.name}
+              {property.address.department ?? ""}, {property.address.town.name}
             </Typography>
             <div className={styles.facts}>
-              <Typography>{property.type}</Typography>
-              <Typography>Estilo {property.style.label}</Typography>
-              <Typography>{property.squareFoot} m² Total</Typography>
-              <Typography>{property.coveredSquareFoot} m² Cubierta</Typography>
-              <Typography>
-                {pluralize("Ambiente", property.environments, true)}
-              </Typography>
-              <Typography>
-                {pluralize("Baño", property.fullBaths, true)}
-              </Typography>
-              <Typography>
-                {pluralize("Toilets", property.toilets, true)}
-              </Typography>
-              <Typography>
-                {pluralize("Piso", property.levels, true)}
-              </Typography>
-              <Typography>
-                {pluralize("Cuarto", property.rooms, true)}
-              </Typography>
-              <Typography>
-                {pluralize("Año", property.constructionDate, true)} de
-                antiguedad
-              </Typography>
+              <div>
+                <span>{property.type}</span>
+              </div>
+              {makeFact(<span>Estilo {property.style.label}</span>, <FcHome />)}
+              {makeFact(
+                <span>{property.squareFoot} m² Total</span>,
+                <GiPathDistance />
+              )}
+              {makeFact(<span>{property.coveredSquareFoot} m² Cubierta</span>)}
+              {makeFact(
+                <span>
+                  {pluralize("Ambiente", property.environments, true)}
+                </span>
+              )}
+              {makeFact(
+                <span>{pluralize("Baño", property.fullBaths, true)}</span>
+              )}
+              {makeFact(
+                <span>{pluralize("Toilets", property.toilets, true)}</span>
+              )}
+              {makeFact(
+                <span>{pluralize("Piso", property.levels, true)}</span>
+              )}
+              {makeFact(
+                <span>{pluralize("Cuarto", property.rooms, true)}</span>
+              )}
+              {makeFact(
+                <span>
+                  {pluralize("Año", property.constructionDate, true)} de
+                  antiguedad
+                </span>
+              )}
             </div>
           </div>
           <div className={styles.divider} />
@@ -151,6 +161,13 @@ const View = ({ id }: ViewProps) => {
   );
 };
 
+const makeFact = (text: ReactNode, icon?: ReactNode) => (
+  <div>
+    {icon}
+    {text}
+  </div>
+);
+
 interface CharacteristicsContainerProps {
   tabs: CharacterContainerTab[];
 }
@@ -207,18 +224,18 @@ const AddressSection = ({ address }: AddressSectionProps) => {
     <div>
       <h4 className={styles.sectionTitle}>Direccion</h4>
       <div className={styles.addressItemsSection}>
-        <div>
+        <table>
           {getAddressItem("Pais", address.town.city.state.country.name)}
           {getAddressItem("Provincia", address.town.city.state.name)}
           {getAddressItem("Ciudad", address.town.city.name)}
           {getAddressItem("Barrio", address.town.name)}
-        </div>
-        <div>
+        </table>
+        <table>
           {getAddressItem("Calle", address.street)}
           {getAddressItem("Numero", address.number.toString())}
           {getAddressItem("Departamento", address.department)}
           {getAddressItem("Codigo Postal", address.postalCode)}
-        </div>
+        </table>
       </div>
     </div>
   );
@@ -226,14 +243,14 @@ const AddressSection = ({ address }: AddressSectionProps) => {
 
 const getAddressItem = (name: string, value: string) => {
   return (
-    <div className={styles.addressItem}>
-      <div className={styles.addressItemLabel}>
+    <tr>
+      <td>
         <h5>{name}: </h5>
-      </div>
-      <div className={styles.addressItemValue}>
+      </td>
+      <td>
         <span>{value}</span>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 };
 
