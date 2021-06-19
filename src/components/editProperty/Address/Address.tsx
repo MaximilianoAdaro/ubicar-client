@@ -3,19 +3,18 @@ import { useCustomForm } from "../../../hooks/useCustomForm";
 import * as yup from "yup";
 import { Col, Container, Form } from "react-bootstrap";
 import { createCustomTextInput } from "../../forms/customForm/TextInput";
-import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { Select } from "../../forms/Select";
-import React from "react";
+import React, { useEffect } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
 
 import styles from "./Address.module.scss";
 import {
-  useFetchCities,
-  useFetchStates,
-  useFetchTowns,
-} from "../../../api/location";
-import { useGetProperty } from "../../../api/property";
+  useGetCitiesUsingGET,
+  useGetStatesUsingGET,
+  useGetTownsUsingGET,
+} from "../../../api/generated/location-controller/location-controller";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -30,35 +29,42 @@ export type AddressFormData = yup.InferType<typeof schema>;
 
 const AddressTextInput = createCustomTextInput<AddressFormData>();
 
-export const Address = (props: any) => {
-  const data = useGetProperty(props.id);
+export const Address = () => {
   const defaults = useAppSelector(
-    ({ createPropertyForm: { address, addressDropdowns } }) => ({
+    ({ editPropertyForm: { address, addressDropdowns } }) => ({
       ...addressDropdowns,
       ...address,
     })
   );
   const dispatch = useAppDispatch();
 
-  const { data: states } = useFetchStates();
-  const { data: cities } = useFetchCities(defaults.state);
-  const { data: towns } = useFetchTowns(defaults.city);
+  const { data: states } = useGetStatesUsingGET();
+  const { data: cities } = useGetCitiesUsingGET(defaults.state as any);
+  const { data: towns } = useGetTownsUsingGET(defaults.city as any);
 
-  if (defaults.state === undefined && states?.[0]?.id !== undefined) {
-    dispatch(actions.createPropertyForm.setState(states[0]?.id));
-  }
-  if (defaults.city === undefined && cities?.[0]?.id !== undefined) {
-    dispatch(actions.createPropertyForm.setCity(cities[0]?.id));
-  }
-  if (defaults.town === undefined && towns?.[0]?.id !== undefined) {
-    dispatch(actions.createPropertyForm.setTown(towns[0]?.id));
-  }
+  useEffect(() => {
+    if (defaults.state === undefined && states?.[0]?.id !== undefined) {
+      dispatch(actions.editPropertyForm.setState(states[0]?.id));
+    }
+  }, [defaults.state, states, dispatch]);
+
+  useEffect(() => {
+    if (defaults.city === undefined && cities?.[0]?.id !== undefined) {
+      dispatch(actions.editPropertyForm.setCity(cities[0]?.id));
+    }
+  }, [defaults.city, cities, dispatch]);
+
+  useEffect(() => {
+    if (defaults.town === undefined && towns?.[0]?.id !== undefined) {
+      dispatch(actions.editPropertyForm.setTown(towns[0]?.id));
+    }
+  }, [defaults.town, towns, dispatch]);
 
   const customForm = useCustomForm<AddressFormData>({
     schema,
     onSubmit: (data) => {
-      dispatch(actions.createPropertyForm.setAddress(data));
-      dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
+      dispatch(actions.editPropertyForm.setAddress(data));
+      dispatch(actions.editPropertyForm.setStep(Step.Characteristics));
     },
   });
 
@@ -66,8 +72,8 @@ export const Address = (props: any) => {
     const isValid = await customForm.methods.trigger();
     if (isValid) {
       const data = customForm.methods.getValues();
-      dispatch(actions.createPropertyForm.setAddress(data));
-      dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
+      dispatch(actions.editPropertyForm.setAddress(data));
+      dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
     }
   };
 
@@ -96,9 +102,9 @@ export const Address = (props: any) => {
                       placeholder="Provincia"
                       options={states}
                       onSelect={(id) => {
-                        dispatch(actions.createPropertyForm.setState(id));
-                        dispatch(actions.createPropertyForm.setCity(undefined));
-                        dispatch(actions.createPropertyForm.setTown(undefined));
+                        dispatch(actions.editPropertyForm.setState(id));
+                        dispatch(actions.editPropertyForm.setCity(undefined));
+                        dispatch(actions.editPropertyForm.setTown(undefined));
                       }}
                       defaultValue={defaults.state}
                     />
@@ -116,8 +122,8 @@ export const Address = (props: any) => {
                       placeholder="Ciudad"
                       options={cities}
                       onSelect={(id) => {
-                        dispatch(actions.createPropertyForm.setCity(id));
-                        dispatch(actions.createPropertyForm.setTown(undefined));
+                        dispatch(actions.editPropertyForm.setCity(id));
+                        dispatch(actions.editPropertyForm.setTown(undefined));
                       }}
                       defaultValue={defaults.city}
                     />
@@ -135,7 +141,7 @@ export const Address = (props: any) => {
                       placeholder="Barrio"
                       options={towns}
                       onSelect={(id) =>
-                        dispatch(actions.createPropertyForm.setTown(id))
+                        dispatch(actions.editPropertyForm.setTown(id))
                       }
                       defaultValue={defaults.town}
                     />
@@ -152,7 +158,7 @@ export const Address = (props: any) => {
                   <AddressTextInput
                     name="postalCode"
                     label="Codigo postal"
-                    // defaultValue={data.data.address.postalCode}
+                    defaultValue={defaults.postalCode}
                   />
                 </div>
               </Col>
@@ -163,7 +169,7 @@ export const Address = (props: any) => {
                   <AddressTextInput
                     name="street"
                     label="Calle"
-                    // defaultValue={data.data.address.street}
+                    defaultValue={defaults.street}
                   />
                 </div>
               </Col>
@@ -174,7 +180,7 @@ export const Address = (props: any) => {
                   <AddressTextInput
                     name="number"
                     label="Numero"
-                    // defaultValue={data.data.address.number.toString()}
+                    defaultValue={defaults.number.toString()}
                   />
                 </div>
               </Col>
@@ -185,7 +191,7 @@ export const Address = (props: any) => {
                   <AddressTextInput
                     name="department"
                     label="Departamento"
-                    // defaultValue={data.data.address.department}
+                    defaultValue={defaults.department}
                   />
                 </div>
               </Col>
@@ -194,7 +200,6 @@ export const Address = (props: any) => {
         </Form.Row>
         <StepButtons type={"submit"} onPrevious={handlePreviousButton} />
       </CustomForm>
-      )
     </Container>
   );
 };

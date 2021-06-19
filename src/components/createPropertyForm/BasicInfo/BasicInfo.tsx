@@ -34,6 +34,7 @@ export const BasicInfo = () => {
       type: propertyType,
     })
   );
+
   const dispatch = useAppDispatch();
 
   const { data: types } = useGetTypesUsingGET();

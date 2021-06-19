@@ -1,7 +1,7 @@
 import { Badge, Button, Col, Form } from "react-bootstrap";
 import { useRef, useState } from "react";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { selectYoutubeLinks } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { selectYoutubeLinks } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import styles from "./VideoInput.module.scss";
 import { FiTrash2, ImSpinner9 } from "react-icons/all";
 
@@ -32,13 +32,13 @@ export const VideoInput = () => {
       const json = await res.json();
       console.log(json);
       setError("");
-      dispatch(actions.createPropertyForm.addYoutubeLink(link));
+      dispatch(actions.editPropertyForm.addYoutubeLink(link));
       ref.current.value = "";
     }
   };
 
   const onRemoveVideo = (link: string) => {
-    dispatch(actions.createPropertyForm.removeYoutubeLink(link));
+    dispatch(actions.editPropertyForm.removeYoutubeLink(link));
   };
 
   return (

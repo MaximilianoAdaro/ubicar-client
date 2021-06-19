@@ -1,0 +1,263 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../store";
+import { BasicInfoFormData } from "../../../components/editProperty/BasicInfo/BasicInfo";
+import { CharacteristicsFormData } from "../../../components/editProperty/Characteristics/Characteristics";
+import { AdditionalFormData } from "../../../components/editProperty/Additional/Additional";
+import { AddressFormData } from "../../../components/editProperty/Address/Address";
+import { isEqualObjects } from "../../../utils/utils";
+import { PropertyDTO } from "../../../api/generated/endpoints.schemas";
+
+// Define a type for the slice state
+export interface EditPropertyState {
+  isInitialized: boolean;
+  operationType: string;
+  style: string | undefined;
+  youtubeLinks: string[];
+  amenities: string[];
+  materials: string[];
+  securities: string[];
+  contacts: Contact[];
+  openHouses: OpenHouse[];
+  propertyType: string | undefined;
+  addressDropdowns: {
+    state: string | undefined;
+    city: string | undefined;
+    town: string | undefined;
+  };
+  address: AddressFormData;
+  basicInfo: BasicInfoFormData;
+  characteristics: CharacteristicsFormData;
+  additional: AdditionalFormData;
+  currentStep: Step;
+}
+
+export enum Step {
+  BasicInfo,
+  Address,
+  Characteristics,
+  OptionalInfo,
+  Multimedia,
+  Additional,
+  Confirmation,
+}
+
+export interface OpenHouse {
+  day: string;
+  initialTime: string;
+  finalTime: string;
+}
+
+interface Contact {
+  label: string;
+  email: string;
+}
+
+// Define the initial state using that type
+const initialState: EditPropertyState = {
+  isInitialized: false,
+  operationType: "SALE",
+  style: undefined,
+  youtubeLinks: [],
+  amenities: [],
+  materials: [],
+  securities: [],
+  contacts: [],
+  openHouses: [],
+  propertyType: undefined,
+  address: {
+    street: "",
+    number: 0,
+    postalCode: "",
+    department: "",
+  },
+  addressDropdowns: {
+    state: undefined,
+    city: undefined,
+    town: undefined,
+  },
+  basicInfo: {
+    expenses: 0,
+    price: 0,
+    title: "",
+  },
+  characteristics: {
+    constructionYear: 0,
+    coveredSurface: 0,
+    floors: 0,
+    fullBaths: 0,
+    parkDescription: "",
+    rooms: 0,
+    toilets: 0,
+    totalSurface: 0,
+    environments: 0,
+  },
+  additional: {
+    description: "",
+  },
+  currentStep: Step.BasicInfo,
+};
+
+export const editPropertyFormSlice = createSlice({
+  name: "editPropertyForm",
+
+  initialState,
+  reducers: {
+    setInitialValues: (state, action: PayloadAction<PropertyDTO>) => {
+      state.operationType = action.payload.type;
+      state.basicInfo.title = action.payload.title;
+      state.basicInfo.price = action.payload.price;
+      state.basicInfo.expenses = action.payload.expenses;
+      state.operationType = action.payload.type;
+      state.style = action.payload.style.label;
+      state.address.postalCode = action.payload.address.postalCode;
+      state.address.number = action.payload.address.number;
+      state.address.street = action.payload.address.street;
+      state.address.department = action.payload.address.department;
+      state.addressDropdowns.town = action.payload.address.town.name;
+      state.addressDropdowns.city = action.payload.address.town.city.name;
+      state.addressDropdowns.state =
+        action.payload.address.town.city.state.name;
+      state.characteristics.constructionYear = action.payload.constructionDate;
+      state.characteristics.coveredSurface = action.payload.coveredSquareFoot;
+      state.characteristics.environments = action.payload.environments;
+      state.characteristics.floors = action.payload.levels;
+      state.characteristics.rooms = action.payload.rooms;
+      state.characteristics.fullBaths = action.payload.fullBaths;
+      state.characteristics.parkDescription = action.payload.parkDescription;
+      state.characteristics.toilets = action.payload.toilets;
+      state.characteristics.totalSurface = action.payload.squareFoot;
+      state.additional.description = action.payload.comments;
+      state.youtubeLinks = action.payload.links;
+      // state.amenities = action.payload.amenities;
+      // state.securities = action.payload.security;
+      // state.materials = action.payload.materials;
+      // state.openHouses = action.payload.openHouse;
+      state.contacts = action.payload.contacts;
+      state.isInitialized = true;
+    },
+    setStep: (state, action: PayloadAction<Step>) => {
+      state.currentStep = action.payload;
+    },
+    setStyle: (state, action: PayloadAction<string>) => {
+      state.style = action.payload;
+    },
+    addYoutubeLink: (state, action: PayloadAction<string>) => {
+      state.youtubeLinks.push(action.payload);
+    },
+    addAmenity: (state, action: PayloadAction<string>) => {
+      state.amenities.push(action.payload);
+    },
+    addMaterial: (state, action: PayloadAction<string>) => {
+      state.materials.push(action.payload);
+    },
+    addSecurity: (state, action: PayloadAction<string>) => {
+      state.securities.push(action.payload);
+    },
+    addContact: (state, action: PayloadAction<Contact>) => {
+      state.contacts.push(action.payload);
+    },
+    addOpenHouse: (state, action: PayloadAction<OpenHouse>) => {
+      state.openHouses.push(action.payload);
+    },
+    setPropertyType: (state, action: PayloadAction<string>) => {
+      state.propertyType = action.payload;
+    },
+    setAddress: (state, action: PayloadAction<AddressFormData>) => {
+      state.address = action.payload;
+    },
+    setState: (state, action: PayloadAction<string>) => {
+      state.addressDropdowns.state = action.payload;
+    },
+    setCity: (state, action: PayloadAction<string | undefined>) => {
+      state.addressDropdowns.city = action.payload;
+    },
+    setTown: (state, action: PayloadAction<string | undefined>) => {
+      state.addressDropdowns.town = action.payload;
+    },
+    setBasicInfo: (state, action: PayloadAction<BasicInfoFormData>) => {
+      state.basicInfo = action.payload;
+    },
+    removeAmenity: (state, action: PayloadAction<string>) => {
+      state.amenities = state.amenities.filter((id) => id !== action.payload);
+    },
+    removeSecurity: (state, action: PayloadAction<string>) => {
+      state.securities = state.securities.filter((id) => id !== action.payload);
+    },
+    removeMaterial: (state, action: PayloadAction<string>) => {
+      state.materials = state.materials.filter((id) => id !== action.payload);
+    },
+    setCharacteristics: (
+      state,
+      action: PayloadAction<CharacteristicsFormData>
+    ) => {
+      state.characteristics = action.payload;
+    },
+
+    setAdditional: (state, action: PayloadAction<AdditionalFormData>) => {
+      state.additional = action.payload;
+    },
+    setOperationType: (state, action: PayloadAction<string>) => {
+      state.operationType = action.payload;
+    },
+    removeYoutubeLink: (state, action: PayloadAction<string>) => {
+      state.youtubeLinks = state.youtubeLinks.filter(
+        (link) => link !== action.payload
+      );
+    },
+    removeContact: (state, action: PayloadAction<string>) => {
+      state.contacts = state.contacts.filter(
+        ({ email }) => email !== action.payload
+      );
+    },
+    removeOpenHouseDate: (state, action: PayloadAction<OpenHouse>) => {
+      state.openHouses = state.openHouses.filter(
+        (openHouse) => !isEqualObjects(openHouse, action.payload)
+      );
+    },
+  },
+});
+
+export const editPropertyFormReducer = {
+  editPropertyForm: editPropertyFormSlice.reducer,
+};
+
+export const editPropertyFormActions = {
+  editPropertyForm: editPropertyFormSlice.actions,
+};
+
+// Other code such as selectors can use the imported `RootState` type
+export const selectCurrentStep = (state: RootState) =>
+  state.editPropertyForm.currentStep;
+
+export const selectYoutubeLinks = (state: RootState) =>
+  state.editPropertyForm.youtubeLinks;
+
+export const selectAmenities = (state: RootState) =>
+  state.editPropertyForm.amenities;
+
+export const selectMaterials = (state: RootState) =>
+  state.editPropertyForm.materials;
+
+export const selectSecurities = (state: RootState) =>
+  state.editPropertyForm.securities;
+
+export const selectContacts = (state: RootState) =>
+  state.editPropertyForm.contacts;
+
+export const selectPropertyTypes = (state: RootState) =>
+  state.editPropertyForm.propertyType;
+
+export const selectOperationType = (state: RootState) =>
+  state.editPropertyForm.operationType;
+
+export const selectAddress = (state: RootState) =>
+  state.editPropertyForm.address;
+
+export const selectCreatePropertyState = (state: RootState) =>
+  state.editPropertyForm;
+
+export const selectOpenHouses = (state: RootState) =>
+  state.editPropertyForm.openHouses;
+
+export const selectIsInitialized = (state: RootState) =>
+  state.editPropertyForm.isInitialized;

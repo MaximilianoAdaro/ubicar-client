@@ -6,17 +6,21 @@ import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import { RadioOption } from "../../forms/ComposedRadioInput";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
+  selectIsInitialized,
   selectOperationType,
   Step,
-} from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+} from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { RadioInput } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
-import { useFetchPropertyTypes } from "../../../api/propertyOptionals";
-import { useGetProperty } from "../../../api/property";
-import { useParams } from "react-router-dom";
+import { useGetTypesUsingGET } from "../../../api/generated/optionals-controller/optionals-controller";
+import {
+  PropertyDTO,
+  PropertyDTOCondition,
+} from "../../../api/generated/endpoints.schemas";
+import { Loading } from "../../common/loading/Loading";
 
 const schema = yup.object({
   price: yup.number().positive().required(),
@@ -28,28 +32,39 @@ export type BasicInfoFormData = yup.InferType<typeof schema>;
 
 const BasicInfoTextInput = createCustomTextInput<BasicInfoFormData>();
 
-export const BasicInfo = (props: any) => {
+type BasicInfoProps = {
+  property: PropertyDTO;
+};
+
+export const BasicInfo = ({ property }: BasicInfoProps) => {
   const defaults = useAppSelector(
-    ({ createPropertyForm: { basicInfo, propertyType } }) => ({
+    ({ editPropertyForm: { basicInfo, propertyType } }) => ({
       ...basicInfo,
       type: propertyType,
     })
   );
+
   const dispatch = useAppDispatch();
 
-  const { data: types } = useFetchPropertyTypes();
+  const isInitialized = useAppSelector(selectIsInitialized);
 
-  if (defaults.type === undefined && types?.[0] !== undefined) {
-    dispatch(actions.createPropertyForm.setPropertyType(types[0]));
-  }
+  const { data: types } = useGetTypesUsingGET();
+
+  useEffect(() => {
+    if (defaults.type === undefined && types?.[0] !== undefined) {
+      dispatch(actions.editPropertyForm.setPropertyType(types[0]));
+    }
+  }, [defaults.type, types, dispatch]);
 
   const customForm = useCustomForm<BasicInfoFormData>({
     schema,
     onSubmit: (data) => {
-      dispatch(actions.createPropertyForm.setBasicInfo(data));
-      dispatch(actions.createPropertyForm.setStep(Step.Address));
+      dispatch(actions.editPropertyForm.setBasicInfo(data));
+      dispatch(actions.editPropertyForm.setStep(Step.Address));
     },
   });
+
+  if (!isInitialized) return <Loading />;
 
   return (
     <Container>
@@ -74,7 +89,7 @@ export const BasicInfo = (props: any) => {
                   name="title"
                   label="Titulo"
                   placeholder={"Increible casa en la playa..."}
-                  // defaultValue={props.data.title}
+                  defaultValue={defaults.title}
                 />
               </Col>
             </Form.Row>
@@ -85,14 +100,14 @@ export const BasicInfo = (props: any) => {
                     <BasicInfoTextInput
                       name="price"
                       label="Precio (ARS)"
-                      // defaultValue={data.data.price.toString()}
+                      defaultValue={defaults.price.toString()}
                     />
                   </Col>
                   <Col>
                     <BasicInfoTextInput
                       name="expenses"
                       label="Expensas (ARS)"
-                      // defaultValue={data.data.expenses.toString()}
+                      defaultValue={defaults.expenses.toString()}
                     />
                   </Col>
                 </Form.Row>
@@ -117,10 +132,10 @@ export const BasicInfo = (props: any) => {
                       onSelected={(label) => {
                         if (types)
                           dispatch(
-                            actions.createPropertyForm.setPropertyType(label)
+                            actions.editPropertyForm.setPropertyType(label)
                           );
                       }}
-                      defaultValue={defaults.type}
+                      defaultValue={property.type}
                     />
                   )}
                 </div>
@@ -132,18 +147,17 @@ export const BasicInfo = (props: any) => {
           <StepButtons type={"submit"} showPrevious={false} />
         </Form.Row>
       </CustomForm>
-      )
     </Container>
   );
 };
 
 const operationTypes: RadioOption[] = [
   {
-    value: "SALE",
+    value: PropertyDTOCondition.SALE,
     displayName: "Venta",
   },
   {
-    value: "RENT",
+    value: PropertyDTOCondition.RENT,
     displayName: "Alquiler",
   },
 ];
@@ -155,7 +169,7 @@ const OperationTypeRadio = () => {
 
   const handleSelect = (value: string) => {
     setCurrentValue(value);
-    dispatch(actions.createPropertyForm.setOperationType(value));
+    dispatch(actions.editPropertyForm.setOperationType(value));
   };
   return (
     <>

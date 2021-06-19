@@ -1,20 +1,18 @@
 import { Container } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { CreatePropertyDTO } from "../../../api/generated/endpoints.schemas";
+import { useEditPropertyUsingPUT } from "../../../api/generated/property-controller/property-controller";
+import { urls } from "../../../constants";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   CreatePropertyState,
   selectCreatePropertyState,
-  selectCurrentStep,
   Step,
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Confirmation.module.scss";
 
-import { useHistory, useParams } from "react-router-dom";
-import { useCreateProperty, useEditProperty } from "../../../api/property";
-import { urls } from "../../../constants";
-import { CreatePropertyDTO } from "../../../generated/api";
-
-const editRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
+const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
@@ -43,27 +41,28 @@ const editRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   links: data.youtubeLinks,
   contacts: data.contacts,
   openHouse: data.openHouses.map(({ day, initialTime, finalTime }) => ({
-    day,
+    day: new Date(day).toISOString(),
     initialTime: initialTime as any,
     finalTime: finalTime as any,
   })),
   comments: data.additional.description ?? "",
 });
 
-type propertyType = {
-  propertyId: string;
+type Id = {
+  id: string;
 };
-export const Confirmation = (props: any) => {
-  const currentStep = useAppSelector(selectCurrentStep);
-  const { propertyId } = useParams<propertyType>();
+export const Confirmation = ({ id }: Id) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { mutateAsync } = useEditProperty(propertyId);
+  const { mutateAsync } = useEditPropertyUsingPUT();
   const createPropertyState = useAppSelector(selectCreatePropertyState);
 
   const handleSend = async () => {
     try {
-      await mutateAsync(editRequestData(createPropertyState));
+      await mutateAsync({
+        id,
+        data: createRequestData(createPropertyState),
+      });
       history.push(urls.home);
     } catch (e) {
       throw Error;

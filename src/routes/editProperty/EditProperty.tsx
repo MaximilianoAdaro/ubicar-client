@@ -14,21 +14,22 @@ import styles from "./EditProperty.module.scss";
 import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
-import { NavBar } from "../../components/navbar/NavBar";
 import { useParams } from "react-router-dom";
-import { useFetchProperties, useGetProperty } from "../../api/property";
-import { useState } from "react";
-// import {useFetchProperties} from "../../api/property";
+import { useGetPropertyUsingGET } from "../../api/generated/property-controller/property-controller";
+import { Loading } from "../../components/common/loading/Loading";
+import { Suspense, useEffect } from "react";
+import { selectIsInitialized } from "../../store/slices/editPropertyForm/editPropertyFormSlice";
 
 export const EditProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
   return (
     <>
       <Container fluid>
-        <NavBar />
         <h1 className={styles.title}>Edita tu propiedad</h1>
         <StepBar currentStep={currentStep} />
-        <CurrentStep currentStep={currentStep} />
+        <Suspense fallback={<Loading />}>
+          <CurrentStep currentStep={currentStep} />
+        </Suspense>
       </Container>
     </>
   );
@@ -104,9 +105,26 @@ interface CurrentStepProps {
 }
 
 const CurrentStep = ({ currentStep }: CurrentStepProps) => {
+  const dispatch = useAppDispatch();
+  const isInitialized = useAppSelector(selectIsInitialized);
+  const { id } = useParams<{ id: string }>();
+  const { data: property } = useGetPropertyUsingGET(id, {
+    query: {
+      suspense: true,
+    },
+  });
+
+  useEffect(() => {
+    if (property && !isInitialized) {
+      dispatch(actions.editPropertyForm.setInitialValues(property));
+    }
+  }, [property]);
+
+  if (!property) return <h4>Error</h4>;
+
   switch (currentStep) {
     case Step.BasicInfo:
-      return <BasicInfo />;
+      return <BasicInfo property={property} />;
     case Step.Address:
       return <Address />;
     case Step.Characteristics:
@@ -118,7 +136,7 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     case Step.Additional:
       return <Additional />;
     case Step.Confirmation:
-      return <Confirmation />;
+      return <Confirmation id={id} />;
   }
   // }
 };

@@ -5,25 +5,27 @@ import { useCustomForm } from "../../../hooks/useCustomForm";
 import { CustomForm } from "../../forms/customForm/CustomForm";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { createCustomTextInputArea } from "../../forms/customForm/TextAreaInput";
-import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { Select } from "../../forms/Select";
 import { StepButtons } from "../StepButtons/StepButtons";
-import React from "react";
 import styles from "./Characteristics.module.scss";
-import { useFetchPropertyStyles } from "../../../api/propertyOptionals";
-import { useGetProperty } from "../../../api/property";
-
-const requiredMessage = "Este campo es requerido";
+import { errorMessages } from "../../../constants";
+import { useGetStylesUsingGET } from "../../../api/generated/optionals-controller/optionals-controller";
+import { useEffect } from "react";
 
 const schema = yup.object({
-  totalSurface: yup.number().required(requiredMessage),
-  coveredSurface: yup.number().required(requiredMessage),
-  rooms: yup.number().positive().integer().required(requiredMessage),
-  environments: yup.number().positive().integer().required(requiredMessage),
-  toilets: yup.number().positive().integer().required(requiredMessage),
-  fullBaths: yup.number().positive().integer().required(requiredMessage),
-  constructionYear: yup.number().required(requiredMessage),
-  floors: yup.number().required(),
+  totalSurface: yup.number().required(errorMessages.required),
+  coveredSurface: yup.number().required(errorMessages.required),
+  rooms: yup.number().positive().integer().required(errorMessages.required),
+  environments: yup
+    .number()
+    .positive()
+    .integer()
+    .required(errorMessages.required),
+  toilets: yup.number().positive().integer().required(errorMessages.required),
+  fullBaths: yup.number().positive().integer().required(errorMessages.required),
+  constructionYear: yup.number().required(errorMessages.required),
+  floors: yup.number().required(errorMessages.required),
   parkDescription: yup.string(),
 });
 
@@ -34,27 +36,28 @@ const CharacteristicsTextInput =
 const CharacteristicsTextArea =
   createCustomTextInputArea<CharacteristicsFormData>();
 
-export const Characteristics = (props: any) => {
-  const data = useGetProperty(props.id);
+export const Characteristics = () => {
   const defaults = useAppSelector(
-    ({ createPropertyForm: { characteristics, style } }) => ({
+    ({ editPropertyForm: { characteristics, style } }) => ({
       ...characteristics,
       style,
     })
   );
   const dispatch = useAppDispatch();
 
-  const { data: propertyStyles } = useFetchPropertyStyles();
+  const { data: propertyStyles } = useGetStylesUsingGET();
 
-  if (defaults.style === undefined && propertyStyles?.[0].id !== undefined) {
-    dispatch(actions.createPropertyForm.setStyle(propertyStyles[0].id));
-  }
+  useEffect(() => {
+    if (defaults.style === undefined && propertyStyles?.[0].id !== undefined) {
+      dispatch(actions.editPropertyForm.setStyle(propertyStyles[0].id));
+    }
+  }, [defaults.style, propertyStyles, dispatch]);
 
   const customForm = useCustomForm<CharacteristicsFormData>({
     schema,
     onSubmit: (data) => {
-      dispatch(actions.createPropertyForm.setCharacteristics(data));
-      dispatch(actions.createPropertyForm.setStep(Step.OptionalInfo));
+      dispatch(actions.editPropertyForm.setCharacteristics(data));
+      dispatch(actions.editPropertyForm.setStep(Step.OptionalInfo));
     },
   });
 
@@ -62,8 +65,8 @@ export const Characteristics = (props: any) => {
     const isValid = await customForm.methods.trigger();
     if (isValid) {
       const data = customForm.methods.getValues();
-      dispatch(actions.createPropertyForm.setCharacteristics(data));
-      dispatch(actions.createPropertyForm.setStep(Step.Address));
+      dispatch(actions.editPropertyForm.setCharacteristics(data));
+      dispatch(actions.editPropertyForm.setStep(Step.Address));
     }
   };
 
@@ -78,7 +81,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="totalSurface"
                     label="Superficie total (m²)"
-                    // defaultValue={data.data.squareFoot.toString()}
+                    defaultValue={defaults.totalSurface.toString()}
                   />
                 </div>
               </Col>
@@ -88,7 +91,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="coveredSurface"
                     label="Superficie cubierta (m²)"
-                    // defaultValue={data.data.coveredSquareFoot.toString()}
+                    defaultValue={defaults.coveredSurface.toString()}
                   />
                 </div>
               </Col>
@@ -100,7 +103,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="environments"
                     label="Cantidad de ambientes"
-                    // defaultValue={data.data.environments.toString()}
+                    defaultValue={defaults.environments.toString()}
                   />
                 </div>
               </Col>
@@ -110,7 +113,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="rooms"
                     label="Cantidad de habitaciones"
-                    // defaultValue={data.data.rooms.toString()}
+                    defaultValue={defaults.rooms.toString()}
                   />
                 </div>
               </Col>
@@ -122,7 +125,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="fullBaths"
                     label="Baños completos"
-                    // defaultValue={data.data.fullBaths.toString()}
+                    defaultValue={defaults.fullBaths.toString()}
                   />
                 </div>
               </Col>
@@ -132,7 +135,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="toilets"
                     label="Toilettes"
-                    // defaultValue={data.data.toilets.toString()}
+                    defaultValue={defaults.toilets.toString()}
                   />
                 </div>
               </Col>
@@ -146,7 +149,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="floors"
                     label="Cantidad de Pisos"
-                    // defaultValue={data.data.levels.toString()}
+                    defaultValue={defaults.floors.toString()}
                   />
                 </div>
               </Col>
@@ -156,7 +159,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextInput
                     name="constructionYear"
                     label="Año de construccion"
-                    // defaultValue={data.data.constructionDate.toString()}
+                    defaultValue={defaults.constructionYear.toString()}
                   />
                 </div>
               </Col>
@@ -174,7 +177,7 @@ export const Characteristics = (props: any) => {
                         id,
                       }))}
                       onSelect={(id) =>
-                        dispatch(actions.createPropertyForm.setStyle(id))
+                        dispatch(actions.editPropertyForm.setStyle(id))
                       }
                       defaultValue={defaults.style}
                     />
@@ -189,7 +192,7 @@ export const Characteristics = (props: any) => {
                   <CharacteristicsTextArea
                     name="parkDescription"
                     label={"Caracteristicas del parque"}
-                    // defaultValue={data.data.parkDescription}
+                    defaultValue={defaults.parkDescription}
                   />
                 </div>
               </Col>
@@ -198,7 +201,6 @@ export const Characteristics = (props: any) => {
         </Form.Row>
         <StepButtons type={"submit"} onPrevious={handlePreviousButton} />
       </CustomForm>
-      )
     </Container>
   );
 };

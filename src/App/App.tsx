@@ -7,7 +7,6 @@ import logo from "../assets/Logo-Ubicar.png";
 import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
-import { EditProperty } from "../components/editProperty/editProperty";
 import { NavBar } from "../components/navbar/NavBar";
 import { NotFound } from "../components/NotFound";
 import { urls } from "../constants";
@@ -22,6 +21,7 @@ import { actions, useAppDispatch, useAppSelector } from "../store";
 import { selectRedirectPath } from "../store/slices/session";
 import styles from "./App.module.scss";
 import { Loading } from "../components/common/loading/Loading";
+import { EditProperty } from "../routes/editProperty";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);

@@ -1,20 +1,20 @@
 import { VideoInput } from "./VideoInput";
 import { Col, Container, Row } from "react-bootstrap";
 import { actions, useAppDispatch } from "../../../store";
-import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import { Photos } from "./Photos";
 import styles from "./Multimedia.module.scss";
 
-export const Multimedia = (props: any) => {
+export const Multimedia = () => {
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    dispatch(actions.createPropertyForm.setStep(Step.Additional));
+    dispatch(actions.editPropertyForm.setStep(Step.Additional));
   };
 
   const handlePreviousButton = () => {
-    dispatch(actions.createPropertyForm.setStep(Step.OptionalInfo));
+    dispatch(actions.editPropertyForm.setStep(Step.OptionalInfo));
   };
 
   return (
