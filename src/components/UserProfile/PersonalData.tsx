@@ -6,6 +6,8 @@ export function PersonalData() {
   const [emailChangeButton, setEmailChangeButton] = useState(true);
   const [passwordChangeButton, setPasswordChangeButton] = useState(true);
   const [nameChangeButton, setNameChangeButton] = useState(true);
+  const [cellphoneChangeButton, setCellphoneChangeButton] = useState(true);
+  const [phoneChangeButton, setPhoneChangeButton] = useState(true);
 
   return (
     <div className={styles.personalDataMainDiv}>
@@ -69,7 +71,13 @@ export function PersonalData() {
                 variant="outlined"
                 size={"small"}
                 fullWidth
+                disabled={cellphoneChangeButton}
               />
+              <Button
+                onClick={() => setCellphoneChangeButton(!cellphoneChangeButton)}
+              >
+                Edit
+              </Button>
             </ListItem>
             <ListItem>
               <TextField
@@ -77,7 +85,11 @@ export function PersonalData() {
                 variant="outlined"
                 size={"small"}
                 fullWidth
+                disabled={phoneChangeButton}
               />
+              <Button onClick={() => setPhoneChangeButton(!phoneChangeButton)}>
+                Edit
+              </Button>
             </ListItem>
           </List>
         </Grid>
