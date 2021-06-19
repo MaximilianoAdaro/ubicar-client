@@ -51,6 +51,13 @@
         margin-right: 20px;
       }
     }
+
+    .subtitle {
+      font-weight: 200;
+      font-size: 1.5em;
+      color: #124455;
+    }
+
     .facts {
       margin: 20px 10px 0;
       display: flex;
@@ -59,6 +66,31 @@
       & > * {
         margin-right: 70px;
         margin-bottom: 20px;
+      }
+
+      .factContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+        transition: transform 0.5s;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        .factKeyWord {
+          font-size: 1em;
+          color: #64625f;
+          font-weight: 300;
+        }
+
+        .factValue {
+          font-size: 1.3em;
+          line-height: 30px;
+          font-weight: 200;
+          color: #324c71;
+        }
       }
     }
   }
@@ -181,7 +213,7 @@
 
 .tabsBarContainerAdditional {
   justify-content: flex-start;
-  gap: 20px;
+  gap: 25px;
   margin-bottom: 1em;
 }
 

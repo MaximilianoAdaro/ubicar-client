@@ -73,38 +73,59 @@ const View = ({ id }: ViewProps) => {
               </Typography>
               {currentUser && <AddFavorite id={id} />}
             </div>
+            {/* <div className={styles.subtitle}> */}
+            <span className={styles.subtitle}>{property.type}</span>
+            {/* </div> */}
             <div className={styles.facts}>
-              <div>
-                <span>{property.type}</span>
-              </div>
-              {makeFact(<span>Estilo {property.style.label}</span>, <FcHome />)}
+              {makeFact("Estilo", property.style.label, true, <FcHome />)}
               {makeFact(
-                <span>{property.squareFoot} m² Total</span>,
+                "Total",
+                `${property.squareFoot}m²`,
+                false,
                 <GiPathDistance />
               )}
-              {makeFact(<span>{property.coveredSquareFoot} m² Cubierta</span>)}
               {makeFact(
-                <span>
-                  {pluralize("Ambiente", property.environments, true)}
-                </span>
+                "Cubierta",
+                `${property.coveredSquareFoot}m²`,
+                false,
+                <GiPathDistance />
               )}
               {makeFact(
-                <span>{pluralize("Baño", property.fullBaths, true)}</span>
+                pluralize("Ambiente", property.environments),
+                `${property.environments}`,
+                false,
+                <GiPathDistance />
               )}
               {makeFact(
-                <span>{pluralize("Toilets", property.toilets, true)}</span>
+                pluralize("Baño", property.fullBaths),
+                `${property.fullBaths}`,
+                false,
+                <GiPathDistance />
               )}
               {makeFact(
-                <span>{pluralize("Piso", property.levels, true)}</span>
+                pluralize("Toilets", property.toilets),
+                `${property.toilets}`,
+                false,
+                <GiPathDistance />
               )}
               {makeFact(
-                <span>{pluralize("Cuarto", property.rooms, true)}</span>
+                pluralize("Piso", property.levels),
+                `${property.levels}`,
+                false,
+                <GiPathDistance />
               )}
               {makeFact(
-                <span>
-                  {pluralize("Año", property.constructionDate, true)} de
-                  antiguedad
-                </span>
+                pluralize("Cuarto", property.rooms),
+                `${property.rooms}`,
+                false,
+                <GiPathDistance />
+              )}
+              {makeFact(
+                `${pluralize("Año", property.constructionDate)} de
+                antiguedad`,
+                `${property.constructionDate}`,
+                false,
+                <GiPathDistance />
               )}
             </div>
           </div>
@@ -168,10 +189,20 @@ const View = ({ id }: ViewProps) => {
   );
 };
 
-const makeFact = (text: ReactNode, icon?: ReactNode) => (
-  <div>
+const makeFact = (
+  keyWord: string,
+  value: string,
+  left: boolean,
+  icon?: ReactNode
+) => (
+  <div className={styles.factContainer}>
     {icon}
-    {text}
+    <div>
+      {left && <span className={styles.factKeyWord}>{keyWord}</span>}
+      {left && " "}
+      <span className={styles.factValue}>{value}</span>{" "}
+      {!left && <span className={styles.factKeyWord}>{keyWord}</span>}
+    </div>
   </div>
 );
 

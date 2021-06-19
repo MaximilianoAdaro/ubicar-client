@@ -59,6 +59,7 @@ export const Confirmation = () => {
       await mutateAsync({
         data: createRequestData(createPropertyState),
       });
+      dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
       history.push(urls.home);
     } catch (e) {
       throw Error;
