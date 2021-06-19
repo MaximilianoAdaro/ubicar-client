@@ -8,21 +8,24 @@ import { createCustomTextInputArea } from "../../forms/customForm/TextAreaInput"
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { Select } from "../../forms/Select";
 import { StepButtons } from "../StepButtons/StepButtons";
-import React from "react";
 import styles from "./Characteristics.module.scss";
-import { useFetchPropertyStyles } from "../../../api/propertyOptionals";
-
-const requiredMessage = "Este campo es requerido";
+import { errorMessages } from "../../../constants";
+import { useGetStylesUsingGET } from "../../../api/generated/optionals-controller/optionals-controller";
+import { useEffect } from "react";
 
 const schema = yup.object({
-  totalSurface: yup.number().required(requiredMessage),
-  coveredSurface: yup.number().required(requiredMessage),
-  rooms: yup.number().positive().integer().required(requiredMessage),
-  environments: yup.number().positive().integer().required(requiredMessage),
-  toilets: yup.number().positive().integer().required(requiredMessage),
-  fullBaths: yup.number().positive().integer().required(requiredMessage),
-  constructionYear: yup.number().required(requiredMessage),
-  floors: yup.number().required(),
+  totalSurface: yup.number().required(errorMessages.required),
+  coveredSurface: yup.number().required(errorMessages.required),
+  rooms: yup.number().positive().integer().required(errorMessages.required),
+  environments: yup
+    .number()
+    .positive()
+    .integer()
+    .required(errorMessages.required),
+  toilets: yup.number().positive().integer().required(errorMessages.required),
+  fullBaths: yup.number().positive().integer().required(errorMessages.required),
+  constructionYear: yup.number().required(errorMessages.required),
+  floors: yup.number().required(errorMessages.required),
   parkDescription: yup.string(),
 });
 
@@ -42,11 +45,13 @@ export const Characteristics = () => {
   );
   const dispatch = useAppDispatch();
 
-  const { data: propertyStyles } = useFetchPropertyStyles();
+  const { data: propertyStyles } = useGetStylesUsingGET();
 
-  if (defaults.style === undefined && propertyStyles?.[0].id !== undefined) {
-    dispatch(actions.createPropertyForm.setStyle(propertyStyles[0].id));
-  }
+  useEffect(() => {
+    if (defaults.style === undefined && propertyStyles?.[0].id !== undefined) {
+      dispatch(actions.createPropertyForm.setStyle(propertyStyles[0].id));
+    }
+  }, [defaults.style, propertyStyles, dispatch]);
 
   const customForm = useCustomForm<CharacteristicsFormData>({
     schema,
@@ -75,7 +80,7 @@ export const Characteristics = () => {
                 <div className={styles.inputContainer}>
                   <CharacteristicsTextInput
                     name="totalSurface"
-                    label="Superficie total (m2)"
+                    label="Superficie total (m²)"
                     defaultValue={defaults.totalSurface.toString()}
                   />
                 </div>
@@ -85,7 +90,7 @@ export const Characteristics = () => {
                 <div className={styles.inputContainer}>
                   <CharacteristicsTextInput
                     name="coveredSurface"
-                    label="Superficie cubierta (m2)"
+                    label="Superficie cubierta (m²)"
                     defaultValue={defaults.coveredSurface.toString()}
                   />
                 </div>

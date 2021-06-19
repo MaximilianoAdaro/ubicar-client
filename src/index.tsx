@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App/App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ErrorPage } from "./components/ErrorPage";
-import "./index.css";
+import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -13,8 +13,11 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { initializeFirebase } from "./config/FirebaseInitialize";
 
 const queryClient = new QueryClient();
-
 initializeFirebase();
+
+if (process.env.REACT_APP_API_MODE === "mock") {
+  require("./mock");
+}
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,7 +28,7 @@ ReactDOM.render(
             <App />
           </ErrorBoundary>
         </Provider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,

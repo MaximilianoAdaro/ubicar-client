@@ -1,0 +1,41 @@
+@import "src/styles/common";
+
+.tabsBarContainer {
+  display: flex;
+  width: auto;
+  flex-wrap: nowrap;
+}
+
+.tabsBarItem {
+  display: flex;
+  flex-direction: column;
+  height: 35px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1em;
+}
+
+.highlighter {
+  height: 4px;
+  width: 80%;
+  border: 1px solid rgba(209, 167, 125, 0.4);
+  border-radius: 30px;
+}
+
+.active {
+  border-color: #d1a77d;
+  border-width: 1px;
+}
+
+.cursorPointer {
+  cursor: pointer;
+  transition: transform 0.5s;
+
+  &:hover {
+    transform: scale(1.1);
+
+    // .highlighter {
+    //   height: 5px;
+    // }
+  }
+}
