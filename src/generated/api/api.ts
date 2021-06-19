@@ -1636,6 +1636,12 @@ export interface User {
    * @type {string}
    * @memberof User
    */
+  birthDate?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof User
+   */
   email: string;
   /**
    *
@@ -1690,6 +1696,12 @@ export enum UserUserOriginEnum {
  * @interface UserCreationDTO
  */
 export interface UserCreationDTO {
+  /**
+   *
+   * @type {string}
+   * @memberof UserCreationDTO
+   */
+  birthDate?: string;
   /**
    *
    * @type {string}
@@ -2092,9 +2104,8 @@ export const AuthControllerApiAxiosParamCreator = function (
  * @export
  */
 export const AuthControllerApiFp = function (configuration?: Configuration) {
-  const localVarAxiosParamCreator = AuthControllerApiAxiosParamCreator(
-    configuration
-  );
+  const localVarAxiosParamCreator =
+    AuthControllerApiAxiosParamCreator(configuration);
   return {
     /**
      *
@@ -2107,9 +2118,8 @@ export const AuthControllerApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getLoggedUsingGET(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getLoggedUsingGET(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -2128,9 +2138,8 @@ export const AuthControllerApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleDTO>>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getRolesUsingGET(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getRolesUsingGET(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -2198,11 +2207,12 @@ export const AuthControllerApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.loginWithGoogleUsingPOST(
-        authorization,
-        logInUser,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.loginWithGoogleUsingPOST(
+          authorization,
+          logInUser,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -2223,10 +2233,11 @@ export const AuthControllerApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.registerUsingPOST(
-        userCreation,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.registerUsingPOST(
+          userCreation,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -2411,7 +2422,8 @@ export interface AuthControllerApiInterface {
  */
 export class AuthControllerApi
   extends BaseAPI
-  implements AuthControllerApiInterface {
+  implements AuthControllerApiInterface
+{
   /**
    *
    * @summary getLogged
@@ -2776,9 +2788,8 @@ export const BasicErrorControllerApiAxiosParamCreator = function (
 export const BasicErrorControllerApiFp = function (
   configuration?: Configuration
 ) {
-  const localVarAxiosParamCreator = BasicErrorControllerApiAxiosParamCreator(
-    configuration
-  );
+  const localVarAxiosParamCreator =
+    BasicErrorControllerApiAxiosParamCreator(configuration);
   return {
     /**
      *
@@ -2794,9 +2805,8 @@ export const BasicErrorControllerApiFp = function (
         basePath?: string
       ) => AxiosPromise<{ [key: string]: object | undefined }>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.errorUsingDELETE(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.errorUsingDELETE(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -2866,9 +2876,8 @@ export const BasicErrorControllerApiFp = function (
         basePath?: string
       ) => AxiosPromise<{ [key: string]: object | undefined }>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.errorUsingOPTIONS(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.errorUsingOPTIONS(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -3148,7 +3157,8 @@ export interface BasicErrorControllerApiInterface {
  */
 export class BasicErrorControllerApi
   extends BaseAPI
-  implements BasicErrorControllerApiInterface {
+  implements BasicErrorControllerApiInterface
+{
   /**
    *
    * @summary error
@@ -3388,9 +3398,8 @@ export const LocationControllerApiAxiosParamCreator = function (
 export const LocationControllerApiFp = function (
   configuration?: Configuration
 ) {
-  const localVarAxiosParamCreator = LocationControllerApiAxiosParamCreator(
-    configuration
-  );
+  const localVarAxiosParamCreator =
+    LocationControllerApiAxiosParamCreator(configuration);
   return {
     /**
      *
@@ -3405,10 +3414,8 @@ export const LocationControllerApiFp = function (
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CityDTO>>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getCitiesUsingGET(
-        stateId,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getCitiesUsingGET(stateId, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -3430,9 +3437,8 @@ export const LocationControllerApiFp = function (
         basePath?: string
       ) => AxiosPromise<Array<StateDTO>>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getStatesUsingGET(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getStatesUsingGET(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -3453,10 +3459,8 @@ export const LocationControllerApiFp = function (
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TownDTO>>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getTownsUsingGET(
-        cityId,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getTownsUsingGET(cityId, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -3569,7 +3573,8 @@ export interface LocationControllerApiInterface {
  */
 export class LocationControllerApi
   extends BaseAPI
-  implements LocationControllerApiInterface {
+  implements LocationControllerApiInterface
+{
   /**
    *
    * @summary getCities
@@ -3815,9 +3820,8 @@ export const OptionalsControllerApiAxiosParamCreator = function (
 export const OptionalsControllerApiFp = function (
   configuration?: Configuration
 ) {
-  const localVarAxiosParamCreator = OptionalsControllerApiAxiosParamCreator(
-    configuration
-  );
+  const localVarAxiosParamCreator =
+    OptionalsControllerApiAxiosParamCreator(configuration);
   return {
     /**
      *
@@ -3833,9 +3837,8 @@ export const OptionalsControllerApiFp = function (
         basePath?: string
       ) => AxiosPromise<Array<AmenityDTO>>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getAmenitiesUsingGET(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getAmenitiesUsingGET(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -3857,9 +3860,8 @@ export const OptionalsControllerApiFp = function (
         basePath?: string
       ) => AxiosPromise<Array<MaterialDTO>>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getMaterialsUsingGET(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getMaterialsUsingGET(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -3881,9 +3883,8 @@ export const OptionalsControllerApiFp = function (
         basePath?: string
       ) => AxiosPromise<Array<SecurityDTO>>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getSecuritiesUsingGET(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getSecuritiesUsingGET(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -3905,9 +3906,8 @@ export const OptionalsControllerApiFp = function (
         basePath?: string
       ) => AxiosPromise<Array<StyleDTO>>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getStylesUsingGET(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getStylesUsingGET(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -3926,9 +3926,8 @@ export const OptionalsControllerApiFp = function (
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getTypesUsingGET(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getTypesUsingGET(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -4068,7 +4067,8 @@ export interface OptionalsControllerApiInterface {
  */
 export class OptionalsControllerApi
   extends BaseAPI
-  implements OptionalsControllerApiInterface {
+  implements OptionalsControllerApiInterface
+{
   /**
    *
    * @summary getAmenities
@@ -4297,6 +4297,52 @@ export const PropertyControllerApiAxiosParamCreator = function (
         options: localVarRequestOptions,
       };
     },
+    /**
+     *
+     * @summary getProperty
+     * @param {string} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPropertyUsingGET: async (
+      id: string,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("getPropertyUsingGET", "id", id);
+      const localVarPath = `/property/{id}`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
   };
 };
 
@@ -4307,9 +4353,8 @@ export const PropertyControllerApiAxiosParamCreator = function (
 export const PropertyControllerApiFp = function (
   configuration?: Configuration
 ) {
-  const localVarAxiosParamCreator = PropertyControllerApiAxiosParamCreator(
-    configuration
-  );
+  const localVarAxiosParamCreator =
+    PropertyControllerApiAxiosParamCreator(configuration);
   return {
     /**
      *
@@ -4324,10 +4369,11 @@ export const PropertyControllerApiFp = function (
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PropertyDTO>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.createPropertyUsingPOST(
-        propertyDTO,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.createPropertyUsingPOST(
+          propertyDTO,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -4350,11 +4396,12 @@ export const PropertyControllerApiFp = function (
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PropertyDTO>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.editPropertyUsingPUT(
-        id,
-        propertyDTO,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.editPropertyUsingPUT(
+          id,
+          propertyDTO,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -4378,10 +4425,30 @@ export const PropertyControllerApiFp = function (
         basePath?: string
       ) => AxiosPromise<PagePropertyPreviewDTO>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getPropertiesUsingGET(
-        page,
-        options
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getPropertiesUsingGET(page, options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
       );
+    },
+    /**
+     *
+     * @summary getProperty
+     * @param {string} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getPropertyUsingGET(
+      id: string,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PropertyDTO>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getPropertyUsingGET(id, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -4450,6 +4517,18 @@ export const PropertyControllerApiFactory = function (
         .getPropertiesUsingGET(page, options)
         .then((request) => request(axios, basePath));
     },
+    /**
+     *
+     * @summary getProperty
+     * @param {string} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPropertyUsingGET(id: string, options?: any): AxiosPromise<PropertyDTO> {
+      return localVarFp
+        .getPropertyUsingGET(id, options)
+        .then((request) => request(axios, basePath));
+    },
   };
 };
 
@@ -4499,6 +4578,16 @@ export interface PropertyControllerApiInterface {
     page: number,
     options?: any
   ): AxiosPromise<PagePropertyPreviewDTO>;
+
+  /**
+   *
+   * @summary getProperty
+   * @param {string} id id
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof PropertyControllerApiInterface
+   */
+  getPropertyUsingGET(id: string, options?: any): AxiosPromise<PropertyDTO>;
 }
 
 /**
@@ -4509,7 +4598,8 @@ export interface PropertyControllerApiInterface {
  */
 export class PropertyControllerApi
   extends BaseAPI
-  implements PropertyControllerApiInterface {
+  implements PropertyControllerApiInterface
+{
   /**
    *
    * @summary createProperty
@@ -4557,6 +4647,20 @@ export class PropertyControllerApi
   public getPropertiesUsingGET(page: number, options?: any) {
     return PropertyControllerApiFp(this.configuration)
       .getPropertiesUsingGET(page, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary getProperty
+   * @param {string} id id
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof PropertyControllerApi
+   */
+  public getPropertyUsingGET(id: string, options?: any) {
+    return PropertyControllerApiFp(this.configuration)
+      .getPropertyUsingGET(id, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }
@@ -4671,9 +4775,8 @@ export const PropertyUserControllerApiAxiosParamCreator = function (
 export const PropertyUserControllerApiFp = function (
   configuration?: Configuration
 ) {
-  const localVarAxiosParamCreator = PropertyUserControllerApiAxiosParamCreator(
-    configuration
-  );
+  const localVarAxiosParamCreator =
+    PropertyUserControllerApiAxiosParamCreator(configuration);
   return {
     /**
      *
@@ -4688,10 +4791,8 @@ export const PropertyUserControllerApiFp = function (
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PropertyDTO>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.dislikePropertyUsingPUT(
-        id,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.dislikePropertyUsingPUT(id, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -4712,10 +4813,8 @@ export const PropertyUserControllerApiFp = function (
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PropertyDTO>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.likePropertyUsingPUT(
-        id,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.likePropertyUsingPUT(id, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -4802,7 +4901,8 @@ export interface PropertyUserControllerApiInterface {
  */
 export class PropertyUserControllerApi
   extends BaseAPI
-  implements PropertyUserControllerApiInterface {
+  implements PropertyUserControllerApiInterface
+{
   /**
    *
    * @summary dislikeProperty

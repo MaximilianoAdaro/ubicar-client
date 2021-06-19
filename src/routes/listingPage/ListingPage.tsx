@@ -7,11 +7,14 @@ import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import { MapComponent } from "../../components/Map/map";
 import { useFetchProperties } from "../../api/property";
 import { AddFavorite } from "../../components/addFavorite/addFavorite";
+import { Link, Route } from "react-router-dom";
+import { EditProperty } from "../editProperty";
 
 export function ListingPage() {
   const data = useFetchProperties();
   const zoom = useAppSelector(selectZoom);
   const view = useAppSelector(selectView);
+
   return (
     <div>
       <ListingFilters />

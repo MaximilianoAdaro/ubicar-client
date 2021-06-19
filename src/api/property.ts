@@ -15,3 +15,16 @@ export const useCreateProperty = () => {
     propertyControllerApi.createPropertyUsingPOST(data)
   );
 };
+
+export const useGetProperty = (id: string) => {
+  return useQuery("propertyPreview", async () => {
+    const { data } = await propertyControllerApi.getPropertyUsingGET(id);
+    return data;
+  });
+};
+
+export const useEditProperty = (id: string) => {
+  return useMutation((data: CreatePropertyDTO) =>
+    propertyControllerApi.editPropertyUsingPUT(id, data)
+  );
+};

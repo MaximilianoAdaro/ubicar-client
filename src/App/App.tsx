@@ -1,5 +1,11 @@
 import { Link, Route, Switch, useHistory } from "react-router-dom";
-import { CreateProperty, ListingPage, LogIn, SignUp } from "../routes";
+import {
+  CreateProperty,
+  ListingPage,
+  LogIn,
+  SignUp,
+  EditProperty,
+} from "../routes";
 import styles from "./App.module.scss";
 import { Button } from "@material-ui/core";
 import firebase from "firebase";
@@ -12,7 +18,7 @@ import ProtectedRoute, {
 } from "../components/common/protectedRoute/ProtectedRoute";
 import { NotFound } from "../components/NotFound";
 import logo from "../assets/Logo-Ubicar.png";
-import { EditProperty } from "../components/editProperty/editProperty";
+// import { EditProperty } from "../components/editProperty/editProperty";
 
 export default function App() {
   const session = useAppSelector(selectSession);
@@ -43,7 +49,7 @@ export default function App() {
         <Route exact path={urls.listingPage} component={ListingPage} />
         <Route exact path={urls.signUp} component={SignUp} />
         <Route exact path={urls.logIn} component={LogIn} />
-        <Route exact path={"/editProp"} component={EditProperty} />
+        <Route exact path={"/editProp/:propertyId"} component={EditProperty} />
         <Route component={NotFound} />
       </Switch>
     </>
@@ -109,10 +115,6 @@ const WorkInProgress = () => {
         </Link>
 
         <br />
-
-        <Link to={"/editProp"}>
-          <Button>Edit</Button>
-        </Link>
 
         {!user ? (
           <div

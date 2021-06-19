@@ -3,6 +3,7 @@ import { Image } from "react-bootstrap";
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { Tooltip } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 export function ListingHouse(props: any) {
   const house = props.house;
@@ -21,7 +22,9 @@ export function ListingHouse(props: any) {
       </Grid>
       <Grid xs={6}>
         <Tooltip title={house.title}>
-          <p className={styles.propertyTitle}>{house.title}</p>
+          <Link to={`/editProp/${house.id}`}>
+            <p className={styles.propertyTitle}>{house.title}</p>
+          </Link>
         </Tooltip>
         <p className={styles.propertyPriceCondition}>
           ${house.price.toLocaleString()} &nbsp;|&nbsp; En venta

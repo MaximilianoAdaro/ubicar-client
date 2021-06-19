@@ -46,20 +46,20 @@ export const SignUp = () => {
     mode: "onBlur",
   });
 
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      await mutateAsync({
-        ...data,
-        userName: `${data.firstName} ${data.lastName}`,
-      });
-      history.push(urls.logIn);
-    } catch (e) {}
-  });
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     await mutateAsync({
+  //       ...data,
+  //       userName: `${data.firstName} ${data.lastName}`,
+  //     });
+  //     history.push(urls.logIn);
+  //   } catch (e) {}
+  // });
 
   return (
     <>
       <Container>
-        <form onSubmit={onSubmit}>
+        <form>
           <Grid container spacing={3}>
             <Grid item xs={12} className={styles.titleContainer}>
               <Typography variant={"h3"} className={styles.title}>
