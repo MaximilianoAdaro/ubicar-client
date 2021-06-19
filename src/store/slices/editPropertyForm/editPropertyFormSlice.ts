@@ -102,6 +102,9 @@ export const editPropertyFormSlice = createSlice({
 
   initialState,
   reducers: {
+    setStep: (state, action: PayloadAction<Step>) => {
+      state.currentStep = action.payload;
+    },
     setInitialValues: (state, action: PayloadAction<PropertyDTO>) => {
       state.operationType = action.payload.type;
       state.basicInfo.title = action.payload.title;
@@ -128,15 +131,18 @@ export const editPropertyFormSlice = createSlice({
       state.characteristics.totalSurface = action.payload.squareFoot;
       state.additional.description = action.payload.comments;
       state.youtubeLinks = action.payload.links;
-      // state.amenities = action.payload.amenities;
-      // state.securities = action.payload.security;
-      // state.materials = action.payload.materials;
+      state.amenities = action.payload.amenities.map((amenity) => {
+        return amenity.label;
+      });
+      state.securities = action.payload.security.map((security) => {
+        return security.label;
+      });
+      state.materials = action.payload.materials.map((material) => {
+        return material.label;
+      });
       // state.openHouses = action.payload.openHouse;
       state.contacts = action.payload.contacts;
       state.isInitialized = true;
-    },
-    setStep: (state, action: PayloadAction<Step>) => {
-      state.currentStep = action.payload;
     },
     setStyle: (state, action: PayloadAction<string>) => {
       state.style = action.payload;
