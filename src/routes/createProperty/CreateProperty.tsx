@@ -14,7 +14,6 @@ import styles from "./CreateProperty.module.scss";
 import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
-import { NavBar } from "../../components/navbar/NavBar";
 
 export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);

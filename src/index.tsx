@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App/App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ErrorPage } from "./components/ErrorPage";
-import "./index.css";
+import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import { QueryClient, QueryClientProvider } from "react-query";

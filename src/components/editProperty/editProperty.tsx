@@ -1,6 +1,3 @@
-import styles from "./editProperty.module.scss";
-import React from "react";
-import { Form } from "react-bootstrap";
 import {
   Button,
   Checkbox,
@@ -12,6 +9,8 @@ import {
   StylesProvider,
   TextField,
 } from "@material-ui/core";
+import { Form } from "react-bootstrap";
+import styles from "./editProperty.module.scss";
 
 export function EditProperty() {
   return (

@@ -1,4 +1,16 @@
+import { Button } from "@material-ui/core";
+import firebase from "firebase";
 import { Link, Route, Switch, useHistory } from "react-router-dom";
+import { useLogOut } from "../api/auth";
+import { useGetLoggedUsingGET } from "../api/generated/auth-controller/auth-controller";
+import logo from "../assets/Logo-Ubicar.png";
+import ProtectedRoute, {
+  ProtectedRouteProps,
+} from "../components/common/protectedRoute/ProtectedRoute";
+import { EditProperty } from "../components/editProperty/editProperty";
+import { NavBar } from "../components/navbar/NavBar";
+import { NotFound } from "../components/NotFound";
+import { urls } from "../constants";
 import {
   CreateProperty,
   ListingPage,
@@ -6,19 +18,10 @@ import {
   SignUp,
   ViewProperty,
 } from "../routes";
-import styles from "./App.module.scss";
-import { Button } from "@material-ui/core";
-import firebase from "firebase";
-import { urls } from "../constants";
 import { actions, useAppDispatch, useAppSelector } from "../store";
 import { selectRedirectPath } from "../store/slices/session";
-import { useLogOut } from "../api/auth";
-import ProtectedRoute, {
-  ProtectedRouteProps,
-} from "../components/common/protectedRoute/ProtectedRoute";
-import { NotFound } from "../components/NotFound";
-import logo from "../assets/Logo-Ubicar.png";
-import { useGetLoggedUsingGET } from "../api/generated/auth-controller/auth-controller";
+import styles from "./App.module.scss";
+import { Loading } from "../components/common/loading/Loading";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -37,6 +40,7 @@ export default function App() {
 
   return (
     <>
+      <NavBar />
       <Switch>
         <Route exact path={urls.home} component={WorkInProgress} />
         <ProtectedRoute
@@ -49,7 +53,8 @@ export default function App() {
         <Route exact path={urls.viewProperty.path} component={ViewProperty} />
         <Route exact path={urls.signUp} component={SignUp} />
         <Route exact path={urls.logIn} component={LogIn} />
-        <Route exact path={"/editProp"} component={EditProperty} />
+        <Route exact path={urls.editProperty.path} component={EditProperty} />
+        <Route exact path={"/loading"} component={Loading} />
         <Route component={NotFound} />
       </Switch>
     </>
