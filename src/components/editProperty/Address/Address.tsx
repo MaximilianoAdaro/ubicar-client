@@ -37,7 +37,7 @@ export const Address = () => {
     })
   );
   const dispatch = useAppDispatch();
-
+  console.log(defaults);
   const { data: states } = useGetStatesUsingGET();
   const { data: cities } = useGetCitiesUsingGET(defaults.state as any);
   const { data: towns } = useGetTownsUsingGET(defaults.city as any);

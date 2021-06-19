@@ -1,18 +1,22 @@
 import { Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { CreatePropertyDTO } from "../../../api/generated/endpoints.schemas";
-import { useEditPropertyUsingPUT } from "../../../api/generated/property-controller/property-controller";
+import {
+  getGetPropertyUsingGETQueryKey,
+  useEditPropertyUsingPUT,
+} from "../../../api/generated/property-controller/property-controller";
 import { urls } from "../../../constants";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
-  CreatePropertyState,
+  EditPropertyState,
   selectCreatePropertyState,
   Step,
-} from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+} from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Confirmation.module.scss";
+import { useQueryClient } from "react-query";
 
-const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
+const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
@@ -54,7 +58,14 @@ type Id = {
 export const Confirmation = ({ id }: Id) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { mutateAsync } = useEditPropertyUsingPUT();
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useEditPropertyUsingPUT({
+    mutation: {
+      onSuccess() {
+        queryClient.invalidateQueries(getGetPropertyUsingGETQueryKey(id));
+      },
+    },
+  });
   const createPropertyState = useAppSelector(selectCreatePropertyState);
 
   const handleSend = async () => {
@@ -70,7 +81,7 @@ export const Confirmation = ({ id }: Id) => {
   };
 
   const handlePreviousButton = () => {
-    dispatch(actions.createPropertyForm.setStep(Step.Additional));
+    dispatch(actions.editPropertyForm.setStep(Step.Additional));
   };
 
   return (

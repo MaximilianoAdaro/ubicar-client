@@ -5,7 +5,7 @@ import { actions, useAppDispatch, useAppSelector } from "../../store";
 import {
   selectCurrentStep,
   Step,
-} from "../../store/slices/createPropetyForm/createPropertyFormSlice";
+} from "../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { OptionalInfo } from "../../components/editProperty/OptionalInfo/OptionalInfo";
 import { Multimedia } from "../../components/editProperty/Multimedia/Multimedia";
 import { Additional } from "../../components/editProperty/Additional/Additional";

@@ -134,6 +134,7 @@ export const BasicInfo = ({ property }: BasicInfoProps) => {
                           dispatch(
                             actions.editPropertyForm.setPropertyType(label)
                           );
+                        console.log(label);
                       }}
                       defaultValue={property.type}
                     />

@@ -106,20 +106,18 @@ export const editPropertyFormSlice = createSlice({
       state.currentStep = action.payload;
     },
     setInitialValues: (state, action: PayloadAction<PropertyDTO>) => {
-      state.operationType = action.payload.type;
+      state.operationType = action.payload.condition;
       state.basicInfo.title = action.payload.title;
       state.basicInfo.price = action.payload.price;
       state.basicInfo.expenses = action.payload.expenses;
-      state.operationType = action.payload.type;
-      state.style = action.payload.style.label;
+      state.style = action.payload.style.id;
       state.address.postalCode = action.payload.address.postalCode;
       state.address.number = action.payload.address.number;
       state.address.street = action.payload.address.street;
       state.address.department = action.payload.address.department;
-      state.addressDropdowns.town = action.payload.address.town.name;
-      state.addressDropdowns.city = action.payload.address.town.city.name;
-      state.addressDropdowns.state =
-        action.payload.address.town.city.state.name;
+      state.addressDropdowns.town = action.payload.address.town.id;
+      state.addressDropdowns.city = action.payload.address.town.city.id;
+      state.addressDropdowns.state = action.payload.address.town.city.state.id;
       state.characteristics.constructionYear = action.payload.constructionDate;
       state.characteristics.coveredSurface = action.payload.coveredSquareFoot;
       state.characteristics.environments = action.payload.environments;
@@ -132,15 +130,19 @@ export const editPropertyFormSlice = createSlice({
       state.additional.description = action.payload.comments;
       state.youtubeLinks = action.payload.links;
       state.amenities = action.payload.amenities.map((amenity) => {
-        return amenity.label;
+        return amenity.id;
       });
       state.securities = action.payload.security.map((security) => {
-        return security.label;
+        return security.id;
       });
       state.materials = action.payload.materials.map((material) => {
-        return material.label;
+        return material.id;
       });
-      // state.openHouses = action.payload.openHouse;
+      state.openHouses = action.payload.openHouse.map((date) => ({
+        ...date,
+        initialTime: date.initialTime as string,
+        finalTime: date.finalTime as string,
+      }));
       state.contacts = action.payload.contacts;
       state.isInitialized = true;
     },
