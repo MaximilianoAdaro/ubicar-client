@@ -29,7 +29,7 @@ export default function App() {
 
   const { data: user, isLoading } = useGetLoggedUsingGET();
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Loading />;
 
   const defaultProtectedRouteProps: ProtectedRouteProps = {
     isAuthenticated: !!user,
