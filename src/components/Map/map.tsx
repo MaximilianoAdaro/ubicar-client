@@ -4,6 +4,8 @@ import View from "ol/View";
 import TileLayer from "ol/layer/Tile";
 import { TMapProps, IMapContext, TMapState } from "./maptypes";
 import "ol/ol.css";
+import "ol-layerswitcher/dist/ol-layerswitcher.css";
+import "./map.css";
 import styles from "./map.module.scss";
 import {
   AirportLayer,
@@ -21,7 +23,8 @@ import {
 } from "./Layers/Vector";
 import { XYZ } from "ol/source";
 import { MapView } from "../../store/slices/map/mapSlice";
-import { FullScreen, defaults as defaultControls } from "ol/control";
+import LayerSwitcher from "ol-layerswitcher";
+import { PropertiesLayerWithContext } from "./Layers/Vector/PropertiesLayer";
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
@@ -56,11 +59,6 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
           }),
         }),
       ],
-      controls: defaultControls().extend([
-        new FullScreen({
-          source: "fullscreen",
-        }),
-      ]),
       view: new View({
         center: [this.view.longitude, this.view.latitude],
         zoom: this.zoom,
@@ -90,6 +88,16 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
     this.setState({
       mapContext: mapContext,
     });
+
+    const layerSwitcher = new LayerSwitcher({
+      label: "",
+      tipLabel: "",
+      collapseTipLabel: "Collapse legend",
+      groupSelectStyle: "children",
+      reverse: false,
+    });
+
+    map.addControl(layerSwitcher);
   }
 
   componentDidUpdate() {}
@@ -98,22 +106,21 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
     return (
       <div className={styles.map} ref={this.mapDivRef}>
         {this.state.mapContext && (
-          <div className={styles.formGroup}>
-            <MapContext.Provider value={this.state.mapContext}>
-              <PopUpLayer />
-              <UniversityLayer />
-              <NationalRoutesLayer />
-              <AirportLayer />
-              <PortLayer />
-              <FireLayer />
-              <SchoolLayer />
-              <RailwayLayer />
-              <HospitalLayer />
-              <PoliceLayer />
-              <PrisonLayer />
-              <IndustrialAreaLayers />
-            </MapContext.Provider>
-          </div>
+          <MapContext.Provider value={this.state.mapContext}>
+            <PopUpLayer />
+            <UniversityLayer />
+            <NationalRoutesLayer />
+            <AirportLayer />
+            <PortLayer />
+            <FireLayer />
+            <SchoolLayer />
+            <RailwayLayer />
+            <HospitalLayer />
+            <PoliceLayer />
+            <PrisonLayer />
+            <PropertiesLayerWithContext />
+            <IndustrialAreaLayers />
+          </MapContext.Provider>
         )}
       </div>
     );

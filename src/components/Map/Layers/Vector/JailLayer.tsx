@@ -7,14 +7,14 @@ import { MapContext } from "../../map";
 import { IMapContext } from "../../maptypes";
 import { GeoJSON } from "ol/format";
 
-class HospitalLayer extends React.PureComponent<TVectorLayerComponentProps> {
+class JailsLayer extends React.PureComponent<TVectorLayerComponentProps> {
   layer: VectorLayer;
   source: VectorSource;
   state = { visible: false };
 
   componentDidMount() {
     this.source = new VectorSource({
-      url: "./geojson/Edificio_de_salud.geojson",
+      url: "./geojson/Jails.geojson",
       format: new GeoJSON(),
     });
     const style = new Style({
@@ -26,8 +26,8 @@ class HospitalLayer extends React.PureComponent<TVectorLayerComponentProps> {
         color: "rgba(0, 100, 240, 0.8)",
       }),
       image: new Icon({
-        src: "./icons/hospital.png",
-        scale: 30 / 1024,
+        src: "./icons/prison.png",
+        scale: 300 / 1024,
         anchor: [1, 1],
       }),
       text: new Text(),
@@ -35,12 +35,13 @@ class HospitalLayer extends React.PureComponent<TVectorLayerComponentProps> {
 
     this.layer = new VectorLayer({
       source: this.source,
-      visible: this.state.visible,
+      visible: this.state.visible, //Todo set redux variable.
       style: function () {
         return [style];
       },
     });
-    this.layer.set("title", "Hospitales");
+
+    this.layer.set("title", "Carceles");
     this.props.map.addLayer(this.layer);
   }
 
@@ -62,12 +63,12 @@ class HospitalLayer extends React.PureComponent<TVectorLayerComponentProps> {
   }
 }
 
-export const HospitalLayerWithContext = (props: TVectorLayerProps) => {
+export const CarcelesLayerWithContext = (props: TVectorLayerProps) => {
   return (
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          return <HospitalLayer {...props} map={mapContext.map} />;
+          return <JailsLayer {...props} map={mapContext.map} />;
         }
       }}
     </MapContext.Consumer>

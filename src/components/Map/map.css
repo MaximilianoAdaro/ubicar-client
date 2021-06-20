@@ -1,0 +1,9 @@
+.layer-switcher {
+  position: absolute;
+  top: 1.5em;
+  right: 0.5em;
+  text-align: left;
+}
+
+.panel > ul > li {
+}
