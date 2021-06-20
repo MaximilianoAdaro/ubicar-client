@@ -5,6 +5,14 @@ export const urls = {
   notFound: "/notfound",
   createProperty: "/create-property",
   listingPage: "/listing-page",
+  viewProperty: {
+    path: "/view-property/:id",
+    byId: (id: string) => `/view-property/${id}`,
+  },
+  editProperty: {
+    path: "/edit-property/:id",
+    byId: (id: string) => `/edit-property/${id}`,
+  },
 };
 
 export const errorMessages = {

@@ -4,12 +4,11 @@ import { Col, Container, Form } from "react-bootstrap";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import styles from "./OptionalInfo.module.scss";
 import { StepButtons } from "../StepButtons/StepButtons";
-import React from "react";
 import {
-  useFetchPropertyAmenities,
-  useFetchPropertyMaterials,
-  useFetchPropertySecurities,
-} from "../../../api/property";
+  useGetAmenitiesUsingGET,
+  useGetMaterialsUsingGET,
+  useGetSecuritiesUsingGET,
+} from "../../../api/generated/optionals-controller/optionals-controller";
 
 export const OptionalInfo = () => {
   const defaults = useAppSelector(
@@ -21,9 +20,9 @@ export const OptionalInfo = () => {
   );
   const dispatch = useAppDispatch();
 
-  const { data: amenities } = useFetchPropertyAmenities();
-  const { data: securities } = useFetchPropertySecurities();
-  const { data: materials } = useFetchPropertyMaterials();
+  const { data: amenities } = useGetAmenitiesUsingGET();
+  const { data: securities } = useGetSecuritiesUsingGET();
+  const { data: materials } = useGetMaterialsUsingGET();
 
   const handleClick = () => {
     dispatch(actions.createPropertyForm.setStep(Step.Multimedia));

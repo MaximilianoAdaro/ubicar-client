@@ -6,15 +6,15 @@ import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { Select } from "../../forms/Select";
-import React from "react";
+import React, { useEffect } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
 
 import styles from "./Address.module.scss";
 import {
-  useFetchCities,
-  useFetchStates,
-  useFetchTowns,
-} from "../../../api/property";
+  useGetCitiesUsingGET,
+  useGetStatesUsingGET,
+  useGetTownsUsingGET,
+} from "../../../api/generated/location-controller/location-controller";
 
 const requiredMessage = "Este campo es requerido";
 
@@ -38,19 +38,27 @@ export const Address = () => {
   );
   const dispatch = useAppDispatch();
 
-  const { data: states } = useFetchStates();
-  const { data: cities } = useFetchCities(defaults.state);
-  const { data: towns } = useFetchTowns(defaults.city);
+  const { data: states } = useGetStatesUsingGET();
+  const { data: cities } = useGetCitiesUsingGET(defaults.state as any);
+  const { data: towns } = useGetTownsUsingGET(defaults.city as any);
 
-  if (defaults.state === undefined && states?.[0]?.id !== undefined) {
-    dispatch(actions.createPropertyForm.setState(states[0]?.id));
-  }
-  if (defaults.city === undefined && cities?.[0]?.id !== undefined) {
-    dispatch(actions.createPropertyForm.setCity(cities[0]?.id));
-  }
-  if (defaults.town === undefined && towns?.[0]?.id !== undefined) {
-    dispatch(actions.createPropertyForm.setTown(towns[0]?.id));
-  }
+  useEffect(() => {
+    if (defaults.state === undefined && states?.[0]?.id !== undefined) {
+      dispatch(actions.createPropertyForm.setState(states[0]?.id));
+    }
+  }, [defaults.state, states, dispatch]);
+
+  useEffect(() => {
+    if (defaults.city === undefined && cities?.[0]?.id !== undefined) {
+      dispatch(actions.createPropertyForm.setCity(cities[0]?.id));
+    }
+  }, [defaults.city, cities, dispatch]);
+
+  useEffect(() => {
+    if (defaults.town === undefined && towns?.[0]?.id !== undefined) {
+      dispatch(actions.createPropertyForm.setTown(towns[0]?.id));
+    }
+  }, [defaults.town, towns, dispatch]);
 
   const customForm = useCustomForm<AddressFormData>({
     schema,

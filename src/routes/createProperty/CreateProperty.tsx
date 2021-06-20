@@ -11,7 +11,7 @@ import { Multimedia } from "../../components/createPropertyForm/Multimedia/Multi
 import { Additional } from "../../components/createPropertyForm/Additional/Additional";
 import { Confirmation } from "../../components/createPropertyForm/Confirmation/Confirmation";
 import styles from "./CreateProperty.module.scss";
-import classNames from "classnames";
+import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
 
@@ -20,7 +20,7 @@ export const CreateProperty = () => {
   return (
     <>
       <Container fluid>
-        <h1 className={styles.title}>Publica tu propiedad</h1>
+        <h1 className={styles.mainTitle}>Publica tu propiedad</h1>
         <StepBar currentStep={currentStep} />
         <CurrentStep currentStep={currentStep} />
       </Container>
@@ -72,7 +72,7 @@ const StepBar = ({ currentStep }: StepBarProps) => {
         {steps.map(({ displayName, step }) => (
           <div
             key={step}
-            className={classNames(styles.stepBarItem, {
+            className={clsx(styles.stepBarItem, {
               [styles.cursorPointer]: enableSuperUser,
             })}
             onClick={() => {
@@ -82,7 +82,7 @@ const StepBar = ({ currentStep }: StepBarProps) => {
           >
             <span>{displayName}</span>
             <div
-              className={classNames(styles.highlighter, {
+              className={clsx(styles.highlighter, {
                 [styles.active]: step === currentStep,
               })}
             />

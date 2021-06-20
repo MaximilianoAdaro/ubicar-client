@@ -22,10 +22,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+.history
+.vscode
+
 ### Example user template
 
 # IntelliJ project files
 .idea
 *.iml
 out
-gen
+src/gen

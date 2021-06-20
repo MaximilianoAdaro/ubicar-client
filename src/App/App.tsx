@@ -1,35 +1,46 @@
-import { Link, Route, Switch, useHistory } from "react-router-dom";
-import { CreateProperty, ListingPage, LogIn, SignUp } from "../routes";
-import styles from "./App.module.scss";
 import { Button } from "@material-ui/core";
 import firebase from "firebase";
-import { urls } from "../constants";
-import { actions, useAppDispatch, useAppSelector } from "../store";
-import { selectSession } from "../store/slices/session";
-import { useLoggedUser, useLogOut } from "../api/auth";
+import { Link, Route, Switch, useHistory } from "react-router-dom";
+import { useLogOut } from "../api/auth";
+import { useGetLoggedUsingGET } from "../api/generated/auth-controller/auth-controller";
+import logo from "../assets/Logo-Ubicar.png";
 import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
+import { EditProperty } from "../components/editProperty/editProperty";
+import { NavBar } from "../components/navbar/NavBar";
 import { NotFound } from "../components/NotFound";
+import { urls } from "../constants";
+import {
+  CreateProperty,
+  ListingPage,
+  LogIn,
+  SignUp,
+  ViewProperty,
+} from "../routes";
+import { actions, useAppDispatch, useAppSelector } from "../store";
+import { selectRedirectPath } from "../store/slices/session";
+import styles from "./App.module.scss";
+import { Loading } from "../components/common/loading/Loading";
 
 export default function App() {
-  const session = useAppSelector(selectSession);
+  const redirectPath = useAppSelector(selectRedirectPath);
   const dispatch = useAppDispatch();
 
-  const { data: user, isLoading } = useLoggedUser();
+  const { data: user, isLoading } = useGetLoggedUsingGET();
 
-  if (isLoading) return <span>Loading...</span>;
-  if (user) dispatch(actions.session.setUser(user));
+  if (isLoading) return <Loading />;
 
   const defaultProtectedRouteProps: ProtectedRouteProps = {
-    isAuthenticated: session.isAuthenticated,
+    isAuthenticated: !!user,
     authenticationPath: urls.logIn,
-    redirectPath: session.redirectPath,
+    redirectPath,
     setRedirectPath: (path) => dispatch(actions.session.setRedirectPath(path)),
   };
 
   return (
     <>
+      <NavBar />
       <Switch>
         <Route exact path={urls.home} component={WorkInProgress} />
         <ProtectedRoute
@@ -39,8 +50,11 @@ export default function App() {
           component={CreateProperty}
         />
         <Route exact path={urls.listingPage} component={ListingPage} />
+        <Route exact path={urls.viewProperty.path} component={ViewProperty} />
         <Route exact path={urls.signUp} component={SignUp} />
         <Route exact path={urls.logIn} component={LogIn} />
+        <Route exact path={urls.editProperty.path} component={EditProperty} />
+        <Route exact path={"/loading"} component={Loading} />
         <Route component={NotFound} />
       </Switch>
     </>
@@ -49,21 +63,17 @@ export default function App() {
 
 const WorkInProgress = () => {
   const history = useHistory();
-  const dispatch = useAppDispatch();
 
-  const { data: user } = useLoggedUser();
-
+  const { data: user } = useGetLoggedUsingGET();
   const { mutateAsync: logOut } = useLogOut();
 
   const handleLogout = async (e: any) => {
     e.preventDefault();
-    console.log("signing out");
     await logOut();
     await firebase.auth().signOut();
-    dispatch(actions.session.setUser(null));
-    console.log("dispatched user null");
     history.push(urls.home);
   };
+
   return (
     <div className={styles.app}>
       {user && (
@@ -75,36 +85,61 @@ const WorkInProgress = () => {
           <h4>Bienvenido {user.userName}</h4>
         </div>
       )}
-      <h1>Ubicar in progress...</h1>
-      <br />
-
-      <Link to={urls.createProperty}>
-        <Button variant={"outlined"}>Crear publicacion</Button>
-      </Link>
-
-      <br />
-
-      <Link to={urls.signUp}>
-        <Button variant={"outlined"}>Registrarse</Button>
-      </Link>
-
-      <br />
-
-      <Link to={urls.logIn}>
-        <Button variant={"outlined"}>Entrar</Button>
-      </Link>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 20,
+        }}
+      >
+        <img src={logo} height={90} alt={"logo"} />
+        <h1>Ubicar in progress...</h1>
+      </div>
 
       <br />
 
-      <Button variant={"outlined"} onClick={handleLogout}>
-        Log out
-      </Button>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        {!user ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Link to={urls.signUp}>
+              <Button variant={"outlined"}>Registrarse</Button>
+            </Link>
+            <div style={{ height: 24 }} />
+            <Link to={urls.logIn}>
+              <Button variant={"outlined"}>Iniciar sesión</Button>
+            </Link>
+          </div>
+        ) : (
+          <Button variant={"outlined"} onClick={handleLogout}>
+            Cerrar sesión
+          </Button>
+        )}
 
-      <br />
+        <br />
 
-      <Link to={urls.listingPage}>
-        <Button variant={"outlined"}>Listing Page</Button>
-      </Link>
+        <Link to={urls.createProperty}>
+          <Button variant={"outlined"}>Crear publicacion</Button>
+        </Link>
+
+        <br />
+
+        <Link to={urls.listingPage}>
+          <Button variant={"outlined"}>Listar publicaciones</Button>
+        </Link>
+      </div>
     </div>
   );
 };

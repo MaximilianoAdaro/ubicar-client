@@ -11,10 +11,11 @@ import {
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { RadioInput } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
-import classNames from "classnames";
-import { useState } from "react";
+import clsx from "clsx";
+import { useEffect, useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
-import { useFetchPropertyTypes } from "../../../api/property";
+import { useGetTypesUsingGET } from "../../../api/generated/optionals-controller/optionals-controller";
+import { PropertyDTOCondition } from "../../../api/generated/endpoints.schemas";
 
 const schema = yup.object({
   price: yup.number().positive().required(),
@@ -35,11 +36,13 @@ export const BasicInfo = () => {
   );
   const dispatch = useAppDispatch();
 
-  const { data: types } = useFetchPropertyTypes();
+  const { data: types } = useGetTypesUsingGET();
 
-  if (defaults.type === undefined && types?.[0] !== undefined) {
-    dispatch(actions.createPropertyForm.setPropertyType(types[0]));
-  }
+  useEffect(() => {
+    if (defaults.type === undefined && types?.[0] !== undefined) {
+      dispatch(actions.createPropertyForm.setPropertyType(types[0]));
+    }
+  }, [defaults.type, types, dispatch]);
 
   const customForm = useCustomForm<BasicInfoFormData>({
     schema,
@@ -81,14 +84,14 @@ export const BasicInfo = () => {
                   <Col>
                     <BasicInfoTextInput
                       name="price"
-                      label="Precio"
+                      label="Precio (ARS)"
                       defaultValue={defaults.price.toString()}
                     />
                   </Col>
                   <Col>
                     <BasicInfoTextInput
                       name="expenses"
-                      label="Expensas"
+                      label="Expensas (ARS)"
                       defaultValue={defaults.expenses.toString()}
                     />
                   </Col>
@@ -135,11 +138,11 @@ export const BasicInfo = () => {
 
 const operationTypes: RadioOption[] = [
   {
-    value: "SALE",
+    value: PropertyDTOCondition.SALE,
     displayName: "Venta",
   },
   {
-    value: "RENT",
+    value: PropertyDTOCondition.RENT,
     displayName: "Alquiler",
   },
 ];
@@ -164,7 +167,7 @@ const OperationTypeRadio = () => {
           >
             <span>{displayName}</span>
             <div
-              className={classNames(styles.highlighter, {
+              className={clsx(styles.highlighter, {
                 [styles.active]: value === currentValue,
               })}
             />

@@ -2,7 +2,7 @@ import React from "react";
 import { TVectorLayerComponentProps, TVectorLayerProps } from "./vector-types";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import { Icon, Style } from "ol/style";
+import { Fill, Icon, Stroke, Style, Text } from "ol/style";
 import { MapContext } from "../../map";
 import { IMapContext } from "../../maptypes";
 import { GeoJSON } from "ol/format";
@@ -18,23 +18,27 @@ class AirportLayer extends React.PureComponent<TVectorLayerComponentProps> {
       format: new GeoJSON(),
     });
     const style = new Style({
+      fill: new Fill({
+        color: "rgba(30, 400, 240, 0.3)",
+      }),
+      stroke: new Stroke({
+        width: 3,
+        color: "rgba(0, 100, 240, 0.8)",
+      }),
       image: new Icon({
         src: "./icons/airport.png",
         scale: 50 / 1024,
         anchor: [1, 1],
       }),
+      text: new Text(),
     });
 
     this.layer = new VectorLayer({
       source: this.source,
-      visible: false, //Todo set redux variable.
       style: function () {
         return [style];
       },
     });
-
-    this.layer.set("title", "Aeropuertos");
-    this.props.map.addLayer(this.layer);
   }
 
   componentWillUnmount() {
@@ -48,10 +52,28 @@ class AirportLayer extends React.PureComponent<TVectorLayerComponentProps> {
         this.source.addFeatures(this.props.features);
       }
     }
+    if (this.state.visible) {
+      this.props.map.addLayer(this.layer);
+    } else {
+      this.props.map.removeLayer(this.layer);
+    }
   }
 
   render() {
-    return null;
+    return (
+      <div className="custom-control custom-checkbox">
+        <input
+          type="checkbox"
+          className="custom-control-input"
+          id="customCheck1"
+          checked={this.state.visible}
+          onChange={() => this.setState({ visible: !this.state.visible })}
+        />
+        <label className="custom-control-label" htmlFor="customCheck1">
+          Aeropuertos
+        </label>
+      </div>
+    );
   }
 }
 

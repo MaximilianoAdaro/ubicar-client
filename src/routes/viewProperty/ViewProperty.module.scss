@@ -1,0 +1,268 @@
+@import "src/styles/common";
+
+.container {
+  margin-top: 1em;
+  margin-bottom: 5em;
+}
+
+.mediaContainer {
+  border: 1px solid $theme-dark-blue;
+  padding: 30px;
+  border-radius: 30px;
+  height: 200px;
+  margin: 0 0.5em;
+}
+
+.comingSoon {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.divider {
+  width: 98%;
+  height: 2px;
+  background-color: #ecb97e;
+  margin: auto auto 15px;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 30px;
+  margin: 2em 2.2em 0;
+}
+
+.leftInfo {
+  width: 70%;
+
+  .firstSection {
+    .titleSection {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+
+      .mainTitle {
+        margin-top: 10px;
+        font-size: 2.6em;
+        color: #8e5b50;
+        margin-right: 20px;
+      }
+    }
+
+    .subtitle {
+      font-weight: 200;
+      font-size: 1.5em;
+      color: #124455;
+    }
+
+    .facts {
+      margin: 20px 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+
+      & > * {
+        margin-right: 70px;
+        margin-bottom: 20px;
+      }
+
+      .factContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+        transition: transform 0.5s;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        .factKeyWord {
+          font-size: 1em;
+          color: #64625f;
+          font-weight: 300;
+        }
+
+        .factValue {
+          font-size: 1.3em;
+          line-height: 30px;
+          font-weight: 200;
+          color: #324c71;
+        }
+      }
+    }
+  }
+}
+
+.sectionTitle {
+  font-size: 1.7em;
+  font-weight: 400;
+  color: #124455;
+}
+
+.secondSection {
+  margin-top: 10px;
+
+  .body {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    font-size: 1em;
+    line-height: 30px;
+    font-weight: 300;
+
+    & > * {
+      margin-top: 10px;
+    }
+
+    .parkDescription {
+      margin-top: 1em;
+    }
+  }
+}
+
+.thirdSection {
+  //margin-top: 20px;
+  .tabSection {
+    margin: 40px 15px 0;
+
+    .tabBodyItem {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-weight: 300;
+
+      .bulletPoint {
+        $size: 8px;
+        width: $size;
+        height: $size;
+        border: 1px solid $theme-goldish;
+        background-color: rgba(209, 167, 125, 0.14);
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.addressSection {
+  .addressItemsSection {
+    margin: 20px 15px 0;
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+
+    tr {
+      height: 40px;
+    }
+
+    td h5 {
+      font-weight: 400;
+      color: #936538;
+    }
+
+    tr > td:first-child {
+      padding-right: 40px;
+    }
+  }
+}
+
+.rightSide {
+  width: 30%;
+}
+
+.priceInfo {
+  display: flex;
+  justify-content: center;
+}
+
+.priceSection {
+  $font-weight: 400;
+  margin: auto;
+
+  .condition {
+    font-size: 2.3em;
+    font-weight: $font-weight;
+  }
+
+  .priceColor {
+    color: #dc9e65;
+  }
+
+  .price {
+    font-size: 3em;
+    font-weight: $font-weight;
+  }
+
+  .expenses {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.3em;
+
+    & > * {
+      margin-right: 20px;
+    }
+  }
+
+  .priceSymbol {
+    color: #767069;
+  }
+}
+
+.tabsBarContainerAdditional {
+  justify-content: flex-start;
+  gap: 25px;
+  margin-bottom: 1em;
+}
+
+.characteristicsItemsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 150px;
+  justify-items: start;
+  align-content: flex-start;
+
+  & > * {
+    //width: 100%;
+    padding: 8px;
+    font-size: 1em;
+    margin-right: 60px;
+    color: #484141;
+    //margin-left: 10px;
+  }
+}
+
+.contactSection {
+  margin-top: 4em;
+  border-radius: 40px;
+  border: 1px solid #eca1a1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(227, 238, 243, 0.62);
+  padding: 2em 1.9em;
+
+  .contactFormTitle {
+    margin-top: 0.3em;
+    color: #e0a365;
+    font-size: 2em;
+    font-weight: 350;
+  }
+
+  .contactForm {
+    margin-top: 1.3em;
+    margin-bottom: 2em;
+    width: 100%;
+
+    .contactInputContainer {
+      margin-top: 0.6em;
+    }
+
+    .submitButton {
+      margin-top: 2em;
+    }
+  }
+}

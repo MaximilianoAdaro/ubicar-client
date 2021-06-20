@@ -1,4 +1,8 @@
 import { Container } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { CreatePropertyDTO } from "../../../api/generated/endpoints.schemas";
+import { useCreatePropertyUsingPOST } from "../../../api/generated/property-controller/property-controller";
+import { urls } from "../../../constants";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   CreatePropertyState,
@@ -8,16 +12,7 @@ import {
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Confirmation.module.scss";
 
-import { useHistory } from "react-router-dom";
-import { urls } from "../../../constants";
-import {
-  CreatePropertyRequestData,
-  useCreateProperty,
-} from "../../../api/property";
-
-const createRequestData = (
-  data: CreatePropertyState
-): CreatePropertyRequestData => ({
+const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
@@ -46,9 +41,9 @@ const createRequestData = (
   links: data.youtubeLinks,
   contacts: data.contacts,
   openHouse: data.openHouses.map(({ day, initialTime, finalTime }) => ({
-    day: new Date(day),
-    initialTime,
-    finalTime,
+    day: new Date(day).toISOString(),
+    initialTime: initialTime as any,
+    finalTime: finalTime as any,
   })),
   comments: data.additional.description ?? "",
 });
@@ -56,12 +51,15 @@ const createRequestData = (
 export const Confirmation = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { mutateAsync } = useCreateProperty();
+  const { mutateAsync } = useCreatePropertyUsingPOST();
   const createPropertyState = useAppSelector(selectCreatePropertyState);
 
   const handleSend = async () => {
     try {
-      await mutateAsync(createRequestData(createPropertyState));
+      await mutateAsync({
+        data: createRequestData(createPropertyState),
+      });
+      dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
       history.push(urls.home);
     } catch (e) {
       throw Error;
