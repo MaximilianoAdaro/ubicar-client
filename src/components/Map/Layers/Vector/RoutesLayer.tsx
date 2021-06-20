@@ -30,7 +30,7 @@ class RoutesLayer extends React.PureComponent<TVectorLayerComponentProps> {
 
     this.layer = new VectorLayer({
       source: this.source,
-      visible: false, //Todo set redux variable.
+      visible: this.state.visible, //Todo set redux variable.
       style: function () {
         return [style];
       },

@@ -90,8 +90,6 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
     });
 
     const layerSwitcher = new LayerSwitcher({
-      activationMode: "click",
-      startActive: true,
       label: "",
       tipLabel: "",
       collapseTipLabel: "Collapse legend",

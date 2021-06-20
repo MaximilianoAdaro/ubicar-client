@@ -35,7 +35,7 @@ class HospitalLayer extends React.PureComponent<TVectorLayerComponentProps> {
 
     this.layer = new VectorLayer({
       source: this.source,
-      visible: false,
+      visible: this.state.visible,
       style: function () {
         return [style];
       },

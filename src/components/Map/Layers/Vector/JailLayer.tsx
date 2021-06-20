@@ -7,7 +7,7 @@ import { MapContext } from "../../map";
 import { IMapContext } from "../../maptypes";
 import { GeoJSON } from "ol/format";
 
-class JailLayer extends React.PureComponent<TVectorLayerComponentProps> {
+class JailsLayer extends React.PureComponent<TVectorLayerComponentProps> {
   layer: VectorLayer;
   source: VectorSource;
   state = { visible: false };
@@ -35,7 +35,7 @@ class JailLayer extends React.PureComponent<TVectorLayerComponentProps> {
 
     this.layer = new VectorLayer({
       source: this.source,
-      visible: false, //Todo set redux variable.
+      visible: this.state.visible, //Todo set redux variable.
       style: function () {
         return [style];
       },
@@ -68,7 +68,7 @@ export const CarcelesLayerWithContext = (props: TVectorLayerProps) => {
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          return <JailLayer {...props} map={mapContext.map} />;
+          return <JailsLayer {...props} map={mapContext.map} />;
         }
       }}
     </MapContext.Consumer>

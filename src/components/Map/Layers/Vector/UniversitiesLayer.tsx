@@ -35,7 +35,7 @@ class UniversitiesLayer extends React.PureComponent<TVectorLayerComponentProps> 
 
     this.layer = new VectorLayer({
       source: this.source,
-      visible: false, //Todo set redux variable.
+      visible: this.state.visible,
       style: function () {
         return [style];
       },
