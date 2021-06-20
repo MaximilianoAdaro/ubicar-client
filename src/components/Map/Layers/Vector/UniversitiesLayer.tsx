@@ -7,7 +7,7 @@ import { MapContext } from "../../map";
 import { IMapContext } from "../../maptypes";
 import { GeoJSON } from "ol/format";
 
-class UniversidadesLayer extends React.PureComponent<TVectorLayerComponentProps> {
+class UniversitiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
   layer: VectorLayer;
   source: VectorSource;
   state = { visible: false };
@@ -35,10 +35,14 @@ class UniversidadesLayer extends React.PureComponent<TVectorLayerComponentProps>
 
     this.layer = new VectorLayer({
       source: this.source,
+      visible: this.state.visible,
       style: function () {
         return [style];
       },
     });
+
+    this.layer.set("title", "Universidades");
+    this.props.map.addLayer(this.layer);
   }
 
   componentWillUnmount() {
@@ -52,28 +56,10 @@ class UniversidadesLayer extends React.PureComponent<TVectorLayerComponentProps>
         this.source.addFeatures(this.props.features);
       }
     }
-    if (this.state.visible) {
-      this.props.map.addLayer(this.layer);
-    } else {
-      this.props.map.removeLayer(this.layer);
-    }
   }
 
   render() {
-    return (
-      <div className="custom-control custom-checkbox">
-        <input
-          type="checkbox"
-          className="custom-control-input"
-          id="customCheck3"
-          checked={this.state.visible}
-          onChange={() => this.setState({ visible: !this.state.visible })}
-        />
-        <label className="custom-control-label" htmlFor="customCheck3">
-          Universidades
-        </label>
-      </div>
-    );
+    return null;
   }
 }
 
@@ -82,7 +68,7 @@ export const UniversidadesLayerWithContext = (props: TVectorLayerProps) => {
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          return <UniversidadesLayer {...props} map={mapContext.map} />;
+          return <UniversitiesLayer {...props} map={mapContext.map} />;
         }
       }}
     </MapContext.Consumer>
