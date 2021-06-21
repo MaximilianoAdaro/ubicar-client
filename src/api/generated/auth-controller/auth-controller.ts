@@ -26,7 +26,7 @@ type AsyncReturnType<
   U = unknown
 > = T extends (...args: any) => Promise<infer R> ? (U extends R ? U : R) : any;
 
-type SecondParameter<T extends (...args: any) => any> = T extends (
+export type SecondParameter<T extends (...args: any) => any> = T extends (
   config: any,
   args: infer P
 ) => any

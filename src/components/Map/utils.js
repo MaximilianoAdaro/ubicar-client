@@ -2,6 +2,7 @@ import * as ol from "ol";
 import { GeoJSON } from "ol/format";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
+import { transform } from "ol/proj";
 
 // GET OPEN STREET MAP LAYER
 export function getOSMLayer() {
@@ -113,6 +114,14 @@ export function featureToGeoJson(feature) {
     dataProjection: "EPSG:3857",
     featureProjection: "EPSG:3857",
   });
+}
+
+export function transformFrom3857to4326(coordinate) {
+  return transform(coordinate, "EPSG:3857", "EPSG:4326");
+}
+
+export function transformFrom4326to3857(coordinate) {
+  return transform(coordinate, "EPSG:4326", "EPSG:3857");
 }
 
 export function getItemsFromStorage(key) {

@@ -25,6 +25,10 @@ import { XYZ } from "ol/source";
 import { MapView } from "../../store/slices/map/mapSlice";
 import LayerSwitcher from "ol-layerswitcher";
 import { PropertiesLayerWithContext } from "./Layers/Vector/PropertiesLayer";
+import VectorSource from "ol/source/Vector";
+import Feature from "ol/Feature";
+import { Point } from "ol/geom";
+import VectorLayer from "ol/layer/Vector";
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
@@ -32,9 +36,18 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
   mapDivRef: React.RefObject<HTMLDivElement>;
   check1BoxRef: React.RefObject<HTMLInputElement>;
   check2BoxRef: React.RefObject<HTMLInputElement>;
-  state: TMapState = {};
+  state: TMapState = {
+    view: { longitude: -6506056.858887733, latitude: -4114291.375798843 },
+    zoom: 10,
+    editable: false,
+    markerLayer: null,
+  };
   zoom: number;
   view: MapView;
+  renderLayers: boolean | null | undefined;
+  additionalStyle: React.CSSProperties | null | undefined;
+  additionalLayers: TileLayer | null | undefined;
+  map: Map;
 
   constructor(props: TMapProps) {
     super(props);
@@ -43,53 +56,64 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
     this.check2BoxRef = React.createRef<HTMLInputElement>();
     this.zoom = props.zoom;
     this.view = props.view;
+    this.renderLayers = props.renderLayers;
+    this.additionalStyle = props.additionalStyle;
+    this.additionalLayers = props.additionalLayers;
   }
   componentDidMount() {
     if (!this.mapDivRef.current) {
       return;
     }
 
-    const map = new Map({
-      target: this.mapDivRef.current,
-      layers: [
-        new TileLayer({
-          source: new XYZ({
-            attributions: "© OpenStreetMap",
-            url: "https://{a-c}.tile.osm.org/{z}/{x}/{y}.png",
-          }),
+    const layers = [
+      new TileLayer({
+        source: new XYZ({
+          attributions: "© OpenStreetMap",
+          url: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         }),
-      ],
+      }),
+    ];
+
+    if (this.additionalLayers !== undefined && this.additionalLayers !== null) {
+      layers.push(this.additionalLayers);
+    }
+
+    this.map = new Map({
+      target: this.mapDivRef.current,
+      layers: layers,
       view: new View({
+        projection: "EPSG:3857",
         center: [this.view.longitude, this.view.latitude],
         zoom: this.zoom,
       }),
     });
 
-    let currZoom = map.getView().getZoom();
-    map.on("moveend", function () {
-      let newZoom = map.getView().getZoom();
+    let currZoom = this.map.getView().getZoom();
+    this.map.on("moveend", () => {
+      let newZoom = this.map.getView().getZoom();
       if (currZoom !== newZoom) {
-        if (newZoom !== null) {
-          //TODO UPDATE DATA
+        if (newZoom) {
+          this.state.zoom = newZoom;
         }
       }
     });
 
-    map.on("pointermove", (e) => {
+    this.map.on("pointermove", (e) => {
       if (e.dragging) {
         return;
       }
-      const pixel = map.getEventPixel(e.originalEvent);
-      const hit = map.hasFeatureAtPixel(pixel);
-      map.getTargetElement().style.cursor = hit ? "pointer" : "";
+      const pixel = this.map.getEventPixel(e.originalEvent);
+      const hit = this.map.hasFeatureAtPixel(pixel);
+      this.map.getTargetElement().style.cursor = hit ? "pointer" : "";
     });
 
-    const mapContext: IMapContext = { map };
+    const mapContext: IMapContext = { map: this.map };
     this.setState({
       mapContext: mapContext,
     });
 
     const layerSwitcher = new LayerSwitcher({
+      startActive: false,
       label: "",
       tipLabel: "",
       collapseTipLabel: "Collapse legend",
@@ -97,29 +121,82 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
       reverse: false,
     });
 
-    map.addControl(layerSwitcher);
+    if (this.renderLayers) {
+      this.map.addControl(layerSwitcher);
+    }
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate(
+    prevProps: Readonly<TMapProps>,
+    prevState: Readonly<TMapState>,
+    snapshot?: any
+  ) {
+    if (prevProps.view !== this.props.view) {
+      if (this.state.markerLayer !== null) {
+        this.map.removeLayer(this.state.markerLayer);
+      }
+      this.setState({ view: this.props.view });
+      this.map.setView(
+        new View({
+          projection: "EPSG:3857",
+          center: [this.props.view.longitude, this.props.view.latitude],
+          zoom: this.props.zoom,
+        })
+      );
+      const markerLayer = new VectorLayer({
+        source: new VectorSource({
+          features: [
+            new Feature({
+              geometry: new Point([
+                this.props.view.longitude,
+                this.props.view.latitude,
+              ]),
+              fna: "Tu casa!",
+            }),
+          ],
+        }),
+      });
+      this.setState({ markerLayer: markerLayer });
+      this.map.addLayer(markerLayer);
+      // const onMapClick = (event: MapBrowserEvent) => {
+      //   const featureToAdd = new Feature({
+      //     geometry: new Point(event.coordinate),
+      //     fna: "Tu casa!",
+      //   });
+      //
+      //   Markerlayer.getSource().clear();
+      //   Markerlayer.getSource().addFeatures([featureToAdd]);
+      // };
+      // this.map.on("singleclick", onMapClick);
+    }
+  }
 
   render() {
     return (
-      <div className={styles.map} ref={this.mapDivRef}>
+      <div
+        className={styles.map}
+        style={this.additionalStyle !== null ? this.additionalStyle : undefined}
+        ref={this.mapDivRef}
+      >
         {this.state.mapContext && (
           <MapContext.Provider value={this.state.mapContext}>
             <PopUpLayer />
-            <UniversityLayer />
-            <NationalRoutesLayer />
-            <AirportLayer />
-            <PortLayer />
-            <FireLayer />
-            <SchoolLayer />
-            <RailwayLayer />
-            <HospitalLayer />
-            <PoliceLayer />
-            <PrisonLayer />
-            <PropertiesLayerWithContext />
-            <IndustrialAreaLayers />
+            {this.props.renderLayers && (
+              <>
+                <UniversityLayer />
+                <NationalRoutesLayer />
+                <AirportLayer />
+                <PortLayer />
+                <FireLayer />
+                <SchoolLayer />
+                <RailwayLayer />
+                <HospitalLayer />
+                <PoliceLayer />
+                <PrisonLayer />
+                <PropertiesLayerWithContext />
+                <IndustrialAreaLayers />
+              </>
+            )}
           </MapContext.Provider>
         )}
       </div>
