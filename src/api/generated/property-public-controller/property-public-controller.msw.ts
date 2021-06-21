@@ -8,7 +8,209 @@
 import { rest } from "msw";
 import faker from "faker";
 
-export const getDislikePropertyUsingPUTMock = () => ({
+export const getGetPropertiesUsingGETMock = () => ({
+  content: faker.helpers.randomize([
+    [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
+      address: {
+        department: faker.random.word(),
+        id: (() => faker.datatype.uuid())(),
+        number: faker.datatype.number(),
+        postalCode: faker.random.word(),
+        street: faker.random.word(),
+        town: {
+          city: {
+            id: (() => faker.datatype.uuid())(),
+            name: faker.random.word(),
+            state: {
+              country: {
+                id: (() => faker.datatype.uuid())(),
+                name: faker.random.word(),
+              },
+              id: (() => faker.datatype.uuid())(),
+              name: faker.random.word(),
+            },
+          },
+          id: (() => faker.datatype.uuid())(),
+          name: faker.random.word(),
+        },
+      },
+      condition: faker.helpers.randomize(["RENT", "SALE"]),
+      coveredSquareFoot: faker.datatype.number(),
+      fullBaths: faker.datatype.number(),
+      id: (() => faker.datatype.uuid())(),
+      price: faker.datatype.number(),
+      rooms: faker.datatype.number(),
+      squareFoot: faker.datatype.number(),
+      title: faker.random.word(),
+      toilets: faker.datatype.number(),
+      type: faker.helpers.randomize([
+        "Casa",
+        "Cochera",
+        "Compartido",
+        "Consultorio",
+        "Country",
+        "Departamento",
+        "Edificio",
+        "Flat",
+        "Galpon",
+        "Hotel",
+        "Local",
+        "Loft",
+        "Oficina",
+        "PH",
+        "Quinta",
+        "Terreno",
+      ]),
+    })),
+    undefined,
+  ]),
+  empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  first: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  last: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  number: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  numberOfElements: faker.helpers.randomize([
+    faker.datatype.number(),
+    undefined,
+  ]),
+  pageable: faker.helpers.randomize([
+    {
+      offset: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      pageNumber: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      pageSize: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      paged: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      sort: faker.helpers.randomize([
+        {
+          empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+          sorted: faker.helpers.randomize([
+            faker.datatype.boolean(),
+            undefined,
+          ]),
+          unsorted: faker.helpers.randomize([
+            faker.datatype.boolean(),
+            undefined,
+          ]),
+        },
+        undefined,
+      ]),
+      unpaged: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+    },
+    undefined,
+  ]),
+  size: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  sort: faker.helpers.randomize([
+    {
+      empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      sorted: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      unsorted: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+    },
+    undefined,
+  ]),
+  totalElements: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  totalPages: faker.helpers.randomize([faker.datatype.number(), undefined]),
+});
+
+export const getGetPropertiesFilteredUsingPOSTMock = () => ({
+  content: faker.helpers.randomize([
+    [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
+      address: {
+        department: faker.random.word(),
+        id: (() => faker.datatype.uuid())(),
+        number: faker.datatype.number(),
+        postalCode: faker.random.word(),
+        street: faker.random.word(),
+        town: {
+          city: {
+            id: (() => faker.datatype.uuid())(),
+            name: faker.random.word(),
+            state: {
+              country: {
+                id: (() => faker.datatype.uuid())(),
+                name: faker.random.word(),
+              },
+              id: (() => faker.datatype.uuid())(),
+              name: faker.random.word(),
+            },
+          },
+          id: (() => faker.datatype.uuid())(),
+          name: faker.random.word(),
+        },
+      },
+      condition: faker.helpers.randomize(["RENT", "SALE"]),
+      coveredSquareFoot: faker.datatype.number(),
+      fullBaths: faker.datatype.number(),
+      id: (() => faker.datatype.uuid())(),
+      price: faker.datatype.number(),
+      rooms: faker.datatype.number(),
+      squareFoot: faker.datatype.number(),
+      title: faker.random.word(),
+      toilets: faker.datatype.number(),
+      type: faker.helpers.randomize([
+        "Casa",
+        "Cochera",
+        "Compartido",
+        "Consultorio",
+        "Country",
+        "Departamento",
+        "Edificio",
+        "Flat",
+        "Galpon",
+        "Hotel",
+        "Local",
+        "Loft",
+        "Oficina",
+        "PH",
+        "Quinta",
+        "Terreno",
+      ]),
+    })),
+    undefined,
+  ]),
+  empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  first: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  last: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  number: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  numberOfElements: faker.helpers.randomize([
+    faker.datatype.number(),
+    undefined,
+  ]),
+  pageable: faker.helpers.randomize([
+    {
+      offset: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      pageNumber: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      pageSize: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      paged: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      sort: faker.helpers.randomize([
+        {
+          empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+          sorted: faker.helpers.randomize([
+            faker.datatype.boolean(),
+            undefined,
+          ]),
+          unsorted: faker.helpers.randomize([
+            faker.datatype.boolean(),
+            undefined,
+          ]),
+        },
+        undefined,
+      ]),
+      unpaged: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+    },
+    undefined,
+  ]),
+  size: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  sort: faker.helpers.randomize([
+    {
+      empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      sorted: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      unsorted: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+    },
+    undefined,
+  ]),
+  totalElements: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  totalPages: faker.helpers.randomize([faker.datatype.number(), undefined]),
+});
+
+export const getGetPropertyUsingGETMock = () => ({
   address: {
     department: faker.random.word(),
     id: (() => faker.datatype.uuid())(),
@@ -267,7 +469,7 @@ export const getDislikePropertyUsingPUTMock = () => ({
       })
     ),
   })),
-  comments: faker.random.word(),
+  comments: (() => faker.lorem.sentences(5))(),
   condition: faker.helpers.randomize(["RENT", "SALE"]),
   constructionDate: faker.datatype.number(),
   contacts: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -525,7 +727,7 @@ export const getDislikePropertyUsingPUTMock = () => ({
     id: (() => faker.datatype.uuid())(),
     initialTime: faker.random.word(),
   })),
-  parkDescription: faker.random.word(),
+  parkDescription: (() => faker.lorem.sentences(3))(),
   price: faker.datatype.number(),
   rooms: faker.datatype.number(),
   security: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -787,798 +989,26 @@ export const getDislikePropertyUsingPUTMock = () => ({
   ]),
 });
 
-export const getLikePropertyUsingPUTMock = () => ({
-  address: {
-    department: faker.random.word(),
-    id: (() => faker.datatype.uuid())(),
-    number: faker.datatype.number(),
-    postalCode: faker.random.word(),
-    street: faker.random.word(),
-    town: {
-      city: {
-        id: (() => faker.datatype.uuid())(),
-        name: faker.random.word(),
-        state: {
-          country: {
-            id: (() => faker.datatype.uuid())(),
-            name: faker.random.word(),
-          },
-          id: (() => faker.datatype.uuid())(),
-          name: faker.random.word(),
-        },
-      },
-      id: (() => faker.datatype.uuid())(),
-      name: faker.random.word(),
-    },
-  },
-  amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
-    id: (() => faker.datatype.uuid())(),
-    label: faker.random.word(),
-    properties: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-      () => ({
-        address: {
-          department: faker.random.word(),
-          id: (() => faker.datatype.uuid())(),
-          number: faker.datatype.number(),
-          postalCode: faker.random.word(),
-          street: faker.random.word(),
-          town: {
-            city: {
-              id: (() => faker.datatype.uuid())(),
-              name: faker.random.word(),
-              state: {
-                country: {
-                  id: (() => faker.datatype.uuid())(),
-                  name: faker.random.word(),
-                },
-                id: (() => faker.datatype.uuid())(),
-                name: faker.random.word(),
-              },
-            },
-            id: (() => faker.datatype.uuid())(),
-            name: faker.random.word(),
-          },
-        },
-        comments: faker.random.word(),
-        condition: faker.helpers.randomize(["RENT", "SALE"]),
-        constructionDate: faker.datatype.number(),
-        contacts: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            email: (() => faker.internet.email())(),
-            id: (() => faker.datatype.uuid())(),
-            label: faker.random.word(),
-          })
-        ),
-        coveredSquareFoot: faker.datatype.number(),
-        creationDate: faker.date.recent(),
-        environments: faker.datatype.number(),
-        expenses: faker.datatype.number(),
-        fullBaths: faker.datatype.number(),
-        id: (() => faker.datatype.uuid())(),
-        levels: faker.datatype.number(),
-        likes: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            birthDate: faker.helpers.randomize([
-              faker.date.recent(),
-              undefined,
-            ]),
-            email: (() => faker.internet.email())(),
-            id: (() => faker.datatype.uuid())(),
-            likedProperties: [
-              ...Array(faker.datatype.number({ min: 1, max: 10 })),
-            ].map(() => ({
-              address: {
-                department: faker.random.word(),
-                id: (() => faker.datatype.uuid())(),
-                number: faker.datatype.number(),
-                postalCode: faker.random.word(),
-                street: faker.random.word(),
-                town: {
-                  city: {
-                    id: (() => faker.datatype.uuid())(),
-                    name: faker.random.word(),
-                    state: {
-                      country: {
-                        id: (() => faker.datatype.uuid())(),
-                        name: faker.random.word(),
-                      },
-                      id: (() => faker.datatype.uuid())(),
-                      name: faker.random.word(),
-                    },
-                  },
-                  id: (() => faker.datatype.uuid())(),
-                  name: faker.random.word(),
-                },
-              },
-              comments: faker.random.word(),
-              condition: faker.helpers.randomize(["RENT", "SALE"]),
-              constructionDate: faker.datatype.number(),
-              contacts: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                email: (() => faker.internet.email())(),
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              })),
-              coveredSquareFoot: faker.datatype.number(),
-              creationDate: faker.date.recent(),
-              environments: faker.datatype.number(),
-              expenses: faker.datatype.number(),
-              fullBaths: faker.datatype.number(),
-              id: (() => faker.datatype.uuid())(),
-              levels: faker.datatype.number(),
-              links: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-                () => faker.random.word()
-              ),
-              materials: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              })),
-              openHouse: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                day: faker.date.recent(),
-                finalTime: faker.random.word(),
-                id: (() => faker.datatype.uuid())(),
-                initialTime: faker.random.word(),
-              })),
-              parkDescription: faker.random.word(),
-              price: faker.datatype.number(),
-              rooms: faker.datatype.number(),
-              security: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              })),
-              squareFoot: faker.datatype.number(),
-              style: {
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              },
-              title: faker.random.word(),
-              toilets: faker.datatype.number(),
-              type: faker.helpers.randomize([
-                "Casa",
-                "Cochera",
-                "Compartido",
-                "Consultorio",
-                "Country",
-                "Departamento",
-                "Edificio",
-                "Flat",
-                "Galpon",
-                "Hotel",
-                "Local",
-                "Loft",
-                "Oficina",
-                "PH",
-                "Quinta",
-                "Terreno",
-              ]),
-            })),
-            password: faker.helpers.randomize([faker.random.word(), undefined]),
-            userName: faker.random.word(),
-            userOrigin: faker.helpers.randomize(["GOOGLE", "UBICAR"]),
-            userRole: {
-              active: faker.datatype.boolean(),
-              creationDate: faker.date.recent(),
-              description: faker.random.word(),
-              id: (() => faker.datatype.uuid())(),
-              permissions: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                active: faker.datatype.boolean(),
-                creationDate: faker.date.recent(),
-                description: faker.random.word(),
-                id: (() => faker.datatype.uuid())(),
-                slug: faker.random.word(),
-                title: faker.random.word(),
-                userRoles: [
-                  ...Array(faker.datatype.number({ min: 1, max: 10 })),
-                ].map(() => ({
-                  active: faker.datatype.boolean(),
-                  creationDate: faker.date.recent(),
-                  description: faker.random.word(),
-                  id: (() => faker.datatype.uuid())(),
-                  slug: faker.random.word(),
-                  title: faker.random.word(),
-                })),
-              })),
-              slug: faker.random.word(),
-              title: faker.random.word(),
-            },
-          })
-        ),
-        links: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() =>
-          faker.random.word()
-        ),
-        materials: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            id: (() => faker.datatype.uuid())(),
-            label: faker.random.word(),
-          })
-        ),
-        openHouse: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            day: faker.date.recent(),
-            finalTime: faker.random.word(),
-            id: (() => faker.datatype.uuid())(),
-            initialTime: faker.random.word(),
-          })
-        ),
-        parkDescription: faker.random.word(),
-        price: faker.datatype.number(),
-        rooms: faker.datatype.number(),
-        security: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            id: (() => faker.datatype.uuid())(),
-            label: faker.random.word(),
-          })
-        ),
-        squareFoot: faker.datatype.number(),
-        style: {
-          id: (() => faker.datatype.uuid())(),
-          label: faker.random.word(),
-        },
-        title: faker.random.word(),
-        toilets: faker.datatype.number(),
-        type: faker.helpers.randomize([
-          "Casa",
-          "Cochera",
-          "Compartido",
-          "Consultorio",
-          "Country",
-          "Departamento",
-          "Edificio",
-          "Flat",
-          "Galpon",
-          "Hotel",
-          "Local",
-          "Loft",
-          "Oficina",
-          "PH",
-          "Quinta",
-          "Terreno",
-        ]),
-      })
-    ),
-  })),
-  comments: faker.random.word(),
-  condition: faker.helpers.randomize(["RENT", "SALE"]),
-  constructionDate: faker.datatype.number(),
-  contacts: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
-    email: (() => faker.internet.email())(),
-    id: (() => faker.datatype.uuid())(),
-    label: faker.random.word(),
-  })),
-  coveredSquareFoot: faker.datatype.number(),
-  environments: faker.datatype.number(),
-  expenses: faker.datatype.number(),
-  fullBaths: faker.datatype.number(),
-  id: (() => faker.datatype.uuid())(),
-  levels: faker.datatype.number(),
-  links: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() =>
-    faker.random.word()
-  ),
-  materials: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
-    id: (() => faker.datatype.uuid())(),
-    label: faker.random.word(),
-    properties: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-      () => ({
-        address: {
-          department: faker.random.word(),
-          id: (() => faker.datatype.uuid())(),
-          number: faker.datatype.number(),
-          postalCode: faker.random.word(),
-          street: faker.random.word(),
-          town: {
-            city: {
-              id: (() => faker.datatype.uuid())(),
-              name: faker.random.word(),
-              state: {
-                country: {
-                  id: (() => faker.datatype.uuid())(),
-                  name: faker.random.word(),
-                },
-                id: (() => faker.datatype.uuid())(),
-                name: faker.random.word(),
-              },
-            },
-            id: (() => faker.datatype.uuid())(),
-            name: faker.random.word(),
-          },
-        },
-        amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            id: (() => faker.datatype.uuid())(),
-            label: faker.random.word(),
-          })
-        ),
-        comments: faker.random.word(),
-        condition: faker.helpers.randomize(["RENT", "SALE"]),
-        constructionDate: faker.datatype.number(),
-        contacts: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            email: (() => faker.internet.email())(),
-            id: (() => faker.datatype.uuid())(),
-            label: faker.random.word(),
-          })
-        ),
-        coveredSquareFoot: faker.datatype.number(),
-        creationDate: faker.date.recent(),
-        environments: faker.datatype.number(),
-        expenses: faker.datatype.number(),
-        fullBaths: faker.datatype.number(),
-        id: (() => faker.datatype.uuid())(),
-        levels: faker.datatype.number(),
-        likes: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            birthDate: faker.helpers.randomize([
-              faker.date.recent(),
-              undefined,
-            ]),
-            email: (() => faker.internet.email())(),
-            id: (() => faker.datatype.uuid())(),
-            likedProperties: [
-              ...Array(faker.datatype.number({ min: 1, max: 10 })),
-            ].map(() => ({
-              address: {
-                department: faker.random.word(),
-                id: (() => faker.datatype.uuid())(),
-                number: faker.datatype.number(),
-                postalCode: faker.random.word(),
-                street: faker.random.word(),
-                town: {
-                  city: {
-                    id: (() => faker.datatype.uuid())(),
-                    name: faker.random.word(),
-                    state: {
-                      country: {
-                        id: (() => faker.datatype.uuid())(),
-                        name: faker.random.word(),
-                      },
-                      id: (() => faker.datatype.uuid())(),
-                      name: faker.random.word(),
-                    },
-                  },
-                  id: (() => faker.datatype.uuid())(),
-                  name: faker.random.word(),
-                },
-              },
-              amenities: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              })),
-              comments: faker.random.word(),
-              condition: faker.helpers.randomize(["RENT", "SALE"]),
-              constructionDate: faker.datatype.number(),
-              contacts: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                email: (() => faker.internet.email())(),
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              })),
-              coveredSquareFoot: faker.datatype.number(),
-              creationDate: faker.date.recent(),
-              environments: faker.datatype.number(),
-              expenses: faker.datatype.number(),
-              fullBaths: faker.datatype.number(),
-              id: (() => faker.datatype.uuid())(),
-              levels: faker.datatype.number(),
-              links: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-                () => faker.random.word()
-              ),
-              openHouse: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                day: faker.date.recent(),
-                finalTime: faker.random.word(),
-                id: (() => faker.datatype.uuid())(),
-                initialTime: faker.random.word(),
-              })),
-              parkDescription: faker.random.word(),
-              price: faker.datatype.number(),
-              rooms: faker.datatype.number(),
-              security: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              })),
-              squareFoot: faker.datatype.number(),
-              style: {
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              },
-              title: faker.random.word(),
-              toilets: faker.datatype.number(),
-              type: faker.helpers.randomize([
-                "Casa",
-                "Cochera",
-                "Compartido",
-                "Consultorio",
-                "Country",
-                "Departamento",
-                "Edificio",
-                "Flat",
-                "Galpon",
-                "Hotel",
-                "Local",
-                "Loft",
-                "Oficina",
-                "PH",
-                "Quinta",
-                "Terreno",
-              ]),
-            })),
-            password: faker.helpers.randomize([faker.random.word(), undefined]),
-            userName: faker.random.word(),
-            userOrigin: faker.helpers.randomize(["GOOGLE", "UBICAR"]),
-            userRole: {
-              active: faker.datatype.boolean(),
-              creationDate: faker.date.recent(),
-              description: faker.random.word(),
-              id: (() => faker.datatype.uuid())(),
-              permissions: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                active: faker.datatype.boolean(),
-                creationDate: faker.date.recent(),
-                description: faker.random.word(),
-                id: (() => faker.datatype.uuid())(),
-                slug: faker.random.word(),
-                title: faker.random.word(),
-                userRoles: [
-                  ...Array(faker.datatype.number({ min: 1, max: 10 })),
-                ].map(() => ({
-                  active: faker.datatype.boolean(),
-                  creationDate: faker.date.recent(),
-                  description: faker.random.word(),
-                  id: (() => faker.datatype.uuid())(),
-                  slug: faker.random.word(),
-                  title: faker.random.word(),
-                })),
-              })),
-              slug: faker.random.word(),
-              title: faker.random.word(),
-            },
-          })
-        ),
-        links: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() =>
-          faker.random.word()
-        ),
-        openHouse: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            day: faker.date.recent(),
-            finalTime: faker.random.word(),
-            id: (() => faker.datatype.uuid())(),
-            initialTime: faker.random.word(),
-          })
-        ),
-        parkDescription: faker.random.word(),
-        price: faker.datatype.number(),
-        rooms: faker.datatype.number(),
-        security: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            id: (() => faker.datatype.uuid())(),
-            label: faker.random.word(),
-          })
-        ),
-        squareFoot: faker.datatype.number(),
-        style: {
-          id: (() => faker.datatype.uuid())(),
-          label: faker.random.word(),
-        },
-        title: faker.random.word(),
-        toilets: faker.datatype.number(),
-        type: faker.helpers.randomize([
-          "Casa",
-          "Cochera",
-          "Compartido",
-          "Consultorio",
-          "Country",
-          "Departamento",
-          "Edificio",
-          "Flat",
-          "Galpon",
-          "Hotel",
-          "Local",
-          "Loft",
-          "Oficina",
-          "PH",
-          "Quinta",
-          "Terreno",
-        ]),
-      })
-    ),
-  })),
-  openHouse: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
-    day: faker.date.recent(),
-    finalTime: faker.random.word(),
-    id: (() => faker.datatype.uuid())(),
-    initialTime: faker.random.word(),
-  })),
-  parkDescription: faker.random.word(),
-  price: faker.datatype.number(),
-  rooms: faker.datatype.number(),
-  security: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
-    id: (() => faker.datatype.uuid())(),
-    label: faker.random.word(),
-    properties: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-      () => ({
-        address: {
-          department: faker.random.word(),
-          id: (() => faker.datatype.uuid())(),
-          number: faker.datatype.number(),
-          postalCode: faker.random.word(),
-          street: faker.random.word(),
-          town: {
-            city: {
-              id: (() => faker.datatype.uuid())(),
-              name: faker.random.word(),
-              state: {
-                country: {
-                  id: (() => faker.datatype.uuid())(),
-                  name: faker.random.word(),
-                },
-                id: (() => faker.datatype.uuid())(),
-                name: faker.random.word(),
-              },
-            },
-            id: (() => faker.datatype.uuid())(),
-            name: faker.random.word(),
-          },
-        },
-        amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            id: (() => faker.datatype.uuid())(),
-            label: faker.random.word(),
-          })
-        ),
-        comments: faker.random.word(),
-        condition: faker.helpers.randomize(["RENT", "SALE"]),
-        constructionDate: faker.datatype.number(),
-        contacts: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            email: (() => faker.internet.email())(),
-            id: (() => faker.datatype.uuid())(),
-            label: faker.random.word(),
-          })
-        ),
-        coveredSquareFoot: faker.datatype.number(),
-        creationDate: faker.date.recent(),
-        environments: faker.datatype.number(),
-        expenses: faker.datatype.number(),
-        fullBaths: faker.datatype.number(),
-        id: (() => faker.datatype.uuid())(),
-        levels: faker.datatype.number(),
-        likes: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            birthDate: faker.helpers.randomize([
-              faker.date.recent(),
-              undefined,
-            ]),
-            email: (() => faker.internet.email())(),
-            id: (() => faker.datatype.uuid())(),
-            likedProperties: [
-              ...Array(faker.datatype.number({ min: 1, max: 10 })),
-            ].map(() => ({
-              address: {
-                department: faker.random.word(),
-                id: (() => faker.datatype.uuid())(),
-                number: faker.datatype.number(),
-                postalCode: faker.random.word(),
-                street: faker.random.word(),
-                town: {
-                  city: {
-                    id: (() => faker.datatype.uuid())(),
-                    name: faker.random.word(),
-                    state: {
-                      country: {
-                        id: (() => faker.datatype.uuid())(),
-                        name: faker.random.word(),
-                      },
-                      id: (() => faker.datatype.uuid())(),
-                      name: faker.random.word(),
-                    },
-                  },
-                  id: (() => faker.datatype.uuid())(),
-                  name: faker.random.word(),
-                },
-              },
-              amenities: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              })),
-              comments: faker.random.word(),
-              condition: faker.helpers.randomize(["RENT", "SALE"]),
-              constructionDate: faker.datatype.number(),
-              contacts: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                email: (() => faker.internet.email())(),
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              })),
-              coveredSquareFoot: faker.datatype.number(),
-              creationDate: faker.date.recent(),
-              environments: faker.datatype.number(),
-              expenses: faker.datatype.number(),
-              fullBaths: faker.datatype.number(),
-              id: (() => faker.datatype.uuid())(),
-              levels: faker.datatype.number(),
-              links: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-                () => faker.random.word()
-              ),
-              materials: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              })),
-              openHouse: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                day: faker.date.recent(),
-                finalTime: faker.random.word(),
-                id: (() => faker.datatype.uuid())(),
-                initialTime: faker.random.word(),
-              })),
-              parkDescription: faker.random.word(),
-              price: faker.datatype.number(),
-              rooms: faker.datatype.number(),
-              squareFoot: faker.datatype.number(),
-              style: {
-                id: (() => faker.datatype.uuid())(),
-                label: faker.random.word(),
-              },
-              title: faker.random.word(),
-              toilets: faker.datatype.number(),
-              type: faker.helpers.randomize([
-                "Casa",
-                "Cochera",
-                "Compartido",
-                "Consultorio",
-                "Country",
-                "Departamento",
-                "Edificio",
-                "Flat",
-                "Galpon",
-                "Hotel",
-                "Local",
-                "Loft",
-                "Oficina",
-                "PH",
-                "Quinta",
-                "Terreno",
-              ]),
-            })),
-            password: faker.helpers.randomize([faker.random.word(), undefined]),
-            userName: faker.random.word(),
-            userOrigin: faker.helpers.randomize(["GOOGLE", "UBICAR"]),
-            userRole: {
-              active: faker.datatype.boolean(),
-              creationDate: faker.date.recent(),
-              description: faker.random.word(),
-              id: (() => faker.datatype.uuid())(),
-              permissions: [
-                ...Array(faker.datatype.number({ min: 1, max: 10 })),
-              ].map(() => ({
-                active: faker.datatype.boolean(),
-                creationDate: faker.date.recent(),
-                description: faker.random.word(),
-                id: (() => faker.datatype.uuid())(),
-                slug: faker.random.word(),
-                title: faker.random.word(),
-                userRoles: [
-                  ...Array(faker.datatype.number({ min: 1, max: 10 })),
-                ].map(() => ({
-                  active: faker.datatype.boolean(),
-                  creationDate: faker.date.recent(),
-                  description: faker.random.word(),
-                  id: (() => faker.datatype.uuid())(),
-                  slug: faker.random.word(),
-                  title: faker.random.word(),
-                })),
-              })),
-              slug: faker.random.word(),
-              title: faker.random.word(),
-            },
-          })
-        ),
-        links: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() =>
-          faker.random.word()
-        ),
-        materials: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            id: (() => faker.datatype.uuid())(),
-            label: faker.random.word(),
-          })
-        ),
-        openHouse: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(
-          () => ({
-            day: faker.date.recent(),
-            finalTime: faker.random.word(),
-            id: (() => faker.datatype.uuid())(),
-            initialTime: faker.random.word(),
-          })
-        ),
-        parkDescription: faker.random.word(),
-        price: faker.datatype.number(),
-        rooms: faker.datatype.number(),
-        squareFoot: faker.datatype.number(),
-        style: {
-          id: (() => faker.datatype.uuid())(),
-          label: faker.random.word(),
-        },
-        title: faker.random.word(),
-        toilets: faker.datatype.number(),
-        type: faker.helpers.randomize([
-          "Casa",
-          "Cochera",
-          "Compartido",
-          "Consultorio",
-          "Country",
-          "Departamento",
-          "Edificio",
-          "Flat",
-          "Galpon",
-          "Hotel",
-          "Local",
-          "Loft",
-          "Oficina",
-          "PH",
-          "Quinta",
-          "Terreno",
-        ]),
-      })
-    ),
-  })),
-  squareFoot: faker.datatype.number(),
-  style: { id: (() => faker.datatype.uuid())(), label: faker.random.word() },
-  title: faker.random.word(),
-  toilets: faker.datatype.number(),
-  type: faker.helpers.randomize([
-    "Casa",
-    "Cochera",
-    "Compartido",
-    "Consultorio",
-    "Country",
-    "Departamento",
-    "Edificio",
-    "Flat",
-    "Galpon",
-    "Hotel",
-    "Local",
-    "Loft",
-    "Oficina",
-    "PH",
-    "Quinta",
-    "Terreno",
-  ]),
-});
-
-export const getPropertyUserControllerMSW = () => [
-  rest.put("*/dislike/:id", (req, res, ctx) => {
+export const getPropertyPublicControllerMSW = () => [
+  rest.get("*/property/public/preview", (req, res, ctx) => {
     return res(
       ctx.delay(1000),
       ctx.status(200, "Mocked status"),
-      ctx.json(getDislikePropertyUsingPUTMock())
+      ctx.json(getGetPropertiesUsingGETMock())
     );
   }),
-  rest.put("*/like/:id", (req, res, ctx) => {
+  rest.post("*/property/public/preview/by-filter", (req, res, ctx) => {
     return res(
       ctx.delay(1000),
       ctx.status(200, "Mocked status"),
-      ctx.json(getLikePropertyUsingPUTMock())
+      ctx.json(getGetPropertiesFilteredUsingPOSTMock())
+    );
+  }),
+  rest.get("*/property/public/:id", (req, res, ctx) => {
+    return res(
+      ctx.delay(1000),
+      ctx.status(200, "Mocked status"),
+      ctx.json(getGetPropertyUsingGETMock())
     );
   }),
 ];
