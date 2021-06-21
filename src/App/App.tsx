@@ -22,6 +22,7 @@ import { actions, useAppDispatch, useAppSelector } from "../store";
 import { selectRedirectPath } from "../store/slices/session";
 import styles from "./App.module.scss";
 import { Loading } from "../components/common/loading/Loading";
+import { Footer } from "../components/footer/Footer";
 import { EditProperty } from "../routes/editProperty";
 
 export default function App() {
@@ -59,6 +60,7 @@ export default function App() {
         <Route exact path={"/userProfile"} component={UserProfile} />
         <Route component={NotFound} />
       </Switch>
+      <Footer />
     </>
   );
 }
