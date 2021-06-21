@@ -57,7 +57,7 @@ export default function App() {
         <Route exact path={urls.logIn} component={LogIn} />
         <Route exact path={urls.editProperty.path} component={EditProperty} />
         <Route exact path={"/loading"} component={Loading} />
-        <Route exact path={"/userProfile"} component={UserProfile} />
+        <Route exact path={urls.userProfile} component={UserProfile} />
         <Route component={NotFound} />
       </Switch>
       <Footer />
