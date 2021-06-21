@@ -15,6 +15,7 @@ import {
   useGetStylesUsingGET,
   useGetTypesUsingGET,
 } from "../../api/generated/optionals-controller/optionals-controller";
+import { Footer } from "../../components/footer/Footer";
 
 export function ListingPage() {
   const [filters, setFilters] = useState<PropertyFilterDto>({});

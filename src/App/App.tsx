@@ -1,7 +1,4 @@
-import { Button } from "@material-ui/core";
-import firebase from "firebase";
-import { Link, Route, Switch, useHistory } from "react-router-dom";
-import { useLogOut } from "../api/auth";
+import { Route, Switch } from "react-router-dom";
 import { useGetLoggedUsingGET } from "../api/generated/auth-controller/auth-controller";
 import logo from "../assets/Logo-Ubicar.png";
 import ProtectedRoute, {
@@ -43,23 +40,29 @@ export default function App() {
   return (
     <>
       <NavBar />
-      <Switch>
-        <Route exact path={urls.home} component={WorkInProgress} />
-        <ProtectedRoute
-          {...defaultProtectedRouteProps}
-          exact
-          path={urls.createProperty}
-          component={CreateProperty}
-        />
-        <Route exact path={urls.listingPage} component={ListingPage} />
-        <Route exact path={urls.viewProperty.path} component={ViewProperty} />
-        <Route exact path={urls.signUp} component={SignUp} />
-        <Route exact path={urls.logIn} component={LogIn} />
-        <Route exact path={urls.editProperty.path} component={EditProperty} />
-        <Route exact path={"/loading"} component={Loading} />
-        <Route exact path={"/userProfile"} component={UserProfile} />
-        <Route component={NotFound} />
-      </Switch>
+      <div
+        style={{
+          height: "70vh",
+        }}
+      >
+        <Switch>
+          <Route exact path={urls.home} component={WorkInProgress} />
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact
+            path={urls.createProperty}
+            component={CreateProperty}
+          />
+          <Route exact path={urls.listingPage} component={ListingPage} />
+          <Route exact path={urls.viewProperty.path} component={ViewProperty} />
+          <Route exact path={urls.signUp} component={SignUp} />
+          <Route exact path={urls.logIn} component={LogIn} />
+          <Route exact path={urls.editProperty.path} component={EditProperty} />
+          <Route exact path={"/loading"} component={Loading} />
+          <Route exact path={urls.userProfile} component={UserProfile} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
       <Footer />
     </>
   );
