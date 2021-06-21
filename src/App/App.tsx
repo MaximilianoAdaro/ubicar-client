@@ -43,23 +43,29 @@ export default function App() {
   return (
     <>
       <NavBar />
-      <Switch>
-        <Route exact path={urls.home} component={WorkInProgress} />
-        <ProtectedRoute
-          {...defaultProtectedRouteProps}
-          exact
-          path={urls.createProperty}
-          component={CreateProperty}
-        />
-        <Route exact path={urls.listingPage} component={ListingPage} />
-        <Route exact path={urls.viewProperty.path} component={ViewProperty} />
-        <Route exact path={urls.signUp} component={SignUp} />
-        <Route exact path={urls.logIn} component={LogIn} />
-        <Route exact path={urls.editProperty.path} component={EditProperty} />
-        <Route exact path={"/loading"} component={Loading} />
-        <Route exact path={"/userProfile"} component={UserProfile} />
-        <Route component={NotFound} />
-      </Switch>
+      <div
+        style={{
+          minHeight: "80vh",
+        }}
+      >
+        <Switch>
+          <Route exact path={urls.home} component={WorkInProgress} />
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact
+            path={urls.createProperty}
+            component={CreateProperty}
+          />
+          <Route exact path={urls.listingPage} component={ListingPage} />
+          <Route exact path={urls.viewProperty.path} component={ViewProperty} />
+          <Route exact path={urls.signUp} component={SignUp} />
+          <Route exact path={urls.logIn} component={LogIn} />
+          <Route exact path={urls.editProperty.path} component={EditProperty} />
+          <Route exact path={"/loading"} component={Loading} />
+          <Route exact path={"/userProfile"} component={UserProfile} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
       <Footer />
     </>
   );

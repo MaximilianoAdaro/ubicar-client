@@ -4,7 +4,11 @@ import { Grid } from "@material-ui/core";
 
 export function Footer() {
   return (
-    <div>
+    <div
+      style={{
+        marginTop: "3vh",
+      }}
+    >
       <Grid container className={styles.footerContainer}>
         <Grid xs={4} className={styles.footerUbicar}>
           <Grid>
