@@ -93,7 +93,7 @@ export function NavBar() {
                       <List>
                         <ListItem>
                           <Link
-                            to={"/userProfile"}
+                            to={urls.userProfile}
                             className={styles.myAccountDropdownAccount}
                           >
                             Mi cuenta

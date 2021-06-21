@@ -35,7 +35,8 @@ export function ListingHouse(props: ListingHouseProps) {
           <p className={styles.propertyTitle}>{house.title}</p>
         </Tooltip>
         <p className={styles.propertyPriceCondition}>
-          ${house.price.toLocaleString()} &nbsp;|&nbsp; En venta
+          ${house.price.toLocaleString()} &nbsp;|&nbsp; En{" "}
+          {house.condition == "SALE" ? "Venta" : "Alquiler"}
         </p>
         <p className={styles.propertySpecifications}>
           {house.squareFoot} m² &nbsp;&nbsp;|&nbsp;&nbsp; {house.rooms} hab.

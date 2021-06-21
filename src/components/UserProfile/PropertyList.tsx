@@ -4,6 +4,7 @@ import { Image } from "react-bootstrap";
 import styles from "./UserProfile.module.scss";
 import { useHistory } from "react-router-dom";
 import pluralize from "pluralize";
+import { urls } from "../../constants";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
@@ -11,12 +12,18 @@ interface ListingHouseProps {
 
 export function PropertyList(props: ListingHouseProps) {
   const house = props.house;
+  const history = useHistory();
   const houseAddress = house.address;
   const houseStreetNumber = `${houseAddress.street} ${houseAddress.number}`;
   const baths = pluralize("baño", house.fullBaths);
+  console.log(house);
   return (
     <Grid className={styles.myPropertyOuterDiv}>
-      <Grid container className={styles.container}>
+      <Grid
+        container
+        className={styles.container}
+        onClick={() => history.push(urls.viewProperty.byId(house.id))}
+      >
         <Grid xs={4} xl={3}>
           <Image
             className={styles.myPropertiesImage}
@@ -25,13 +32,19 @@ export function PropertyList(props: ListingHouseProps) {
           />
         </Grid>
         <Grid xs={8} xl={9}>
-          <p className={styles.myPropertyTitle}>{house.title}</p>
+          <p className={styles.myPropertyTitle}>
+            {house.title} &nbsp;|&nbsp; {house.type}
+          </p>
           <p className={styles.myPropertyPriceCondition}>
-            ${house.price.toLocaleString()} &nbsp;|&nbsp; En venta
+            En {house.condition == "SALE" ? "Venta" : "Alquiler"} &nbsp;|&nbsp;
+            ${house.price.toLocaleString()}
           </p>
           <p className={styles.myPropertySpecifications}>
-            {house.squareFoot} m² &nbsp;&nbsp;|&nbsp;&nbsp; {house.rooms} hab.
-            &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths} {baths}
+            {house.squareFoot} m² &nbsp; totales &nbsp;&nbsp;|&nbsp;&nbsp;{" "}
+            {house.coveredSquareFoot} m² &nbsp; cubiertos
+            &nbsp;&nbsp;|&nbsp;&nbsp; {house.rooms} habitaciones
+            &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths} {baths}{" "}
+            &nbsp;&nbsp;|&nbsp;&nbsp; {house.toilets} toilets
           </p>
           <p className={styles.myPropertyStreetNumber}>{houseStreetNumber}</p>
           <p className={styles.myPropertyTownCity}>
