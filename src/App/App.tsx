@@ -22,8 +22,8 @@ import { actions, useAppDispatch, useAppSelector } from "../store";
 import { selectRedirectPath } from "../store/slices/session";
 import styles from "./App.module.scss";
 import { Loading } from "../components/common/loading/Loading";
-import { Footer } from "../components/footer/Footer";
 import { EditProperty } from "../routes/editProperty";
+import { Footer } from "../components/footer/Footer";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -57,7 +57,7 @@ export default function App() {
         <Route exact path={urls.logIn} component={LogIn} />
         <Route exact path={urls.editProperty.path} component={EditProperty} />
         <Route exact path={"/loading"} component={Loading} />
-        <Route exact path={urls.userProfile} component={UserProfile} />
+        <Route exact path={"/userProfile"} component={UserProfile} />
         <Route component={NotFound} />
       </Switch>
       <Footer />
@@ -66,17 +66,7 @@ export default function App() {
 }
 
 const WorkInProgress = () => {
-  const history = useHistory();
-
   const { data: user } = useGetLoggedUsingGET();
-  const { mutateAsync: logOut } = useLogOut();
-
-  const handleLogout = async (e: any) => {
-    e.preventDefault();
-    await logOut();
-    await firebase.auth().signOut();
-    history.push(urls.home);
-  };
 
   return (
     <div className={styles.app}>
@@ -99,50 +89,6 @@ const WorkInProgress = () => {
       >
         <img src={logo} height={90} alt={"logo"} />
         <h1>Ubicar in progress...</h1>
-      </div>
-
-      <br />
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {!user ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Link to={urls.signUp}>
-              <Button variant={"outlined"}>Registrarse</Button>
-            </Link>
-            <div style={{ height: 24 }} />
-            <Link to={urls.logIn}>
-              <Button variant={"outlined"}>Iniciar sesión</Button>
-            </Link>
-          </div>
-        ) : (
-          <Button variant={"outlined"} onClick={handleLogout}>
-            Cerrar sesión
-          </Button>
-        )}
-
-        <br />
-
-        <Link to={urls.createProperty}>
-          <Button variant={"outlined"}>Crear publicacion</Button>
-        </Link>
-
-        <br />
-
-        <Link to={urls.listingPage}>
-          <Button variant={"outlined"}>Listar publicaciones</Button>
-        </Link>
       </div>
     </div>
   );
