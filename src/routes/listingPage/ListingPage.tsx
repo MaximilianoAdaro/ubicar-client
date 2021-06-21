@@ -1,5 +1,4 @@
 import Grid from "@material-ui/core/Grid";
-import { useGetPropertiesUsingGET } from "../../api/generated/property-public-controller/property-public-controller";
 import { ListingFilters } from "../../components/listingFilters/";
 import { ListingHouse } from "../../components/listingHouse/";
 import { MapComponent } from "../../components/Map/map";

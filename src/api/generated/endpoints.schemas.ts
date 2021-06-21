@@ -61,6 +61,16 @@ export interface ContactDto {
   label: string;
 }
 
+export interface ContactDtoReq {
+  email: string;
+  label: string;
+}
+
+export interface ContactDtoRes {
+  email: string;
+  label: string;
+}
+
 export interface Country {
   id: string;
   name: string;
@@ -72,7 +82,7 @@ export interface CreatePropertyDTO {
   comments: string;
   condition: string;
   constructionDate?: number;
-  contacts: ContactDto[];
+  contacts: ContactDtoReq[];
   coveredSquareFoot?: number;
   environments?: number;
   expenses?: number;
@@ -80,7 +90,7 @@ export interface CreatePropertyDTO {
   levels?: number;
   links: string[];
   materials: string[];
-  openHouse: OpenHouseDateDto[];
+  openHouse: OpenHouseDateDtoReq[];
   parkDescription: string;
   price?: number;
   rooms?: number;
@@ -283,6 +293,18 @@ export interface OpenHouseDateDto {
   initialTime: string;
 }
 
+export interface OpenHouseDateDtoReq {
+  day: string;
+  finalTime: string;
+  initialTime: string;
+}
+
+export interface OpenHouseDateDtoRes {
+  day: string;
+  finalTime: string;
+  initialTime: string;
+}
+
 export interface Pageable {
   offset?: number;
   pageNumber?: number;
@@ -425,7 +447,7 @@ export interface PropertyDTO {
   comments: string;
   condition: PropertyDTOCondition;
   constructionDate: number;
-  contacts: Contact[];
+  contacts: ContactDto[];
   coveredSquareFoot: number;
   environments: number;
   expenses: number;
@@ -433,12 +455,12 @@ export interface PropertyDTO {
   id: string;
   levels: number;
   links: string[];
-  materials: ConstructionMaterial[];
-  openHouse: OpenHouseDate[];
+  materials: MaterialDTO[];
+  openHouse: OpenHouseDateDto[];
   parkDescription: string;
   price: number;
   rooms: number;
-  security: SecurityMeasure[];
+  security: SecurityDTO[];
   squareFoot: number;
   style: Style;
   title: string;
