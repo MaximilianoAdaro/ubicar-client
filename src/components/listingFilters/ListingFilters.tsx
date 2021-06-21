@@ -12,19 +12,34 @@ import {
 } from "@material-ui/core";
 import { MdSearch as SearchIcon } from "react-icons/md";
 import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
+import {
+  GetTypesUsingGET200Item,
+  PropertyFilterDto,
+  StyleDTO,
+} from "../../api/generated/endpoints.schemas";
+import DropdownItem from "react-bootstrap/DropdownItem";
+import { Dropdown } from "react-bootstrap";
 
-export function ListingFilters() {
+type ListingFiltersProp = {
+  filters: PropertyFilterDto;
+  setFilters: (filters: PropertyFilterDto) => void;
+  houseStyles: StyleDTO[] | null;
+  houseTypes: GetTypesUsingGET200Item[] | null;
+};
+
+export function ListingFilters({
+  filters,
+  setFilters,
+  houseStyles,
+  houseTypes,
+}: ListingFiltersProp) {
   const [anchorSale, setAnchorSale] = useState(null);
   const [anchorPrice, setAnchorPrice] = useState(null);
   const [anchorRooms, setAnchorRooms] = useState(null);
   const [anchorBaths, setAnchorBaths] = useState(null);
   const [anchorSqMts, setAnchorSqMts] = useState(null);
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [minSqMts, setMinSqMts] = useState("");
-  const [maxSqMts, setMaxSqMts] = useState("");
-  const [baths, setBaths] = useState("");
-  const [rooms, setRooms] = useState("");
+  const [anchorStyles, setAnchorStyles] = useState(null);
+  const [anchorTypes, setAnchorTypes] = useState(null);
 
   const openSalePopover = (event: any) => {
     setAnchorSale(event.currentTarget);
@@ -40,6 +55,18 @@ export function ListingFilters() {
   };
   const openSqMtsPopover = (event: any) => {
     setAnchorSqMts(event.currentTarget);
+  };
+
+  const openStylePopover = (event: any) => {
+    setAnchorStyles(event.currentTarget);
+  };
+
+  const openTypesPopover = (event: any) => {
+    setAnchorTypes(event.currentTarget);
+  };
+
+  const clearFilters = () => {
+    setFilters({});
   };
 
   const { data: user } = useGetLoggedUsingGET();
@@ -61,14 +88,23 @@ export function ListingFilters() {
           id="buttonForm"
           size="small"
           onClick={openSalePopover}
+          style={filters.condition ? { background: "antiquewhite" } : {}}
         >
-          En Venta
+          {filters.condition
+            ? filters.condition === "SALE"
+              ? "En Venta"
+              : "En Alquiler"
+            : "En Venta"}
         </Button>
         <Button
           className={styles.filtersButton}
           size="small"
           onClick={openPricePopover}
-          style={minPrice || maxPrice ? { background: "antiquewhite" } : {}}
+          style={
+            filters.minPrice || filters.maxPrice
+              ? { background: "antiquewhite" }
+              : {}
+          }
         >
           Precio
         </Button>
@@ -76,25 +112,60 @@ export function ListingFilters() {
           className={styles.filtersButton}
           size="small"
           onClick={openRoomsPopover}
-          style={rooms ? { background: "antiquewhite" } : {}}
+          style={filters.minAmountRoom ? { background: "antiquewhite" } : {}}
         >
-          Habitaciones
+          {filters.minAmountRoom
+            ? filters.minAmountRoom + "+ Habitaciones"
+            : "Habitaciones"}
         </Button>
         <Button
           className={styles.filtersButton}
           size="small"
           onClick={openBathsPopover}
-          style={baths ? { background: "antiquewhite" } : {}}
+          style={
+            filters.minAmountBathroom ? { background: "antiquewhite" } : {}
+          }
         >
-          Baños
+          {filters.minAmountBathroom
+            ? filters.minAmountBathroom + "+ Baños"
+            : "Baños"}
         </Button>
         <Button
           className={styles.filtersButton}
           size="small"
           onClick={openSqMtsPopover}
-          style={minSqMts || maxSqMts ? { background: "antiquewhite" } : {}}
+          style={
+            filters.minAmountSquareMeter || filters.maxAmountSquareMeter
+              ? { background: "antiquewhite" }
+              : {}
+          }
         >
           Metros Cuadrados
+        </Button>
+        <Button
+          className={styles.filtersButton}
+          size="small"
+          onClick={openStylePopover}
+          style={filters.style ? { background: "antiquewhite" } : {}}
+        >
+          Estilo
+        </Button>
+
+        <Button
+          className={styles.filtersButton}
+          size="small"
+          onClick={openTypesPopover}
+          style={filters.typeProperty ? { background: "antiquewhite" } : {}}
+        >
+          Tipo
+        </Button>
+
+        <Button
+          className={styles.filtersButton}
+          size="small"
+          onClick={clearFilters}
+        >
+          Limpiar Filtros
         </Button>
         <div style={{ marginLeft: "auto", marginRight: 0 }}>
           {user && (
@@ -120,9 +191,75 @@ export function ListingFilters() {
         onClose={() => setAnchorSale(null)}
       >
         <List>
-          <ListItem>En Venta</ListItem>
-          <ListItem>En Alquiler</ListItem>
+          <ListItem
+            onClick={() => setFilters({ ...filters, condition: "SALE" })}
+          >
+            En Venta
+          </ListItem>
+          <ListItem
+            onClick={() => setFilters({ ...filters, condition: "RENT" })}
+          >
+            En Alquiler
+          </ListItem>
         </List>
+      </Popover>
+      <Popover
+        open={Boolean(anchorStyles)}
+        anchorEl={anchorStyles}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setAnchorStyles(null)}
+      >
+        <Dropdown>
+          {houseStyles?.map((data) => {
+            return (
+              <DropdownItem
+                onClick={() => setFilters({ ...filters, style: data })}
+                style={
+                  filters.style === data ? { background: "antiquewhite" } : {}
+                }
+              >
+                {data.label}
+              </DropdownItem>
+            );
+          })}
+        </Dropdown>
+      </Popover>
+      <Popover
+        open={Boolean(anchorTypes)}
+        anchorEl={anchorTypes}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setAnchorTypes(null)}
+      >
+        <Dropdown>
+          {houseTypes?.map((data) => {
+            return (
+              <DropdownItem
+                onClick={() => setFilters({ ...filters, typeProperty: data })}
+                style={
+                  filters.typeProperty === data
+                    ? { background: "antiquewhite" }
+                    : {}
+                }
+              >
+                {data}
+              </DropdownItem>
+            );
+          })}
+        </Dropdown>
       </Popover>
       <Popover
         open={Boolean(anchorPrice)}
@@ -143,18 +280,22 @@ export function ListingFilters() {
             placeholder="Min"
             className={styles.priceMinInp}
             variant="outlined"
-            value={minPrice}
+            value={filters.minPrice}
             size="small"
-            onChange={(e) => setMinPrice(e.target.value)}
+            onChange={(e) =>
+              setFilters({ ...filters, minPrice: parseInt(e.target.value) })
+            }
           />
 
           <TextField
             placeholder="Max"
             className={styles.priceMaxInp}
             variant="outlined"
-            value={maxPrice}
+            value={filters.maxPrice}
             size="small"
-            onChange={(e) => setMaxPrice(e.target.value)}
+            onChange={(e) =>
+              setFilters({ ...filters, maxPrice: parseInt(e.target.value) })
+            }
           />
         </Grid>
       </Popover>
@@ -180,26 +321,34 @@ export function ListingFilters() {
           }}
         >
           <Button
-            style={rooms === "1" ? { background: "antiquewhite" } : {}}
-            onClick={() => setRooms("1")}
+            style={
+              filters.minAmountRoom === 1 ? { background: "antiquewhite" } : {}
+            }
+            onClick={() => setFilters({ ...filters, minAmountRoom: 1 })}
           >
             1+
           </Button>
           <Button
-            style={rooms === "2" ? { background: "antiquewhite" } : {}}
-            onClick={() => setRooms("2")}
+            style={
+              filters.minAmountRoom === 2 ? { background: "antiquewhite" } : {}
+            }
+            onClick={() => setFilters({ ...filters, minAmountRoom: 2 })}
           >
             2+
           </Button>
           <Button
-            style={rooms === "3" ? { background: "antiquewhite" } : {}}
-            onClick={() => setRooms("3")}
+            style={
+              filters.minAmountRoom === 3 ? { background: "antiquewhite" } : {}
+            }
+            onClick={() => setFilters({ ...filters, minAmountRoom: 3 })}
           >
             3+
           </Button>
           <Button
-            style={rooms === "4" ? { background: "antiquewhite" } : {}}
-            onClick={() => setRooms("4")}
+            style={
+              filters.minAmountRoom === 4 ? { background: "antiquewhite" } : {}
+            }
+            onClick={() => setFilters({ ...filters, minAmountRoom: 4 })}
           >
             4+
           </Button>
@@ -227,26 +376,42 @@ export function ListingFilters() {
           }}
         >
           <Button
-            style={baths === "1" ? { background: "antiquewhite" } : {}}
-            onClick={() => setBaths("1")}
+            style={
+              filters.minAmountBathroom === 1
+                ? { background: "antiquewhite" }
+                : {}
+            }
+            onClick={() => setFilters({ ...filters, minAmountBathroom: 1 })}
           >
             1+
           </Button>
           <Button
-            style={baths === "2" ? { background: "antiquewhite" } : {}}
-            onClick={() => setBaths("2")}
+            style={
+              filters.minAmountBathroom === 2
+                ? { background: "antiquewhite" }
+                : {}
+            }
+            onClick={() => setFilters({ ...filters, minAmountBathroom: 2 })}
           >
             2+
           </Button>
           <Button
-            style={baths === "3" ? { background: "antiquewhite" } : {}}
-            onClick={() => setBaths("3")}
+            style={
+              filters.minAmountBathroom === 3
+                ? { background: "antiquewhite" }
+                : {}
+            }
+            onClick={() => setFilters({ ...filters, minAmountBathroom: 3 })}
           >
             3+
           </Button>
           <Button
-            style={baths === "4" ? { background: "antiquewhite" } : {}}
-            onClick={() => setBaths("4")}
+            style={
+              filters.minAmountBathroom === 4
+                ? { background: "antiquewhite" }
+                : {}
+            }
+            onClick={() => setFilters({ ...filters, minAmountBathroom: 3 })}
           >
             4+
           </Button>
@@ -271,17 +436,27 @@ export function ListingFilters() {
             placeholder="Min"
             className={styles.priceMinInp}
             variant="outlined"
-            value={minSqMts}
+            value={filters.minAmountSquareMeter}
             size="small"
-            onChange={(e) => setMinSqMts(e.target.value)}
+            onChange={(e) =>
+              setFilters({
+                ...filters,
+                minAmountSquareMeter: parseInt(e.target.value),
+              })
+            }
           />
           <TextField
             placeholder="Max"
             className={styles.priceMaxInp}
             variant="outlined"
-            value={maxSqMts}
+            value={filters.maxAmountSquareMeter}
             size="small"
-            onChange={(e) => setMaxSqMts(e.target.value)}
+            onChange={(e) =>
+              setFilters({
+                ...filters,
+                maxAmountSquareMeter: parseInt(e.target.value),
+              })
+            }
           />
         </Grid>
       </Popover>

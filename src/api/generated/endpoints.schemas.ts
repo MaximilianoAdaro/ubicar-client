@@ -97,27 +97,6 @@ export interface GoogleLoginUserDTO {
   name: string;
 }
 
-export interface LocalTime {
-  hour?: number;
-  minute?: number;
-  nano?: number;
-  second?: number;
-}
-
-export interface LocalTimeReq {
-  hour?: string;
-  minute?: string;
-  nano?: number;
-  second?: string;
-}
-
-export interface LocalTimeRes {
-  hour?: number;
-  minute?: number;
-  nano?: number;
-  second?: number;
-}
-
 export interface LogInUserDTO {
   email: string;
   password: string;
@@ -293,15 +272,15 @@ export interface ModelAndView {
 
 export interface OpenHouseDate {
   day: string;
-  finalTime: LocalTime;
+  finalTime: string;
   id: string;
-  initialTime: LocalTime;
+  initialTime: string;
 }
 
 export interface OpenHouseDateDto {
   day: string;
-  finalTime: LocalTimeReq;
-  initialTime: LocalTimeReq;
+  finalTime: string;
+  initialTime: string;
 }
 
 export interface Pageable {

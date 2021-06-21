@@ -4,7 +4,6 @@ import { Typography } from "@material-ui/core";
 import { TabsBar } from "../../components/common/tabsBar/TabsBar";
 import { ReactNode, Suspense, useState } from "react";
 import pluralize from "pluralize";
-import { useGetPropertyUsingGET } from "../../api/generated/property-controller/property-controller";
 import {
   buildTabs,
   CharacterContainerTab,
@@ -23,6 +22,7 @@ import { Loading } from "../../components/common/loading/Loading";
 import { FcHome, GiPathDistance } from "react-icons/all";
 import { AddFavorite } from "../../components/addFavorite/addFavorite";
 import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
+import { useGetPropertyUsingGET } from "../../api/generated/property-public-controller/property-public-controller";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();

@@ -5,22 +5,8 @@
  * Api Documentation
  * OpenAPI spec version: 1.0
  */
-import {
-  useQuery,
-  useInfiniteQuery,
-  useMutation,
-  UseQueryOptions,
-  UseInfiniteQueryOptions,
-  UseMutationOptions,
-} from "react-query";
-import type {
-  PropertyDTO,
-  CreatePropertyDTOBody,
-  PagePropertyPreviewDTO,
-  GetPropertiesUsingGETParams,
-  PropertyFilterDto,
-  GetPropertiesFilteredUsingPOSTParams,
-} from "../endpoints.schemas";
+import { useMutation, UseMutationOptions } from "react-query";
+import type { PropertyDTO, CreatePropertyDTOBody } from "../endpoints.schemas";
 import { customInstance } from "../../mutator/custom-instance";
 
 type AsyncReturnType<
@@ -40,7 +26,7 @@ export const createPropertyUsingPOST = <TData = PropertyDTO>(
   options?: SecondParameter<typeof customInstance>
 ) => {
   return customInstance<TData>(
-    { url: `/create`, method: "post", data: createPropertyDTOBody },
+    { url: `/property/create`, method: "post", data: createPropertyDTOBody },
     // eslint-disable-next-line
     // @ts-ignore
     options
@@ -71,178 +57,6 @@ export const useCreatePropertyUsingPOST = <
     mutationOptions
   );
 };
-export const getPropertiesUsingGET = <TData = PagePropertyPreviewDTO>(
-  params?: GetPropertiesUsingGETParams,
-  options?: SecondParameter<typeof customInstance>
-) => {
-  return customInstance<TData>(
-    { url: `/preview`, method: "get", params },
-    // eslint-disable-next-line
-    // @ts-ignore
-    options
-  );
-};
-
-export const getGetPropertiesUsingGETQueryKey = (
-  params?: GetPropertiesUsingGETParams
-) => [`/preview`, ...(params ? [params] : [])];
-
-export const useGetPropertiesUsingGETInfinite = <
-  TQueryFnData = AsyncReturnType<
-    typeof getPropertiesUsingGET,
-    PagePropertyPreviewDTO
-  >,
-  TError = unknown,
-  TData = TQueryFnData
->(
-  params?: GetPropertiesUsingGETParams,
-  options?: {
-    query?: UseInfiniteQueryOptions<TQueryFnData, TError, TData>;
-    request?: SecondParameter<typeof customInstance>;
-  }
-) => {
-  const { query: queryOptions, request: requestOptions } = options || {};
-
-  const queryKey =
-    queryOptions?.queryKey ?? getGetPropertiesUsingGETQueryKey(params);
-
-  const query = useInfiniteQuery<TQueryFnData, TError, TData>(
-    queryKey,
-    ({ pageParam }) =>
-      getPropertiesUsingGET<TQueryFnData>(
-        { page: pageParam, ...params },
-        requestOptions
-      ),
-    queryOptions
-  );
-
-  return {
-    queryKey,
-    ...query,
-  };
-};
-
-export const useGetPropertiesUsingGET = <
-  TQueryFnData = AsyncReturnType<
-    typeof getPropertiesUsingGET,
-    PagePropertyPreviewDTO
-  >,
-  TError = unknown,
-  TData = TQueryFnData
->(
-  params?: GetPropertiesUsingGETParams,
-  options?: {
-    query?: UseQueryOptions<TQueryFnData, TError, TData>;
-    request?: SecondParameter<typeof customInstance>;
-  }
-) => {
-  const { query: queryOptions, request: requestOptions } = options || {};
-
-  const queryKey =
-    queryOptions?.queryKey ?? getGetPropertiesUsingGETQueryKey(params);
-
-  const query = useQuery<TQueryFnData, TError, TData>(
-    queryKey,
-    () => getPropertiesUsingGET<TQueryFnData>(params, requestOptions),
-    queryOptions
-  );
-
-  return {
-    queryKey,
-    ...query,
-  };
-};
-
-export const getPropertiesFilteredUsingPOST = <TData = PagePropertyPreviewDTO>(
-  propertyFilterDto: PropertyFilterDto,
-  params?: GetPropertiesFilteredUsingPOSTParams,
-  options?: SecondParameter<typeof customInstance>
-) => {
-  return customInstance<TData>(
-    {
-      url: `/preview/by-filter`,
-      method: "post",
-      data: propertyFilterDto,
-      params,
-    },
-    // eslint-disable-next-line
-    // @ts-ignore
-    options
-  );
-};
-
-export const useGetPropertiesFilteredUsingPOST = <
-  TData = AsyncReturnType<
-    typeof getPropertiesFilteredUsingPOST,
-    PagePropertyPreviewDTO
-  >,
-  TError = unknown,
-  TContext = unknown
->(options?: {
-  mutation?: UseMutationOptions<
-    TData,
-    TError,
-    { data: PropertyFilterDto; params?: GetPropertiesFilteredUsingPOSTParams },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}) => {
-  const { mutation: mutationOptions, request: requestOptions } = options || {};
-
-  return useMutation<
-    TData,
-    TError,
-    { data: PropertyFilterDto; params?: GetPropertiesFilteredUsingPOSTParams },
-    TContext
-  >((props) => {
-    const { data, params } = props || {};
-
-    return getPropertiesFilteredUsingPOST<TData>(data, params, requestOptions);
-  }, mutationOptions);
-};
-export const getPropertyUsingGET = <TData = PropertyDTO>(
-  id: string,
-  options?: SecondParameter<typeof customInstance>
-) => {
-  return customInstance<TData>(
-    { url: `/property/${id}`, method: "get" },
-    // eslint-disable-next-line
-    // @ts-ignore
-    options
-  );
-};
-
-export const getGetPropertyUsingGETQueryKey = (id: string) => [
-  `/property/${id}`,
-];
-
-export const useGetPropertyUsingGET = <
-  TQueryFnData = AsyncReturnType<typeof getPropertyUsingGET, PropertyDTO>,
-  TError = unknown,
-  TData = TQueryFnData
->(
-  id: string,
-  options?: {
-    query?: UseQueryOptions<TQueryFnData, TError, TData>;
-    request?: SecondParameter<typeof customInstance>;
-  }
-) => {
-  const { query: queryOptions, request: requestOptions } = options || {};
-
-  const queryKey = queryOptions?.queryKey ?? getGetPropertyUsingGETQueryKey(id);
-
-  const query = useQuery<TQueryFnData, TError, TData>(
-    queryKey,
-    () => getPropertyUsingGET<TQueryFnData>(id, requestOptions),
-    { enabled: !!id, ...queryOptions }
-  );
-
-  return {
-    queryKey,
-    ...query,
-  };
-};
-
 export const editPropertyUsingPUT = <TData = PropertyDTO>(
   id: string,
   createPropertyDTOBody: CreatePropertyDTOBody,
