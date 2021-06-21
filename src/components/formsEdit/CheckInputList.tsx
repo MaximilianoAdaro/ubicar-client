@@ -34,9 +34,7 @@ export const CheckInputList = ({
           label={label}
           value={id}
           onChange={handleChange}
-          checked={
-            defaultValues?.includes(id) || defaultValues?.includes(label)
-          }
+          checked={defaultValues?.includes(id)}
         />
       ))}
     </>

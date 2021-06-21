@@ -6,16 +6,21 @@ import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import { RadioOption } from "../../forms/ComposedRadioInput";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
+  selectIsInitialized,
   selectOperationType,
   Step,
-} from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+} from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { RadioInput } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
 import { useGetTypesUsingGET } from "../../../api/generated/optionals-controller/optionals-controller";
-import { PropertyDTOCondition } from "../../../api/generated/endpoints.schemas";
+import {
+  PropertyDTO,
+  PropertyDTOCondition,
+} from "../../../api/generated/endpoints.schemas";
+import { Loading } from "../../common/loading/Loading";
 
 const schema = yup.object({
   price: yup.number().positive().required(),
@@ -27,9 +32,13 @@ export type BasicInfoFormData = yup.InferType<typeof schema>;
 
 const BasicInfoTextInput = createCustomTextInput<BasicInfoFormData>();
 
-export const BasicInfo = () => {
+type BasicInfoProps = {
+  property: PropertyDTO;
+};
+
+export const BasicInfo = ({ property }: BasicInfoProps) => {
   const defaults = useAppSelector(
-    ({ createPropertyForm: { basicInfo, propertyType } }) => ({
+    ({ editPropertyForm: { basicInfo, propertyType } }) => ({
       ...basicInfo,
       type: propertyType,
     })
@@ -37,21 +46,26 @@ export const BasicInfo = () => {
 
   const dispatch = useAppDispatch();
 
+  const isInitialized = useAppSelector(selectIsInitialized);
+
   const { data: types } = useGetTypesUsingGET();
 
   useEffect(() => {
     if (defaults.type === undefined && types?.[0] !== undefined) {
-      dispatch(actions.createPropertyForm.setPropertyType(types[0]));
+      dispatch(actions.editPropertyForm.setPropertyType(types[0]));
     }
   }, [defaults.type, types, dispatch]);
 
   const customForm = useCustomForm<BasicInfoFormData>({
     schema,
     onSubmit: (data) => {
-      dispatch(actions.createPropertyForm.setBasicInfo(data));
-      dispatch(actions.createPropertyForm.setStep(Step.Address));
+      dispatch(actions.editPropertyForm.setBasicInfo(data));
+      dispatch(actions.editPropertyForm.setStep(Step.Address));
     },
   });
+
+  if (!isInitialized) return <Loading />;
+
   return (
     <Container>
       <CustomForm {...customForm}>
@@ -118,10 +132,11 @@ export const BasicInfo = () => {
                       onSelected={(label) => {
                         if (types)
                           dispatch(
-                            actions.createPropertyForm.setPropertyType(label)
+                            actions.editPropertyForm.setPropertyType(label)
                           );
+                        console.log(label);
                       }}
-                      defaultValue={defaults.type}
+                      defaultValue={property.type}
                     />
                   )}
                 </div>
@@ -155,7 +170,7 @@ const OperationTypeRadio = () => {
 
   const handleSelect = (value: string) => {
     setCurrentValue(value);
-    dispatch(actions.createPropertyForm.setOperationType(value));
+    dispatch(actions.editPropertyForm.setOperationType(value));
   };
   return (
     <>
