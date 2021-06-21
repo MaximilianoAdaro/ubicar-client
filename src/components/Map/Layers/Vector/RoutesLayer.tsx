@@ -7,14 +7,14 @@ import { MapContext } from "../../map";
 import { IMapContext } from "../../maptypes";
 import { GeoJSON } from "ol/format";
 
-class FerrocarrilLayer extends React.PureComponent<TVectorLayerComponentProps> {
+class RoutesLayer extends React.PureComponent<TVectorLayerComponentProps> {
   layer: VectorLayer;
   source: VectorSource;
   state = { visible: false };
 
   componentDidMount() {
     this.source = new VectorSource({
-      url: "./geojson/Ferrocarril.geojson",
+      url: "./geojson/Rutas_Provinciales.geojson",
       format: new GeoJSON(),
     });
     const style = new Style({
@@ -30,10 +30,14 @@ class FerrocarrilLayer extends React.PureComponent<TVectorLayerComponentProps> {
 
     this.layer = new VectorLayer({
       source: this.source,
+      visible: this.state.visible, //Todo set redux variable.
       style: function () {
         return [style];
       },
     });
+
+    this.layer.set("title", "Rutas");
+    this.props.map.addLayer(this.layer);
   }
 
   componentWillUnmount() {
@@ -47,37 +51,19 @@ class FerrocarrilLayer extends React.PureComponent<TVectorLayerComponentProps> {
         this.source.addFeatures(this.props.features);
       }
     }
-    if (this.state.visible) {
-      this.props.map.addLayer(this.layer);
-    } else {
-      this.props.map.removeLayer(this.layer);
-    }
   }
 
   render() {
-    return (
-      <div className="custom-control custom-checkbox">
-        <input
-          type="checkbox"
-          className="custom-control-input"
-          id="railway"
-          checked={this.state.visible}
-          onChange={() => this.setState({ visible: !this.state.visible })}
-        />
-        <label className="custom-control-label" htmlFor="railway">
-          Ferrocarriles
-        </label>
-      </div>
-    );
+    return null;
   }
 }
 
-export const FerrocarrilLayerWithContext = (props: TVectorLayerProps) => {
+export const RutasLayerWithContext = (props: TVectorLayerProps) => {
   return (
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          return <FerrocarrilLayer {...props} map={mapContext.map} />;
+          return <RoutesLayer {...props} map={mapContext.map} />;
         }
       }}
     </MapContext.Consumer>

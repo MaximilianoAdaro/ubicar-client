@@ -35,10 +35,14 @@ class FireDepartmentLayer extends React.PureComponent<TVectorLayerComponentProps
 
     this.layer = new VectorLayer({
       source: this.source,
+      visible: this.state.visible, //Todo set redux variable.
       style: function () {
         return [style];
       },
     });
+
+    this.layer.set("title", "Estaciones de Bomberos");
+    this.props.map.addLayer(this.layer);
   }
 
   componentWillUnmount() {
@@ -52,28 +56,10 @@ class FireDepartmentLayer extends React.PureComponent<TVectorLayerComponentProps
         this.source.addFeatures(this.props.features);
       }
     }
-    if (this.state.visible) {
-      this.props.map.addLayer(this.layer);
-    } else {
-      this.props.map.removeLayer(this.layer);
-    }
   }
 
   render() {
-    return (
-      <div className="custom-control custom-checkbox">
-        <input
-          type="checkbox"
-          className="custom-control-input"
-          id="bomberos"
-          checked={this.state.visible}
-          onChange={() => this.setState({ visible: !this.state.visible })}
-        />
-        <label className="custom-control-label" htmlFor="bomberos">
-          Bomberos
-        </label>
-      </div>
-    );
+    return null;
   }
 }
 
