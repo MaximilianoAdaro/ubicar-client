@@ -6,6 +6,7 @@ import { MyFavorites } from "../../components/UserProfile/MyFavorites";
 import { MyProperties } from "../../components/UserProfile/MyProperties";
 import { Notifications } from "../../components/UserProfile/Notifications";
 import { useState } from "react";
+import { Footer } from "../../components/footer/Footer";
 
 const useStyles = makeStyles({
   button: {
@@ -65,12 +66,13 @@ export function UserProfile() {
             </List>
           </Grid>
           <Grid xs>
-            {component === "PersonalData" && <PersonalData></PersonalData>}
-            {component === "MyFavorites" && <MyFavorites></MyFavorites>}
-            {component === "MyProperties" && <MyProperties></MyProperties>}
-            {component === "Notifications" && <Notifications></Notifications>}
+            {component === "PersonalData" && <PersonalData />}
+            {component === "MyFavorites" && <MyFavorites />}
+            {component === "MyProperties" && <MyProperties />}
+            {component === "Notifications" && <Notifications />}
           </Grid>
         </Grid>
+        <Footer />
       </div>
     </>
   );
