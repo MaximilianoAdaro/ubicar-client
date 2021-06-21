@@ -15,10 +15,10 @@ import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
 import { useParams } from "react-router-dom";
-import { useGetPropertyUsingGET } from "../../api/generated/property-controller/property-controller";
 import { Loading } from "../../components/common/loading/Loading";
 import { Suspense, useEffect } from "react";
 import { selectIsInitialized } from "../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { useGetPropertyUsingGET } from "../../api/generated/property-public-controller/property-public-controller";
 
 export const EditProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);

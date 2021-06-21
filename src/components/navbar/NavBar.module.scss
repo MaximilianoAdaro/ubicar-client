@@ -7,6 +7,13 @@ $theme-goldish-changed: #cd863d;
   text-align: center;
   border-bottom: 2px solid $theme-goldish-changed;
 }
+.UbicarTitle {
+  color: black;
+  &:hover {
+    color: black;
+    text-decoration: none;
+  }
+}
 
 .imageLogo {
   height: 1.75em;
@@ -39,10 +46,10 @@ $theme-goldish-changed: #cd863d;
 }
 .navBarTags:hover {
   text-decoration: none;
-  color: black;
+  color: grey;
 }
 
-.faker {
+.gridTagsContainer {
   margin-top: 0.9em;
 }
 
@@ -60,4 +67,15 @@ $theme-goldish-changed: #cd863d;
 
 .myAccountDropdownIcon {
   color: black;
+}
+
+.myAccountDropdownAccount {
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+  }
 }

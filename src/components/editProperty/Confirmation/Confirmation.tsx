@@ -1,10 +1,7 @@
 import { Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { CreatePropertyDTO } from "../../../api/generated/endpoints.schemas";
-import {
-  getGetPropertyUsingGETQueryKey,
-  useEditPropertyUsingPUT,
-} from "../../../api/generated/property-controller/property-controller";
+import { useEditPropertyUsingPUT } from "../../../api/generated/property-controller/property-controller";
 import { urls } from "../../../constants";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
@@ -15,6 +12,7 @@ import {
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Confirmation.module.scss";
 import { useQueryClient } from "react-query";
+import { getGetPropertyUsingGETQueryKey } from "../../../api/generated/property-public-controller/property-public-controller";
 
 const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
