@@ -1,4 +1,4 @@
-import { Grid, List, ListItem, Popover } from "@material-ui/core";
+import { Button, Grid, List, ListItem, Popover } from "@material-ui/core";
 import styles from "./NavBar.module.scss";
 import { useState } from "react";
 import logo from "./Logo/Logo-Ubicar.png";
@@ -68,7 +68,9 @@ export function NavBar() {
                   onClose={() => setAnchorAccount(null)}
                 >
                   <List>
-                    <ListItem>Propiedades</ListItem>
+                    <ListItem>
+                      <Link to={"/userProfile"}>Mi cuenta</Link>
+                    </ListItem>
                     <ListItem>Favoritos</ListItem>
                     <ListItem>Perfil</ListItem>
                     <ListItem>Cerrar sesión</ListItem>

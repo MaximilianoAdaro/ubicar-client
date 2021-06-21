@@ -72,7 +72,6 @@ export function UserProfile() {
             {component === "Notifications" && <Notifications />}
           </Grid>
         </Grid>
-        <Footer />
       </div>
     </>
   );

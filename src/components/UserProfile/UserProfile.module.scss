@@ -1,7 +1,54 @@
+.container {
+  border: 2px solid black;
+  margin-bottom: 2em;
+  margin-right: 200px;
+  padding: 0.5em;
+  background: whitesmoke;
+  box-shadow: 4px 4px 5px 0px;
+  margin-top: 2em;
+}
+
+.myPropertyOuterDiv {
+  margin-right: 3em;
+}
+
+.myPropertiesImage {
+  max-height: 97%;
+  max-width: 97%;
+}
+.myPropertyPriceCondition {
+  font-size: 1.2em;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 0.4em;
+}
+
+.myPropertySpecifications {
+  font-size: 1.2em;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 0.4em;
+}
+.myPropertyStreetNumber {
+  font-size: 1.2em;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 0.4em;
+}
+.myPropertyTownCity {
+  font-size: 1.2em;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 0.4em;
+}
+
+.myPropertyTitle {
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.7em;
+}
+
 .personalDataMainDiv {
   margin-left: 2%;
   margin-top: 2%;
 }
+
 .properties {
   margin-left: 2%;
 }
@@ -14,4 +61,12 @@
 }
 .personalDataInformation {
   margin-top: 1em;
+}
+
+.propertyList {
+  max-height: 200px;
+}
+
+.emailButton:hover {
+  display: none;
 }

@@ -36,18 +36,6 @@ export function PersonalData() {
             </ListItem>
             <ListItem>
               <TextField
-                label="Email"
-                variant="outlined"
-                size={"small"}
-                fullWidth
-                disabled={emailChangeButton}
-              />
-              <Button onClick={() => setEmailChangeButton(!emailChangeButton)}>
-                Edit
-              </Button>
-            </ListItem>
-            <ListItem>
-              <TextField
                 label="Contraseña"
                 variant="outlined"
                 size={"small"}
@@ -59,6 +47,16 @@ export function PersonalData() {
               >
                 Edit
               </Button>
+            </ListItem>
+            <ListItem>
+              <TextField
+                label="Email"
+                variant="outlined"
+                size={"small"}
+                fullWidth
+                disabled
+              />
+              <Button className={styles.emailButton}></Button>
             </ListItem>
           </List>
         </Grid>
