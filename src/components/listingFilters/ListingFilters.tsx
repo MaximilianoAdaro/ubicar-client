@@ -193,11 +193,13 @@ export function ListingFilters({
         <List>
           <ListItem
             onClick={() => setFilters({ ...filters, condition: "SALE" })}
+            className={styles.conditionHovering}
           >
             En Venta
           </ListItem>
           <ListItem
             onClick={() => setFilters({ ...filters, condition: "RENT" })}
+            className={styles.conditionHovering}
           >
             En Alquiler
           </ListItem>
