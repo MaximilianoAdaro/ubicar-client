@@ -36,6 +36,9 @@ const StyledButton = withStyles({
     textTransform: "none",
     marginLeft: "1.5rem",
     border: "1px #4a636c solid",
+    "&:hover": {
+      background: "#f2f2f2",
+    },
   },
 })(Button);
 
