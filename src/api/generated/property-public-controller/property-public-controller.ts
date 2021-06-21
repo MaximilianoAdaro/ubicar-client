@@ -39,7 +39,7 @@ export const getPropertiesUsingGET = <TData = PagePropertyPreviewDTO>(
   options?: SecondParameter<typeof customInstance>
 ) => {
   return customInstance<TData>(
-    { url: `/property/public/preview`, method: "get", params },
+    { url: `/public/property/preview`, method: "get", params },
     // eslint-disable-next-line
     // @ts-ignore
     options
@@ -48,7 +48,7 @@ export const getPropertiesUsingGET = <TData = PagePropertyPreviewDTO>(
 
 export const getGetPropertiesUsingGETQueryKey = (
   params?: GetPropertiesUsingGETParams
-) => [`/property/public/preview`, ...(params ? [params] : [])];
+) => [`/public/property/preview`, ...(params ? [params] : [])];
 
 export const useGetPropertiesUsingGETInfinite = <
   TQueryFnData = AsyncReturnType<
@@ -123,7 +123,7 @@ export const getPropertiesFilteredUsingPOST = <TData = PagePropertyPreviewDTO>(
 ) => {
   return customInstance<TData>(
     {
-      url: `/property/public/preview/by-filter`,
+      url: `/public/property/preview/by-filter`,
       method: "post",
       data: propertyFilterDto,
       params,
@@ -168,7 +168,7 @@ export const getPropertyUsingGET = <TData = PropertyDTO>(
   options?: SecondParameter<typeof customInstance>
 ) => {
   return customInstance<TData>(
-    { url: `/property/public/${id}`, method: "get" },
+    { url: `/public/property/${id}`, method: "get" },
     // eslint-disable-next-line
     // @ts-ignore
     options
@@ -176,7 +176,7 @@ export const getPropertyUsingGET = <TData = PropertyDTO>(
 };
 
 export const getGetPropertyUsingGETQueryKey = (id: string) => [
-  `/property/public/${id}`,
+  `/public/property/${id}`,
 ];
 
 export const useGetPropertyUsingGET = <

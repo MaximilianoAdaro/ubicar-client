@@ -13,7 +13,7 @@ export const getErrorHtmlUsingGETMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq5s2lq900004ujpcr729h1x: {},
+      ckq6y4b5z0000vejp6o3h7p7h: {},
     },
     undefined,
   ]),
@@ -103,7 +103,7 @@ export const getErrorHtmlUsingHEADMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq5s2lqa00014ujpdd4ibw52: {},
+      ckq6y4b600001vejp51ddhl6e: {},
     },
     undefined,
   ]),
@@ -193,7 +193,7 @@ export const getErrorHtmlUsingPOSTMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq5s2lqb00024ujpd21n9srp: {},
+      ckq6y4b610002vejpgvu41fvn: {},
     },
     undefined,
   ]),
@@ -283,7 +283,7 @@ export const getErrorHtmlUsingPUTMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq5s2lqd00034ujpbp224jb2: {},
+      ckq6y4b610003vejpai858fxk: {},
     },
     undefined,
   ]),
@@ -373,7 +373,7 @@ export const getErrorHtmlUsingDELETEMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq5s2lqd00044ujpf5ysbhp4: {},
+      ckq6y4b620004vejp8fa6fmn9: {},
     },
     undefined,
   ]),
@@ -463,7 +463,7 @@ export const getErrorHtmlUsingPATCHMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq5s2lqe00054ujpa6b98esl: {},
+      ckq6y4b630005vejpha9c7w76: {},
     },
     undefined,
   ]),
