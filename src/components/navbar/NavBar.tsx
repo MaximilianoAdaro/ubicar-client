@@ -2,7 +2,7 @@ import { Grid, List, ListItem, Popover } from "@material-ui/core";
 import styles from "./NavBar.module.scss";
 import { useState } from "react";
 import logo from "./Logo/Logo-Ubicar.png";
-import { Button, Image } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import { IoMdArrowDropdown } from "react-icons/all";
 import { Link, useHistory } from "react-router-dom";
 import { urls } from "../../constants";
@@ -23,13 +23,12 @@ export function NavBar() {
   const { mutateAsync: logOut } = useLogOut();
 
   const handleLogout = async (e: any) => {
+    setAnchorAccount(null);
     e.preventDefault();
     await logOut();
     await firebase.auth().signOut();
     history.push(urls.home);
   };
-
-  console.log(user);
 
   return (
     <div className={styles.divNavBarContainer}>

@@ -1,5 +1,5 @@
 import styles from "./ListingFilters.module.scss";
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Grid,
@@ -7,7 +7,6 @@ import {
   List,
   ListItem,
   Popover,
-  StylesProvider,
   TextField,
   withStyles,
 } from "@material-ui/core";
@@ -111,7 +110,6 @@ export function ListingFilters({
           </Grid>
         </Grid>
         <StyledButton
-          // className={styles.filtersButton}
           id="buttonForm"
           size="small"
           onClick={openSalePopover}
@@ -124,7 +122,6 @@ export function ListingFilters({
             : "En Venta"}
         </StyledButton>
         <StyledButton
-          // className={styles.filtersButton}
           size="small"
           onClick={openPricePopover}
           style={
@@ -136,7 +133,6 @@ export function ListingFilters({
           Precio
         </StyledButton>
         <StyledButton
-          className={styles.filtersButton}
           size="small"
           onClick={openRoomsPopover}
           style={filters.minAmountRoom ? { background: "antiquewhite" } : {}}
@@ -146,7 +142,6 @@ export function ListingFilters({
             : "Habitaciones"}
         </StyledButton>
         <StyledButton
-          className={styles.filtersButton}
           size="small"
           onClick={openBathsPopover}
           style={
@@ -158,7 +153,6 @@ export function ListingFilters({
             : "Baños"}
         </StyledButton>
         <StyledButton
-          className={styles.filtersButton}
           size="small"
           onClick={openSqMtsPopover}
           style={
@@ -170,7 +164,6 @@ export function ListingFilters({
           Metros Cuadrados
         </StyledButton>
         <StyledButton
-          className={styles.filtersButton}
           size="small"
           onClick={openStylePopover}
           style={filters.style ? { background: "antiquewhite" } : {}}
@@ -179,7 +172,6 @@ export function ListingFilters({
         </StyledButton>
 
         <StyledButton
-          className={styles.filtersButton}
           size="small"
           onClick={openTypesPopover}
           style={filters.typeProperty ? { background: "antiquewhite" } : {}}
@@ -187,11 +179,7 @@ export function ListingFilters({
           Tipo
         </StyledButton>
 
-        <StyledButton
-          className={styles.filtersButton}
-          size="small"
-          onClick={clearFilters}
-        >
+        <StyledButton size="small" onClick={clearFilters}>
           Limpiar Filtros
         </StyledButton>
         <div style={{ marginLeft: "auto", marginRight: 0 }}>
