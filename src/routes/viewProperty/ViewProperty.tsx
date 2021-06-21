@@ -4,7 +4,6 @@ import { Typography } from "@material-ui/core";
 import { TabsBar } from "../../components/common/tabsBar/TabsBar";
 import { ReactNode, Suspense, useState } from "react";
 import pluralize from "pluralize";
-import { useGetPropertyUsingGET } from "../../api/generated/property-controller/property-controller";
 import {
   buildTabs,
   CharacterContainerTab,
@@ -21,8 +20,10 @@ import { HookFormTextField } from "../../components/common/forms/HookFormTextFie
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import { Loading } from "../../components/common/loading/Loading";
 import { FcHome, GiPathDistance } from "react-icons/all";
-import { AddFavorite } from "../../components/addFavorite/addFavorite";
+import { FavoriteButton } from "../../components/addFavorite/FavoriteButton";
 import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
+import { useGetPropertyUsingGET } from "../../api/generated/property-public-controller/property-public-controller";
+import surfaceIcon from "../../assets/surfaceIcon.png";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -56,9 +57,14 @@ const View = ({ id }: ViewProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.mediaContainer}>
-        <h4>Fotos</h4>
-        <div className={styles.comingSoon}>
-          <h3>Proximamente...</h3>
+        <img src="https://timberhavenloghomes.com/wp-content/uploads/2017/07/Barth-Log-Home-Greatroom-1030x687.jpg" />
+        <div>
+          <img src="https://media.architecturaldigest.com/photos/58f7cf1a8bfbf566da78acc2/master/pass/IShvzncvwa127j0000000000.jpg" />
+          <img src="https://shawhomes.com/wp-content/uploads/Exterior-Twilight-2-Shaw-Homes-12801-S.-Date-Street-Jenks-OK-Yorktown.jpg" />
+          <img src="https://www.maids.com/cleaning-hacks/wp-content/uploads/2018/01/Entire2-house-featured.jpg" />
+          <img src="https://media.architecturaldigest.com/photos/59382d7a3176b35c589a6af3/master/pass/adelman-house-frank-lloyd-wright-03.jpg" />
+          <img src="https://cdn.architecturendesign.net/wp-content/uploads/2014/07/House-in-Gorki-08.jpg" />
+          <img src="http://www.passivehousecanada.com/wp-content/uploads/2016/05/Alta-Lake-Passive-House-1024x637.jpg" />
         </div>
       </div>
       <div className={styles.infoContainer}>
@@ -71,40 +77,59 @@ const View = ({ id }: ViewProps) => {
                 {property.address.department ?? ""},{" "}
                 {property.address.town.name}
               </Typography>
-              {currentUser && <AddFavorite id={id} />}
+              {currentUser && <FavoriteButton id={id} isLiked={true} />}
             </div>
+            <span className={styles.subtitle}>{property.type}</span>
             <div className={styles.facts}>
-              <div>
-                <span>{property.type}</span>
-              </div>
-              {makeFact(<span>Estilo {property.style.label}</span>, <FcHome />)}
+              {makeFact("Estilo", property.style.label, true, <FcHome />)}
               {makeFact(
-                <span>{property.squareFoot} m² Total</span>,
+                "Total",
+                `${property.squareFoot}m²`,
+                false,
+                <img src={surfaceIcon} />
+              )}
+              {makeFact(
+                "Cubierta",
+                `${property.coveredSquareFoot}m²`,
+                false,
                 <GiPathDistance />
               )}
-              {makeFact(<span>{property.coveredSquareFoot} m² Cubierta</span>)}
               {makeFact(
-                <span>
-                  {pluralize("Ambiente", property.environments, true)}
-                </span>
+                pluralize("Ambiente", property.environments),
+                `${property.environments}`,
+                false,
+                <GiPathDistance />
               )}
               {makeFact(
-                <span>{pluralize("Baño", property.fullBaths, true)}</span>
+                pluralize("Baño", property.fullBaths),
+                `${property.fullBaths}`,
+                false,
+                <GiPathDistance />
               )}
               {makeFact(
-                <span>{pluralize("Toilets", property.toilets, true)}</span>
+                pluralize("Toilets", property.toilets),
+                `${property.toilets}`,
+                false,
+                <GiPathDistance />
               )}
               {makeFact(
-                <span>{pluralize("Piso", property.levels, true)}</span>
+                pluralize("Piso", property.levels),
+                `${property.levels}`,
+                false,
+                <GiPathDistance />
               )}
               {makeFact(
-                <span>{pluralize("Cuarto", property.rooms, true)}</span>
+                pluralize("Cuarto", property.rooms),
+                `${property.rooms}`,
+                false,
+                <GiPathDistance />
               )}
               {makeFact(
-                <span>
-                  {pluralize("Año", property.constructionDate, true)} de
-                  antiguedad
-                </span>
+                `${pluralize("Año", property.constructionDate)} de
+                antiguedad`,
+                `${property.constructionDate}`,
+                false,
+                <GiPathDistance />
               )}
             </div>
           </div>
@@ -168,10 +193,20 @@ const View = ({ id }: ViewProps) => {
   );
 };
 
-const makeFact = (text: ReactNode, icon?: ReactNode) => (
-  <div>
-    {icon}
-    {text}
+const makeFact = (
+  keyWord: string,
+  value: string,
+  left: boolean,
+  icon?: ReactNode
+) => (
+  <div className={styles.factContainer}>
+    <div className={styles.factIcon}>{icon}</div>
+    <div>
+      {left && <span className={styles.factKeyWord}>{keyWord}</span>}
+      {left && " "}
+      <span className={styles.factValue}>{value}</span>{" "}
+      {!left && <span className={styles.factKeyWord}>{keyWord}</span>}
+    </div>
   </div>
 );
 
