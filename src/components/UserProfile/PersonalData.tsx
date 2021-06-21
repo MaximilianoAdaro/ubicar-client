@@ -38,7 +38,7 @@ export function PersonalData() {
                 value={user.userName}
                 size={"small"}
                 fullWidth
-                disabled={nameChangeButton}
+                disabled
               />
               {/*<Button onClick={() => setNameChangeButton(!nameChangeButton)}>*/}
               {/*  Edit*/}
@@ -51,7 +51,7 @@ export function PersonalData() {
                 size={"small"}
                 value={"********"}
                 fullWidth
-                disabled={passwordChangeButton}
+                disabled
               />
               {/*<Button*/}
               {/*  onClick={() => setPasswordChangeButton(!passwordChangeButton)}*/}
@@ -81,7 +81,7 @@ export function PersonalData() {
                 variant="outlined"
                 size={"small"}
                 fullWidth
-                disabled={cellphoneChangeButton}
+                disabled
               />
               {/*<Button*/}
               {/*  onClick={() => setCellphoneChangeButton(!cellphoneChangeButton)}*/}
@@ -95,7 +95,7 @@ export function PersonalData() {
                 variant="outlined"
                 size={"small"}
                 fullWidth
-                disabled={phoneChangeButton}
+                disabled
               />
               {/*<Button onClick={() => setPhoneChangeButton(!phoneChangeButton)}>*/}
               {/*  Edit*/}
