@@ -20,9 +20,10 @@ import { HookFormTextField } from "../../components/common/forms/HookFormTextFie
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import { Loading } from "../../components/common/loading/Loading";
 import { FcHome, GiPathDistance } from "react-icons/all";
-import { AddFavorite } from "../../components/addFavorite/addFavorite";
+import { FavoriteButton } from "../../components/addFavorite/FavoriteButton";
 import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
 import { useGetPropertyUsingGET } from "../../api/generated/property-public-controller/property-public-controller";
+import surfaceIcon from "../../assets/surfaceIcon.png";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -56,9 +57,14 @@ const View = ({ id }: ViewProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.mediaContainer}>
-        <h4>Fotos</h4>
-        <div className={styles.comingSoon}>
-          <h3>Proximamente...</h3>
+        <img src="https://timberhavenloghomes.com/wp-content/uploads/2017/07/Barth-Log-Home-Greatroom-1030x687.jpg" />
+        <div>
+          <img src="https://media.architecturaldigest.com/photos/58f7cf1a8bfbf566da78acc2/master/pass/IShvzncvwa127j0000000000.jpg" />
+          <img src="https://shawhomes.com/wp-content/uploads/Exterior-Twilight-2-Shaw-Homes-12801-S.-Date-Street-Jenks-OK-Yorktown.jpg" />
+          <img src="https://www.maids.com/cleaning-hacks/wp-content/uploads/2018/01/Entire2-house-featured.jpg" />
+          <img src="https://media.architecturaldigest.com/photos/59382d7a3176b35c589a6af3/master/pass/adelman-house-frank-lloyd-wright-03.jpg" />
+          <img src="https://cdn.architecturendesign.net/wp-content/uploads/2014/07/House-in-Gorki-08.jpg" />
+          <img src="http://www.passivehousecanada.com/wp-content/uploads/2016/05/Alta-Lake-Passive-House-1024x637.jpg" />
         </div>
       </div>
       <div className={styles.infoContainer}>
@@ -71,18 +77,16 @@ const View = ({ id }: ViewProps) => {
                 {property.address.department ?? ""},{" "}
                 {property.address.town.name}
               </Typography>
-              {currentUser && <AddFavorite id={id} />}
+              {currentUser && <FavoriteButton id={id} isLiked={true} />}
             </div>
-            {/* <div className={styles.subtitle}> */}
             <span className={styles.subtitle}>{property.type}</span>
-            {/* </div> */}
             <div className={styles.facts}>
               {makeFact("Estilo", property.style.label, true, <FcHome />)}
               {makeFact(
                 "Total",
                 `${property.squareFoot}m²`,
                 false,
-                <GiPathDistance />
+                <img src={surfaceIcon} />
               )}
               {makeFact(
                 "Cubierta",
@@ -196,7 +200,7 @@ const makeFact = (
   icon?: ReactNode
 ) => (
   <div className={styles.factContainer}>
-    {icon}
+    <div className={styles.factIcon}>{icon}</div>
     <div>
       {left && <span className={styles.factKeyWord}>{keyWord}</span>}
       {left && " "}
