@@ -49,6 +49,7 @@ export const TextAreaInput = <T,>({
   );
 };
 
-export const createCustomTextInputArea = <T,>() => (
-  props: TextInputAreaProps<T>
-) => <TextAreaInput<T> {...props} />;
+export const createCustomTextInputArea =
+  <T,>() =>
+  (props: TextInputAreaProps<T>) =>
+    <TextAreaInput<T> {...props} />;
