@@ -3,14 +3,19 @@ import React, { useState } from "react";
 import { Button, Grid, List, ListItem, TextField } from "@material-ui/core";
 
 export function PersonalData() {
-  const [emailChangeButton, setEmailChangeButton] = useState(true);
+  // const [emailChangeButton, setEmailChangeButton] = useState(true);
   const [passwordChangeButton, setPasswordChangeButton] = useState(true);
   const [nameChangeButton, setNameChangeButton] = useState(true);
   const [cellphoneChangeButton, setCellphoneChangeButton] = useState(true);
   const [phoneChangeButton, setPhoneChangeButton] = useState(true);
 
   return (
-    <div className={styles.personalDataMainDiv}>
+    <div
+      className={styles.personalDataMainDiv}
+      style={{
+        height: "80vh",
+      }}
+    >
       <Grid className={styles.personalDataTitle}>
         <h1>Datos</h1>
         <p>
