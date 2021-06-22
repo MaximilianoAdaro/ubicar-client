@@ -3,7 +3,7 @@ import { Container, Link as MLink, Typography } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import * as yup from "yup";
-import { useSignIn } from "../../api/auth";
+import { useSignIn } from "../../api/custom/auth";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import { DividerWithText } from "../../components/common/DividerWithText";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";

@@ -8,7 +8,7 @@ import {
   useGetAmenitiesUsingGET,
   useGetMaterialsUsingGET,
   useGetSecuritiesUsingGET,
-} from "../../../api/generated/optionals-controller/optionals-controller";
+} from "../../../api";
 
 export const OptionalInfo = () => {
   const defaults = useAppSelector(

@@ -10,8 +10,8 @@ import { Select } from "../../forms/Select";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Characteristics.module.scss";
 import { errorMessages } from "../../../constants";
-import { useGetStylesUsingGET } from "../../../api/generated/optionals-controller/optionals-controller";
 import { useEffect } from "react";
+import { useGetStylesUsingGET } from "../../../api";
 
 const schema = yup.object({
   totalSurface: yup.number().required(errorMessages.required),
