@@ -5,7 +5,7 @@ import { Tooltip } from "@material-ui/core";
 import pluralize from "pluralize";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../constants";
-import { PropertyPreviewDTO } from "../../api/generated/endpoints.schemas";
+import { PropertyPreviewDTO } from "../../api";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
@@ -36,7 +36,7 @@ export function ListingHouse(props: ListingHouseProps) {
         </Tooltip>
         <p className={styles.propertyPriceCondition}>
           ${house.price.toLocaleString()} &nbsp;|&nbsp; En{" "}
-          {house.condition == "SALE" ? "Venta" : "Alquiler"}
+          {house.condition === "SALE" ? "Venta" : "Alquiler"}
         </p>
         <p className={styles.propertySpecifications}>
           {house.squareFoot} m² &nbsp;&nbsp;|&nbsp;&nbsp; {house.rooms} hab.
