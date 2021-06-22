@@ -22,7 +22,11 @@ import { Loading } from "../../components/common/loading/Loading";
 import { FcHome, GiPathDistance } from "react-icons/all";
 import { FavoriteButton } from "../../components/addFavorite/FavoriteButton";
 import surfaceIcon from "../../assets/surfaceIcon.png";
-import { useGetLoggedUsingGET, useGetPropertyUsingGET } from "../../api";
+import {
+  useGetFavoritePropertiesUsingGET,
+  useGetLoggedUsingGET,
+  useGetPropertyUsingGET,
+} from "../../api";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -44,6 +48,8 @@ const View = ({ id }: ViewProps) => {
       suspense: true,
     },
   });
+
+  const { data } = useGetFavoritePropertiesUsingGET();
 
   if (!property) return <h4>Error</h4>;
 
