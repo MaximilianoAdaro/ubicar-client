@@ -6,7 +6,6 @@ export const customInstance = async <T>(
   config: AxiosRequestConfig,
   options?: AxiosRequestConfig
 ): Promise<T> => {
-  console.log(config, options);
   const { data } = await AXIOS_INSTANCE({ ...config, ...(options ?? {}) });
 
   return data;

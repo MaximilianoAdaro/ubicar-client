@@ -1,7 +1,6 @@
 import { Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { CreatePropertyDTO } from "../../../api/generated/endpoints.schemas";
-import { useCreatePropertyUsingPOST } from "../../../api/generated/property-controller/property-controller";
+import { CreatePropertyDTO, useCreatePropertyUsingPOST } from "../../../api";
 import { urls } from "../../../constants";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
@@ -42,8 +41,8 @@ const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   contacts: data.contacts,
   openHouse: data.openHouses.map(({ day, initialTime, finalTime }) => ({
     day: new Date(day).toISOString(),
-    initialTime: initialTime as any,
-    finalTime: finalTime as any,
+    initialTime,
+    finalTime,
   })),
   comments: data.additional.description ?? "",
 });
@@ -59,7 +58,7 @@ export const Confirmation = () => {
       await mutateAsync({
         data: createRequestData(createPropertyState),
       });
-      dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
+      dispatch(actions.createPropertyForm.reset());
       history.push(urls.home);
     } catch (e) {
       throw Error;

@@ -1,8 +1,8 @@
 import styles from "./UserProfile.module.scss";
 import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
-import { useGetPropertiesUsingGET } from "../../api/generated/property-public-controller/property-public-controller";
 import { PropertyList } from "./PropertyList";
+import { useGetPropertiesUsingGET } from "../../api";
 
 export function MyProperties() {
   const data = useGetPropertiesUsingGET({
@@ -15,12 +15,10 @@ export function MyProperties() {
         <p>Aqui puedes ver las propiedades que publicaste.</p>
       </Grid>
       <Grid className={styles.properties}>
-        <div className={styles.propertyList}>
-          {data.status === "success" &&
-            data?.data.content?.map((casa: any) => (
-              <PropertyList key={casa.id} house={casa} />
-            ))}
-        </div>
+        {data.status === "success" &&
+          data?.data.content?.map((casa: any) => (
+            <PropertyList key={casa.id} house={casa} />
+          ))}
       </Grid>
     </div>
   );
