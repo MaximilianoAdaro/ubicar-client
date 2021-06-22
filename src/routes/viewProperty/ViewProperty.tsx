@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import styles from "./ViewProperty.module.scss";
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { TabsBar } from "../../components/common/tabsBar/TabsBar";
 import { ReactNode, Suspense, useState } from "react";
 import pluralize from "pluralize";
@@ -14,7 +14,7 @@ import { Address } from "../../api/generated/endpoints.schemas";
 import { formatPrice } from "../../utils/utils";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { errorMessages } from "../../constants";
+import { errorMessages, urls } from "../../constants";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
@@ -27,6 +27,7 @@ import {
   useGetLoggedUsingGET,
   useGetPropertyUsingGET,
 } from "../../api";
+import { Link } from "react-router-dom";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -81,6 +82,17 @@ const View = ({ id }: ViewProps) => {
                 {property.address.town.name}
               </Typography>
               {currentUser && <FavoriteButton id={id} isLiked={true} />}
+              <Link to={urls.editProperty.byId(id)}>
+                <Button
+                  variant={"outlined"}
+                  style={{
+                    marginLeft: "1em",
+                    textTransform: "none",
+                  }}
+                >
+                  Editar Propiedad
+                </Button>
+              </Link>
             </div>
             <span className={styles.subtitle}>{property.type}</span>
             <div className={styles.facts}>

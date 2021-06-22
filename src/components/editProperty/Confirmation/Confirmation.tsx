@@ -69,6 +69,7 @@ export const Confirmation = ({ id }: Id) => {
   const createPropertyState = useAppSelector(selectCreatePropertyState);
 
   const handleSend = async () => {
+    dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
     try {
       await mutateAsync({
         id,

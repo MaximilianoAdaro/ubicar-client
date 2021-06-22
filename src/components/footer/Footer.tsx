@@ -1,7 +1,8 @@
 import styles from "./Footer.module.scss";
 import React from "react";
 import { Grid } from "@material-ui/core";
-
+import { Link } from "react-router-dom";
+import { urls } from "../../constants";
 export function Footer() {
   return (
     <div>
@@ -24,19 +25,19 @@ export function Footer() {
             <h4>Mapa de sitio</h4>
           </Grid>
           <Grid className={styles.footerOptionsGrid}>
-            <a className={styles.footerOptionsATag}>Publicar propiedad</a>
+            <Link className={styles.footerOptionsATag} to={urls.createProperty}>
+              Publicar propiedad
+            </Link>
           </Grid>
           <Grid className={styles.footerOptionsGrid}>
-            <a className={styles.footerOptionsATag}>Comprar propiedad</a>
+            <Link className={styles.footerOptionsATag} to={urls.listingPage}>
+              Comprar propiedad
+            </Link>
           </Grid>
           <Grid className={styles.footerOptionsGrid}>
-            <a className={styles.footerOptionsATag}>Alquilar propiedad</a>
-          </Grid>
-          <Grid className={styles.footerOptionsGrid}>
-            <a className={styles.footerOptionsATag}>Publicar propiedad</a>
-          </Grid>
-          <Grid className={styles.footerOptionsGrid}>
-            <a className={styles.footerOptionsATag}>Mi cuenta</a>
+            <Link className={styles.footerOptionsATag} to={urls.userProfile}>
+              Mi cuenta
+            </Link>
           </Grid>
         </Grid>
         <Grid xs={2}></Grid>
