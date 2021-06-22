@@ -22,7 +22,11 @@ import { Loading } from "../../components/common/loading/Loading";
 import { FcHome, GiPathDistance } from "react-icons/all";
 import { FavoriteButton } from "../../components/addFavorite/FavoriteButton";
 import surfaceIcon from "../../assets/surfaceIcon.png";
-import { useGetLoggedUsingGET, useGetPropertyUsingGET } from "../../api";
+import {
+  useContactPropertyOwnerUsingPOST,
+  useGetLoggedUsingGET,
+  useGetPropertyUsingGET,
+} from "../../api";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -185,7 +189,7 @@ const View = ({ id }: ViewProps) => {
               </div>
             </div>
           </div>
-          <ContactSection />
+          <ContactSection id={id} />
         </div>
       </div>
     </div>
@@ -302,20 +306,43 @@ const getAddressItem = (name: string, value: string) => {
 const schema = yup.object({
   name: yup.string().required(errorMessages.required),
   email: yup.string().required(errorMessages.required),
-  phoneNumber: yup.string().required(errorMessages.required),
+  cellphone: yup.string().required(errorMessages.required),
   message: yup.string().required(errorMessages.required),
 });
 
 type ContactForm = yup.InferType<typeof schema>;
 
-const ContactSection = () => {
-  const { control, handleSubmit } = useForm<ContactForm>({
+type ContactSectionProps = {
+  id: string;
+};
+
+const defaultContactValues: ContactForm = {
+  name: "",
+  email: "",
+  cellphone: "",
+  message: "",
+};
+
+const ContactSection = ({ id }: ContactSectionProps) => {
+  const { control, handleSubmit, reset } = useForm<ContactForm>({
     resolver: yupResolver(schema),
     mode: "onBlur",
+    defaultValues: defaultContactValues,
+  });
+
+  const { mutate: sendMessage, isLoading } = useContactPropertyOwnerUsingPOST({
+    mutation: {
+      onSuccess() {
+        reset(defaultContactValues);
+      },
+    },
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    sendMessage({
+      id,
+      data,
+    });
   });
 
   return (
@@ -348,7 +375,7 @@ const ContactSection = () => {
           <div className={styles.contactInputContainer}>
             <HookFormTextField
               label={"Telefono"}
-              name={"phoneNumber"}
+              name={"cellphone"}
               control={control}
               additionalStyles={{
                 borderRadius: "10px",
@@ -368,8 +395,16 @@ const ContactSection = () => {
             />
           </div>
           <div>
-            <RoundedButton className={styles.submitButton} type={"submit"}>
-              Enviar
+            <RoundedButton
+              className={styles.submitButton}
+              type={"submit"}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loading additionalStyle={{ fontSize: 20, color: "blue" }} />
+              ) : (
+                "Enviar"
+              )}
             </RoundedButton>
           </div>
         </form>
