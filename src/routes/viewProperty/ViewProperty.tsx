@@ -10,7 +10,7 @@ import {
   CharacteristicsItems,
   translateCondition,
 } from "./viewPropertyUtils";
-import { Address } from "../../api/generated/endpoints.schemas";
+import { Address } from "../../api";
 import { formatPrice } from "../../utils/utils";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -77,8 +77,7 @@ const View = ({ id }: ViewProps) => {
             <div className={styles.titleSection}>
               <Typography variant={"h5"} className={styles.mainTitle}>
                 {property.address.street} {property.address.number}{" "}
-                {property.address.department ?? ""},{" "}
-                {property.address.town.name}
+                {property.address.city}
               </Typography>
               {currentUser && <FavoriteButton id={id} isLiked={true} />}
             </div>
@@ -271,18 +270,16 @@ const AddressSection = ({ address }: AddressSectionProps) => {
       <div className={styles.addressItemsSection}>
         <table>
           <tbody>
-            {getAddressItem("Pais", address.town.city.state.country.name)}
-            {getAddressItem("Provincia", address.town.city.state.name)}
-            {getAddressItem("Ciudad", address.town.city.name)}
-            {getAddressItem("Barrio", address.town.name)}
+            {/*{getAddressItem("Pais", address.town.city.state.country.name)}*/}
+            {/*{getAddressItem("Provincia", address.town.city.state.name)}*/}
+            {/*{getAddressItem("Ciudad", address.town.city.name)}*/}
+            {/*{getAddressItem("Barrio", address.town.name)}*/}
           </tbody>
         </table>
         <table>
           <tbody>
             {getAddressItem("Calle", address.street)}
             {getAddressItem("Numero", address.number.toString())}
-            {getAddressItem("Departamento", address.department)}
-            {getAddressItem("Codigo Postal", address.postalCode)}
           </tbody>
         </table>
       </div>

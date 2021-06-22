@@ -112,19 +112,19 @@ export const AddressRevamp = () => {
 
   const onSubmit = () => {
     console.log(data);
-    dispatch(actions.createPropertyForm.setAddress(data));
-    dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
+    dispatch(actions.editPropertyForm.setAddress(data));
+    dispatch(actions.editPropertyForm.setStep(Step.Characteristics));
   };
 
   const handlePreviousButton = async () => {
     console.log(data);
-    dispatch(actions.createPropertyForm.setAddress(data));
-    dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
+    dispatch(actions.editPropertyForm.setAddress(data));
+    dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
   };
 
   return (
     <Container>
-      <form>
+      <form onSubmit={onSubmit}>
         <Grid container>
           <Grid item xl={6} sm={6}>
             <div className={styles.input}>
@@ -189,8 +189,7 @@ export const AddressRevamp = () => {
       <StepButtons
         type={"submit"}
         onNext={() =>
-          dispatch(actions.createPropertyForm.setStep(Step.Characteristics)) &&
-          onSubmit()
+          dispatch(actions.editPropertyForm.setStep(Step.Characteristics))
         }
         onPrevious={handlePreviousButton}
       />

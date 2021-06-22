@@ -6,20 +6,20 @@
  * OpenAPI spec version: 1.0
  */
 export interface Address {
-  department: string;
+  city: City;
+  coordinates: Coordinates;
   id: string;
   number: number;
-  postalCode: string;
   street: string;
-  town: Town;
 }
 
 export interface AddressDTO {
-  department: string;
+  city: string;
+  coordinates: CoordinatesDTO;
+  country: string;
   number?: number;
-  postalCode: string;
+  state: string;
   street: string;
-  town_id: string;
 }
 
 export interface Amenity {
@@ -69,6 +69,17 @@ export interface ContactDtoReq {
 export interface ContactDtoRes {
   email: string;
   label: string;
+}
+
+export interface Coordinates {
+  id: string;
+  lat: number;
+  long: number;
+}
+
+export interface CoordinatesDTO {
+  lat?: number;
+  long?: number;
 }
 
 export interface Country {
@@ -627,17 +638,6 @@ export interface Style {
 export interface StyleDTO {
   id: string;
   label: string;
-}
-
-export interface Town {
-  city: City;
-  id: string;
-  name: string;
-}
-
-export interface TownDTO {
-  id: string;
-  name: string;
 }
 
 // tslint:disable-next-line:no-empty-interface

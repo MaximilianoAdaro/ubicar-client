@@ -46,7 +46,7 @@ export function ListingHouse(props: ListingHouseProps) {
           <p className={styles.propertyStreetNumber}>{houseStreetNumber}</p>
         </Tooltip>
         <p className={styles.propertyTownCity}>
-          {houseAddress.town.name}, {houseAddress.town.city.name}
+          {houseAddress.city}, {houseAddress}
         </p>
       </Grid>
     </Grid>

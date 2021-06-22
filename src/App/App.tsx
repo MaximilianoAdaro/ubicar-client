@@ -41,11 +41,9 @@ export default function App() {
     <>
       <NavBar />
       <div
-        style={
-          {
-            // height: "70vh",
-          }
-        }
+        style={{
+          minHeight: "71vh",
+        }}
       >
         <Switch>
           <Route exact path={urls.home} component={WorkInProgress} />
