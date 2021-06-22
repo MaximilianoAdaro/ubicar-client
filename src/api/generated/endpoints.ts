@@ -29,6 +29,7 @@ import type {
   SecurityDTO,
   StyleDTO,
   GetTypesUsingGET200Item,
+  UserContactDto,
   PagePropertyPreviewDTO,
   GetPropertiesUsingGETParams,
   PropertyFilterDto,
@@ -843,6 +844,49 @@ export const useGetTypesUsingGET = <
   };
 };
 
+export const contactPropertyOwnerUsingPOST = <TData = unknown>(
+  id: string,
+  userContactDto: UserContactDto,
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    {
+      url: `/public/property/contact/${id}`,
+      method: "post",
+      data: userContactDto,
+    },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const useContactPropertyOwnerUsingPOST = <
+  TData = AsyncReturnType<typeof contactPropertyOwnerUsingPOST, unknown>,
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    TData,
+    TError,
+    { id: string; data: UserContactDto },
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { mutation: mutationOptions, request: requestOptions } = options || {};
+
+  return useMutation<
+    TData,
+    TError,
+    { id: string; data: UserContactDto },
+    TContext
+  >((props) => {
+    const { id, data } = props || {};
+
+    return contactPropertyOwnerUsingPOST<TData>(id, data, requestOptions);
+  }, mutationOptions);
+};
 export const getPropertiesUsingGET = <TData = PagePropertyPreviewDTO>(
   params?: GetPropertiesUsingGETParams,
   options?: SecondParameter<typeof customInstance>

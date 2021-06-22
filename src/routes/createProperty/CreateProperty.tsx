@@ -14,6 +14,7 @@ import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
 import { AddressRevamp } from "../../components/createPropertyForm/Address/AddressRevamp";
+import { Address } from "../../components/createPropertyForm/Address/Address";
 
 export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
@@ -102,7 +103,7 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     case Step.BasicInfo:
       return <BasicInfo />;
     case Step.Address:
-      return <AddressRevamp />;
+      return <Address />;
     case Step.Characteristics:
       return <Characteristics />;
     case Step.OptionalInfo:

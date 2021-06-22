@@ -386,6 +386,7 @@ export interface Property {
   links: string[];
   materials: ConstructionMaterial[];
   openHouse: OpenHouseDate[];
+  owner: User;
   parkDescription: string;
   price: number;
   rooms: number;
@@ -658,6 +659,13 @@ export interface User {
   userName: string;
   userOrigin: UserUserOrigin;
   userRole: UserRole;
+}
+
+export interface UserContactDto {
+  cellphone: string;
+  email: string;
+  message: string;
+  name: string;
 }
 
 export interface UserCreationDTO {
