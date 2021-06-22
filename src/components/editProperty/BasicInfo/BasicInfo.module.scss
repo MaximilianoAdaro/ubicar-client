@@ -1,0 +1,48 @@
+@import "src/styles/common";
+
+.operationTypeContainer {
+  margin-top: 30px;
+}
+
+.itemContainer {
+  display: flex;
+  width: auto;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  margin-bottom: 5em;
+  font-size: 1.2em;
+}
+
+.item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 35px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.highlighter {
+  height: 4px;
+  width: 80%;
+  border: 1px solid $theme-light-blue;
+  border-radius: 30px;
+}
+
+.active {
+  border-color: $theme-darker-blue;
+}
+
+.typeContainer {
+  display: grid;
+  grid-column-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  padding: 10px;
+  justify-items: start;
+
+  & > * {
+    padding: 10px;
+    font-size: 1em;
+    margin-left: 10px;
+  }
+}

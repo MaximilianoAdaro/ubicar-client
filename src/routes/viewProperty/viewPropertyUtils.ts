@@ -1,8 +1,8 @@
 import {
-  Amenity,
-  ConstructionMaterial,
+  AmenityDTO,
+  MaterialDTO,
   PropertyDTOCondition,
-  SecurityMeasure,
+  SecurityDTO,
 } from "../../api/generated/endpoints.schemas";
 
 export type CharacteristicsItems = { value: string; displayName: string }[];
@@ -32,9 +32,9 @@ export const buildSingleTab = ({
 };
 
 export const buildTabs = (
-  services?: Amenity[],
-  materials?: ConstructionMaterial[],
-  securities?: SecurityMeasure[]
+  services?: AmenityDTO[],
+  materials?: MaterialDTO[],
+  securities?: SecurityDTO[]
 ): CharacterContainerTab[] => {
   const itemsBuilt = [
     buildSingleTab({

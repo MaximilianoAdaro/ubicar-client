@@ -30,6 +30,7 @@ const ComposedRadioInput = <T,>({ name, options }: RadioInputProps<T>) => {
   );
 };
 
-export const createCustomRadioInput = <T,>() => (props: RadioInputProps<T>) => (
-  <ComposedRadioInput<T> {...props} />
-);
+export const createCustomRadioInput =
+  <T,>() =>
+  (props: RadioInputProps<T>) =>
+    <ComposedRadioInput<T> {...props} />;
