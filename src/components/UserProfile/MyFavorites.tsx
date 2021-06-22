@@ -2,8 +2,8 @@ import styles from "./UserProfile.module.scss";
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { ListingHouse } from "../listingHouse";
-import { useGetPropertiesUsingGET } from "../../api/generated/property-public-controller/property-public-controller";
 import { PropertyList } from "./PropertyList";
+import { useGetPropertiesUsingGET } from "../../api";
 
 export function MyFavorites() {
   const data = useGetPropertiesUsingGET({

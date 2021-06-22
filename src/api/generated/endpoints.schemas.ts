@@ -704,33 +704,6 @@ export interface PagePropertyPreviewDTO {
 
 export type CreatePropertyDTOBody = CreatePropertyDTO;
 
-export type GetPropertiesUsingGETParams = { page: number };
-
-export type GetPropertiesFilteredUsingPOSTParams = {
-  direction?: GetPropertiesFilteredUsingPOSTDirection;
-  page?: number;
-  property?: GetPropertiesFilteredUsingPOSTProperty;
-  size?: number;
-};
-
-export type GetPropertiesFilteredUsingPOSTDirection = "ASC" | "DESC";
-
-export const GetPropertiesFilteredUsingPOSTDirection = {
-  ASC: "ASC" as GetPropertiesFilteredUsingPOSTDirection,
-  DESC: "DESC" as GetPropertiesFilteredUsingPOSTDirection,
-};
-
-export type GetPropertiesFilteredUsingPOSTProperty =
-  | "CREATION_DATE"
-  | "ID"
-  | "PRICE";
-
-export const GetPropertiesFilteredUsingPOSTProperty = {
-  CREATION_DATE: "CREATION_DATE" as GetPropertiesFilteredUsingPOSTProperty,
-  ID: "ID" as GetPropertiesFilteredUsingPOSTProperty,
-  PRICE: "PRICE" as GetPropertiesFilteredUsingPOSTProperty,
-};
-
 export type GetTypesUsingGET200Item =
   | "Casa"
   | "Cochera"
@@ -766,4 +739,31 @@ export const GetTypesUsingGET200Item = {
   PH: "PH" as GetTypesUsingGET200Item,
   Quinta: "Quinta" as GetTypesUsingGET200Item,
   Terreno: "Terreno" as GetTypesUsingGET200Item,
+};
+
+export type GetPropertiesUsingGETParams = { page: number };
+
+export type GetPropertiesFilteredUsingPOSTParams = {
+  direction?: GetPropertiesFilteredUsingPOSTDirection;
+  page?: number;
+  property?: GetPropertiesFilteredUsingPOSTProperty;
+  size?: number;
+};
+
+export type GetPropertiesFilteredUsingPOSTDirection = "ASC" | "DESC";
+
+export const GetPropertiesFilteredUsingPOSTDirection = {
+  ASC: "ASC" as GetPropertiesFilteredUsingPOSTDirection,
+  DESC: "DESC" as GetPropertiesFilteredUsingPOSTDirection,
+};
+
+export type GetPropertiesFilteredUsingPOSTProperty =
+  | "CREATION_DATE"
+  | "ID"
+  | "PRICE";
+
+export const GetPropertiesFilteredUsingPOSTProperty = {
+  CREATION_DATE: "CREATION_DATE" as GetPropertiesFilteredUsingPOSTProperty,
+  ID: "ID" as GetPropertiesFilteredUsingPOSTProperty,
+  PRICE: "PRICE" as GetPropertiesFilteredUsingPOSTProperty,
 };

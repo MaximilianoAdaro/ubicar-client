@@ -11,14 +11,14 @@ import {
   withStyles,
 } from "@material-ui/core";
 import { MdSearch as SearchIcon } from "react-icons/md";
-import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
-import {
-  GetTypesUsingGET200Item,
-  PropertyFilterDto,
-  StyleDTO,
-} from "../../api/generated/endpoints.schemas";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import { Dropdown } from "react-bootstrap";
+import {
+  PropertyFilterDto,
+  StyleDTO,
+  GetTypesUsingGET200Item,
+  useGetLoggedUsingGET,
+} from "../../api";
 
 type ListingFiltersProp = {
   filters: PropertyFilterDto;

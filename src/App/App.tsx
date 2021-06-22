@@ -1,5 +1,4 @@
 import { Route, Switch } from "react-router-dom";
-import { useGetLoggedUsingGET } from "../api/generated/auth-controller/auth-controller";
 import logo from "../assets/Logo-Ubicar.png";
 import ProtectedRoute, {
   ProtectedRouteProps,
@@ -21,6 +20,7 @@ import styles from "./App.module.scss";
 import { Loading } from "../components/common/loading/Loading";
 import { EditProperty } from "../routes/editProperty";
 import { Footer } from "../components/footer/Footer";
+import { useGetLoggedUsingGET } from "../api";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -41,9 +41,11 @@ export default function App() {
     <>
       <NavBar />
       <div
-        style={{
-          height: "70vh",
-        }}
+        style={
+          {
+            // height: "70vh",
+          }
+        }
       >
         <Switch>
           <Route exact path={urls.home} component={WorkInProgress} />

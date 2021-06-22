@@ -6,9 +6,8 @@ import { Image } from "react-bootstrap";
 import { IoMdArrowDropdown } from "react-icons/all";
 import { Link, useHistory } from "react-router-dom";
 import { urls } from "../../constants";
-import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
-import { useLogOut } from "../../api/auth";
 import firebase from "firebase";
+import { useGetLoggedUsingGET, useLogOut } from "../../api";
 
 export function NavBar() {
   const [anchorAccount, setAnchorAccount] = useState(null);

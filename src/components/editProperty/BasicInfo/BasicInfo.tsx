@@ -15,12 +15,12 @@ import styles from "./BasicInfo.module.scss";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
-import { useGetTypesUsingGET } from "../../../api/generated/optionals-controller/optionals-controller";
 import {
   PropertyDTO,
   PropertyDTOCondition,
 } from "../../../api/generated/endpoints.schemas";
 import { Loading } from "../../common/loading/Loading";
+import { useGetTypesUsingGET } from "../../../api";
 
 const schema = yup.object({
   price: yup.number().positive().required(),

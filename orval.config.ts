@@ -3,7 +3,7 @@ const faker = require("faker");
 const config = () => ({
   "ubicar-api": {
     output: {
-      mode: "tags-split",
+      mode: "split",
       target: "src/api/generated/endpoints.ts",
       client: "react-query",
       mock: true,

@@ -18,7 +18,7 @@ import { useParams } from "react-router-dom";
 import { Loading } from "../../components/common/loading/Loading";
 import { Suspense, useEffect } from "react";
 import { selectIsInitialized } from "../../store/slices/editPropertyForm/editPropertyFormSlice";
-import { useGetPropertyUsingGET } from "../../api/generated/property-public-controller/property-public-controller";
+import { useGetPropertyUsingGET } from "../../api";
 
 export const EditProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
