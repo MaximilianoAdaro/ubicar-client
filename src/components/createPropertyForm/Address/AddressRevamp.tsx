@@ -11,7 +11,6 @@ import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Address.module.scss";
 import { MapComponent } from "../../Map/map";
 import customInstance from "../../../api/mutator/custom-instance";
-import { SecondParameter } from "../../../api/generated/auth-controller/auth-controller";
 import { MapView } from "../../../store/slices/map/mapSlice";
 
 type locationData = {
@@ -38,15 +37,9 @@ const getApiRequest = (
     direccion: string;
     localidad: string | null;
     provincia: string | null;
-  },
-  options?: SecondParameter<typeof customInstance>
+  }
 ) => {
-  return customInstance<any>(
-    { url: url, method: "get", params: params },
-    // eslint-disable-next-line
-    // @ts-ignore
-    options
-  );
+  return customInstance<any>({ url: url, method: "get", params: params });
 };
 
 export const AddressRevamp = () => {
