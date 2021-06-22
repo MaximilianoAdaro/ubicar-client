@@ -4,9 +4,8 @@ import firebase from "firebase";
 import "./firebaseui-styling.global.scss";
 import { useAppSelector } from "../../store";
 import { selectRedirectPath } from "../../store/slices/session";
-import { useGoogleSignIn } from "../../api/auth";
-import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
 import { FirebaseAuth } from "react-firebaseui";
+import { useGetLoggedUsingGET, useGoogleSignIn } from "../../api";
 
 const uiConfig = {
   // Popup signin flow rather than redirect flow.

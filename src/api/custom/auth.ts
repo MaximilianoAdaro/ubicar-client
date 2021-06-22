@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "react-query";
 import {
-  getGetLoggedUsingGETQueryKey,
-  loginWithGoogleUsingPOST,
-  useLoginUsingPOST,
-  useLogOutUsingPOST,
   useRegisterUsingPOST,
-} from "./generated/auth-controller/auth-controller";
-import { GoogleLoginUserDTO } from "./generated/endpoints.schemas";
+  useLoginUsingPOST,
+  getGetLoggedUsingGETQueryKey,
+  GoogleLoginUserDTO,
+  loginWithGoogleUsingPOST,
+  useLogOutUsingPOST,
+} from "..";
 
 export const useSignUp = () => {
   return useRegisterUsingPOST();

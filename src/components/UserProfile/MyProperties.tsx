@@ -1,8 +1,8 @@
 import styles from "./UserProfile.module.scss";
 import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
-import { useGetPropertiesUsingGET } from "../../api/generated/property-public-controller/property-public-controller";
 import { PropertyList } from "./PropertyList";
+import { useGetPropertiesUsingGET } from "../../api";
 
 export function MyProperties() {
   const data = useGetPropertiesUsingGET({

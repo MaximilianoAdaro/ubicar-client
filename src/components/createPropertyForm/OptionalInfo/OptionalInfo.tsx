@@ -6,9 +6,9 @@ import styles from "./OptionalInfo.module.scss";
 import { StepButtons } from "../StepButtons/StepButtons";
 import {
   useGetAmenitiesUsingGET,
-  useGetMaterialsUsingGET,
   useGetSecuritiesUsingGET,
-} from "../../../api/generated/optionals-controller/optionals-controller";
+  useGetMaterialsUsingGET,
+} from "../../../api";
 
 export const OptionalInfo = () => {
   const defaults = useAppSelector(

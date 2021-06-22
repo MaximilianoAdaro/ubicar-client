@@ -6,15 +6,14 @@ import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { Select } from "../../forms/Select";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
-
 import styles from "./Address.module.scss";
 import {
-  useGetCitiesUsingGET,
   useGetStatesUsingGET,
+  useGetCitiesUsingGET,
   useGetTownsUsingGET,
-} from "../../../api/generated/location-controller/location-controller";
+} from "../../../api";
 
 const requiredMessage = "Este campo es requerido";
 
