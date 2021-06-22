@@ -43,8 +43,11 @@ const getApiRequest = (
 };
 
 export const AddressRevamp = () => {
-  const [map, setMap] = useState(false);
-  const [view, setView] = useState<MapView>();
+  const [zoom, setZoom] = useState(10);
+  const [view, setView] = useState<MapView>({
+    longitude: -6506056.858887733,
+    latitude: -4114291.375798843,
+  });
   const mounted = useRef(false);
   const [data, setData] = useState<locationData>({
     number: null,
@@ -55,7 +58,6 @@ export const AddressRevamp = () => {
     longitude: null,
   });
   const [load, setLoad] = useState(false);
-  const zoom = 17;
   const dispatch = useAppDispatch();
 
   const requiredMessage = "Este campo es requerido";
@@ -100,11 +102,9 @@ export const AddressRevamp = () => {
           );
 
           setView({ longitude: coord[0], latitude: coord[1] });
-          setMap(true);
+          setZoom(17);
         })
-        .catch(() => {
-          setMap(false);
-        });
+        .catch(() => {});
     } else {
       mounted.current = true;
     }
@@ -188,14 +188,12 @@ export const AddressRevamp = () => {
             </div>
           </Grid>
           <Grid item xs={6} sm={6}>
-            {map && view ? (
-              <MapComponent
-                additionalStyle={{ height: "500px", width: "100%" }}
-                renderLayers={false}
-                zoom={zoom}
-                view={view}
-              />
-            ) : null}
+            <MapComponent
+              additionalStyle={{ height: "500px", width: "100%" }}
+              renderLayers={false}
+              zoom={zoom}
+              view={view}
+            />
           </Grid>
         </Grid>
       </CustomForm>
