@@ -135,7 +135,6 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
       if (this.state.markerLayer !== null) {
         this.map.removeLayer(this.state.markerLayer);
       }
-      this.setState({ view: this.props.view });
       this.map.setView(
         new View({
           projection: "EPSG:3857",
@@ -143,6 +142,7 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
           zoom: this.props.zoom,
         })
       );
+      this.setState({ view: this.props.view });
       const markerLayer = new VectorLayer({
         source: new VectorSource({
           features: [
@@ -168,6 +168,16 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
       //   Markerlayer.getSource().addFeatures([featureToAdd]);
       // };
       // this.map.on("singleclick", onMapClick);
+    }
+    if (prevProps.zoom !== this.props.zoom) {
+      this.setState({ zoom: this.props.zoom });
+      this.map.setView(
+        new View({
+          projection: "EPSG:3857",
+          center: [this.props.view.longitude, this.props.view.latitude],
+          zoom: this.props.zoom,
+        })
+      );
     }
   }
 
