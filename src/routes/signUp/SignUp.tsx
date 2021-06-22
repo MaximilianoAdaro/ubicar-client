@@ -8,12 +8,10 @@ import { HookFormDatePicker } from "../../components/common/forms/HookFormDatePi
 import { HookFormSelect } from "../../components/common/forms/HookFormSelect";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
-import { useSignUp } from "../../api/auth";
 import { Link, useHistory } from "react-router-dom";
 import { urls } from "../../constants";
 import { GoogleLogin } from "../logIn/GoogleLogin";
-import { useGetRolesUsingGET } from "../../api/generated/auth-controller/auth-controller";
-import { RoleDTO } from "../../api/generated/endpoints.schemas";
+import { RoleDTO, useGetRolesUsingGET, useSignUp } from "../../api";
 
 const schema = yup.object({
   firstName: yup.string().required(),

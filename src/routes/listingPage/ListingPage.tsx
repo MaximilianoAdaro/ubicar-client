@@ -6,16 +6,13 @@ import { useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import styles from "./ListingPage.module.scss";
 import { useEffect, useState } from "react";
-import { useGetPropertiesFilteredUsingPOST } from "../../api/generated/property-public-controller/property-public-controller";
 import {
-  PagePropertyPreviewDTO,
   PropertyFilterDto,
-} from "../../api/generated/endpoints.schemas";
-import {
+  PagePropertyPreviewDTO,
   useGetStylesUsingGET,
   useGetTypesUsingGET,
-} from "../../api/generated/optionals-controller/optionals-controller";
-import { Footer } from "../../components/footer/Footer";
+  useGetPropertiesFilteredUsingPOST,
+} from "../../api";
 
 export function ListingPage() {
   const [filters, setFilters] = useState<PropertyFilterDto>({});

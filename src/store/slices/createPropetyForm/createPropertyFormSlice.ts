@@ -99,6 +99,9 @@ export const createPropertyFormSlice = createSlice({
 
   initialState,
   reducers: {
+    reset: () => {
+      return initialState;
+    },
     setStep: (state, action: PayloadAction<Step>) => {
       state.currentStep = action.payload;
     },

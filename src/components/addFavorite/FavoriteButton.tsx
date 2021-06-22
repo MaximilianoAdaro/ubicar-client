@@ -1,8 +1,5 @@
 import { MdStar, MdStarBorder } from "react-icons/all";
-import {
-  useDislikePropertyUsingPUT,
-  useLikePropertyUsingPUT,
-} from "../../api/generated/property-user-controller/property-user-controller";
+import { useLikePropertyUsingPUT, useDislikePropertyUsingPUT } from "../../api";
 import styles from "./FavoriteButton.module.scss";
 
 type FavoriteButtonProps = {

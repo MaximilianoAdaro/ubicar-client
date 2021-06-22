@@ -1,7 +1,7 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
 import { Grid, List, ListItem, TextField } from "@material-ui/core";
-import { useGetLoggedUsingGET } from "../../api/generated/auth-controller/auth-controller";
+import { useGetLoggedUsingGET } from "../../api";
 
 export function PersonalData() {
   // const [emailChangeButton, setEmailChangeButton] = useState(true);
