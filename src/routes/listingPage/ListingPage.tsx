@@ -15,7 +15,6 @@ import {
   useGetStylesUsingGET,
   useGetTypesUsingGET,
 } from "../../api/generated/optionals-controller/optionals-controller";
-import { Footer } from "../../components/footer/Footer";
 
 export function ListingPage() {
   const [filters, setFilters] = useState<PropertyFilterDto>({});
@@ -64,7 +63,7 @@ export function ListingPage() {
       />
       <Grid container className={styles.mapAndProperties}>
         <Grid item xl={9} sm={8} className={styles.map}>
-          <MapComponent zoom={zoom} view={view} />
+          <MapComponent zoom={zoom} view={view} renderLayers={true} />
         </Grid>
         <Grid item xl={3} sm={4} className={styles.propertyList}>
           {!data && <h1>There was an error retrieving the properties</h1>}
