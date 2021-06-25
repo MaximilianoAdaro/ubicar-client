@@ -49,7 +49,7 @@ export function PropertyList(props: ListingHouseProps) {
             </p>
             <p className={styles.myPropertyStreetNumber}>{houseStreetNumber}</p>
             <p className={styles.myPropertyTownCity}>
-              {houseAddress}, {houseAddress}
+              {houseAddress.city}, {houseAddress.street}
             </p>
           </Grid>
         </Grid>

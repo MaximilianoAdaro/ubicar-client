@@ -6,10 +6,11 @@
  * OpenAPI spec version: 1.0
  */
 export interface Address {
-  city: City;
-  coordinates: Coordinates;
-  id: string;
-  number: number;
+  city: string;
+  coordinates: CoordinatesDTO;
+  country: string;
+  number?: number;
+  state: string;
   street: string;
 }
 

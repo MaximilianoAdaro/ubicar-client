@@ -111,13 +111,11 @@ export const AddressRevamp = () => {
   }, [load]);
 
   const onSubmit = () => {
-    console.log(data);
     dispatch(actions.createPropertyForm.setAddress(data));
     dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
   };
 
   const handlePreviousButton = async () => {
-    console.log(data);
     dispatch(actions.createPropertyForm.setAddress(data));
     dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
   };
