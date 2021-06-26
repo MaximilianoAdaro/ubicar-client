@@ -6,11 +6,10 @@
  * OpenAPI spec version: 1.0
  */
 export interface Address {
-  city: string;
-  coordinates: CoordinatesDTO;
-  country: string;
-  number?: number;
-  state: string;
+  city: City;
+  coordinates: Coordinates;
+  id: string;
+  number: number;
   street: string;
 }
 
@@ -18,7 +17,25 @@ export interface AddressDTO {
   city: string;
   coordinates: CoordinatesDTO;
   country: string;
+  number: number;
+  state: string;
+  street: string;
+}
+
+export interface AddressDTOReq {
+  city: string;
+  coordinates: CoordinatesDTOReq;
+  country: string;
   number?: number;
+  state: string;
+  street: string;
+}
+
+export interface AddressDTORes {
+  city: string;
+  coordinates: CoordinatesDTORes;
+  country: string;
+  number: number;
   state: string;
   street: string;
 }
@@ -79,8 +96,18 @@ export interface Coordinates {
 }
 
 export interface CoordinatesDTO {
+  lat: number;
+  long: number;
+}
+
+export interface CoordinatesDTOReq {
   lat?: number;
   long?: number;
+}
+
+export interface CoordinatesDTORes {
+  lat: number;
+  long: number;
 }
 
 export interface Country {
@@ -89,7 +116,7 @@ export interface Country {
 }
 
 export interface CreatePropertyDTO {
-  address: AddressDTO;
+  address: AddressDTOReq;
   amenities: string[];
   comments: string;
   condition: string;
@@ -455,7 +482,7 @@ export const PropertyDTOType = {
 };
 
 export interface PropertyDTO {
-  address: Address;
+  address: AddressDTO;
   amenities: Amenity[];
   comments: string;
   condition: PropertyDTOCondition;
@@ -585,7 +612,7 @@ export const PropertyPreviewDTOType = {
 };
 
 export interface PropertyPreviewDTO {
-  address: Address;
+  address: AddressDTO;
   condition: PropertyPreviewDTOCondition;
   coveredSquareFoot: number;
   fullBaths: number;

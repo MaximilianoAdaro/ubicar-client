@@ -10,7 +10,7 @@ import {
   CharacteristicsItems,
   translateCondition,
 } from "./viewPropertyUtils";
-import { Address } from "../../api";
+import { AddressDTO } from "../../api";
 import { formatPrice } from "../../utils/utils";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -260,7 +260,7 @@ const CharacteristicsTab = ({ items }: CharacteristicsTabProps) => {
 };
 
 interface AddressSectionProps {
-  address: Address;
+  address: AddressDTO;
 }
 
 const AddressSection = ({ address }: AddressSectionProps) => {

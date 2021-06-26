@@ -36,25 +36,14 @@ export const getRegisterUsingPOSTMock = () => ({
 
 export const getDislikePropertyUsingPUTMock = () => ({
   address: {
-    city: {
-      id: (() => faker.datatype.uuid())(),
-      name: faker.random.word(),
-      state: {
-        country: {
-          id: (() => faker.datatype.uuid())(),
-          name: faker.random.word(),
-        },
-        id: (() => faker.datatype.uuid())(),
-        name: faker.random.word(),
-      },
-    },
+    city: faker.random.word(),
     coordinates: {
-      id: (() => faker.datatype.uuid())(),
       lat: faker.datatype.number(),
       long: faker.datatype.number(),
     },
-    id: (() => faker.datatype.uuid())(),
+    country: faker.random.word(),
     number: faker.datatype.number(),
+    state: faker.random.word(),
     street: faker.random.word(),
   },
   amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -567,7 +556,7 @@ export const getErrorHtmlUsingGETMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq82j2zs0000d9p4fjnr7aam: {},
+      ckqedlt7j0000kymubp73g2eh: {},
     },
     undefined,
   ]),
@@ -657,7 +646,7 @@ export const getErrorHtmlUsingHEADMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq82j2zt0001d9p46eb49bpo: {},
+      ckqedlt7m0001kymu6wqf5tqt: {},
     },
     undefined,
   ]),
@@ -747,7 +736,7 @@ export const getErrorHtmlUsingPOSTMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq82j2zt0002d9p49ke48mso: {},
+      ckqedlt7o0002kymua6yh73k0: {},
     },
     undefined,
   ]),
@@ -837,7 +826,7 @@ export const getErrorHtmlUsingPUTMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq82j2zu0003d9p41f8u04az: {},
+      ckqedlt7p0003kymu2ocbepn5: {},
     },
     undefined,
   ]),
@@ -927,7 +916,7 @@ export const getErrorHtmlUsingDELETEMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq82j2zv0004d9p43v12dyzv: {},
+      ckqedlt7p0004kymu9b2f6hs5: {},
     },
     undefined,
   ]),
@@ -1017,7 +1006,7 @@ export const getErrorHtmlUsingPATCHMock = () => ({
   model: faker.helpers.randomize([{}, undefined]),
   modelMap: faker.helpers.randomize([
     {
-      ckq82j2zv0005d9p4aok73qkn: {},
+      ckqedlt7q0005kymu639n0sj1: {},
     },
     undefined,
   ]),
@@ -1104,25 +1093,14 @@ export const getErrorHtmlUsingPATCHMock = () => ({
 
 export const getLikePropertyUsingPUTMock = () => ({
   address: {
-    city: {
-      id: (() => faker.datatype.uuid())(),
-      name: faker.random.word(),
-      state: {
-        country: {
-          id: (() => faker.datatype.uuid())(),
-          name: faker.random.word(),
-        },
-        id: (() => faker.datatype.uuid())(),
-        name: faker.random.word(),
-      },
-    },
+    city: faker.random.word(),
     coordinates: {
-      id: (() => faker.datatype.uuid())(),
       lat: faker.datatype.number(),
       long: faker.datatype.number(),
     },
-    id: (() => faker.datatype.uuid())(),
+    country: faker.random.word(),
     number: faker.datatype.number(),
+    state: faker.random.word(),
     street: faker.random.word(),
   },
   amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -1632,25 +1610,14 @@ export const getLikePropertyUsingPUTMock = () => ({
 
 export const getCreatePropertyUsingPOSTMock = () => ({
   address: {
-    city: {
-      id: (() => faker.datatype.uuid())(),
-      name: faker.random.word(),
-      state: {
-        country: {
-          id: (() => faker.datatype.uuid())(),
-          name: faker.random.word(),
-        },
-        id: (() => faker.datatype.uuid())(),
-        name: faker.random.word(),
-      },
-    },
+    city: faker.random.word(),
     coordinates: {
-      id: (() => faker.datatype.uuid())(),
       lat: faker.datatype.number(),
       long: faker.datatype.number(),
     },
-    id: (() => faker.datatype.uuid())(),
+    country: faker.random.word(),
     number: faker.datatype.number(),
+    state: faker.random.word(),
     street: faker.random.word(),
   },
   amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -2160,25 +2127,14 @@ export const getCreatePropertyUsingPOSTMock = () => ({
 
 export const getEditPropertyUsingPUTMock = () => ({
   address: {
-    city: {
-      id: (() => faker.datatype.uuid())(),
-      name: faker.random.word(),
-      state: {
-        country: {
-          id: (() => faker.datatype.uuid())(),
-          name: faker.random.word(),
-        },
-        id: (() => faker.datatype.uuid())(),
-        name: faker.random.word(),
-      },
-    },
+    city: faker.random.word(),
     coordinates: {
-      id: (() => faker.datatype.uuid())(),
       lat: faker.datatype.number(),
       long: faker.datatype.number(),
     },
-    id: (() => faker.datatype.uuid())(),
+    country: faker.random.word(),
     number: faker.datatype.number(),
+    state: faker.random.word(),
     street: faker.random.word(),
   },
   amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -2690,25 +2646,14 @@ export const getGetPropertiesUsingGETMock = () => ({
   content: faker.helpers.randomize([
     [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
       address: {
-        city: {
-          id: (() => faker.datatype.uuid())(),
-          name: faker.random.word(),
-          state: {
-            country: {
-              id: (() => faker.datatype.uuid())(),
-              name: faker.random.word(),
-            },
-            id: (() => faker.datatype.uuid())(),
-            name: faker.random.word(),
-          },
-        },
+        city: faker.random.word(),
         coordinates: {
-          id: (() => faker.datatype.uuid())(),
           lat: faker.datatype.number(),
           long: faker.datatype.number(),
         },
-        id: (() => faker.datatype.uuid())(),
+        country: faker.random.word(),
         number: faker.datatype.number(),
+        state: faker.random.word(),
         street: faker.random.word(),
       },
       condition: faker.helpers.randomize(["RENT", "SALE"]),
@@ -2790,25 +2735,14 @@ export const getGetPropertiesFilteredUsingPOSTMock = () => ({
   content: faker.helpers.randomize([
     [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
       address: {
-        city: {
-          id: (() => faker.datatype.uuid())(),
-          name: faker.random.word(),
-          state: {
-            country: {
-              id: (() => faker.datatype.uuid())(),
-              name: faker.random.word(),
-            },
-            id: (() => faker.datatype.uuid())(),
-            name: faker.random.word(),
-          },
-        },
+        city: faker.random.word(),
         coordinates: {
-          id: (() => faker.datatype.uuid())(),
           lat: faker.datatype.number(),
           long: faker.datatype.number(),
         },
-        id: (() => faker.datatype.uuid())(),
+        country: faker.random.word(),
         number: faker.datatype.number(),
+        state: faker.random.word(),
         street: faker.random.word(),
       },
       condition: faker.helpers.randomize(["RENT", "SALE"]),
@@ -2888,25 +2822,14 @@ export const getGetPropertiesFilteredUsingPOSTMock = () => ({
 
 export const getGetPropertyUsingGETMock = () => ({
   address: {
-    city: {
-      id: (() => faker.datatype.uuid())(),
-      name: faker.random.word(),
-      state: {
-        country: {
-          id: (() => faker.datatype.uuid())(),
-          name: faker.random.word(),
-        },
-        id: (() => faker.datatype.uuid())(),
-        name: faker.random.word(),
-      },
-    },
+    city: faker.random.word(),
     coordinates: {
-      id: (() => faker.datatype.uuid())(),
       lat: faker.datatype.number(),
       long: faker.datatype.number(),
     },
-    id: (() => faker.datatype.uuid())(),
+    country: faker.random.word(),
     number: faker.datatype.number(),
+    state: faker.random.word(),
     street: faker.random.word(),
   },
   amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
