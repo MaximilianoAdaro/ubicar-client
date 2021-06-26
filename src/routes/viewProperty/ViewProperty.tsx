@@ -285,7 +285,7 @@ const getAddressItem = (name: string, value: string) => {
   return (
     <tr>
       <td>
-        <h5>{name}: </h5>
+        <h5 style={{ textTransform: "capitalize" }}>{name}: </h5>
       </td>
       <td>
         <span>{value}</span>

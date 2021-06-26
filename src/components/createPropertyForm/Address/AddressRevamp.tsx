@@ -58,6 +58,7 @@ export const AddressRevamp = () => {
     coordinates: { lat: 0, long: 0 },
   });
   const [load, setLoad] = useState(false);
+  const [error, setError] = useState(true);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -84,6 +85,10 @@ export const AddressRevamp = () => {
               lat: response.direcciones[0].ubicacion.lat,
               long: response.direcciones[0].ubicacion.lon,
             },
+            country: "Argentina",
+            state: response.direcciones[0].provincia.nombre,
+            city: response.direcciones[0].departamento.nombre,
+            street: response.direcciones[0].calle.nombre,
           });
 
           //Nose devuelve en 4326 lo tenemos que convertir 3857
@@ -103,6 +108,7 @@ export const AddressRevamp = () => {
 
           setView({ longitude: coord[0], latitude: coord[1] });
           setZoom(17);
+          setError(false);
         })
         .catch(() => {});
     } else {
@@ -118,6 +124,14 @@ export const AddressRevamp = () => {
   const handlePreviousButton = async () => {
     dispatch(actions.createPropertyForm.setAddress(data));
     dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
+  };
+
+  const handleSubmit = () => {
+    if (data.state !== "" || data.street !== "" || data.number !== 0) {
+      dispatch(actions.createPropertyForm.setStep(Step.Characteristics)) &&
+        onSubmit();
+    } else {
+    }
   };
 
   return (
@@ -186,10 +200,8 @@ export const AddressRevamp = () => {
       </form>
       <StepButtons
         type={"submit"}
-        onNext={() =>
-          dispatch(actions.createPropertyForm.setStep(Step.Characteristics)) &&
-          onSubmit()
-        }
+        onNext={() => handleSubmit()}
+        disabledNext={error}
         onPrevious={handlePreviousButton}
       />
     </Container>
