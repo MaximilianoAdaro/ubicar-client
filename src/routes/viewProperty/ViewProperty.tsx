@@ -270,14 +270,8 @@ const AddressSection = ({ address }: AddressSectionProps) => {
       <div className={styles.addressItemsSection}>
         <table>
           <tbody>
-            {/*{getAddressItem("Pais", address.town.city.state.country.name)}*/}
-            {/*{getAddressItem("Provincia", address.town.city.state.name)}*/}
-            {/*{getAddressItem("Ciudad", address.town.city.name)}*/}
-            {/*{getAddressItem("Barrio", address.town.name)}*/}
-          </tbody>
-        </table>
-        <table>
-          <tbody>
+            {getAddressItem("Provincia", address.state)}
+            {getAddressItem("Municipio", address.city)}
             {getAddressItem("Calle", address.street)}
             {getAddressItem("Numero", address.number.toString())}
           </tbody>
