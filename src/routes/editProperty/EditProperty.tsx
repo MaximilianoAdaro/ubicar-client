@@ -123,11 +123,22 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
   // console.log("EditProperty", property);
   if (!property) return <h4>Error</h4>;
 
+  const address = property.address;
+
   switch (currentStep) {
     case Step.BasicInfo:
       return <BasicInfo property={property} />;
     case Step.Address:
-      return <AddressRevamp />;
+      return (
+        <AddressRevamp
+          country={address.country}
+          coordinates={address.coordinates}
+          number={address.number}
+          city={address.city}
+          state={address.state}
+          street={address.street}
+        />
+      );
     case Step.Characteristics:
       return <Characteristics />;
     case Step.OptionalInfo:

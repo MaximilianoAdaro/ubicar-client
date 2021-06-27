@@ -3,9 +3,8 @@ import { RootState } from "../../store";
 import { BasicInfoFormData } from "../../../components/editProperty/BasicInfo/BasicInfo";
 import { CharacteristicsFormData } from "../../../components/editProperty/Characteristics/Characteristics";
 import { AdditionalFormData } from "../../../components/editProperty/Additional/Additional";
-import { AddressFormData } from "../../../components/editProperty/Address/AddressRevamp";
 import { isEqualObjects } from "../../../utils/utils";
-import { PropertyDTO } from "../../../api";
+import { AddressDTO, PropertyDTO } from "../../../api";
 
 // Define a type for the slice state
 export interface EditPropertyState {
@@ -19,7 +18,7 @@ export interface EditPropertyState {
   contacts: Contact[];
   openHouses: OpenHouse[];
   propertyType: string | undefined;
-  address: AddressFormData;
+  address: AddressDTO;
   basicInfo: BasicInfoFormData;
   characteristics: CharacteristicsFormData;
   additional: AdditionalFormData;
@@ -164,7 +163,7 @@ export const editPropertyFormSlice = createSlice({
     setPropertyType: (state, action: PayloadAction<string>) => {
       state.propertyType = action.payload;
     },
-    setAddress: (state, action: PayloadAction<AddressFormData>) => {
+    setAddress: (state, action: PayloadAction<AddressDTO>) => {
       state.address = action.payload;
     },
 
