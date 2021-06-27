@@ -5,6 +5,10 @@ import {
   SecurityDTO,
 } from "../../api/generated/endpoints.schemas";
 
+export const getYearDistance = (year: number) => {
+  return new Date().getFullYear() - year;
+};
+
 export type CharacteristicsItems = { value: string; displayName: string }[];
 
 export interface CharacterContainerTab {

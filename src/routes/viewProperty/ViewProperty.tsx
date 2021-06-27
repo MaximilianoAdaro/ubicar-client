@@ -8,6 +8,7 @@ import {
   buildTabs,
   CharacterContainerTab,
   CharacteristicsItems,
+  getYearDistance,
   translateCondition,
 } from "./viewPropertyUtils";
 import { AddressDTO } from "../../api";
@@ -19,14 +20,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import { Loading } from "../../components/common/loading/Loading";
-import { FcHome, GiPathDistance } from "react-icons/all";
+import { FcHome } from "react-icons/all";
 import { FavoriteButton } from "../../components/addFavorite/FavoriteButton";
 import surfaceIcon from "../../assets/surfaceIcon.png";
+import bathroomIcon from "../../assets/bathroomIcon.svg";
+import toiletIcon from "../../assets/toiletIcon.svg";
+import roomIcon from "../../assets/roomIcon.svg";
 import {
-  useContactPropertyOwnerUsingPOST,
   useGetLoggedUsingGET,
   useGetPropertyUsingGET,
+  useContactPropertyOwnerUsingPOST,
 } from "../../api";
+import { formatDistanceToNow } from "date-fns/esm";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -99,50 +104,45 @@ const View = ({ id }: ViewProps) => {
                 "Total",
                 `${property.squareFoot}m²`,
                 false,
-                <img src={surfaceIcon} />
+                <img src={surfaceIcon} alt="surface icon" />
               )}
-              {makeFact(
-                "Cubierta",
-                `${property.coveredSquareFoot}m²`,
-                false,
-                <GiPathDistance />
-              )}
+              {makeFact("Cubierta", `${property.coveredSquareFoot}m²`, false)}
               {makeFact(
                 pluralize("Ambiente", property.environments),
                 `${property.environments}`,
-                false,
-                <GiPathDistance />
+                false
               )}
               {makeFact(
                 pluralize("Baño", property.fullBaths),
                 `${property.fullBaths}`,
                 false,
-                <GiPathDistance />
+                <img src={bathroomIcon} alt="bathroom icon" />
               )}
               {makeFact(
                 pluralize("Toilets", property.toilets),
                 `${property.toilets}`,
                 false,
-                <GiPathDistance />
+                <img src={toiletIcon} alt="toilet icon" />
               )}
               {makeFact(
                 pluralize("Piso", property.levels),
                 `${property.levels}`,
-                false,
-                <GiPathDistance />
+                false
               )}
               {makeFact(
                 pluralize("Cuarto", property.rooms),
                 `${property.rooms}`,
                 false,
-                <GiPathDistance />
+                <img src={roomIcon} alt="toilet icon" />
               )}
               {makeFact(
-                `${pluralize("Año", property.constructionDate)} de
+                `${pluralize(
+                  "Año",
+                  getYearDistance(property.constructionDate)
+                )} de
                 antiguedad`,
-                `${property.constructionDate}`,
-                false,
-                <GiPathDistance />
+                `${getYearDistance(property.constructionDate)}`,
+                false
               )}
             </div>
           </div>
