@@ -6,20 +6,38 @@
  * OpenAPI spec version: 1.0
  */
 export interface Address {
-  department: string;
+  city: City;
+  coordinates: Coordinates;
   id: string;
   number: number;
-  postalCode: string;
   street: string;
-  town: Town;
 }
 
 export interface AddressDTO {
-  department: string;
-  number?: number;
-  postalCode: string;
+  city: string;
+  coordinates: CoordinatesDTO;
+  country: string;
+  number: number;
+  state: string;
   street: string;
-  town_id: string;
+}
+
+export interface AddressDTOReq {
+  city: string;
+  coordinates: CoordinatesDTOReq;
+  country: string;
+  number?: number;
+  state: string;
+  street: string;
+}
+
+export interface AddressDTORes {
+  city: string;
+  coordinates: CoordinatesDTORes;
+  country: string;
+  number: number;
+  state: string;
+  street: string;
 }
 
 export interface Amenity {
@@ -71,13 +89,34 @@ export interface ContactDtoRes {
   label: string;
 }
 
+export interface Coordinates {
+  id: string;
+  lat: number;
+  long: number;
+}
+
+export interface CoordinatesDTO {
+  lat: number;
+  long: number;
+}
+
+export interface CoordinatesDTOReq {
+  lat?: number;
+  long?: number;
+}
+
+export interface CoordinatesDTORes {
+  lat: number;
+  long: number;
+}
+
 export interface Country {
   id: string;
   name: string;
 }
 
 export interface CreatePropertyDTO {
-  address: AddressDTO;
+  address: AddressDTOReq;
   amenities: string[];
   comments: string;
   condition: string;
@@ -443,7 +482,7 @@ export const PropertyDTOType = {
 };
 
 export interface PropertyDTO {
-  address: Address;
+  address: AddressDTO;
   amenities: Amenity[];
   comments: string;
   condition: PropertyDTOCondition;
@@ -573,7 +612,7 @@ export const PropertyPreviewDTOType = {
 };
 
 export interface PropertyPreviewDTO {
-  address: Address;
+  address: AddressDTO;
   condition: PropertyPreviewDTOCondition;
   coveredSquareFoot: number;
   fullBaths: number;
@@ -627,17 +666,6 @@ export interface Style {
 export interface StyleDTO {
   id: string;
   label: string;
-}
-
-export interface Town {
-  city: City;
-  id: string;
-  name: string;
-}
-
-export interface TownDTO {
-  id: string;
-  name: string;
 }
 
 // tslint:disable-next-line:no-empty-interface

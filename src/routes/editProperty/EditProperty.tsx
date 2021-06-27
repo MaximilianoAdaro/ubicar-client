@@ -1,5 +1,4 @@
 import { BasicInfo } from "../../components/editProperty/BasicInfo/BasicInfo";
-import { Address } from "../../components/editProperty/Address/Address";
 import { Characteristics } from "../../components/editProperty/Characteristics/Characteristics";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
 import {
@@ -19,6 +18,7 @@ import { Loading } from "../../components/common/loading/Loading";
 import { Suspense, useEffect } from "react";
 import { selectIsInitialized } from "../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { useGetPropertyUsingGET } from "../../api";
+import { AddressRevamp } from "../../components/editProperty/Address/AddressRevamp";
 
 export const EditProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
@@ -126,7 +126,7 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     case Step.BasicInfo:
       return <BasicInfo property={property} />;
     case Step.Address:
-      return <Address />;
+      return <AddressRevamp />;
     case Step.Characteristics:
       return <Characteristics />;
     case Step.OptionalInfo:

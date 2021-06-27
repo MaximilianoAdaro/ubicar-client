@@ -3,9 +3,9 @@ import { RootState } from "../../store";
 import { BasicInfoFormData } from "../../../components/editProperty/BasicInfo/BasicInfo";
 import { CharacteristicsFormData } from "../../../components/editProperty/Characteristics/Characteristics";
 import { AdditionalFormData } from "../../../components/editProperty/Additional/Additional";
-import { AddressFormData } from "../../../components/editProperty/Address/Address";
+import { AddressFormData } from "../../../components/editProperty/Address/AddressRevamp";
 import { isEqualObjects } from "../../../utils/utils";
-import { PropertyDTO } from "../../../api/generated/endpoints.schemas";
+import { PropertyDTO } from "../../../api";
 
 // Define a type for the slice state
 export interface EditPropertyState {
@@ -19,11 +19,6 @@ export interface EditPropertyState {
   contacts: Contact[];
   openHouses: OpenHouse[];
   propertyType: string | undefined;
-  addressDropdowns: {
-    state: string | undefined;
-    city: string | undefined;
-    town: string | undefined;
-  };
   address: AddressFormData;
   basicInfo: BasicInfoFormData;
   characteristics: CharacteristicsFormData;
@@ -65,15 +60,12 @@ const initialState: EditPropertyState = {
   openHouses: [],
   propertyType: undefined,
   address: {
+    country: "",
+    state: "",
+    city: "",
     street: "",
     number: 0,
-    postalCode: "",
-    department: "",
-  },
-  addressDropdowns: {
-    state: undefined,
-    city: undefined,
-    town: undefined,
+    coordinates: { lat: 0, long: 0 },
   },
   basicInfo: {
     expenses: 0,
@@ -111,13 +103,7 @@ export const editPropertyFormSlice = createSlice({
       state.basicInfo.price = action.payload.price;
       state.basicInfo.expenses = action.payload.expenses;
       state.style = action.payload.style.id;
-      state.address.postalCode = action.payload.address.postalCode;
-      state.address.number = action.payload.address.number;
-      state.address.street = action.payload.address.street;
-      state.address.department = action.payload.address.department;
-      state.addressDropdowns.town = action.payload.address.town.id;
-      state.addressDropdowns.city = action.payload.address.town.city.id;
-      state.addressDropdowns.state = action.payload.address.town.city.state.id;
+      //TODO: Set edit data address data
       state.characteristics.constructionYear = action.payload.constructionDate;
       state.characteristics.coveredSurface = action.payload.coveredSquareFoot;
       state.characteristics.environments = action.payload.environments;
@@ -173,15 +159,7 @@ export const editPropertyFormSlice = createSlice({
     setAddress: (state, action: PayloadAction<AddressFormData>) => {
       state.address = action.payload;
     },
-    setState: (state, action: PayloadAction<string>) => {
-      state.addressDropdowns.state = action.payload;
-    },
-    setCity: (state, action: PayloadAction<string | undefined>) => {
-      state.addressDropdowns.city = action.payload;
-    },
-    setTown: (state, action: PayloadAction<string | undefined>) => {
-      state.addressDropdowns.town = action.payload;
-    },
+
     setBasicInfo: (state, action: PayloadAction<BasicInfoFormData>) => {
       state.basicInfo = action.payload;
     },

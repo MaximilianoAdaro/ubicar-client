@@ -35,7 +35,6 @@ import type {
   PropertyFilterDto,
   GetPropertiesFilteredUsingPOSTParams,
   StateDTO,
-  TownDTO,
 } from "./endpoints.schemas";
 import { customInstance } from "../mutator/custom-instance";
 
@@ -1088,50 +1087,6 @@ export const useGetStatesUsingGET = <
     queryKey,
     () => getStatesUsingGET<TQueryFnData>(requestOptions),
     queryOptions
-  );
-
-  return {
-    queryKey,
-    ...query,
-  };
-};
-
-export const getTownsUsingGET = <TData = TownDTO[]>(
-  cityId: string,
-  options?: SecondParameter<typeof customInstance>
-) => {
-  return customInstance<TData>(
-    { url: `/towns/${cityId}`, method: "get" },
-    // eslint-disable-next-line
-    // @ts-ignore
-    options
-  );
-};
-
-export const getGetTownsUsingGETQueryKey = (cityId: string) => [
-  `/towns/${cityId}`,
-];
-
-export const useGetTownsUsingGET = <
-  TQueryFnData = AsyncReturnType<typeof getTownsUsingGET, TownDTO[]>,
-  TError = unknown,
-  TData = TQueryFnData
->(
-  cityId: string,
-  options?: {
-    query?: UseQueryOptions<TQueryFnData, TError, TData>;
-    request?: SecondParameter<typeof customInstance>;
-  }
-) => {
-  const { query: queryOptions, request: requestOptions } = options || {};
-
-  const queryKey =
-    queryOptions?.queryKey ?? getGetTownsUsingGETQueryKey(cityId);
-
-  const query = useQuery<TQueryFnData, TError, TData>(
-    queryKey,
-    () => getTownsUsingGET<TQueryFnData>(cityId, requestOptions),
-    { enabled: !!cityId, ...queryOptions }
   );
 
   return {
