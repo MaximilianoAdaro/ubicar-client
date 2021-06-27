@@ -89,6 +89,9 @@ export function NavBar() {
                       onClose={() => setAnchorAccount(null)}
                     >
                       <List>
+                        <ListItem className={styles.myAccountDropdownUserName}>
+                          {user.userName}
+                        </ListItem>
                         <ListItem>
                           <Link
                             to={urls.userProfile}

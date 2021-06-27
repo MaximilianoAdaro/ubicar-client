@@ -12,7 +12,7 @@ export function MyFavorites() {
     <div>
       <Grid className={styles.personalDataMainDiv}>
         <h1>Mis Favoritos</h1>
-        <p>Aqui puedes ver las propiedades que mas te gustaron.</p>
+        <p>Aqui puedes ver las propiedades que más te gustaron.</p>
       </Grid>
       <Grid className={styles.properties}>
         <div className={styles.propertyList}>
