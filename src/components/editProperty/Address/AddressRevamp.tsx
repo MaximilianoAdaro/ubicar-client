@@ -9,6 +9,7 @@ import { MapComponent } from "../../Map/map";
 import customInstance from "../../../api/mutator/custom-instance";
 import { MapView } from "../../../store/slices/map/mapSlice";
 import { AddressDTO } from "../../../api";
+import { convertCoordinates } from "../../Map/utils";
 
 export type getApiRequestParams = {
   direccion: string;
@@ -87,14 +88,6 @@ export const AddressRevamp = (address: AddressDTO) => {
           });
 
           //Nose devuelve en 4326 lo tenemos que convertir 3857
-          const convertCoordinates = (lon: number, lat: number) => {
-            let x = (lon * 20037508.34) / 180;
-            let y =
-              Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) /
-              (Math.PI / 180);
-            y = (y * 20037508.34) / 180;
-            return [x, y];
-          };
 
           const coord = convertCoordinates(
             response.direcciones[0].ubicacion.lon,

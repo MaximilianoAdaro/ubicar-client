@@ -16,6 +16,13 @@ export function getOSMLayer() {
   });
 }
 
+export const convertCoordinates = (lon, lat) => {
+  let x = (lon * 20037508.34) / 180;
+  let y = Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) / (Math.PI / 180);
+  y = (y * 20037508.34) / 180;
+  return [x, y];
+};
+
 export function scaleToResolution(scale, map) {
   const DOTS_PER_INCH = 96;
   const INCHES_PER_METER = 39.37;
