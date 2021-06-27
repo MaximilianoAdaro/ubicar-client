@@ -3,8 +3,8 @@ import { RootState } from "../../store";
 import { BasicInfoFormData } from "../../../components/createPropertyForm/BasicInfo/BasicInfo";
 import { CharacteristicsFormData } from "../../../components/createPropertyForm/Characteristics/Characteristics";
 import { AdditionalFormData } from "../../../components/createPropertyForm/Additional/Additional";
-import { AddressFormData } from "../../../components/createPropertyForm/Address/Address";
 import { isEqualObjects } from "../../../utils/utils";
+import { AddressFormData } from "../../../components/createPropertyForm/Address/AddressRevamp";
 
 // Define a type for the slice state
 export interface CreatePropertyState {
@@ -62,10 +62,12 @@ const initialState: CreatePropertyState = {
   openHouses: [],
   propertyType: undefined,
   address: {
+    country: "",
+    state: "",
+    city: "",
     street: "",
     number: 0,
-    postalCode: "",
-    department: "",
+    coordinates: { lat: 0, long: 0 },
   },
   addressDropdowns: {
     state: undefined,
