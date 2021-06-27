@@ -21,12 +21,16 @@ import { Loading } from "../components/common/loading/Loading";
 import { EditProperty } from "../routes/editProperty";
 import { Footer } from "../components/footer/Footer";
 import { useGetLoggedUsingGET } from "../api";
+import { useLocation } from "react-router-dom";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
   const dispatch = useAppDispatch();
 
   const { data: user, isLoading } = useGetLoggedUsingGET();
+
+  let location = useLocation();
+  console.log(location.pathname);
 
   if (isLoading) return <Loading />;
 
@@ -63,7 +67,7 @@ export default function App() {
           <Route component={NotFound} />
         </Switch>
       </div>
-      <Footer />
+      {location.pathname !== "/listing-page" && <Footer />}
     </>
   );
 }

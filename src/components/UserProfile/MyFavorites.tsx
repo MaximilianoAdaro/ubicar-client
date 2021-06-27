@@ -1,7 +1,6 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { ListingHouse } from "../listingHouse";
 import { PropertyList } from "./PropertyList";
 import { useGetPropertiesUsingGET } from "../../api";
 
@@ -13,13 +12,13 @@ export function MyFavorites() {
     <div>
       <Grid className={styles.personalDataMainDiv}>
         <h1>Mis Favoritos</h1>
-        <p>Aqui puedes ver las propiedades que mas te gustaron.</p>
+        <p>Aqui puedes ver las propiedades que más te gustaron.</p>
       </Grid>
       <Grid className={styles.properties}>
         <div className={styles.propertyList}>
           {data.status === "success" &&
             data?.data.content?.map((casa: any) => (
-              <PropertyList key={casa.id} house={casa} />
+              <PropertyList key={casa.id} house={casa} from={"favorites"} />
             ))}
         </div>
       </Grid>

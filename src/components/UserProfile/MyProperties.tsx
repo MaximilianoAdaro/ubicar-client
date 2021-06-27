@@ -1,5 +1,5 @@
 import styles from "./UserProfile.module.scss";
-import React, { useState } from "react";
+import React from "react";
 import { Grid } from "@material-ui/core";
 import { PropertyList } from "./PropertyList";
 import { useGetPropertiesUsingGET } from "../../api";
@@ -17,7 +17,7 @@ export function MyProperties() {
       <Grid className={styles.properties}>
         {data.status === "success" &&
           data?.data.content?.map((casa: any) => (
-            <PropertyList key={casa.id} house={casa} />
+            <PropertyList key={casa.id} house={casa} from={"properties"} />
           ))}
       </Grid>
     </div>

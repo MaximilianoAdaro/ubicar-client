@@ -182,11 +182,6 @@ export function ListingFilters({
         <StyledButton size="small" onClick={clearFilters}>
           Limpiar Filtros
         </StyledButton>
-        <div style={{ marginLeft: "auto", marginRight: 0 }}>
-          {user && (
-            <h5 style={{ color: "dimgrey", margin: 0 }}>{user.userName}</h5>
-          )}
-        </div>
       </Grid>
       <Popover
         open={Boolean(anchorSale)}

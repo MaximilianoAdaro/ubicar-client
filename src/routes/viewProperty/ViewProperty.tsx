@@ -84,7 +84,18 @@ const View = ({ id }: ViewProps) => {
                 {property.address.street} {property.address.number}{" "}
                 {property.address.city}
               </Typography>
-              {currentUser && <FavoriteButton id={id} isLiked={true} />}
+              {currentUser && <FavoriteButton id={id} isLiked={false} />}
+              {/*<Link to={urls.editProperty.byId(id)}>*/}
+              {/*  <Button*/}
+              {/*    variant={"outlined"}*/}
+              {/*    style={{*/}
+              {/*      marginLeft: "1em",*/}
+              {/*      textTransform: "none",*/}
+              {/*    }}*/}
+              {/*  >*/}
+              {/*    Editar Propiedad*/}
+              {/*  </Button>*/}
+              {/*</Link>*/}
             </div>
             <span className={styles.subtitle}>{property.type}</span>
             <div className={styles.facts}>
