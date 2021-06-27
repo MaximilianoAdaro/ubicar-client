@@ -69,6 +69,24 @@ export function ListingPage() {
             data.content?.map((casa) => (
               <ListingHouse key={casa.id} house={casa} />
             ))}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
+          {/*<h1>Prueba</h1>*/}
         </Grid>
       </Grid>
     </div>

@@ -120,6 +120,7 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     }
   }, [property]);
 
+  // console.log("EditProperty", property);
   if (!property) return <h4>Error</h4>;
 
   switch (currentStep) {

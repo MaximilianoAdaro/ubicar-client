@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Grid, TextField } from "@material-ui/core";
 import { Container } from "react-bootstrap";
-import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
-import { actions, useAppDispatch } from "../../../store";
+import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Address.module.scss";
 import { MapComponent } from "../../Map/map";
@@ -43,6 +43,9 @@ const getApiRequest = (
 };
 
 export const AddressRevamp = () => {
+  const defaults = useAppSelector(({ editPropertyForm: { address } }) => ({
+    ...address,
+  }));
   const [zoom, setZoom] = useState(10);
   const [view, setView] = useState<MapView>({
     longitude: -6506056.858887733,
@@ -58,6 +61,7 @@ export const AddressRevamp = () => {
     coordinates: { lat: 0, long: 0 },
   });
   const [load, setLoad] = useState(false);
+  const [error, setError] = useState(true);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -84,6 +88,10 @@ export const AddressRevamp = () => {
               lat: response.direcciones[0].ubicacion.lat,
               long: response.direcciones[0].ubicacion.lon,
             },
+            country: "Argentina",
+            state: response.direcciones[0].provincia.nombre,
+            city: response.direcciones[0].departamento.nombre,
+            street: response.direcciones[0].calle.nombre,
           });
 
           //Nose devuelve en 4326 lo tenemos que convertir 3857
@@ -103,6 +111,7 @@ export const AddressRevamp = () => {
 
           setView({ longitude: coord[0], latitude: coord[1] });
           setZoom(17);
+          setError(false);
         })
         .catch(() => {});
     } else {
@@ -111,20 +120,26 @@ export const AddressRevamp = () => {
   }, [load]);
 
   const onSubmit = () => {
-    console.log(data);
     dispatch(actions.editPropertyForm.setAddress(data));
     dispatch(actions.editPropertyForm.setStep(Step.Characteristics));
   };
 
   const handlePreviousButton = async () => {
-    console.log(data);
     dispatch(actions.editPropertyForm.setAddress(data));
     dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
   };
 
+  const handleSubmit = () => {
+    if (data.state !== "" || data.street !== "" || data.number !== 0) {
+      dispatch(actions.editPropertyForm.setStep(Step.Characteristics)) &&
+        onSubmit();
+    } else {
+    }
+  };
+
   return (
     <Container>
-      <form onSubmit={onSubmit}>
+      <form>
         <Grid container>
           <Grid item xl={6} sm={6}>
             <div className={styles.input}>
@@ -134,6 +149,7 @@ export const AddressRevamp = () => {
                 color="secondary"
                 variant="outlined"
                 onChange={(e) => setData({ ...data, state: e.target.value })}
+                defaultValue={defaults.state}
               />
             </div>
             <div className={styles.input}>
@@ -143,6 +159,7 @@ export const AddressRevamp = () => {
                 color="secondary"
                 variant="outlined"
                 onChange={(e) => setData({ ...data, city: e.target.value })}
+                defaultValue={defaults.city}
               />
             </div>
             <div className={styles.input}>
@@ -152,6 +169,7 @@ export const AddressRevamp = () => {
                 color="secondary"
                 variant="outlined"
                 onChange={(e) => setData({ ...data, street: e.target.value })}
+                defaultValue={defaults.street}
               />
             </div>
             <div className={styles.input}>
@@ -163,6 +181,7 @@ export const AddressRevamp = () => {
                 onChange={(e) =>
                   setData({ ...data, number: parseInt(e.target.value) })
                 }
+                defaultValue={defaults.number}
               />
             </div>
             <div className={styles.input}>
@@ -188,9 +207,8 @@ export const AddressRevamp = () => {
       </form>
       <StepButtons
         type={"submit"}
-        onNext={() =>
-          dispatch(actions.editPropertyForm.setStep(Step.Characteristics))
-        }
+        onNext={() => handleSubmit()}
+        disabledNext={error}
         onPrevious={handlePreviousButton}
       />
     </Container>

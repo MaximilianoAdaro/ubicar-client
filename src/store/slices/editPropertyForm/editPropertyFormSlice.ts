@@ -94,6 +94,9 @@ export const editPropertyFormSlice = createSlice({
 
   initialState,
   reducers: {
+    reset: () => {
+      return initialState;
+    },
     setStep: (state, action: PayloadAction<Step>) => {
       state.currentStep = action.payload;
     },
@@ -103,7 +106,12 @@ export const editPropertyFormSlice = createSlice({
       state.basicInfo.price = action.payload.price;
       state.basicInfo.expenses = action.payload.expenses;
       state.style = action.payload.style.id;
-      //TODO: Set edit data address data
+      state.address.state = action.payload.address.state;
+      state.address.city = action.payload.address.city;
+      state.address.street = action.payload.address.street;
+      state.address.number = action.payload.address.number;
+      state.address.country = action.payload.address.country;
+      state.address.coordinates = action.payload.address.coordinates;
       state.characteristics.constructionYear = action.payload.constructionDate;
       state.characteristics.coveredSurface = action.payload.coveredSquareFoot;
       state.characteristics.environments = action.payload.environments;

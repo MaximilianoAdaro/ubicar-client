@@ -76,6 +76,7 @@ export const Confirmation = ({ id }: Id) => {
         id,
         data: createRequestData(createPropertyState),
       });
+      dispatch(actions.editPropertyForm.reset());
       history.push(urls.home);
     } catch (e) {
       throw Error;

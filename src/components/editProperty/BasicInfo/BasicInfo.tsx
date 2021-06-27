@@ -15,10 +15,7 @@ import styles from "./BasicInfo.module.scss";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
-import {
-  PropertyDTO,
-  PropertyDTOCondition,
-} from "../../../api/generated/endpoints.schemas";
+import { PropertyDTO, PropertyDTOCondition } from "../../../api";
 import { Loading } from "../../common/loading/Loading";
 import { useGetTypesUsingGET } from "../../../api";
 
@@ -89,7 +86,7 @@ export const BasicInfo = ({ property }: BasicInfoProps) => {
                   name="title"
                   label="Titulo"
                   placeholder={"Increible casa en la playa..."}
-                  defaultValue={defaults.title}
+                  defaultValue={property.title}
                 />
               </Col>
             </Form.Row>
@@ -100,14 +97,14 @@ export const BasicInfo = ({ property }: BasicInfoProps) => {
                     <BasicInfoTextInput
                       name="price"
                       label="Precio (ARS)"
-                      defaultValue={defaults.price.toString()}
+                      defaultValue={property.price.toString()}
                     />
                   </Col>
                   <Col>
                     <BasicInfoTextInput
                       name="expenses"
                       label="Expensas (ARS)"
-                      defaultValue={defaults.expenses.toString()}
+                      defaultValue={property.expenses.toString()}
                     />
                   </Col>
                 </Form.Row>

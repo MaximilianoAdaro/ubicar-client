@@ -1,5 +1,5 @@
 import { PropertyPreviewDTO } from "../../api";
-import { Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { Image } from "react-bootstrap";
 import styles from "./UserProfile.module.scss";
 import { useHistory } from "react-router-dom";
@@ -8,6 +8,7 @@ import { urls } from "../../constants";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
+  from: string;
 }
 
 export function PropertyList(props: ListingHouseProps) {
@@ -20,11 +21,23 @@ export function PropertyList(props: ListingHouseProps) {
   return (
     <div>
       <Grid className={styles.myPropertyOuterDiv}>
-        <Grid
-          container
-          className={styles.container}
-          onClick={() => history.push(urls.viewProperty.byId(house.id))}
-        >
+        <Grid container className={styles.container}>
+          <Grid xs={12} className={styles.editAndViewPropertyButtons}>
+            {props.from === "properties" && (
+              <Button
+                variant={"outlined"}
+                onClick={() => history.push(urls.editProperty.byId(house.id))}
+              >
+                Editar
+              </Button>
+            )}
+            <Button
+              variant={"outlined"}
+              onClick={() => history.push(urls.viewProperty.byId(house.id))}
+            >
+              Ver
+            </Button>
+          </Grid>
           <Grid xs={4} xl={3}>
             <Image
               className={styles.myPropertiesImage}

@@ -8,6 +8,7 @@ interface StepButtonsProps {
   onPrevious?: () => void;
   showPrevious?: boolean;
   showNext?: boolean;
+  disabledNext?: boolean;
 }
 
 export const StepButtons = ({
