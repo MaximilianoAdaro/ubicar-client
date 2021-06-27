@@ -29,6 +29,7 @@ import VectorSource from "ol/source/Vector";
 import Feature from "ol/Feature";
 import { Point } from "ol/geom";
 import VectorLayer from "ol/layer/Vector";
+import { PropertyPreviewDTO } from "../../api";
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
@@ -41,7 +42,9 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
     zoom: 10,
     editable: false,
     markerLayer: null,
+    properties: null,
   };
+  properties: PropertyPreviewDTO[] | null | undefined;
   zoom: number;
   view: MapView;
   renderLayers: boolean | null | undefined;
@@ -59,11 +62,14 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
     this.renderLayers = props.renderLayers;
     this.additionalStyle = props.additionalStyle;
     this.additionalLayers = props.additionalLayers;
+    this.properties = props.properties;
   }
   componentDidMount() {
     if (!this.mapDivRef.current) {
       return;
     }
+
+    this.setState({ properties: this.properties });
 
     const layers = [
       new TileLayer({
@@ -179,6 +185,10 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
         })
       );
     }
+
+    if (prevProps.properties !== this.props.properties) {
+      this.setState({ properties: this.props.properties });
+    }
   }
 
   render() {
@@ -203,7 +213,11 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
                 <HospitalLayer />
                 <PoliceLayer />
                 <PrisonLayer />
-                <PropertiesLayerWithContext />
+                {this.state.properties && (
+                  <PropertiesLayerWithContext
+                    properties={this.state.properties}
+                  />
+                )}
                 <IndustrialAreaLayers />
               </>
             )}
