@@ -5,6 +5,9 @@ import styles from "./UserProfile.module.scss";
 import { useHistory } from "react-router-dom";
 import pluralize from "pluralize";
 import { urls } from "../../constants";
+import EditIcon from "@material-ui/icons/Edit";
+import { Tooltip } from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
@@ -22,22 +25,6 @@ export function PropertyList(props: ListingHouseProps) {
     <div>
       <Grid className={styles.myPropertyOuterDiv}>
         <Grid container className={styles.container}>
-          <Grid xs={12} className={styles.editAndViewPropertyButtons}>
-            {props.from === "properties" && (
-              <Button
-                variant={"outlined"}
-                onClick={() => history.push(urls.editProperty.byId(house.id))}
-              >
-                Editar
-              </Button>
-            )}
-            <Button
-              variant={"outlined"}
-              onClick={() => history.push(urls.viewProperty.byId(house.id))}
-            >
-              Ver
-            </Button>
-          </Grid>
           <Grid xs={4} xl={3}>
             <Image
               className={styles.myPropertiesImage}
@@ -64,6 +51,25 @@ export function PropertyList(props: ListingHouseProps) {
             <p className={styles.myPropertyTownCity}>
               {houseAddress.state}, {houseAddress.city}
             </p>
+          </Grid>
+          <Grid xs={12} className={styles.editAndViewPropertyButtons}>
+            {props.from === "properties" && (
+              <Tooltip
+                title={"Editar propiedad"}
+                className={styles.propertyListEditPropertyTooltip}
+              >
+                <EditIcon
+                  onClick={() => history.push(urls.editProperty.byId(house.id))}
+                  className={styles.propertyListIcons}
+                />
+              </Tooltip>
+            )}
+            <Tooltip title={"Ver propiedad"}>
+              <VisibilityIcon
+                onClick={() => history.push(urls.viewProperty.byId(house.id))}
+                className={styles.propertyListIcons}
+              />
+            </Tooltip>
           </Grid>
         </Grid>
       </Grid>

@@ -6,6 +6,7 @@ import pluralize from "pluralize";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../constants";
 import { PropertyPreviewDTO } from "../../api";
+import clsx from "clsx";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
@@ -32,20 +33,39 @@ export function ListingHouse(props: ListingHouseProps) {
       </Grid>
       <Grid xs={6}>
         <Tooltip title={house.title}>
-          <p className={styles.propertyTitle}>{house.title}</p>
+          <p className={clsx(styles.propertyTitle, styles.marginPaddingPTag)}>
+            {house.title}
+          </p>
         </Tooltip>
-        <p className={styles.propertyPriceCondition}>
+        <p
+          className={clsx(
+            styles.propertyPriceCondition,
+            styles.marginPaddingPTag
+          )}
+        >
           ${house.price.toLocaleString()} &nbsp;|&nbsp; En{" "}
           {house.condition === "SALE" ? "Venta" : "Alquiler"}
         </p>
-        <p className={styles.propertySpecifications}>
+        <p
+          className={clsx(
+            styles.propertySpecifications,
+            styles.marginPaddingPTag
+          )}
+        >
           {house.squareFoot} m² &nbsp;&nbsp;|&nbsp;&nbsp; {house.rooms} hab.
           &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths} {baths}
         </p>
         <Tooltip title={houseStreetNumber}>
-          <p className={styles.propertyStreetNumber}>{houseStreetNumber}</p>
+          <p
+            className={clsx(
+              styles.propertyStreetNumber,
+              styles.marginPaddingPTag
+            )}
+          >
+            {houseStreetNumber}
+          </p>
         </Tooltip>
-        <p className={styles.propertyTownCity}>
+        <p className={clsx(styles.propertyTownCity, styles.marginPaddingPTag)}>
           {houseAddress.state}, {houseAddress.city}
         </p>
       </Grid>
