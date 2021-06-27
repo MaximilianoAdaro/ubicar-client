@@ -16,7 +16,6 @@ export function PropertyList(props: ListingHouseProps) {
   const houseAddress = house.address;
   const houseStreetNumber = `${houseAddress.street} ${houseAddress.number}`;
   const baths = pluralize("baño", house.fullBaths);
-  console.log(house);
   return (
     <div>
       <Grid className={styles.myPropertyOuterDiv}>

@@ -69,7 +69,6 @@ export function zoomToFeature(map, feature, animate = true) {
 
 export function centerMap(coords, zoom) {
   let extent = window.map.getView().calculateExtent();
-  console.log(extent);
   let xMin = extent[0];
   let xMax = extent[2];
   let total = (Math.abs(xMin) - Math.abs(xMax)) * 0.04;

@@ -116,21 +116,17 @@ export const AddressRevamp = () => {
     }
   }, [load]);
 
-  const onSubmit = () => {
-    dispatch(actions.createPropertyForm.setAddress(data));
-    dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
-  };
-
   const handlePreviousButton = async () => {
     dispatch(actions.createPropertyForm.setAddress(data));
     dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
   };
 
   const handleSubmit = () => {
-    if (data.state !== "" || data.street !== "" || data.number !== 0) {
-      dispatch(actions.createPropertyForm.setStep(Step.Characteristics)) &&
-        onSubmit();
+    if (data.state !== "" && data.street !== "" && data.number !== 0) {
+      dispatch(actions.createPropertyForm.setAddress(data));
+      dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
     } else {
+      throw Error;
     }
   };
 
