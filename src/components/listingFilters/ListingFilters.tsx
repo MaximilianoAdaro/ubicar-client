@@ -293,6 +293,7 @@ export function ListingFilters({
             placeholder="Min"
             className={styles.priceMinInp}
             variant="outlined"
+            type="number"
             value={filters.minPrice}
             size="small"
             onChange={(e) =>
@@ -304,6 +305,7 @@ export function ListingFilters({
             placeholder="Max"
             className={styles.priceMaxInp}
             variant="outlined"
+            type="number"
             value={filters.maxPrice}
             size="small"
             onChange={(e) =>
@@ -449,6 +451,7 @@ export function ListingFilters({
             placeholder="Min"
             className={styles.priceMinInp}
             variant="outlined"
+            type="number"
             value={filters.minAmountSquareMeter}
             size="small"
             onChange={(e) =>
@@ -462,6 +465,7 @@ export function ListingFilters({
             placeholder="Max"
             className={styles.priceMaxInp}
             variant="outlined"
+            type="number"
             value={filters.maxAmountSquareMeter}
             size="small"
             onChange={(e) =>

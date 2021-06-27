@@ -158,6 +158,7 @@ export const AddressRevamp = (address: AddressDTO) => {
                 fullWidth
                 color="secondary"
                 variant="outlined"
+                type="number"
                 value={data.number ? data.number.toString() : ""}
                 onChange={(e) =>
                   setData({ ...data, number: parseInt(e.target.value) })

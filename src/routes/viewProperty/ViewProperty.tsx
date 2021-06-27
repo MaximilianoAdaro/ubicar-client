@@ -271,7 +271,7 @@ const AddressSection = ({ address }: AddressSectionProps) => {
         <table>
           <tbody>
             {getAddressItem("Provincia", address.state)}
-            {getAddressItem("Municipio", address.city)}
+            {getAddressItem("Localidad", address.city)}
             {getAddressItem("Calle", address.street)}
             {getAddressItem("Numero", address.number.toString())}
           </tbody>

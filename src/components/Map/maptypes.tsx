@@ -14,6 +14,11 @@ export type TMapProps = {
   properties?: PropertyPreviewDTO[] | null;
 };
 
+export type PropertyState = {
+  visible: boolean;
+  properties: PropertyPreviewDTO[];
+};
+
 export type TMapState = {
   mapContext?: IMapContext;
   zoom: number;
