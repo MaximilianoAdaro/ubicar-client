@@ -29,10 +29,16 @@ p {
   text-overflow: "...";
   font-weight: bold;
   font-size: 1em;
+  text-transform: lowercase;
+}
+
+.propertyStreetNumber::first-line {
+  text-transform: capitalize;
 }
 
 .propertyTownCity {
   font-size: 0.9em;
+  text-transform: capitalize;
 }
 
 .propertySpecifications {

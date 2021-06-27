@@ -1,5 +1,5 @@
-import { PropertyPreviewDTO } from "../../api/generated/endpoints.schemas";
-import { Grid, Tooltip } from "@material-ui/core";
+import { PropertyPreviewDTO } from "../../api";
+import { Grid } from "@material-ui/core";
 import { Image } from "react-bootstrap";
 import styles from "./UserProfile.module.scss";
 import { useHistory } from "react-router-dom";
@@ -16,7 +16,6 @@ export function PropertyList(props: ListingHouseProps) {
   const houseAddress = house.address;
   const houseStreetNumber = `${houseAddress.street} ${houseAddress.number}`;
   const baths = pluralize("baño", house.fullBaths);
-  console.log(house);
   return (
     <div>
       <Grid className={styles.myPropertyOuterDiv}>
@@ -49,7 +48,7 @@ export function PropertyList(props: ListingHouseProps) {
             </p>
             <p className={styles.myPropertyStreetNumber}>{houseStreetNumber}</p>
             <p className={styles.myPropertyTownCity}>
-              {houseAddress.town.name}, {houseAddress.town.city.name}
+              {houseAddress.state}, {houseAddress.city}
             </p>
           </Grid>
         </Grid>

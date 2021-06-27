@@ -15,10 +15,7 @@ import styles from "./BasicInfo.module.scss";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
-import {
-  PropertyDTO,
-  PropertyDTOCondition,
-} from "../../../api/generated/endpoints.schemas";
+import { PropertyDTO, PropertyDTOCondition } from "../../../api";
 import { Loading } from "../../common/loading/Loading";
 import { useGetTypesUsingGET } from "../../../api";
 
@@ -134,7 +131,6 @@ export const BasicInfo = ({ property }: BasicInfoProps) => {
                           dispatch(
                             actions.editPropertyForm.setPropertyType(label)
                           );
-                        console.log(label);
                       }}
                       defaultValue={property.type}
                     />

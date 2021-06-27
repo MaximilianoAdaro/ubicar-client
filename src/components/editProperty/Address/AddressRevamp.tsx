@@ -8,6 +8,7 @@ import styles from "./Address.module.scss";
 import { MapComponent } from "../../Map/map";
 import customInstance from "../../../api/mutator/custom-instance";
 import { MapView } from "../../../store/slices/map/mapSlice";
+import { AddressDTO } from "../../../api";
 
 export type getApiRequestParams = {
   direccion: string;
@@ -15,19 +16,6 @@ export type getApiRequestParams = {
   departamento: string;
   localidad: string;
   max: number;
-};
-export type CoordinatesDTO = {
-  lat?: number;
-  long?: number;
-};
-
-export type AddressFormData = {
-  country: string;
-  state: string;
-  city: string;
-  street: string;
-  number: number;
-  coordinates: CoordinatesDTO;
 };
 
 const getApiRequest = (
@@ -42,23 +30,30 @@ const getApiRequest = (
   return customInstance<any>({ url: url, method: "get", params: params });
 };
 
-export const AddressRevamp = () => {
+export const AddressRevamp = (address: AddressDTO) => {
   const [zoom, setZoom] = useState(10);
   const [view, setView] = useState<MapView>({
-    longitude: -6506056.858887733,
-    latitude: -4114291.375798843,
+    longitude: address.coordinates.long
+      ? address.coordinates.long
+      : -6506056.858887733,
+    latitude: address.coordinates.lat
+      ? address.coordinates.lat
+      : -4114291.375798843,
   });
-  const mounted = useRef(false);
-  const [data, setData] = useState<AddressFormData>({
-    country: "",
-    state: "",
-    city: "",
-    street: "",
-    number: 0,
-    coordinates: { lat: 0, long: 0 },
+
+  const mounted = useRef(!!address);
+  const [data, setData] = useState<AddressDTO>({
+    country: address.country ? address.country : "",
+    state: address.state ? address.state : "",
+    city: address.city ? address.city : "",
+    street: address.street ? address.street : "",
+    number: address.number ? address.number : 0,
+    coordinates: address.coordinates
+      ? address.coordinates
+      : { lat: 0, long: 0 },
   });
+
   const [load, setLoad] = useState(false);
-  const [error, setError] = useState(true);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -108,7 +103,6 @@ export const AddressRevamp = () => {
 
           setView({ longitude: coord[0], latitude: coord[1] });
           setZoom(17);
-          setError(false);
         })
         .catch(() => {});
     } else {
@@ -117,14 +111,14 @@ export const AddressRevamp = () => {
   }, [load]);
 
   const handlePreviousButton = async () => {
-    dispatch(actions.createPropertyForm.setAddress(data));
-    dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
+    dispatch(actions.editPropertyForm.setAddress(data));
+    dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
   };
 
   const handleSubmit = () => {
     if (data.state !== "" && data.street !== "" && data.number !== 0) {
-      dispatch(actions.createPropertyForm.setAddress(data));
-      dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
+      dispatch(actions.editPropertyForm.setAddress(data));
+      dispatch(actions.editPropertyForm.setStep(Step.Characteristics));
     } else {
       throw Error;
     }
@@ -139,6 +133,7 @@ export const AddressRevamp = () => {
               <span style={{ color: "black" }}>Provincia</span>
               <TextField
                 fullWidth
+                value={data.state ? data.state : ""}
                 color="secondary"
                 variant="outlined"
                 onChange={(e) => setData({ ...data, state: e.target.value })}
@@ -148,6 +143,7 @@ export const AddressRevamp = () => {
               <span style={{ color: "black" }}>Localidad</span>
               <TextField
                 fullWidth
+                value={data.city ? data.city : ""}
                 color="secondary"
                 variant="outlined"
                 onChange={(e) => setData({ ...data, city: e.target.value })}
@@ -157,6 +153,7 @@ export const AddressRevamp = () => {
               <span style={{ color: "black" }}>Calle</span>
               <TextField
                 fullWidth
+                value={data.street ? data.street : ""}
                 color="secondary"
                 variant="outlined"
                 onChange={(e) => setData({ ...data, street: e.target.value })}
@@ -168,6 +165,7 @@ export const AddressRevamp = () => {
                 fullWidth
                 color="secondary"
                 variant="outlined"
+                value={data.number ? data.number.toString() : ""}
                 onChange={(e) =>
                   setData({ ...data, number: parseInt(e.target.value) })
                 }
@@ -197,7 +195,6 @@ export const AddressRevamp = () => {
       <StepButtons
         type={"submit"}
         onNext={() => handleSubmit()}
-        disabledNext={error}
         onPrevious={handlePreviousButton}
       />
     </Container>
