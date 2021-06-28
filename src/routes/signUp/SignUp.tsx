@@ -60,7 +60,11 @@ export const SignUp = () => {
 
   return (
     <>
-      <Container>
+      <Container
+        style={{
+          marginBottom: 70,
+        }}
+      >
         <form onSubmit={onSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12} className={styles.titleContainer}>
