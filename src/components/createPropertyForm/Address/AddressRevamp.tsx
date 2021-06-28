@@ -140,6 +140,7 @@ export const AddressRevamp = () => {
               <TextField
                 fullWidth
                 color="secondary"
+                value={data.state ? data.state : ""}
                 variant="outlined"
                 onChange={(e) => setData({ ...data, state: e.target.value })}
               />
@@ -149,6 +150,7 @@ export const AddressRevamp = () => {
               <TextField
                 fullWidth
                 color="secondary"
+                value={data.city ? data.city : ""}
                 variant="outlined"
                 onChange={(e) => setData({ ...data, city: e.target.value })}
               />
@@ -158,6 +160,7 @@ export const AddressRevamp = () => {
               <TextField
                 fullWidth
                 color="secondary"
+                value={data.street ? data.street : ""}
                 variant="outlined"
                 onChange={(e) => setData({ ...data, street: e.target.value })}
               />
@@ -167,6 +170,7 @@ export const AddressRevamp = () => {
               <TextField
                 fullWidth
                 color="secondary"
+                type="number"
                 variant="outlined"
                 onChange={(e) =>
                   setData({ ...data, number: parseInt(e.target.value) })
