@@ -50,25 +50,27 @@ export function PropertyList(props: ListingHouseProps) {
             <p className={styles.myPropertyTownCity}>
               {houseAddress.state}, {houseAddress.city}
             </p>
-          </Grid>
-          <Grid xs={12} className={styles.editAndViewPropertyButtons}>
-            {props.from === "properties" && (
-              <Tooltip
-                title={"Editar propiedad"}
-                className={styles.propertyListEditPropertyTooltip}
-              >
-                <EditIcon
-                  onClick={() => history.push(urls.editProperty.byId(house.id))}
+            <Grid className={styles.editAndViewPropertyButtons}>
+              {props.from === "properties" && (
+                <Tooltip
+                  title={"Editar propiedad"}
+                  className={styles.propertyListEditPropertyTooltip}
+                >
+                  <EditIcon
+                    onClick={() =>
+                      history.push(urls.editProperty.byId(house.id))
+                    }
+                    className={styles.propertyListIcons}
+                  />
+                </Tooltip>
+              )}
+              <Tooltip title={"Ver propiedad"}>
+                <VisibilityIcon
+                  onClick={() => history.push(urls.viewProperty.byId(house.id))}
                   className={styles.propertyListIcons}
                 />
               </Tooltip>
-            )}
-            <Tooltip title={"Ver propiedad"}>
-              <VisibilityIcon
-                onClick={() => history.push(urls.viewProperty.byId(house.id))}
-                className={styles.propertyListIcons}
-              />
-            </Tooltip>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
