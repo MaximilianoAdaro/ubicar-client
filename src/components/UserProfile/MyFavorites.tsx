@@ -2,12 +2,10 @@ import styles from "./UserProfile.module.scss";
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { PropertyList } from "./PropertyList";
-import { useGetPropertiesUsingGET } from "../../api";
+import { useGetFavoritePropertiesUsingGET } from "../../api";
 
 export function MyFavorites() {
-  const data = useGetPropertiesUsingGET({
-    page: 0,
-  });
+  const data = useGetFavoritePropertiesUsingGET();
   return (
     <div>
       <Grid className={styles.personalDataMainDiv}>
@@ -17,7 +15,7 @@ export function MyFavorites() {
       <Grid className={styles.properties}>
         <div className={styles.propertyList}>
           {data.status === "success" &&
-            data?.data.content?.map((casa: any) => (
+            data?.data?.map((casa) => (
               <PropertyList key={casa.id} house={casa} from={"favorites"} />
             ))}
         </div>

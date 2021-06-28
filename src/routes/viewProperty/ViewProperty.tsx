@@ -37,7 +37,7 @@ export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
   return (
     <Suspense fallback={<Loading />}>
-      <View id={id} />;
+      <View id={id} />
     </Suspense>
   );
 };
@@ -84,7 +84,9 @@ const View = ({ id }: ViewProps) => {
                 {property.address.street} {property.address.number}{" "}
                 {property.address.city}
               </Typography>
-              {currentUser && <FavoriteButton id={id} isLiked={false} />}
+              {currentUser && (
+                <FavoriteButton id={id} isLiked={property.liked} />
+              )}
               {/*<Link to={urls.editProperty.byId(id)}>*/}
               {/*  <Button*/}
               {/*    variant={"outlined"}*/}
