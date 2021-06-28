@@ -34,7 +34,7 @@
   text-transform: lowercase;
 }
 
-.propertyStreetNumber:first-line {
+.propertyStreetNumber::first-line {
   text-transform: capitalize;
 }
 
