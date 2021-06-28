@@ -203,13 +203,21 @@ export function ListingFilters({
       >
         <List>
           <ListItem
-            onClick={() => setFilters({ ...filters, condition: "SALE" })}
+            onClick={() =>
+              filters.condition === "SALE"
+                ? setFilters({ ...filters, condition: undefined })
+                : setFilters({ ...filters, condition: "SALE" })
+            }
             className={styles.conditionHover}
           >
             En Venta
           </ListItem>
           <ListItem
-            onClick={() => setFilters({ ...filters, condition: "RENT" })}
+            onClick={() =>
+              filters.condition === "RENT"
+                ? setFilters({ ...filters, condition: undefined })
+                : setFilters({ ...filters, condition: "RENT" })
+            }
             className={styles.conditionHover}
           >
             En Alquiler
@@ -233,7 +241,11 @@ export function ListingFilters({
           {houseStyles?.map((data) => {
             return (
               <DropdownItem
-                onClick={() => setFilters({ ...filters, style: data })}
+                onClick={() =>
+                  filters.style === data
+                    ? setFilters({ ...filters, style: undefined })
+                    : setFilters({ ...filters, style: data })
+                }
                 style={
                   filters.style === data ? { background: "antiquewhite" } : {}
                 }
@@ -261,7 +273,11 @@ export function ListingFilters({
           {houseTypes?.map((data) => {
             return (
               <DropdownItem
-                onClick={() => setFilters({ ...filters, typeProperty: data })}
+                onClick={() =>
+                  filters.typeProperty === data
+                    ? setFilters({ ...filters, typeProperty: undefined })
+                    : setFilters({ ...filters, typeProperty: data })
+                }
                 style={
                   filters.typeProperty === data
                     ? { background: "antiquewhite" }
@@ -339,7 +355,11 @@ export function ListingFilters({
             style={
               filters.minAmountRoom === 1 ? { background: "antiquewhite" } : {}
             }
-            onClick={() => setFilters({ ...filters, minAmountRoom: 1 })}
+            onClick={() =>
+              filters.minAmountRoom === 1
+                ? setFilters({ ...filters, minAmountRoom: undefined })
+                : setFilters({ ...filters, minAmountRoom: 1 })
+            }
           >
             1+
           </Button>
@@ -347,7 +367,11 @@ export function ListingFilters({
             style={
               filters.minAmountRoom === 2 ? { background: "antiquewhite" } : {}
             }
-            onClick={() => setFilters({ ...filters, minAmountRoom: 2 })}
+            onClick={() =>
+              filters.minAmountRoom === 2
+                ? setFilters({ ...filters, minAmountRoom: undefined })
+                : setFilters({ ...filters, minAmountRoom: 2 })
+            }
           >
             2+
           </Button>
@@ -355,7 +379,11 @@ export function ListingFilters({
             style={
               filters.minAmountRoom === 3 ? { background: "antiquewhite" } : {}
             }
-            onClick={() => setFilters({ ...filters, minAmountRoom: 3 })}
+            onClick={() =>
+              filters.minAmountRoom === 3
+                ? setFilters({ ...filters, minAmountRoom: undefined })
+                : setFilters({ ...filters, minAmountRoom: 3 })
+            }
           >
             3+
           </Button>
@@ -363,7 +391,11 @@ export function ListingFilters({
             style={
               filters.minAmountRoom === 4 ? { background: "antiquewhite" } : {}
             }
-            onClick={() => setFilters({ ...filters, minAmountRoom: 4 })}
+            onClick={() =>
+              filters.minAmountRoom === 4
+                ? setFilters({ ...filters, minAmountRoom: undefined })
+                : setFilters({ ...filters, minAmountRoom: 4 })
+            }
           >
             4+
           </Button>
@@ -396,7 +428,11 @@ export function ListingFilters({
                 ? { background: "antiquewhite" }
                 : {}
             }
-            onClick={() => setFilters({ ...filters, minAmountBathroom: 1 })}
+            onClick={() =>
+              filters.minAmountBathroom === 1
+                ? setFilters({ ...filters, minAmountBathroom: undefined })
+                : setFilters({ ...filters, minAmountBathroom: 1 })
+            }
           >
             1+
           </Button>
@@ -406,7 +442,11 @@ export function ListingFilters({
                 ? { background: "antiquewhite" }
                 : {}
             }
-            onClick={() => setFilters({ ...filters, minAmountBathroom: 2 })}
+            onClick={() =>
+              filters.minAmountBathroom === 2
+                ? setFilters({ ...filters, minAmountBathroom: undefined })
+                : setFilters({ ...filters, minAmountBathroom: 2 })
+            }
           >
             2+
           </Button>
@@ -416,7 +456,11 @@ export function ListingFilters({
                 ? { background: "antiquewhite" }
                 : {}
             }
-            onClick={() => setFilters({ ...filters, minAmountBathroom: 3 })}
+            onClick={() =>
+              filters.minAmountBathroom === 3
+                ? setFilters({ ...filters, minAmountBathroom: undefined })
+                : setFilters({ ...filters, minAmountBathroom: 3 })
+            }
           >
             3+
           </Button>
@@ -426,7 +470,11 @@ export function ListingFilters({
                 ? { background: "antiquewhite" }
                 : {}
             }
-            onClick={() => setFilters({ ...filters, minAmountBathroom: 3 })}
+            onClick={() =>
+              filters.minAmountBathroom === 4
+                ? setFilters({ ...filters, minAmountBathroom: undefined })
+                : setFilters({ ...filters, minAmountBathroom: 4 })
+            }
           >
             4+
           </Button>
