@@ -28,7 +28,7 @@ ReactDOM.render(
             <App />
           </ErrorBoundary>
         </Provider>
-        <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
+        {/*<ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />*/}
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,

@@ -45,7 +45,7 @@ class PropertiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
       image: new Icon({
         src: "./icons/house.png",
         scale: 200 / 1024,
-        anchor: [1, 1],
+        anchor: [0.5, 0.75],
       }),
     });
 

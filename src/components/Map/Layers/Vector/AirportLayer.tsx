@@ -28,7 +28,7 @@ class AirportLayer extends React.PureComponent<TVectorLayerComponentProps> {
       image: new Icon({
         src: "./icons/airport.png",
         scale: 50 / 1024,
-        anchor: [1, 1],
+        anchor: [0.5, 0.75],
       }),
       text: new Text(),
     });
