@@ -169,9 +169,7 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
             }),
           ],
         }),
-        style: function () {
-          return [style];
-        },
+        style: style,
       });
       this.setState({ markerLayer: markerLayer });
       this.map.addLayer(markerLayer);
