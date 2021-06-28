@@ -28,7 +28,7 @@ class FireDepartmentLayer extends React.PureComponent<TVectorLayerComponentProps
       image: new Icon({
         src: "./icons/fire.png",
         scale: 10 / 1024,
-        anchor: [1, 1],
+        anchor: [0.5, 0.75],
       }),
       text: new Text(),
     });
