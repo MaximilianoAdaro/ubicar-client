@@ -19,7 +19,12 @@ export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
   return (
     <>
-      <Container fluid>
+      <Container
+        fluid
+        style={{
+          marginBottom: 50,
+        }}
+      >
         <h1 className={styles.mainTitle}>Publica tu propiedad</h1>
         <StepBar currentStep={currentStep} />
         <CurrentStep currentStep={currentStep} />

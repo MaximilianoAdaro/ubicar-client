@@ -19,6 +19,9 @@ if (process.env.REACT_APP_API_MODE === "mock") {
   require("./mock");
 }
 
+const showReactQueryDevTools =
+  process.env.REACT_APP_REACT_QUERY_DEVTOOLS ?? false;
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -28,7 +31,9 @@ ReactDOM.render(
             <App />
           </ErrorBoundary>
         </Provider>
-        {/*<ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />*/}
+        {showReactQueryDevTools && (
+          <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
+        )}
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,

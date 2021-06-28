@@ -1,6 +1,8 @@
 import { MdStar, MdStarBorder } from "react-icons/all";
 import { useLikePropertyUsingPUT, useDislikePropertyUsingPUT } from "../../api";
 import styles from "./FavoriteButton.module.scss";
+import { useQueryClient } from "react-query";
+import { getGetPropertyUsingGETQueryKey } from "../../api/generated/endpoints";
 
 type FavoriteButtonProps = {
   id: string;
@@ -8,8 +10,21 @@ type FavoriteButtonProps = {
 };
 
 export function FavoriteButton({ id, isLiked }: FavoriteButtonProps) {
-  const { mutate: likeProperty } = useLikePropertyUsingPUT();
-  const { mutate: dislikeProperty } = useDislikePropertyUsingPUT();
+  const queryClient = useQueryClient();
+  const { mutate: likeProperty } = useLikePropertyUsingPUT({
+    mutation: {
+      onSuccess() {
+        queryClient.invalidateQueries(getGetPropertyUsingGETQueryKey(id));
+      },
+    },
+  });
+  const { mutate: dislikeProperty } = useDislikePropertyUsingPUT({
+    mutation: {
+      onSuccess() {
+        queryClient.invalidateQueries(getGetPropertyUsingGETQueryKey(id));
+      },
+    },
+  });
 
   return (
     <div
