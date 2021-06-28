@@ -70,7 +70,7 @@ export function NavBar() {
                       id="buttonForm"
                       onClick={openAccountPopover}
                     >
-                      Mi cuenta
+                      {user.userName}
                       <IoMdArrowDropdown
                         className={styles.myAccountDropdownIcon}
                       />
@@ -89,15 +89,12 @@ export function NavBar() {
                       onClose={() => setAnchorAccount(null)}
                     >
                       <List>
-                        <ListItem className={styles.myAccountDropdownUserName}>
-                          {user.userName}
-                        </ListItem>
                         <ListItem>
                           <Link
                             to={urls.userProfile}
                             className={styles.myAccountDropdownAccount}
                           >
-                            Mi cuenta
+                            Mi perfil
                           </Link>
                         </ListItem>
                         <ListItem
