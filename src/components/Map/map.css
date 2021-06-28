@@ -5,5 +5,6 @@
   text-align: left;
 }
 
-.panel > ul > li {
+.panel > ul > li > input {
+  top: 15%;
 }

@@ -71,11 +71,14 @@ export function ListingPage() {
           ) : null}
         </Grid>
         <Grid item xl={3} sm={4} className={styles.propertyList}>
-          {!data && <h1>There was an error retrieving the properties</h1>}
-          {data &&
-            data.content?.map((casa) => (
+          {!data && <h2>There was an error retrieving the properties</h2>}
+          {data && data.content && data.content.length > 0 ? (
+            data.content.map((casa) => (
               <ListingHouse key={casa.id} house={casa} />
-            ))}
+            ))
+          ) : (
+            <h2>There are no properties with these filters</h2>
+          )}
         </Grid>
       </Grid>
     </div>
