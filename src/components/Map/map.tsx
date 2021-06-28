@@ -30,6 +30,7 @@ import Feature from "ol/Feature";
 import { Point } from "ol/geom";
 import VectorLayer from "ol/layer/Vector";
 import { PropertyPreviewDTO } from "../../api";
+import { Icon, Style } from "ol/style";
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
@@ -149,6 +150,13 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
         })
       );
       this.setState({ view: this.props.view });
+      const style = new Style({
+        image: new Icon({
+          src: "./icons/house.png",
+          scale: 200 / 1024,
+          anchor: [0.5, 0.75],
+        }),
+      });
       const markerLayer = new VectorLayer({
         source: new VectorSource({
           features: [
@@ -161,6 +169,9 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
             }),
           ],
         }),
+        style: function () {
+          return [style];
+        },
       });
       this.setState({ markerLayer: markerLayer });
       this.map.addLayer(markerLayer);
