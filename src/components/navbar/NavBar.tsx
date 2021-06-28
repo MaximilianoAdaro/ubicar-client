@@ -46,14 +46,14 @@ export function NavBar() {
         <Grid item xs>
           <Grid container className={styles.gridTagsContainer}>
             <Grid item xs></Grid>
-            <Grid item xs={3} xl={2} className={styles.gridTags}>
+            {/* <Grid item xs={3} xl={2} className={styles.gridTags}>
               <Link to={urls.listingPage} className={styles.navBarTags}>
                 Compra
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item xs={3} xl={2} className={styles.gridTags}>
               <Link to={urls.listingPage} className={styles.navBarTags}>
-                Alquiler
+                Ver Publicaciones
               </Link>
             </Grid>
             <Grid item xs={3} xl={2} className={styles.gridTags}>
