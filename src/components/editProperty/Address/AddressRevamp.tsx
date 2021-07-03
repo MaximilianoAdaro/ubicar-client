@@ -84,7 +84,7 @@ export const AddressRevamp = (address: AddressDTO) => {
             country: "Argentina",
             state: response.direcciones[0].provincia.nombre,
             city: response.direcciones[0].departamento.nombre,
-            street: response.direcciones[0].calle.nombre,
+            street: response.direcciones[0].calle.nombre.toLowerCase(),
           });
 
           //Nose devuelve en 4326 lo tenemos que convertir 3857
