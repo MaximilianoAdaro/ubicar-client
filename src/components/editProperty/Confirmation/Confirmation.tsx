@@ -15,6 +15,7 @@ import {
   getGetPropertyUsingGETQueryKey,
   useEditPropertyUsingPUT,
 } from "../../../api";
+import { toast } from "react-toastify";
 
 const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
@@ -63,7 +64,27 @@ export const Confirmation = ({ id }: Id) => {
   const { mutateAsync } = useEditPropertyUsingPUT({
     mutation: {
       onSuccess() {
+        toast.success(" ✅ Edited property!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
         queryClient.invalidateQueries(getGetPropertyUsingGETQueryKey(id));
+      },
+      onError() {
+        toast.error(" ❌ Error on editing property!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
       },
     },
   });

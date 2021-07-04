@@ -10,6 +10,7 @@ import {
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Confirmation.module.scss";
+import { toast } from "react-toastify";
 
 const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
@@ -51,7 +52,32 @@ const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
 export const Confirmation = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { mutateAsync } = useCreatePropertyUsingPOST();
+  const { mutateAsync } = useCreatePropertyUsingPOST({
+    mutation: {
+      onSuccess() {
+        toast.success(" ✅ Created Property!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+      onError() {
+        toast.error(" ❌ Error on creating property!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+    },
+  });
   const createPropertyState = useAppSelector(selectCreatePropertyState);
 
   const handleSend = async () => {
