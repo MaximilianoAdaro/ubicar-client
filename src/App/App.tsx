@@ -22,6 +22,7 @@ import { EditProperty } from "../routes/editProperty";
 import { Footer } from "../components/footer/Footer";
 import { useGetLoggedUsingGET } from "../api";
 import { useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -43,6 +44,17 @@ export default function App() {
 
   return (
     <>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+      />
       <NavBar />
       <div
         style={{

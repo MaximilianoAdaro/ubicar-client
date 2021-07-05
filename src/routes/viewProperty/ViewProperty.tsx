@@ -31,7 +31,7 @@ import {
   useGetPropertyUsingGET,
   useContactPropertyOwnerUsingPOST,
 } from "../../api";
-import { formatDistanceToNow } from "date-fns/esm";
+import { toast } from "react-toastify";
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -342,6 +342,26 @@ const ContactSection = ({ id }: ContactSectionProps) => {
         reset({
           ...getValues(),
           message: "",
+        });
+        toast.success(" ✅ Se ha enviado al dueño de la propiedad!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+      onError() {
+        toast.error(" ❌ Error enviando los datos al dueño de la propiedad!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
         });
       },
     },

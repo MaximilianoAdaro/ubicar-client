@@ -17,6 +17,6 @@ export const urls = {
 };
 
 export const errorMessages = {
-  required: "This field is required",
-  email: "The email is not valid",
+  required: "Este campo es requerido!",
+  email: "El Email no es valido!",
 };
