@@ -17,7 +17,6 @@ const schema = yup.object({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   email: yup.string().email().required(),
-  birthDate: yup.date().required(),
   userRole: yup.string().required(),
   password: yup.string().required(),
   confirmPassword: yup
@@ -50,7 +49,7 @@ export const SignUp = () => {
       await mutateAsync({
         data: {
           ...data,
-          birthDate: data.birthDate.toISOString(),
+          birthDate: new Date().toISOString(),
           userName: `${data.firstName} ${data.lastName}`,
         },
       });
@@ -97,13 +96,13 @@ export const SignUp = () => {
                       control={control}
                     />
                   </div>
-                  <div className={styles.inputContainer}>
+                  {/* <div className={styles.inputContainer}>
                     <HookFormDatePicker
                       label={"Fecha de nacimiento"}
                       name={"birthDate"}
                       control={control}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className={styles.column}>
