@@ -337,7 +337,7 @@ const ContactSection = ({ id }: ContactSectionProps) => {
   const { mutate: sendMessage, isLoading } = useContactPropertyOwnerUsingPOST({
     mutation: {
       onSuccess() {
-        toast.success(" ✅ Sent contact to property owner!", {
+        toast.success(" ✅ Se ha enviado al dueño de la propiedad!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -349,7 +349,7 @@ const ContactSection = ({ id }: ContactSectionProps) => {
         reset(defaultContactValues);
       },
       onError() {
-        toast.error(" ❌ Error on sending contact to property owner!", {
+        toast.error(" ❌ Error enviando los datos al dueño de la propiedad!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,

@@ -55,7 +55,7 @@ export const Confirmation = () => {
   const { mutateAsync } = useCreatePropertyUsingPOST({
     mutation: {
       onSuccess() {
-        toast.success(" ✅ Created Property!", {
+        toast.success(" ✅ Propriedad Creada!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -66,7 +66,7 @@ export const Confirmation = () => {
         });
       },
       onError() {
-        toast.error(" ❌ Error on creating property!", {
+        toast.error(" ❌ Error en la creacion de la propriedad!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,

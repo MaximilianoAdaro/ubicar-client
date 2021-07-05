@@ -17,7 +17,7 @@ export function FavoriteButton({ id, isLiked }: FavoriteButtonProps) {
     mutation: {
       onSuccess() {
         queryClient.invalidateQueries(getGetPropertyUsingGETQueryKey(id));
-        toast.success(" ✅ Saved property!", {
+        toast.success(" ✅ Propiedad guardada en favoritos!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -28,15 +28,18 @@ export function FavoriteButton({ id, isLiked }: FavoriteButtonProps) {
         });
       },
       onError() {
-        toast.error(" ❌ Error on saving property!", {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error(
+          " ❌ Error durante el guardado de propiedad en favoritos!",
+          {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+          }
+        );
       },
     },
   });
@@ -44,7 +47,7 @@ export function FavoriteButton({ id, isLiked }: FavoriteButtonProps) {
     mutation: {
       onSuccess() {
         queryClient.invalidateQueries(getGetPropertyUsingGETQueryKey(id));
-        toast.success(" ✅ Unsaved Property!", {
+        toast.success(" ✅ Propiedad borrada de favoritos!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -55,7 +58,7 @@ export function FavoriteButton({ id, isLiked }: FavoriteButtonProps) {
         });
       },
       onError() {
-        toast.error(" ❌ Error on unsaving property!", {
+        toast.error(" ❌ Error en el borrado de favoritos!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,

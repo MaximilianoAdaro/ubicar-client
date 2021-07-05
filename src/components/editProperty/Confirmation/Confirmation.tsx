@@ -64,7 +64,7 @@ export const Confirmation = ({ id }: Id) => {
   const { mutateAsync } = useEditPropertyUsingPUT({
     mutation: {
       onSuccess() {
-        toast.success(" ✅ Edited property!", {
+        toast.success(" ✅ Propiedad editada!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -76,7 +76,7 @@ export const Confirmation = ({ id }: Id) => {
         queryClient.invalidateQueries(getGetPropertyUsingGETQueryKey(id));
       },
       onError() {
-        toast.error(" ❌ Error on editing property!", {
+        toast.error(" ❌ Error en la edición de la Propiedad!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,
