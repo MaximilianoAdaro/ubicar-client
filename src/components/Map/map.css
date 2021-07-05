@@ -1,0 +1,10 @@
+.layer-switcher {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  text-align: left;
+}
+
+.panel > ul > li > input {
+  top: 15%;
+}

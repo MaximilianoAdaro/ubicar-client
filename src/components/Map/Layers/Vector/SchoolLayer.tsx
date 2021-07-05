@@ -28,17 +28,21 @@ class SchoolLayer extends React.PureComponent<TVectorLayerComponentProps> {
       image: new Icon({
         src: "./icons/school.png",
         scale: 100 / 1024,
-        anchor: [1, 1],
+        anchor: [0.5, 0.75],
       }),
       text: new Text(),
     });
 
     this.layer = new VectorLayer({
       source: this.source,
+      visible: this.state.visible, //Todo set redux variable.
       style: function () {
         return [style];
       },
     });
+
+    this.layer.set("title", "Colegios");
+    this.props.map.addLayer(this.layer);
   }
 
   componentWillUnmount() {
@@ -52,28 +56,10 @@ class SchoolLayer extends React.PureComponent<TVectorLayerComponentProps> {
         this.source.addFeatures(this.props.features);
       }
     }
-    if (this.state.visible) {
-      this.props.map.addLayer(this.layer);
-    } else {
-      this.props.map.removeLayer(this.layer);
-    }
   }
 
   render() {
-    return (
-      <div className="custom-control custom-checkbox">
-        <input
-          type="checkbox"
-          className="custom-control-input"
-          id="school"
-          checked={this.state.visible}
-          onChange={() => this.setState({ visible: !this.state.visible })}
-        />
-        <label className="custom-control-label" htmlFor="school">
-          Colegios
-        </label>
-      </div>
-    );
+    return null;
   }
 }
 

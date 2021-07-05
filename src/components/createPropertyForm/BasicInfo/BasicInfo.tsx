@@ -12,9 +12,9 @@ import {
 import { RadioInput } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
-import { useFetchPropertyTypes } from "../../../api/propertyOptionals";
+import { useGetTypesUsingGET, PropertyDTOCondition } from "../../../api";
 
 const schema = yup.object({
   price: yup.number().positive().required(),
@@ -33,13 +33,16 @@ export const BasicInfo = () => {
       type: propertyType,
     })
   );
+
   const dispatch = useAppDispatch();
 
-  const { data: types } = useFetchPropertyTypes();
+  const { data: types } = useGetTypesUsingGET();
 
-  if (defaults.type === undefined && types?.[0] !== undefined) {
-    dispatch(actions.createPropertyForm.setPropertyType(types[0]));
-  }
+  useEffect(() => {
+    if (defaults.type === undefined && types?.[0] !== undefined) {
+      dispatch(actions.createPropertyForm.setPropertyType(types[0]));
+    }
+  }, [defaults.type, types, dispatch]);
 
   const customForm = useCustomForm<BasicInfoFormData>({
     schema,
@@ -135,11 +138,11 @@ export const BasicInfo = () => {
 
 const operationTypes: RadioOption[] = [
   {
-    value: "SALE",
+    value: PropertyDTOCondition.SALE,
     displayName: "Venta",
   },
   {
-    value: "RENT",
+    value: PropertyDTOCondition.RENT,
     displayName: "Alquiler",
   },
 ];

@@ -5,13 +5,13 @@
 
 .propertyInformation {
   margin-bottom: 3%;
-  margin-top: 3%;
+  margin-top: 1.5%;
   border: 3px solid #d9d9d9;
   background: #f3eedc;
   padding: 0.5em;
 }
 
-p {
+.marginPaddingPTag {
   padding: 0;
   margin: 0;
 }
@@ -21,6 +21,8 @@ p {
   overflow: hidden;
   text-overflow: "...";
   font-weight: bold;
+  padding: 0;
+  margin: 0;
 }
 
 .propertyStreetNumber {
@@ -29,10 +31,12 @@ p {
   text-overflow: "...";
   font-weight: bold;
   font-size: 1em;
+  text-transform: capitalize;
 }
 
 .propertyTownCity {
   font-size: 0.9em;
+  text-transform: capitalize;
 }
 
 .propertySpecifications {

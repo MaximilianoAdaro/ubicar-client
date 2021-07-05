@@ -1,4 +1,7 @@
 import { Container } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { CreatePropertyDTO, useCreatePropertyUsingPOST } from "../../../api";
+import { urls } from "../../../constants";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   CreatePropertyState,
@@ -7,11 +10,7 @@ import {
 } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Confirmation.module.scss";
-
-import { useHistory } from "react-router-dom";
-import { useCreateProperty } from "../../../api/property";
-import { urls } from "../../../constants";
-import { CreatePropertyDTO } from "../../../generated/api";
+import { toast } from "react-toastify";
 
 const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
@@ -20,11 +19,12 @@ const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   condition: data.operationType,
   type: data.propertyType ?? "",
   address: {
-    town_id: data.addressDropdowns.town ?? "",
-    department: data.address.department,
-    number: data.address.number,
-    postalCode: data.address.postalCode,
+    country: data.address.country,
+    state: data.address.state,
+    city: data.address.city,
     street: data.address.street,
+    number: data.address.number,
+    coordinates: data.address.coordinates,
   },
   environments: data.characteristics.environments,
   coveredSquareFoot: data.characteristics.coveredSurface,
@@ -42,9 +42,9 @@ const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   links: data.youtubeLinks,
   contacts: data.contacts,
   openHouse: data.openHouses.map(({ day, initialTime, finalTime }) => ({
-    day,
-    initialTime: initialTime as any,
-    finalTime: finalTime as any,
+    day: new Date(day).toISOString(),
+    initialTime,
+    finalTime,
   })),
   comments: data.additional.description ?? "",
 });
@@ -52,12 +52,40 @@ const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
 export const Confirmation = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { mutateAsync } = useCreateProperty();
+  const { mutateAsync } = useCreatePropertyUsingPOST({
+    mutation: {
+      onSuccess() {
+        toast.success(" ✅ Propriedad Creada!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+      onError() {
+        toast.error(" ❌ Error en la creacion de la propriedad!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+    },
+  });
   const createPropertyState = useAppSelector(selectCreatePropertyState);
 
   const handleSend = async () => {
     try {
-      await mutateAsync(createRequestData(createPropertyState));
+      await mutateAsync({
+        data: createRequestData(createPropertyState),
+      });
+      dispatch(actions.createPropertyForm.reset());
       history.push(urls.home);
     } catch (e) {
       throw Error;

@@ -1,0 +1,86 @@
+@import "src/styles/common";
+$theme-goldish-changed: #cd863d;
+
+.navBarContainer {
+  margin-top: 10px;
+  height: 3.5em;
+  text-align: center;
+  border-bottom: 2px solid $theme-goldish-changed;
+}
+.UbicarTitle {
+  color: black;
+  &:hover {
+    color: black;
+    text-decoration: none;
+  }
+}
+
+.imageLogo {
+  height: 1.75em;
+  padding-left: 5%;
+  margin-right: 0.5em;
+}
+
+.navBarLogo {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-top: 0.25em;
+
+  p {
+    margin-top: 0.1em;
+  }
+  a {
+    text-decoration: none;
+  }
+}
+
+.navBarOptions {
+  margin-top: 0.9em;
+}
+
+.navBarTags {
+  text-decoration: none;
+  color: black;
+  margin-top: 0.6em;
+  font-weight: bold;
+}
+.navBarTags:hover {
+  text-decoration: none;
+  color: grey;
+}
+
+.gridTagsContainer {
+  margin-top: 0.9em;
+}
+
+.gridTags {
+  margin-top: 0.15em;
+  border-right: 1px solid $theme-goldish-changed;
+}
+
+.myAccountButton {
+  background: white;
+  border: none;
+  color: black;
+  font-weight: bold;
+}
+
+.myAccountDropdownIcon {
+  color: black;
+}
+
+.myAccountDropdownAccount {
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+  }
+}
+
+.myAccountDropdownUserName {
+  font-weight: bold;
+  font-size: 0.9em;
+}

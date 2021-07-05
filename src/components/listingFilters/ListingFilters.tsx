@@ -1,5 +1,5 @@
 import styles from "./ListingFilters.module.scss";
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Grid,
@@ -7,40 +7,98 @@ import {
   List,
   ListItem,
   Popover,
-  StylesProvider,
   TextField,
+  withStyles,
 } from "@material-ui/core";
 import { MdSearch as SearchIcon } from "react-icons/md";
-import { useLoggedUser } from "../../api/auth";
+import DropdownItem from "react-bootstrap/DropdownItem";
+import { Dropdown } from "react-bootstrap";
+import {
+  PropertyFilterDto,
+  StyleDTO,
+  GetTypesUsingGET200Item,
+  useGetLoggedUsingGET,
+} from "../../api";
 
-export function ListingFilters() {
-  // const [city, setCity] = useState();
-  const [anchorSale, setAnchorSale] = useState(null);
-  const [anchorPrice, setAnchorPrice] = useState(null);
-  const [anchorRooms, setAnchorRooms] = useState(null);
-  const [anchorBaths, setAnchorBaths] = useState(null);
-  const [anchorSqMts, setAnchorSqMts] = useState(null);
+type ListingFiltersProp = {
+  filters: PropertyFilterDto;
+  setFilters: (filters: PropertyFilterDto) => void;
+  houseStyles: StyleDTO[] | null;
+  houseTypes: GetTypesUsingGET200Item[] | null;
+};
 
-  const openSalePopover = (event: any) => {
+const StyledButton = withStyles({
+  root: {
+    background: "white",
+    paddingLeft: "0.7em",
+    paddingRight: "0.7em",
+    textTransform: "none",
+    marginLeft: "1.5rem",
+    border: "1px #4a636c solid",
+    "&:hover": {
+      background: "#f2f2f2",
+    },
+  },
+})(Button);
+
+export function ListingFilters({
+  filters,
+  setFilters,
+  houseStyles,
+  houseTypes,
+}: ListingFiltersProp) {
+  const [anchorSale, setAnchorSale] = React.useState<HTMLButtonElement | null>(
+    null
+  );
+  const [anchorPrice, setAnchorPrice] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [anchorRooms, setAnchorRooms] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [anchorBaths, setAnchorBaths] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [anchorSqMts, setAnchorSqMts] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [anchorStyles, setAnchorStyles] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [anchorTypes, setAnchorTypes] =
+    React.useState<HTMLButtonElement | null>(null);
+
+  const openSalePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorSale(event.currentTarget);
   };
-  const openPricePopover = (event: any) => {
+
+  const openPricePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorPrice(event.currentTarget);
   };
-  const openRoomsPopover = (event: any) => {
+
+  const openRoomsPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorRooms(event.currentTarget);
   };
-  const openBathsPopover = (event: any) => {
+
+  const openBathsPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorBaths(event.currentTarget);
   };
-  const openSqMtsPopover = (event: any) => {
+
+  const openSqMtsPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorSqMts(event.currentTarget);
   };
 
-  const { data: user } = useLoggedUser();
+  const openStylePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorStyles(event.currentTarget);
+  };
+
+  const openTypesPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorTypes(event.currentTarget);
+  };
+
+  const clearFilters = () => {
+    setFilters({});
+  };
+
+  const { data: user } = useGetLoggedUsingGET();
 
   return (
-    <StylesProvider injectFirst>
+    <div>
       <Grid container className={styles.OptionsFilters}>
         <Grid className={styles.searchBar}>
           <Grid>
@@ -51,52 +109,80 @@ export function ListingFilters() {
             <SearchIcon />
           </Grid>
         </Grid>
-        <Button
-          className={styles.filtersButton}
+        <StyledButton
           id="buttonForm"
           size="small"
           onClick={openSalePopover}
+          style={filters.condition ? { background: "antiquewhite" } : {}}
         >
-          En Venta
-        </Button>
-        <Button
-          className={styles.filtersButton}
+          {filters.condition
+            ? filters.condition === "SALE"
+              ? "En Venta"
+              : "En Alquiler"
+            : "En Venta"}
+        </StyledButton>
+        <StyledButton
           size="small"
           onClick={openPricePopover}
+          style={
+            filters.minPrice || filters.maxPrice
+              ? { background: "antiquewhite" }
+              : {}
+          }
         >
           Precio
-        </Button>
-        <Button
-          className={styles.filtersButton}
+        </StyledButton>
+        <StyledButton
           size="small"
           onClick={openRoomsPopover}
+          style={filters.minAmountRoom ? { background: "antiquewhite" } : {}}
         >
-          Habitaciones
-        </Button>
-        <Button
-          className={styles.filtersButton}
+          {filters.minAmountRoom
+            ? filters.minAmountRoom + "+ Habitaciones"
+            : "Habitaciones"}
+        </StyledButton>
+        <StyledButton
           size="small"
           onClick={openBathsPopover}
+          style={
+            filters.minAmountBathroom ? { background: "antiquewhite" } : {}
+          }
         >
-          Baños
-        </Button>
-        <Button
-          className={styles.filtersButton}
+          {filters.minAmountBathroom
+            ? filters.minAmountBathroom + "+ Baños"
+            : "Baños"}
+        </StyledButton>
+        <StyledButton
           size="small"
           onClick={openSqMtsPopover}
+          style={
+            filters.minAmountSquareMeter || filters.maxAmountSquareMeter
+              ? { background: "antiquewhite" }
+              : {}
+          }
         >
           Metros Cuadrados
-        </Button>
-        <div style={{ marginLeft: "auto", marginRight: 0 }}>
-          {user && (
-            <h5 style={{ color: "dimgrey", margin: 0 }}>{user.userName}</h5>
-          )}
-        </div>
-        {/*<Button className={styles.filtersButton} size="small">*/}
-        {/*  Otros*/}
-        {/*</Button>*/}
+        </StyledButton>
+        <StyledButton
+          size="small"
+          onClick={openStylePopover}
+          style={filters.style ? { background: "antiquewhite" } : {}}
+        >
+          Estilo
+        </StyledButton>
+
+        <StyledButton
+          size="small"
+          onClick={openTypesPopover}
+          style={filters.typeProperty ? { background: "antiquewhite" } : {}}
+        >
+          Tipo
+        </StyledButton>
+
+        <StyledButton size="small" onClick={clearFilters}>
+          Limpiar Filtros
+        </StyledButton>
       </Grid>
-      {/*<Popover open={}>En Venta</Popover>*/}
       <Popover
         open={Boolean(anchorSale)}
         anchorEl={anchorSale}
@@ -111,9 +197,93 @@ export function ListingFilters() {
         onClose={() => setAnchorSale(null)}
       >
         <List>
-          <ListItem>En Venta</ListItem>
-          <ListItem>En Alquiler</ListItem>
+          <ListItem
+            onClick={() =>
+              filters.condition === "SALE"
+                ? setFilters({ ...filters, condition: undefined })
+                : setFilters({ ...filters, condition: "SALE" })
+            }
+            className={styles.conditionHover}
+          >
+            En Venta
+          </ListItem>
+          <ListItem
+            onClick={() =>
+              filters.condition === "RENT"
+                ? setFilters({ ...filters, condition: undefined })
+                : setFilters({ ...filters, condition: "RENT" })
+            }
+            className={styles.conditionHover}
+          >
+            En Alquiler
+          </ListItem>
         </List>
+      </Popover>
+      <Popover
+        open={Boolean(anchorStyles)}
+        anchorEl={anchorStyles}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        onClose={() => setAnchorStyles(null)}
+      >
+        <Dropdown>
+          {houseStyles?.map((data) => {
+            return (
+              <DropdownItem
+                onClick={() =>
+                  filters.style === data
+                    ? setFilters({ ...filters, style: undefined })
+                    : setFilters({ ...filters, style: data })
+                }
+                style={
+                  filters.style === data ? { background: "antiquewhite" } : {}
+                }
+              >
+                {data.label}
+              </DropdownItem>
+            );
+          })}
+        </Dropdown>
+      </Popover>
+      <Popover
+        open={Boolean(anchorTypes)}
+        anchorEl={anchorTypes}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setAnchorTypes(null)}
+      >
+        <Dropdown>
+          {houseTypes?.map((data) => {
+            return (
+              <DropdownItem
+                onClick={() =>
+                  filters.typeProperty === data
+                    ? setFilters({ ...filters, typeProperty: undefined })
+                    : setFilters({ ...filters, typeProperty: data })
+                }
+                style={
+                  filters.typeProperty === data
+                    ? { background: "antiquewhite" }
+                    : {}
+                }
+              >
+                {data}
+              </DropdownItem>
+            );
+          })}
+        </Dropdown>
       </Popover>
       <Popover
         open={Boolean(anchorPrice)}
@@ -134,14 +304,24 @@ export function ListingFilters() {
             placeholder="Min"
             className={styles.priceMinInp}
             variant="outlined"
+            type="number"
+            value={filters.minPrice}
             size="small"
+            onChange={(e) =>
+              setFilters({ ...filters, minPrice: parseInt(e.target.value) })
+            }
           />
 
           <TextField
             placeholder="Max"
             className={styles.priceMaxInp}
             variant="outlined"
+            type="number"
+            value={filters.maxPrice}
             size="small"
+            onChange={(e) =>
+              setFilters({ ...filters, maxPrice: parseInt(e.target.value) })
+            }
           />
         </Grid>
       </Popover>
@@ -166,10 +346,54 @@ export function ListingFilters() {
             justifyContent: "space-between",
           }}
         >
-          <Button>1+</Button>
-          <Button>2+</Button>
-          <Button>3+</Button>
-          <Button>4+</Button>
+          <Button
+            style={
+              filters.minAmountRoom === 1 ? { background: "antiquewhite" } : {}
+            }
+            onClick={() =>
+              filters.minAmountRoom === 1
+                ? setFilters({ ...filters, minAmountRoom: undefined })
+                : setFilters({ ...filters, minAmountRoom: 1 })
+            }
+          >
+            1+
+          </Button>
+          <Button
+            style={
+              filters.minAmountRoom === 2 ? { background: "antiquewhite" } : {}
+            }
+            onClick={() =>
+              filters.minAmountRoom === 2
+                ? setFilters({ ...filters, minAmountRoom: undefined })
+                : setFilters({ ...filters, minAmountRoom: 2 })
+            }
+          >
+            2+
+          </Button>
+          <Button
+            style={
+              filters.minAmountRoom === 3 ? { background: "antiquewhite" } : {}
+            }
+            onClick={() =>
+              filters.minAmountRoom === 3
+                ? setFilters({ ...filters, minAmountRoom: undefined })
+                : setFilters({ ...filters, minAmountRoom: 3 })
+            }
+          >
+            3+
+          </Button>
+          <Button
+            style={
+              filters.minAmountRoom === 4 ? { background: "antiquewhite" } : {}
+            }
+            onClick={() =>
+              filters.minAmountRoom === 4
+                ? setFilters({ ...filters, minAmountRoom: undefined })
+                : setFilters({ ...filters, minAmountRoom: 4 })
+            }
+          >
+            4+
+          </Button>
         </Grid>
       </Popover>
       <Popover
@@ -193,10 +417,62 @@ export function ListingFilters() {
             justifyContent: "space-between",
           }}
         >
-          <Button>1+</Button>
-          <Button>2+</Button>
-          <Button>3+</Button>
-          <Button>4+</Button>
+          <Button
+            style={
+              filters.minAmountBathroom === 1
+                ? { background: "antiquewhite" }
+                : {}
+            }
+            onClick={() =>
+              filters.minAmountBathroom === 1
+                ? setFilters({ ...filters, minAmountBathroom: undefined })
+                : setFilters({ ...filters, minAmountBathroom: 1 })
+            }
+          >
+            1+
+          </Button>
+          <Button
+            style={
+              filters.minAmountBathroom === 2
+                ? { background: "antiquewhite" }
+                : {}
+            }
+            onClick={() =>
+              filters.minAmountBathroom === 2
+                ? setFilters({ ...filters, minAmountBathroom: undefined })
+                : setFilters({ ...filters, minAmountBathroom: 2 })
+            }
+          >
+            2+
+          </Button>
+          <Button
+            style={
+              filters.minAmountBathroom === 3
+                ? { background: "antiquewhite" }
+                : {}
+            }
+            onClick={() =>
+              filters.minAmountBathroom === 3
+                ? setFilters({ ...filters, minAmountBathroom: undefined })
+                : setFilters({ ...filters, minAmountBathroom: 3 })
+            }
+          >
+            3+
+          </Button>
+          <Button
+            style={
+              filters.minAmountBathroom === 4
+                ? { background: "antiquewhite" }
+                : {}
+            }
+            onClick={() =>
+              filters.minAmountBathroom === 4
+                ? setFilters({ ...filters, minAmountBathroom: undefined })
+                : setFilters({ ...filters, minAmountBathroom: 4 })
+            }
+          >
+            4+
+          </Button>
         </Grid>
       </Popover>
       <Popover
@@ -218,17 +494,33 @@ export function ListingFilters() {
             placeholder="Min"
             className={styles.priceMinInp}
             variant="outlined"
+            type="number"
+            value={filters.minAmountSquareMeter}
             size="small"
+            onChange={(e) =>
+              setFilters({
+                ...filters,
+                minAmountSquareMeter: parseInt(e.target.value),
+              })
+            }
           />
           <TextField
             placeholder="Max"
             className={styles.priceMaxInp}
             variant="outlined"
+            type="number"
+            value={filters.maxAmountSquareMeter}
             size="small"
+            onChange={(e) =>
+              setFilters({
+                ...filters,
+                maxAmountSquareMeter: parseInt(e.target.value),
+              })
+            }
           />
         </Grid>
       </Popover>
       {/*<Popover open={}>Otros</Popover>*/}
-    </StylesProvider>
+    </div>
   );
 }

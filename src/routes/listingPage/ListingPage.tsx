@@ -1,32 +1,84 @@
 import Grid from "@material-ui/core/Grid";
-import { ListingHouse } from "../../components/listingHouse/";
-import styles from "./ListingPage.module.scss";
 import { ListingFilters } from "../../components/listingFilters/";
+import { ListingHouse } from "../../components/listingHouse/";
+import { MapComponent } from "../../components/Map/map";
 import { useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
-import { MapComponent } from "../../components/Map/map";
-import { useFetchProperties } from "../../api/property";
+import styles from "./ListingPage.module.scss";
+import { useEffect, useState } from "react";
+import {
+  PropertyFilterDto,
+  PagePropertyPreviewDTO,
+  useGetStylesUsingGET,
+  useGetTypesUsingGET,
+  useGetPropertiesFilteredUsingPOST,
+} from "../../api";
 
 export function ListingPage() {
-  const data = useFetchProperties();
+  const [filters, setFilters] = useState<PropertyFilterDto>({});
+
+  const [data, setData] = useState<PagePropertyPreviewDTO | null>(null);
+
+  const { data: houseStyles } = useGetStylesUsingGET();
+  const { data: houseTypes } = useGetTypesUsingGET();
+
+  const checkNotUndefined = (value: any) => {
+    return value ? value : null;
+  };
+
+  const { mutateAsync: getFilteredProperties } =
+    useGetPropertiesFilteredUsingPOST();
+  useEffect(() => {
+    const f = async () => {
+      const data = await getFilteredProperties({
+        params: { page: 0 },
+        data: {
+          condition: checkNotUndefined(filters.condition),
+          typeProperty: checkNotUndefined(filters.typeProperty),
+          minPrice: parseFloat(checkNotUndefined(filters.minPrice)),
+          maxPrice: parseFloat(checkNotUndefined(filters.maxPrice)),
+          style: checkNotUndefined(filters.style),
+          minAmountBathroom: checkNotUndefined(filters.minAmountBathroom),
+          minAmountRoom: checkNotUndefined(filters.minAmountRoom),
+          minAmountSquareMeter: checkNotUndefined(filters.minAmountSquareMeter),
+          maxAmountSquareMeter: checkNotUndefined(filters.maxAmountSquareMeter),
+        },
+      });
+      setData(data);
+    };
+    f();
+  }, [filters]);
+
   const zoom = useAppSelector(selectZoom);
   const view = useAppSelector(selectView);
-
   return (
     <div>
-      <ListingFilters />
+      <ListingFilters
+        filters={filters}
+        setFilters={setFilters}
+        houseStyles={houseStyles ? houseStyles : null}
+        houseTypes={houseTypes ? houseTypes : null}
+      />
       <Grid container className={styles.mapAndProperties}>
         <Grid item xl={9} sm={8} className={styles.map}>
-          <MapComponent zoom={zoom} view={view} />
+          {data && data.content !== null ? (
+            <MapComponent
+              properties={data.content}
+              zoom={zoom}
+              view={view}
+              renderLayers={true}
+            />
+          ) : null}
         </Grid>
         <Grid item xl={3} sm={4} className={styles.propertyList}>
-          {data.status === "error" && (
-            <h1>There was an error retrieving the properties</h1>
-          )}
-          {data.status === "success" &&
-            data?.data.content?.map((casa: any) => (
+          {!data && <h2>There was an error retrieving the properties</h2>}
+          {data && data.content && data.content.length > 0 ? (
+            data.content.map((casa) => (
               <ListingHouse key={casa.id} house={casa} />
-            ))}
+            ))
+          ) : (
+            <h2>There are no properties with these filters</h2>
+          )}
         </Grid>
       </Grid>
     </div>

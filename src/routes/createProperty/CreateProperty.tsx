@@ -1,5 +1,4 @@
 import { BasicInfo } from "../../components/createPropertyForm/BasicInfo/BasicInfo";
-import { Address } from "../../components/createPropertyForm/Address/Address";
 import { Characteristics } from "../../components/createPropertyForm/Characteristics/Characteristics";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
 import {
@@ -14,13 +13,19 @@ import styles from "./CreateProperty.module.scss";
 import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
+import { AddressRevamp } from "../../components/createPropertyForm/Address/AddressRevamp";
 
 export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
   return (
     <>
-      <Container fluid>
-        <h1 className={styles.title}>Publica tu propiedad</h1>
+      <Container
+        fluid
+        style={{
+          marginBottom: 50,
+        }}
+      >
+        <h1 className={styles.mainTitle}>Publica tu propiedad</h1>
         <StepBar currentStep={currentStep} />
         <CurrentStep currentStep={currentStep} />
       </Container>
@@ -102,7 +107,7 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     case Step.BasicInfo:
       return <BasicInfo />;
     case Step.Address:
-      return <Address />;
+      return <AddressRevamp />;
     case Step.Characteristics:
       return <Characteristics />;
     case Step.OptionalInfo:

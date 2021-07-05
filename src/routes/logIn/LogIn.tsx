@@ -1,18 +1,18 @@
-import * as yup from "yup";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Container, Grid, Typography, Link as MLink } from "@material-ui/core";
-import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
-import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
-import styles from "./LogIn.module.scss";
-import { RoundedButton } from "../../components/common/buttons/RoundedButton";
-import GoogleLogin from "./GoogleLogin";
-import { DividerWithText } from "../../components/common/DividerWithText";
+import { Container, Link as MLink, Typography } from "@material-ui/core";
+import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
-import { actions, useAppDispatch, useAppSelector } from "../../store";
-import { selectRedirectPath } from "../../store/slices/session";
-import { useSignIn } from "../../api/auth";
+import * as yup from "yup";
+import { useSignIn } from "../../api/custom/auth";
+import { RoundedButton } from "../../components/common/buttons/RoundedButton";
+import { DividerWithText } from "../../components/common/DividerWithText";
+import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
+import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
 import { urls } from "../../constants";
+import { useAppSelector } from "../../store";
+import { selectRedirectPath } from "../../store/slices/session";
+import GoogleLogin from "./GoogleLogin";
+import styles from "./LogIn.module.scss";
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -23,10 +23,9 @@ type LogInFormData = yup.InferType<typeof schema>;
 
 export const LogIn = () => {
   const history = useHistory();
-  const dispatch = useAppDispatch();
   const redirectPath = useAppSelector(selectRedirectPath);
 
-  const { mutateAsync, isLoading } = useSignIn();
+  const { mutateAsync: signIn, isLoading } = useSignIn();
 
   const { control, handleSubmit } = useForm<LogInFormData>({
     resolver: yupResolver(schema),
@@ -35,8 +34,7 @@ export const LogIn = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const signInRes = await mutateAsync(data);
-      dispatch(actions.session.setUser(signInRes));
+      await signIn({ data });
       history.push(redirectPath);
     } catch (e) {}
   });
@@ -48,16 +46,16 @@ export const LogIn = () => {
       </div>
 
       <div className={styles.form}>
-        <div className={"w-25"}>
+        <div>
           <form onSubmit={onSubmit}>
-            <div className={"mt-5"}>
+            <div className={styles.input}>
               <HookFormTextField
                 label={"Email"}
                 name={"email"}
                 control={control}
               />
             </div>
-            <div className={"mt-4"}>
+            <div className={styles.input}>
               <HookFormPasswordInput
                 label={"Contraseña"}
                 name={"password"}
@@ -76,7 +74,7 @@ export const LogIn = () => {
                 </Link>
               </div>
             </div>
-            <div className="mt-2">
+            <div>
               <DividerWithText>O</DividerWithText>
             </div>
           </form>

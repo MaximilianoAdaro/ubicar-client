@@ -28,17 +28,20 @@ class HospitalLayer extends React.PureComponent<TVectorLayerComponentProps> {
       image: new Icon({
         src: "./icons/hospital.png",
         scale: 30 / 1024,
-        anchor: [1, 1],
+        anchor: [0.5, 0.75],
       }),
       text: new Text(),
     });
 
     this.layer = new VectorLayer({
       source: this.source,
+      visible: this.state.visible,
       style: function () {
         return [style];
       },
     });
+    this.layer.set("title", "Hospitales");
+    this.props.map.addLayer(this.layer);
   }
 
   componentWillUnmount() {
@@ -52,28 +55,10 @@ class HospitalLayer extends React.PureComponent<TVectorLayerComponentProps> {
         this.source.addFeatures(this.props.features);
       }
     }
-    if (this.state.visible) {
-      this.props.map.addLayer(this.layer);
-    } else {
-      this.props.map.removeLayer(this.layer);
-    }
   }
 
   render() {
-    return (
-      <div className="custom-control custom-checkbox">
-        <input
-          type="checkbox"
-          className="custom-control-input"
-          id="hospital"
-          checked={this.state.visible}
-          onChange={() => this.setState({ visible: !this.state.visible })}
-        />
-        <label className="custom-control-label" htmlFor="hospital">
-          Hospitales
-        </label>
-      </div>
-    );
+    return null;
   }
 }
 

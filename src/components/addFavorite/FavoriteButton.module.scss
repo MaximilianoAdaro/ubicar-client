@@ -1,0 +1,10 @@
+@import "src/styles/common";
+
+.iconContainer {
+  cursor: pointer;
+
+  .icon {
+    font-size: 30px;
+    color: $theme-goldish;
+  }
+}

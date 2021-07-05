@@ -1,17 +1,29 @@
 import styles from "./ListingHouse.module.scss";
 import { Image } from "react-bootstrap";
-import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { Tooltip } from "@material-ui/core";
+import pluralize from "pluralize";
+import { useHistory } from "react-router-dom";
+import { urls } from "../../constants";
+import { PropertyPreviewDTO } from "../../api";
+import clsx from "clsx";
 
-export function ListingHouse(props: any) {
+interface ListingHouseProps {
+  house: PropertyPreviewDTO;
+}
+
+export function ListingHouse(props: ListingHouseProps) {
+  const history = useHistory();
   const house = props.house;
   const houseAddress = house.address;
   const houseStreetNumber = `${houseAddress.street} ${houseAddress.number}`;
-  const pluralize = require("pluralize");
   const baths = pluralize("baño", house.fullBaths);
   return (
-    <Grid container className={styles.propertyInformation}>
+    <Grid
+      container
+      className={styles.propertyInformation}
+      onClick={() => history.push(urls.viewProperty.byId(house.id))}
+    >
       <Grid xs={6}>
         <Image
           className={styles.propertiesImages}
@@ -21,20 +33,40 @@ export function ListingHouse(props: any) {
       </Grid>
       <Grid xs={6}>
         <Tooltip title={house.title}>
-          <p className={styles.propertyTitle}>{house.title}</p>
+          <p className={clsx(styles.propertyTitle, styles.marginPaddingPTag)}>
+            {house.title}
+          </p>
         </Tooltip>
-        <p className={styles.propertyPriceCondition}>
-          ${house.price.toLocaleString()} &nbsp;|&nbsp; En venta
+        <p
+          className={clsx(
+            styles.propertyPriceCondition,
+            styles.marginPaddingPTag
+          )}
+        >
+          ${house.price.toLocaleString()} &nbsp;|&nbsp; En{" "}
+          {house.condition === "SALE" ? "Venta" : "Alquiler"}
         </p>
-        <p className={styles.propertySpecifications}>
+        <p
+          className={clsx(
+            styles.propertySpecifications,
+            styles.marginPaddingPTag
+          )}
+        >
           {house.squareFoot} m² &nbsp;&nbsp;|&nbsp;&nbsp; {house.rooms} hab.
           &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths} {baths}
         </p>
         <Tooltip title={houseStreetNumber}>
-          <p className={styles.propertyStreetNumber}>{houseStreetNumber}</p>
+          <p
+            className={clsx(
+              styles.propertyStreetNumber,
+              styles.marginPaddingPTag
+            )}
+          >
+            {houseStreetNumber}
+          </p>
         </Tooltip>
-        <p className={styles.propertyTownCity}>
-          {houseAddress.town.name}, {houseAddress.town.city.name}
+        <p className={clsx(styles.propertyTownCity, styles.marginPaddingPTag)}>
+          {houseAddress.state}, {houseAddress.city}
         </p>
       </Grid>
     </Grid>

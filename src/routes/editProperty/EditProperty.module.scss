@@ -1,0 +1,43 @@
+@import "../../styles/common";
+
+.title {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0.5em;
+  color: $theme-goldish;
+}
+
+.stepBarContainer {
+  display: flex;
+  width: auto;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  margin-bottom: 5em;
+}
+
+.stepBarItem {
+  display: flex;
+  flex-direction: column;
+  height: 35px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.highlighter {
+  height: 4px;
+  width: 80%;
+  border: 1px solid $theme-light-blue;
+  border-radius: 30px;
+}
+
+.active {
+  border-color: $theme-darker-blue;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.editPropertyContainer {
+  margin-bottom: 5vh;
+}
