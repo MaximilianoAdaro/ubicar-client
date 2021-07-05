@@ -11,7 +11,7 @@ import {
   getYearDistance,
   translateCondition,
 } from "./viewPropertyUtils";
-import { AddressDTO } from "../../api";
+import { AddressDTO, UserDTO } from "../../api";
 import { formatPrice } from "../../utils/utils";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -310,7 +310,7 @@ const getAddressItem = (name: string, value: string) => {
 const schema = yup.object({
   name: yup.string().required(errorMessages.required),
   email: yup.string().required(errorMessages.required),
-  cellphone: yup.string().required(errorMessages.required),
+  cellphone: yup.string(),
   message: yup.string().required(errorMessages.required),
 });
 
@@ -320,23 +320,29 @@ type ContactSectionProps = {
   id: string;
 };
 
-const defaultContactValues: ContactForm = {
-  name: "",
-  email: "",
+const defaultContactValues = (user: UserDTO | undefined): ContactForm => ({
+  name: user?.userName ?? "",
+  email: user?.email ?? "",
   cellphone: "",
   message: "",
-};
+});
 
 const ContactSection = ({ id }: ContactSectionProps) => {
-  const { control, handleSubmit, reset } = useForm<ContactForm>({
+  const { data: currentUser } = useGetLoggedUsingGET();
+
+  const { control, handleSubmit, reset, getValues } = useForm<ContactForm>({
     resolver: yupResolver(schema),
     mode: "onBlur",
-    defaultValues: defaultContactValues,
+    defaultValues: defaultContactValues(currentUser),
   });
 
   const { mutate: sendMessage, isLoading } = useContactPropertyOwnerUsingPOST({
     mutation: {
       onSuccess() {
+        reset({
+          ...getValues(),
+          message: "",
+        });
         toast.success(" ✅ Se ha enviado al dueño de la propiedad!", {
           position: "bottom-center",
           autoClose: 5000,
@@ -346,7 +352,6 @@ const ContactSection = ({ id }: ContactSectionProps) => {
           draggable: true,
           progress: undefined,
         });
-        reset(defaultContactValues);
       },
       onError() {
         toast.error(" ❌ Error enviando los datos al dueño de la propiedad!", {
@@ -365,7 +370,10 @@ const ContactSection = ({ id }: ContactSectionProps) => {
   const onSubmit = handleSubmit((data) => {
     sendMessage({
       id,
-      data,
+      data: {
+        ...data,
+        cellphone: data.cellphone ?? "",
+      },
     });
   });
 
@@ -398,7 +406,7 @@ const ContactSection = ({ id }: ContactSectionProps) => {
           </div>
           <div className={styles.contactInputContainer}>
             <HookFormTextField
-              label={"Telefono"}
+              label={"Telefono (opcional)"}
               name={"cellphone"}
               control={control}
               additionalStyles={{
