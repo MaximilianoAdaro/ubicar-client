@@ -20,7 +20,7 @@ if (process.env.REACT_APP_API_MODE === "mock") {
 }
 
 const showReactQueryDevTools =
-  process.env.REACT_APP_REACT_QUERY_DEVTOOLS ?? false;
+  process.env.REACT_APP_REACT_QUERY_DEVTOOLS === "true" ?? false;
 
 ReactDOM.render(
   <React.StrictMode>
