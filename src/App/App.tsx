@@ -23,6 +23,7 @@ import { Footer } from "../components/footer/Footer";
 import { useGetLoggedUsingGET } from "../api";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { RecommendationList } from "../components/RecomendationList";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -76,6 +77,7 @@ export default function App() {
           <Route exact path={urls.editProperty.path} component={EditProperty} />
           <Route exact path={"/loading"} component={Loading} />
           <Route exact path={urls.userProfile} component={UserProfile} />
+          <Route exact path={"/recomList"} component={RecommendationList} />
           <Route component={NotFound} />
         </Switch>
       </div>
