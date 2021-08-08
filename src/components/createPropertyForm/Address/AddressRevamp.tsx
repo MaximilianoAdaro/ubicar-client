@@ -9,6 +9,7 @@ import { MapComponent } from "../../Map/map";
 import customInstance from "../../../api/mutator/custom-instance";
 import { MapView } from "../../../store/slices/map/mapSlice";
 import { transformFrom3857to4326 } from "../../Map/utils";
+import { toast } from "react-toastify";
 
 export type getApiRequestParams = {
   direccion: string;
@@ -61,6 +62,7 @@ export const AddressRevamp = () => {
     coordinates: { lat: 0, long: 0 },
   });
   const [load, setLoad] = useState(false);
+  const [load2, setLoad2] = useState(false);
   const [error, setError] = useState(true);
   const dispatch = useAppDispatch();
 
@@ -72,44 +74,68 @@ export const AddressRevamp = () => {
   };
 
   const handleChangeClick = (lat: number, lon: number) => {
-    setView({ longitude: lon, latitude: lat });
+    if (!load2) {
+      ////Nos devuelve en 3857 lo tenemos que convertir 4326
+      setLoad2(true);
+      const coord = transformFrom3857to4326([lon, lat]);
 
-    ////Nos devuelve en 3857 lo tenemos que convertir 4326
-    const coord = transformFrom3857to4326([lon, lat]);
+      //tenemos que hacer un reverse geocoding para verificar si esta en el mismo municipio que el geocoding original
 
-    //tenemos que hacer un reverse geocoding para verificar si esta en el mismo municipio que el geocoding original
+      //https://apis.datos.gob.ar/georef/api/ubicacion?lat=-27.2741&lon=-66.7529
 
-    //https://apis.datos.gob.ar/georef/api/ubicacion?lat=-27.2741&lon=-66.7529
+      const fun = async () => {
+        const params = {
+          lat: coord[1],
+          lon: coord[0],
+        };
 
-    const fun = async () => {
-      const params = {
-        lat: lat,
-        lon: lon,
+        return await getApiRequest(
+          "https://apis.datos.gob.ar/georef/api/ubicacion",
+          params
+        );
       };
 
-      return await getApiRequest(
-        "https://apis.datos.gob.ar/georef/api/ubicacion",
-        params
-      );
-    };
+      fun()
+        .then((response) => {
+          if (response.ubicacion.departamento.nombre === data.city) {
+            //same localidad
+            setView({ longitude: lon, latitude: lat });
+            setData({
+              ...data,
+              coordinates: {
+                long: coord[0],
+                lat: coord[1],
+              },
+            });
 
-    fun()
-      .then((response) => {
-        if (response.direcciones[0].departamento.nombre === data.city) {
-          //same localidad
-          setData({
-            ...data,
-            coordinates: {
-              long: coord[0],
-              lat: coord[1],
-            },
-          });
-          console.log("changed coordinates, same localidad");
-        } else {
-          console.log("Wrong localidad");
-        }
-      })
-      .catch(() => {});
+            toast.success(" ✅ Ubicacion dentro del Rango!", {
+              position: "bottom-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
+
+            //show box in bounds.
+          } else {
+            //Show box, wrong city
+            toast.error(" ❌ Ubicacion fuera del Rango!", {
+              position: "bottom-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
+            setError(true);
+          }
+          setLoad2(false);
+        })
+        .catch(() => {});
+    }
   };
 
   useEffect(() => {
