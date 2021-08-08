@@ -6,6 +6,7 @@ import BaseLayer from "ol/layer/Base";
 import { PropertyPreviewDTO } from "../../api";
 
 export type TMapProps = {
+  handleChangeClick?: (lat: number, lon: number) => void | null;
   zoom: number;
   view: MapView;
   renderLayers?: boolean | null;
