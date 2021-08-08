@@ -8,6 +8,8 @@ import styles from "./Address.module.scss";
 import { MapComponent } from "../../Map/map";
 import customInstance from "../../../api/mutator/custom-instance";
 import { MapView } from "../../../store/slices/map/mapSlice";
+import { transformFrom3857to4326 } from "../../Map/utils";
+import { toast } from "react-toastify";
 
 export type getApiRequestParams = {
   direccion: string;
@@ -33,10 +35,12 @@ export type AddressFormData = {
 const getApiRequest = (
   url: string,
   params: {
-    max: number;
-    direccion: string;
-    localidad: string | null;
-    provincia: string | null;
+    max?: number;
+    direccion?: string | null;
+    localidad?: string | null;
+    provincia?: string | null;
+    lat?: number;
+    lon?: number;
   }
 ) => {
   return customInstance<any>({ url: url, method: "get", params: params });
@@ -58,8 +62,81 @@ export const AddressRevamp = () => {
     coordinates: { lat: 0, long: 0 },
   });
   const [load, setLoad] = useState(false);
+  const [load2, setLoad2] = useState(false);
   const [error, setError] = useState(true);
   const dispatch = useAppDispatch();
+
+  const convertCoordinates = (lon: number, lat: number) => {
+    let x = (lon * 20037508.34) / 180;
+    let y = Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) / (Math.PI / 180);
+    y = (y * 20037508.34) / 180;
+    return [x, y];
+  };
+
+  const handleChangeClick = (lat: number, lon: number) => {
+    if (!load2) {
+      ////Nos devuelve en 3857 lo tenemos que convertir 4326
+      setLoad2(true);
+      const coord = transformFrom3857to4326([lon, lat]);
+
+      //tenemos que hacer un reverse geocoding para verificar si esta en el mismo municipio que el geocoding original
+
+      //https://apis.datos.gob.ar/georef/api/ubicacion?lat=-27.2741&lon=-66.7529
+
+      const fun = async () => {
+        const params = {
+          lat: coord[1],
+          lon: coord[0],
+        };
+
+        return await getApiRequest(
+          "https://apis.datos.gob.ar/georef/api/ubicacion",
+          params
+        );
+      };
+
+      fun()
+        .then((response) => {
+          if (response.ubicacion.departamento.nombre === data.city) {
+            //same localidad
+            setView({ longitude: lon, latitude: lat });
+            setData({
+              ...data,
+              coordinates: {
+                long: coord[0],
+                lat: coord[1],
+              },
+            });
+
+            toast.success(" ✅ Ubicacion dentro del Rango!", {
+              position: "bottom-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
+
+            //show box in bounds.
+          } else {
+            //Show box, wrong city
+            toast.error(" ❌ Ubicacion fuera del Rango!", {
+              position: "bottom-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
+            setError(true);
+          }
+          setLoad2(false);
+        })
+        .catch(() => {});
+    }
+  };
 
   useEffect(() => {
     if (mounted.current) {
@@ -91,16 +168,7 @@ export const AddressRevamp = () => {
             street: response.direcciones[0].calle.nombre.toLowerCase(),
           });
 
-          //Nose devuelve en 4326 lo tenemos que convertir 3857
-          const convertCoordinates = (lon: number, lat: number) => {
-            let x = (lon * 20037508.34) / 180;
-            let y =
-              Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) /
-              (Math.PI / 180);
-            y = (y * 20037508.34) / 180;
-            return [x, y];
-          };
-
+          //Nos devuelve en 4326 lo tenemos que convertir 3857
           const coord = convertCoordinates(
             response.direcciones[0].ubicacion.lon,
             response.direcciones[0].ubicacion.lat
@@ -194,6 +262,7 @@ export const AddressRevamp = () => {
               renderLayers={false}
               zoom={zoom}
               view={view}
+              handleChangeClick={handleChangeClick}
             />
           </Grid>
         </Grid>

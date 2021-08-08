@@ -31,6 +31,7 @@ import { Point } from "ol/geom";
 import VectorLayer from "ol/layer/Vector";
 import { PropertyPreviewDTO } from "../../api";
 import { Icon, Style } from "ol/style";
+import { MapBrowserEvent } from "ol";
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
@@ -173,16 +174,19 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
       });
       this.setState({ markerLayer: markerLayer });
       this.map.addLayer(markerLayer);
-      // const onMapClick = (event: MapBrowserEvent) => {
-      //   const featureToAdd = new Feature({
-      //     geometry: new Point(event.coordinate),
-      //     fna: "Tu casa!",
-      //   });
-      //
-      //   Markerlayer.getSource().clear();
-      //   Markerlayer.getSource().addFeatures([featureToAdd]);
-      // };
-      // this.map.on("singleclick", onMapClick);
+
+      const onMapClick = (event: MapBrowserEvent) => {
+        const featureToAdd = new Feature({
+          geometry: new Point(event.coordinate),
+          fna: "Tu casa!",
+        });
+
+        markerLayer.getSource().clear();
+        markerLayer.getSource().addFeatures([featureToAdd]);
+        // @ts-ignore
+        this.props.handleChangeClick(event.coordinate[1], event.coordinate[0]);
+      };
+      this.map.on("singleclick", onMapClick);
     }
     if (prevProps.zoom !== this.props.zoom) {
       this.setState({ zoom: this.props.zoom });
