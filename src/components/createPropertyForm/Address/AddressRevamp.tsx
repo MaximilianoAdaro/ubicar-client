@@ -34,10 +34,12 @@ export type AddressFormData = {
 const getApiRequest = (
   url: string,
   params: {
-    max: number;
-    direccion: string;
-    localidad: string | null;
-    provincia: string | null;
+    max?: number;
+    direccion?: string | null;
+    localidad?: string | null;
+    provincia?: string | null;
+    lat?: number;
+    lon?: number;
   }
 ) => {
   return customInstance<any>({ url: url, method: "get", params: params });
@@ -75,19 +77,39 @@ export const AddressRevamp = () => {
     ////Nos devuelve en 3857 lo tenemos que convertir 4326
     const coord = transformFrom3857to4326([lon, lat]);
 
-    console.log("lon: ", lon, "lat: ", lat);
-    console.log("3857: -6519676.843787 -4093814.290115");
+    //tenemos que hacer un reverse geocoding para verificar si esta en el mismo municipio que el geocoding original
 
-    console.log("converted coord: ", coord);
-    console.log("4326: -58.567010, -34.482542");
+    //https://apis.datos.gob.ar/georef/api/ubicacion?lat=-27.2741&lon=-66.7529
 
-    setData({
-      ...data,
-      coordinates: {
-        long: coord[0],
-        lat: coord[1],
-      },
-    });
+    const fun = async () => {
+      const params = {
+        lat: lat,
+        lon: lon,
+      };
+
+      return await getApiRequest(
+        "https://apis.datos.gob.ar/georef/api/ubicacion",
+        params
+      );
+    };
+
+    fun()
+      .then((response) => {
+        if (response.direcciones[0].departamento.nombre === data.city) {
+          //same localidad
+          setData({
+            ...data,
+            coordinates: {
+              long: coord[0],
+              lat: coord[1],
+            },
+          });
+          console.log("changed coordinates, same localidad");
+        } else {
+          console.log("Wrong localidad");
+        }
+      })
+      .catch(() => {});
   };
 
   useEffect(() => {
