@@ -564,7 +564,7 @@ export interface PropertyFilterDto {
   minAmountRoom?: number;
   minAmountSquareMeter?: number;
   minPrice?: number;
-  style?: StyleDTO;
+  style?: string;
   typeProperty?: PropertyFilterDtoTypeProperty;
 }
 
