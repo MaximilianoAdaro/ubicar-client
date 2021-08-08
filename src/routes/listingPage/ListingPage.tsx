@@ -5,57 +5,62 @@ import { MapComponent } from "../../components/Map/map";
 import { useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import styles from "./ListingPage.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  PropertyFilterDto,
   PagePropertyPreviewDTO,
   useGetStylesUsingGET,
   useGetTypesUsingGET,
   useGetPropertiesFilteredUsingPOST,
 } from "../../api";
+import { useLocation } from "react-router-dom";
+import QueryString from "query-string";
+
+const checkNotUndefined = (value: any) => {
+  return value ? value : null;
+};
 
 export function ListingPage() {
-  const [filters, setFilters] = useState<PropertyFilterDto>({});
+  const location = useLocation();
+
+  const query = useMemo(
+    () => QueryString.parse(location.search) as any,
+    [location.search]
+  );
 
   const [data, setData] = useState<PagePropertyPreviewDTO | null>(null);
 
   const { data: houseStyles } = useGetStylesUsingGET();
   const { data: houseTypes } = useGetTypesUsingGET();
 
-  const checkNotUndefined = (value: any) => {
-    return value ? value : null;
-  };
-
   const { mutateAsync: getFilteredProperties } =
     useGetPropertiesFilteredUsingPOST();
+
   useEffect(() => {
     const f = async () => {
       const data = await getFilteredProperties({
         params: { page: 0 },
         data: {
-          condition: checkNotUndefined(filters.condition),
-          typeProperty: checkNotUndefined(filters.typeProperty),
-          minPrice: parseFloat(checkNotUndefined(filters.minPrice)),
-          maxPrice: parseFloat(checkNotUndefined(filters.maxPrice)),
-          style: checkNotUndefined(filters.style),
-          minAmountBathroom: checkNotUndefined(filters.minAmountBathroom),
-          minAmountRoom: checkNotUndefined(filters.minAmountRoom),
-          minAmountSquareMeter: checkNotUndefined(filters.minAmountSquareMeter),
-          maxAmountSquareMeter: checkNotUndefined(filters.maxAmountSquareMeter),
+          condition: checkNotUndefined(query.condition),
+          typeProperty: checkNotUndefined(query.typeProperty),
+          minPrice: parseFloat(checkNotUndefined(query.minPrice)),
+          maxPrice: parseFloat(checkNotUndefined(query.maxPrice)),
+          style: checkNotUndefined(query.style),
+          minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
+          minAmountRoom: checkNotUndefined(query.minAmountRoom),
+          minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
+          maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
         },
       });
       setData(data);
     };
     f();
-  }, [filters]);
+  }, [getFilteredProperties, query]);
 
   const zoom = useAppSelector(selectZoom);
   const view = useAppSelector(selectView);
   return (
     <div>
       <ListingFilters
-        filters={filters}
-        setFilters={setFilters}
         houseStyles={houseStyles ? houseStyles : null}
         houseTypes={houseTypes ? houseTypes : null}
       />
