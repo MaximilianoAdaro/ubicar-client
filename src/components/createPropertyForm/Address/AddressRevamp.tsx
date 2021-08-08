@@ -8,6 +8,7 @@ import styles from "./Address.module.scss";
 import { MapComponent } from "../../Map/map";
 import customInstance from "../../../api/mutator/custom-instance";
 import { MapView } from "../../../store/slices/map/mapSlice";
+import { transformFrom3857to4326 } from "../../Map/utils";
 
 export type getApiRequestParams = {
   direccion: string;
@@ -61,6 +62,34 @@ export const AddressRevamp = () => {
   const [error, setError] = useState(true);
   const dispatch = useAppDispatch();
 
+  const convertCoordinates = (lon: number, lat: number) => {
+    let x = (lon * 20037508.34) / 180;
+    let y = Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) / (Math.PI / 180);
+    y = (y * 20037508.34) / 180;
+    return [x, y];
+  };
+
+  const handleChangeClick = (lat: number, lon: number) => {
+    setView({ longitude: lon, latitude: lat });
+
+    ////Nos devuelve en 3857 lo tenemos que convertir 4326
+    const coord = transformFrom3857to4326([lon, lat]);
+
+    console.log("lon: ", lon, "lat: ", lat);
+    console.log("3857: -6519676.843787 -4093814.290115");
+
+    console.log("converted coord: ", coord);
+    console.log("4326: -58.567010, -34.482542");
+
+    setData({
+      ...data,
+      coordinates: {
+        long: coord[0],
+        lat: coord[1],
+      },
+    });
+  };
+
   useEffect(() => {
     if (mounted.current) {
       const params = {
@@ -91,16 +120,7 @@ export const AddressRevamp = () => {
             street: response.direcciones[0].calle.nombre.toLowerCase(),
           });
 
-          //Nose devuelve en 4326 lo tenemos que convertir 3857
-          const convertCoordinates = (lon: number, lat: number) => {
-            let x = (lon * 20037508.34) / 180;
-            let y =
-              Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) /
-              (Math.PI / 180);
-            y = (y * 20037508.34) / 180;
-            return [x, y];
-          };
-
+          //Nos devuelve en 4326 lo tenemos que convertir 3857
           const coord = convertCoordinates(
             response.direcciones[0].ubicacion.lon,
             response.direcciones[0].ubicacion.lat
@@ -194,6 +214,7 @@ export const AddressRevamp = () => {
               renderLayers={false}
               zoom={zoom}
               view={view}
+              handleChangeClick={handleChangeClick}
             />
           </Grid>
         </Grid>
