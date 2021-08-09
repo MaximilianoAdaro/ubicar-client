@@ -18,11 +18,20 @@ import { StepButtons } from "../StepButtons/StepButtons";
 import { PropertyDTO, PropertyDTOCondition } from "../../../api";
 import { Loading } from "../../common/loading/Loading";
 import { useGetTypesUsingGET } from "../../../api";
+import { errorMessages } from "../../../constants";
 
 const schema = yup.object({
-  price: yup.number().positive().required(),
-  expenses: yup.number().positive().required(),
-  title: yup.string().required(),
+  price: yup
+    .number()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .required(errorMessages.required),
+  expenses: yup
+    .number()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .required(errorMessages.required),
+  title: yup.string().required(errorMessages.required),
 });
 
 export type BasicInfoFormData = yup.InferType<typeof schema>;

@@ -14,18 +14,46 @@ import { useEffect } from "react";
 import { useGetStylesUsingGET } from "../../../api";
 
 const schema = yup.object({
-  totalSurface: yup.number().required(errorMessages.required),
-  coveredSurface: yup.number().required(errorMessages.required),
-  rooms: yup.number().positive().integer().required(errorMessages.required),
+  totalSurface: yup
+    .number()
+    .typeError(errorMessages.number)
+    .required(errorMessages.required),
+  coveredSurface: yup
+    .number()
+    .typeError(errorMessages.number)
+    .required(errorMessages.required),
+  rooms: yup
+    .number()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .integer(errorMessages.integerNumber)
+    .required(errorMessages.required),
   environments: yup
     .number()
-    .positive()
-    .integer()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .integer(errorMessages.integerNumber)
     .required(errorMessages.required),
-  toilets: yup.number().positive().integer().required(errorMessages.required),
-  fullBaths: yup.number().positive().integer().required(errorMessages.required),
-  constructionYear: yup.number().required(errorMessages.required),
-  floors: yup.number().required(errorMessages.required),
+  toilets: yup
+    .number()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .integer(errorMessages.integerNumber)
+    .required(errorMessages.required),
+  fullBaths: yup
+    .number()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .integer(errorMessages.integerNumber)
+    .required(errorMessages.required),
+  constructionYear: yup
+    .number()
+    .typeError(errorMessages.number)
+    .required(errorMessages.required),
+  floors: yup
+    .number()
+    .typeError(errorMessages.number)
+    .required(errorMessages.required),
   parkDescription: yup.string(),
 });
 

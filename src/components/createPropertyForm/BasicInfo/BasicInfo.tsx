@@ -15,14 +15,27 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
 import { useGetTypesUsingGET, PropertyDTOCondition } from "../../../api";
+import { errorMessages } from "../../../constants";
 
 const schema = yup.object({
-  price: yup.number().positive().required(),
-  expenses: yup.number().positive().required(),
-  title: yup.string().required(),
+  price: yup
+    .number()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .required(errorMessages.required),
+  expenses: yup
+    .number()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .required(errorMessages.required),
+  title: yup.string().required(errorMessages.required),
 });
 
-export type BasicInfoFormData = yup.InferType<typeof schema>;
+export type BasicInfoFormData = {
+  price: number | undefined;
+  expenses: number | undefined;
+  title: string;
+};
 
 const BasicInfoTextInput = createCustomTextInput<BasicInfoFormData>();
 
@@ -84,15 +97,17 @@ export const BasicInfo = () => {
                   <Col>
                     <BasicInfoTextInput
                       name="price"
-                      label="Precio (ARS)"
-                      defaultValue={defaults.price.toString()}
+                      label="Precio"
+                      defaultValue={defaults.price?.toString()}
+                      frontSymbol="$"
                     />
                   </Col>
                   <Col>
                     <BasicInfoTextInput
                       name="expenses"
-                      label="Expensas (ARS)"
-                      defaultValue={defaults.expenses.toString()}
+                      label="Expensas"
+                      defaultValue={defaults.expenses?.toString()}
+                      frontSymbol="$"
                     />
                   </Col>
                 </Form.Row>

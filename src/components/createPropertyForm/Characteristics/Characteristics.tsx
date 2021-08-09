@@ -14,22 +14,60 @@ import { useEffect } from "react";
 import { useGetStylesUsingGET } from "../../../api";
 
 const schema = yup.object({
-  totalSurface: yup.number().required(errorMessages.required),
-  coveredSurface: yup.number().required(errorMessages.required),
-  rooms: yup.number().positive().integer().required(errorMessages.required),
+  totalSurface: yup
+    .number()
+    .typeError(errorMessages.number)
+    .required(errorMessages.required),
+  coveredSurface: yup
+    .number()
+    .typeError(errorMessages.number)
+    .required(errorMessages.required),
+  rooms: yup
+    .number()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .integer(errorMessages.integerNumber)
+    .required(errorMessages.required),
   environments: yup
     .number()
-    .positive()
-    .integer()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .integer(errorMessages.integerNumber)
     .required(errorMessages.required),
-  toilets: yup.number().positive().integer().required(errorMessages.required),
-  fullBaths: yup.number().positive().integer().required(errorMessages.required),
-  constructionYear: yup.number().required(errorMessages.required),
-  floors: yup.number().required(errorMessages.required),
+  toilets: yup
+    .number()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .integer(errorMessages.integerNumber)
+    .required(errorMessages.required),
+  fullBaths: yup
+    .number()
+    .typeError(errorMessages.number)
+    .positive(errorMessages.positiveNumber)
+    .integer(errorMessages.integerNumber)
+    .required(errorMessages.required),
+  constructionYear: yup
+    .number()
+    .typeError(errorMessages.number)
+    .required(errorMessages.required),
+  floors: yup
+    .number()
+    .typeError(errorMessages.number)
+    .required(errorMessages.required),
   parkDescription: yup.string(),
 });
 
-export type CharacteristicsFormData = yup.InferType<typeof schema>;
+export type CharacteristicsFormData = {
+  totalSurface: number | undefined;
+  coveredSurface: number | undefined;
+  rooms: number | undefined;
+  environments: number | undefined;
+  toilets: number | undefined;
+  fullBaths: number | undefined;
+  constructionYear: number | undefined;
+  floors: number | undefined;
+  parkDescription: string;
+};
 
 const CharacteristicsTextInput =
   createCustomTextInput<CharacteristicsFormData>();
@@ -81,7 +119,7 @@ export const Characteristics = () => {
                   <CharacteristicsTextInput
                     name="totalSurface"
                     label="Superficie total (m²)"
-                    defaultValue={defaults.totalSurface.toString()}
+                    defaultValue={defaults.totalSurface?.toString()}
                   />
                 </div>
               </Col>
@@ -91,7 +129,7 @@ export const Characteristics = () => {
                   <CharacteristicsTextInput
                     name="coveredSurface"
                     label="Superficie cubierta (m²)"
-                    defaultValue={defaults.coveredSurface.toString()}
+                    defaultValue={defaults.coveredSurface?.toString()}
                   />
                 </div>
               </Col>
@@ -103,7 +141,7 @@ export const Characteristics = () => {
                   <CharacteristicsTextInput
                     name="environments"
                     label="Cantidad de ambientes"
-                    defaultValue={defaults.environments.toString()}
+                    defaultValue={defaults.environments?.toString()}
                   />
                 </div>
               </Col>
@@ -113,7 +151,7 @@ export const Characteristics = () => {
                   <CharacteristicsTextInput
                     name="rooms"
                     label="Cantidad de habitaciones"
-                    defaultValue={defaults.rooms.toString()}
+                    defaultValue={defaults.rooms?.toString()}
                   />
                 </div>
               </Col>
@@ -125,7 +163,7 @@ export const Characteristics = () => {
                   <CharacteristicsTextInput
                     name="fullBaths"
                     label="Baños completos"
-                    defaultValue={defaults.fullBaths.toString()}
+                    defaultValue={defaults.fullBaths?.toString()}
                   />
                 </div>
               </Col>
@@ -135,7 +173,7 @@ export const Characteristics = () => {
                   <CharacteristicsTextInput
                     name="toilets"
                     label="Toilettes"
-                    defaultValue={defaults.toilets.toString()}
+                    defaultValue={defaults.toilets?.toString()}
                   />
                 </div>
               </Col>
@@ -149,7 +187,7 @@ export const Characteristics = () => {
                   <CharacteristicsTextInput
                     name="floors"
                     label="Cantidad de Pisos"
-                    defaultValue={defaults.floors.toString()}
+                    defaultValue={defaults.floors?.toString()}
                   />
                 </div>
               </Col>
@@ -159,7 +197,7 @@ export const Characteristics = () => {
                   <CharacteristicsTextInput
                     name="constructionYear"
                     label="Año de construccion"
-                    defaultValue={defaults.constructionYear.toString()}
+                    defaultValue={defaults.constructionYear?.toString()}
                   />
                 </div>
               </Col>

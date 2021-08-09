@@ -1,4 +1,6 @@
+import firebase from "firebase";
 import { useMutation, useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 import {
   useRegisterUsingPOST,
   useLoginUsingPOST,
@@ -19,6 +21,17 @@ export const useSignIn = () => {
       onSuccess(user) {
         queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), user);
       },
+      onError() {
+        toast.error("❌ Error al iniciar sesion!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
     },
   });
 };
@@ -35,6 +48,18 @@ export const useGoogleSignIn = () => {
     {
       onSuccess(user) {
         queryClient.setQueryData(getGetLoggedUsingGETQueryKey(), user);
+      },
+      async onError() {
+        await firebase.auth().signOut();
+        toast.error("❌ Error al iniciar sesion!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
       },
     }
   );
