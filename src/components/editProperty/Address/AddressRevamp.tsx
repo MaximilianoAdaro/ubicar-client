@@ -9,7 +9,8 @@ import { MapComponent } from "../../Map/map";
 import customInstance from "../../../api/mutator/custom-instance";
 import { MapView } from "../../../store/slices/map/mapSlice";
 import { AddressDTO } from "../../../api";
-import { convertCoordinates } from "../../Map/utils";
+import { convertCoordinates, transformFrom3857to4326 } from "../../Map/utils";
+import { toast } from "react-toastify";
 
 export type getApiRequestParams = {
   direccion: string;
@@ -22,10 +23,12 @@ export type getApiRequestParams = {
 const getApiRequest = (
   url: string,
   params: {
-    max: number;
-    direccion: string;
-    localidad: string | null;
-    provincia: string | null;
+    max?: number;
+    direccion?: string | null;
+    localidad?: string | null;
+    provincia?: string | null;
+    lat?: number;
+    lon?: number;
   }
 ) => {
   return customInstance<any>({ url: url, method: "get", params: params });
@@ -55,7 +58,74 @@ export const AddressRevamp = (address: AddressDTO) => {
   });
 
   const [load, setLoad] = useState(false);
+  const [load2, setLoad2] = useState(false);
+  const [error, setError] = useState(false);
   const dispatch = useAppDispatch();
+
+  const handleChangeClick = (lat: number, lon: number) => {
+    if (!load2) {
+      ////Nos devuelve en 3857 lo tenemos que convertir 4326
+      setLoad2(true);
+      const coord = transformFrom3857to4326([lon, lat]);
+
+      //tenemos que hacer un reverse geocoding para verificar si esta en el mismo municipio que el geocoding original
+
+      //https://apis.datos.gob.ar/georef/api/ubicacion?lat=-27.2741&lon=-66.7529
+
+      const fun = async () => {
+        const params = {
+          lat: coord[1],
+          lon: coord[0],
+        };
+
+        return await getApiRequest(
+          "https://apis.datos.gob.ar/georef/api/ubicacion",
+          params
+        );
+      };
+
+      fun()
+        .then((response) => {
+          if (response.ubicacion.departamento.nombre === data.city) {
+            //same localidad
+            setView({ longitude: lon, latitude: lat });
+            setData({
+              ...data,
+              coordinates: {
+                long: coord[0],
+                lat: coord[1],
+              },
+            });
+
+            toast.success(" ✅ Ubicacion dentro del Rango!", {
+              position: "bottom-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
+
+            //show box in bounds.
+          } else {
+            //Show box, wrong city
+            toast.error(" ❌ Ubicacion fuera del Rango!", {
+              position: "bottom-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+            });
+            setError(true);
+          }
+          setLoad2(false);
+        })
+        .catch(() => {});
+    }
+  };
 
   useEffect(() => {
     if (mounted.current) {
@@ -182,6 +252,7 @@ export const AddressRevamp = (address: AddressDTO) => {
               renderLayers={false}
               zoom={zoom}
               view={view}
+              handleChangeClick={handleChangeClick}
             />
           </Grid>
         </Grid>
@@ -189,6 +260,7 @@ export const AddressRevamp = (address: AddressDTO) => {
       <StepButtons
         type={"submit"}
         onNext={() => handleSubmit()}
+        disabledNext={error}
         onPrevious={handlePreviousButton}
       />
     </Container>

@@ -15,6 +15,7 @@ export const StepButtons = ({
   type = "button",
   showPrevious = true,
   showNext = true,
+  disabledNext = false,
   onNext,
   onPrevious,
 }: StepButtonsProps) => {
@@ -25,7 +26,7 @@ export const StepButtons = ({
           <CustomButton onClick={onPrevious}>Anterior</CustomButton>
         )}
         {showNext && (
-          <CustomButton onClick={onNext} type={type}>
+          <CustomButton onClick={onNext} type={type} disabled={disabledNext}>
             Siguiente
           </CustomButton>
         )}
@@ -38,11 +39,13 @@ interface CustomButtonProps {
   onClick?: () => void;
   type?: "submit" | "button" | "reset";
   children: ReactNode;
+  disabled?: boolean;
 }
 
 const CustomButton = ({
   children,
   onClick,
+  disabled,
   type = "button",
 }: CustomButtonProps) => {
   return (
@@ -52,6 +55,7 @@ const CustomButton = ({
       variant={"outline-dark"}
       type={type}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </Button>
