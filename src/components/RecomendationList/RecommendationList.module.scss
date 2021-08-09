@@ -1,4 +1,12 @@
 .imageList {
   padding-right: 10%;
   padding-left: 10%;
+  padding-top: 5%;
+}
+
+.myPropertyTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: "...";
+  margin-bottom: 0;
 }

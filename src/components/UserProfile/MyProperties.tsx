@@ -13,10 +13,12 @@ export function MyProperties() {
         <p>Aqui puedes ver las propiedades que publicaste.</p>
       </Grid>
       <Grid className={styles.properties}>
-        {data.status === "success" &&
-          data?.data?.map((casa) => (
-            <PropertyList key={casa.id} house={casa} from={"properties"} />
-          ))}
+        <div className={styles.propertyList}>
+          {data.status === "success" &&
+            data?.data?.map((casa) => (
+              <PropertyList key={casa.id} house={casa} from={"properties"} />
+            ))}
+        </div>
       </Grid>
     </div>
   );

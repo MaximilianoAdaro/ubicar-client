@@ -1,6 +1,17 @@
 import styles from "./UserProfile.module.scss";
-import React from "react";
-import { Grid, List, ListItem, TextField } from "@material-ui/core";
+import React, { useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  List,
+  ListItem,
+  TextField,
+} from "@material-ui/core";
 import { useGetLoggedUsingGET } from "../../api";
 
 export function PersonalData() {
@@ -9,9 +20,20 @@ export function PersonalData() {
   // const [nameChangeButton, setNameChangeButton] = useState(true);
   // const [cellphoneChangeButton, setCellphoneChangeButton] = useState(true);
   // const [phoneChangeButton, setPhoneChangeButton] = useState(true);
+  const [openPasswordChange, setOpenPasswordChange] = useState(false);
+  const [openUsernameChange, setOpenUsernameChange] = useState(false);
+
   const { data: user } = useGetLoggedUsingGET();
 
   if (!user) return <h4>Error</h4>;
+
+  const handleClosePasswordChange = () => {
+    setOpenPasswordChange(false);
+  };
+
+  const handleCloseUsernameChange = () => {
+    setOpenUsernameChange(false);
+  };
 
   return (
     <div
@@ -40,9 +62,41 @@ export function PersonalData() {
                 fullWidth
                 disabled
               />
-              {/*<Button onClick={() => setNameChangeButton(!nameChangeButton)}>*/}
-              {/*  Edit*/}
-              {/*</Button>*/}
+              <Button
+                onClick={() => setOpenUsernameChange(!openUsernameChange)}
+              >
+                Edit
+              </Button>
+              <Dialog
+                open={openUsernameChange}
+                onClose={handleCloseUsernameChange}
+                aria-labelledby="form-dialog-title"
+              >
+                <DialogTitle id="form-dialog-title">
+                  Cambio de Usuario
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Ingerese el nuevo nombre de usuario que desea.
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Nombre de usuario"
+                    type="email"
+                    fullWidth
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCloseUsernameChange} color="primary">
+                    Cancel
+                  </Button>
+                  <Button onClick={handleCloseUsernameChange} color="primary">
+                    Subscribe
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </ListItem>
             <ListItem>
               <TextField
@@ -53,11 +107,67 @@ export function PersonalData() {
                 fullWidth
                 disabled
               />
-              {/*<Button*/}
-              {/*  onClick={() => setPasswordChangeButton(!passwordChangeButton)}*/}
-              {/*>*/}
-              {/*  Edit*/}
-              {/*</Button>*/}
+              <Button
+                onClick={() => setOpenPasswordChange(!openPasswordChange)}
+              >
+                Edit
+              </Button>
+              <Dialog
+                open={openPasswordChange}
+                onClose={handleClosePasswordChange}
+                aria-labelledby="form-dialog-title"
+              >
+                <DialogTitle id="form-dialog-title">
+                  Cambio de contraseña
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Ingrese la contraseña antigua
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Antigua contraseña"
+                    type="email"
+                    fullWidth
+                  />
+                </DialogContent>
+                <DialogContent>
+                  <DialogContentText>
+                    Ingrese la nueva contraseña
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Nueva contraseña"
+                    type="email"
+                    fullWidth
+                  />
+                </DialogContent>
+                <DialogContent>
+                  <DialogContentText>
+                    Ingrese nuevamente la nueva contraseña
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Nueva contraseña"
+                    type="email"
+                    fullWidth
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClosePasswordChange} color="primary">
+                    Cancel
+                  </Button>
+                  <Button onClick={handleClosePasswordChange} color="primary">
+                    Cambiar contraseña
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </ListItem>
             <ListItem>
               <TextField
@@ -83,11 +193,6 @@ export function PersonalData() {
                 fullWidth
                 disabled
               />
-              {/*<Button*/}
-              {/*  onClick={() => setCellphoneChangeButton(!cellphoneChangeButton)}*/}
-              {/*>*/}
-              {/*  Edit*/}
-              {/*</Button>*/}
             </ListItem>
             <ListItem>
               <TextField
@@ -97,11 +202,11 @@ export function PersonalData() {
                 fullWidth
                 disabled
               />
-              {/*<Button onClick={() => setPhoneChangeButton(!phoneChangeButton)}>*/}
-              {/*  Edit*/}
-              {/*</Button>*/}
             </ListItem>
           </List>
+          <Button className={styles.saveContactButton} variant={"outlined"}>
+            Guardar telefonos
+          </Button>
         </Grid>
       </Grid>
     </div>

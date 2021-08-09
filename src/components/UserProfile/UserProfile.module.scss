@@ -13,8 +13,8 @@
 }
 
 .myPropertiesImage {
-  margin-top: 1%;
-  max-height: 97%;
+  margin-top: 2%;
+  height: 97%;
   max-width: 97%;
 }
 .myPropertyPriceCondition {
@@ -27,6 +27,9 @@
   font-size: 1.2em;
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 0.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: "...";
 }
 .myPropertyStreetNumber {
   font-size: 1.2em;
@@ -50,8 +53,11 @@
 .myPropertyTitle {
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.7em;
+  font-size: 1.6em;
   margin-bottom: 0.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: "...";
 }
 
 .personalDataMainDiv {
@@ -79,6 +85,8 @@
 
 .propertyListIcons {
   cursor: pointer;
+  margin-left: 75%;
+  margin-bottom: 1em;
 }
 
 .propertyListEditPropertyTooltip {
@@ -87,4 +95,11 @@
 .editAndViewPropertyButtons {
   margin-left: auto;
   margin-top: 0.3em;
+}
+.saveContactButton {
+  margin-left: 1em;
+}
+
+.tooltipTitle {
+  font-size: 1.8em;
 }
