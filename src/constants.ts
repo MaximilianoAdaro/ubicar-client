@@ -18,5 +18,8 @@ export const urls = {
 
 export const errorMessages = {
   required: "Este campo es requerido!",
-  email: "El Email no es valido!",
+  email: "El email no es valido!",
+  number: "Debe ser un numero",
+  positiveNumber: "El numero debe ser positvo",
+  integerNumber: "El numero debe ser entero",
 };

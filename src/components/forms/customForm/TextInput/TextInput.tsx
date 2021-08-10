@@ -1,4 +1,4 @@
-import { Form } from "react-bootstrap";
+import { Form, InputGroup } from "react-bootstrap";
 import {
   ControllerRenderProps,
   Path,
@@ -12,6 +12,7 @@ interface TextInputProps<T> {
   placeholder?: string;
   type?: "text" | "date";
   defaultValue?: string;
+  frontSymbol?: string;
 }
 
 export const TextInput = <T,>({
@@ -20,6 +21,7 @@ export const TextInput = <T,>({
   type = "text",
   defaultValue = "",
   placeholder = "",
+  frontSymbol,
 }: TextInputProps<T>) => {
   const { control } = useFormContext();
 
@@ -34,15 +36,22 @@ export const TextInput = <T,>({
   return (
     <Form.Group>
       <Form.Label>{label}</Form.Label>
-      <Form.Control
-        type={type}
-        placeholder={placeholder}
-        isInvalid={invalid}
-        {...(field as ControllerRenderProps)}
-      />
-      <Form.Control.Feedback type="invalid">
-        {error?.message}
-      </Form.Control.Feedback>
+      <InputGroup hasValidation>
+        {frontSymbol && (
+          <InputGroup.Prepend>
+            <InputGroup.Text>{frontSymbol}</InputGroup.Text>
+          </InputGroup.Prepend>
+        )}
+        <Form.Control
+          type={type}
+          placeholder={placeholder}
+          isInvalid={invalid}
+          {...(field as ControllerRenderProps)}
+        />
+        <Form.Control.Feedback type="invalid">
+          {error?.message}
+        </Form.Control.Feedback>
+      </InputGroup>
     </Form.Group>
   );
 };

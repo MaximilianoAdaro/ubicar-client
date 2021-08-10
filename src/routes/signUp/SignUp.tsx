@@ -4,25 +4,27 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
-import { HookFormDatePicker } from "../../components/common/forms/HookFormDatePicker";
 import { HookFormSelect } from "../../components/common/forms/HookFormSelect";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import { Link, useHistory } from "react-router-dom";
-import { urls } from "../../constants";
+import { errorMessages, urls } from "../../constants";
 import { GoogleLogin } from "../logIn/GoogleLogin";
 import { RoleDTO, useGetRolesUsingGET, useSignUp } from "../../api";
 
 const schema = yup.object({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  email: yup.string().email().required(),
-  userRole: yup.string().required(),
-  password: yup.string().required(),
+  firstName: yup.string().required(errorMessages.required),
+  lastName: yup.string().required(errorMessages.required),
+  email: yup
+    .string()
+    .email(errorMessages.email)
+    .required(errorMessages.required),
+  userRole: yup.string().required(errorMessages.required),
+  password: yup.string().required(errorMessages.required),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Las contraseñas son distintas")
-    .required(),
+    .required(errorMessages.required),
 });
 
 type SignUpFormData = yup.InferType<typeof schema>;

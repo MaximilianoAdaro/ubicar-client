@@ -30,8 +30,7 @@ export default function App() {
 
   const { data: user, isLoading } = useGetLoggedUsingGET();
 
-  let location = useLocation();
-  console.log(location.pathname);
+  const location = useLocation();
 
   if (isLoading) return <Loading />;
 

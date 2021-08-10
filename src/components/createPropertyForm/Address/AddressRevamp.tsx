@@ -28,7 +28,7 @@ export type AddressFormData = {
   state: string;
   city: string;
   street: string;
-  number: number;
+  number: number | undefined;
   coordinates: CoordinatesDTO;
 };
 
@@ -58,7 +58,7 @@ export const AddressRevamp = () => {
     state: "",
     city: "",
     street: "",
-    number: 0,
+    number: undefined,
     coordinates: { lat: 0, long: 0 },
   });
   const [load, setLoad] = useState(false);
@@ -141,7 +141,7 @@ export const AddressRevamp = () => {
   useEffect(() => {
     if (mounted.current) {
       const params = {
-        direccion: data.street + " " + data.number,
+        direccion: data.street + " " + (data.number ?? 0),
         provincia: data.state,
         localidad: data.city,
         max: 1,
@@ -190,7 +190,7 @@ export const AddressRevamp = () => {
   };
 
   const handleSubmit = () => {
-    if (data.state !== "" && data.street !== "" && data.number !== 0) {
+    if (data.state !== "" && data.street !== "" && data.number !== undefined) {
       dispatch(actions.createPropertyForm.setAddress(data));
       dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
     } else {
