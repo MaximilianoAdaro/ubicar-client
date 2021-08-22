@@ -130,12 +130,13 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     case Step.Address:
       return (
         <AddressRevamp
-          country={address.country}
           coordinates={address.coordinates}
           number={address.number}
           city={address.city}
           state={address.state}
           street={address.street}
+          cityId={address.cityId}
+          stateId={address.stateId}
         />
       );
     case Step.Characteristics:

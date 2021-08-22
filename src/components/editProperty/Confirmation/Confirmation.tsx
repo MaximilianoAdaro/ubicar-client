@@ -24,9 +24,8 @@ const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
   condition: data.operationType,
   type: data.propertyType ?? "",
   address: {
-    country: data.address.country,
-    state: data.address.state,
-    city: data.address.city,
+    stateId: data.address.stateId,
+    cityId: data.address.cityId,
     street: data.address.street,
     number: data.address.number,
     coordinates: data.address.coordinates,

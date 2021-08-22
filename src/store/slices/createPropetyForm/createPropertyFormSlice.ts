@@ -62,11 +62,10 @@ const initialState: CreatePropertyState = {
   openHouses: [],
   propertyType: undefined,
   address: {
-    country: "",
-    state: "",
-    city: "",
+    stateId: "",
+    cityId: "",
     street: "",
-    number: undefined,
+    number: 0,
     coordinates: { lat: 0, long: 0 },
   },
   addressDropdowns: {
