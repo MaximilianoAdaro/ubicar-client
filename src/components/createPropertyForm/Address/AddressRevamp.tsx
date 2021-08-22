@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Grid, TextField } from "@material-ui/core";
+import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 import { Container } from "react-bootstrap";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { actions, useAppDispatch } from "../../../store";
@@ -10,6 +10,7 @@ import customInstance from "../../../api/mutator/custom-instance";
 import { MapView } from "../../../store/slices/map/mapSlice";
 import { transformFrom3857to4326 } from "../../Map/utils";
 import { toast } from "react-toastify";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 export type getApiRequestParams = {
   direccion: string;
@@ -24,11 +25,10 @@ export type CoordinatesDTO = {
 };
 
 export type AddressFormData = {
-  country: string;
-  state: string;
-  city: string;
+  cityId: string;
+  stateId: string;
   street: string;
-  number: number | undefined;
+  number: number;
   coordinates: CoordinatesDTO;
 };
 
@@ -53,12 +53,13 @@ export const AddressRevamp = () => {
     latitude: -4114291.375798843,
   });
   const mounted = useRef(false);
-  const [data, setData] = useState<AddressFormData>({
-    country: "",
+  const [data, setData] = useState({
+    stateId: "",
     state: "",
+    cityId: "",
     city: "",
     street: "",
-    number: undefined,
+    number: 0,
     coordinates: { lat: 0, long: 0 },
   });
   const [load, setLoad] = useState(false);
@@ -140,6 +141,7 @@ export const AddressRevamp = () => {
 
   useEffect(() => {
     if (mounted.current) {
+      console.log(data);
       const params = {
         direccion: data.street + " " + (data.number ?? 0),
         provincia: data.state,
@@ -162,7 +164,6 @@ export const AddressRevamp = () => {
               lat: response.direcciones[0].ubicacion.lat,
               long: response.direcciones[0].ubicacion.lon,
             },
-            country: "Argentina",
             state: response.direcciones[0].provincia.nombre,
             city: response.direcciones[0].departamento.nombre,
             street: response.direcciones[0].calle.nombre.toLowerCase(),
@@ -198,29 +199,159 @@ export const AddressRevamp = () => {
     }
   };
 
+  const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState([{ id: "", name: "" }]);
+  const loading = open && options.length === 0;
+
+  const onChangeHandle = async (value: any) => {
+    const response = await fetch(
+      "http://localhost:3000/public/states" + "?name=" + value
+    );
+
+    const countries = await response.json();
+    if (countries) {
+      setOptions(countries.content);
+    }
+  };
+
+  const onChangeHandle2 = async (value: any) => {
+    if (data.stateId) {
+      const stateid = data.stateId;
+      const response = await fetch(
+        "http://localhost:3000/public/cities/" + stateid + "?name=" + value
+      );
+
+      const cities = await response.json();
+      if (cities) {
+        setOptions2(cities.content);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!open) {
+      setOptions([]);
+    }
+  }, [open]);
+
+  const [open2, setOpen2] = useState(false);
+  const [options2, setOptions2] = useState([{ id: "", name: "" }]);
+  const loading2 = open2 && options2.length === 0;
+
+  useEffect(() => {
+    if (!open2) {
+      setOptions2([]);
+    }
+  }, [open2]);
+
+  const handleChange1 = (value: { name: string; id: string }) => {
+    setData({ ...data, state: value.name, stateId: value.id });
+  };
+  const handleChange2 = (value: { name: string; id: string }) => {
+    setData({ ...data, city: value.name, cityId: value.id });
+  };
+
   return (
     <Container>
-      <form>
+      <form autoComplete={"off"}>
         <Grid container>
           <Grid item xl={6} sm={6}>
             <div className={styles.input}>
               <span style={{ color: "black" }}>Provincia</span>
-              <TextField
-                fullWidth
-                color="secondary"
-                value={data.state ? data.state : ""}
-                variant="outlined"
-                onChange={(e) => setData({ ...data, state: e.target.value })}
+              <Autocomplete
+                id="asyncState"
+                open={open}
+                onChange={(e, value) => {
+                  if (value) {
+                    handleChange1(value);
+                  }
+                }}
+                onOpen={() => {
+                  setOpen(true);
+                }}
+                onClose={() => {
+                  setOpen(false);
+                }}
+                getOptionSelected={(option, value) =>
+                  option.name === value.name
+                }
+                getOptionLabel={(option) => option.name}
+                options={options}
+                loading={loading}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    variant="outlined"
+                    color={"secondary"}
+                    onChange={(ev) => {
+                      // dont fire API if the user delete or not entered anything
+                      if (ev.target.value !== "" || ev.target.value !== null) {
+                        onChangeHandle(ev.target.value);
+                      }
+                    }}
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <React.Fragment>
+                          {loading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                          {params.InputProps.endAdornment}
+                        </React.Fragment>
+                      ),
+                    }}
+                  />
+                )}
               />
             </div>
             <div className={styles.input}>
               <span style={{ color: "black" }}>Localidad</span>
-              <TextField
-                fullWidth
-                color="secondary"
-                value={data.city ? data.city : ""}
-                variant="outlined"
-                onChange={(e) => setData({ ...data, city: e.target.value })}
+              <Autocomplete
+                id="asyncCity"
+                open={open2}
+                onChange={(e, value) => {
+                  if (value) {
+                    handleChange2(value);
+                  }
+                }}
+                onOpen={() => {
+                  setOpen2(true);
+                }}
+                onClose={() => {
+                  setOpen2(false);
+                }}
+                getOptionSelected={(option, value) =>
+                  option.name === value.name
+                }
+                getOptionLabel={(option) => option.name}
+                options={options2}
+                loading={loading2}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    variant="outlined"
+                    color={"secondary"}
+                    onChange={(ev) => {
+                      // dont fire API if the user delete or not entered anything
+                      if (ev.target.value !== "" || ev.target.value !== null) {
+                        onChangeHandle2(ev.target.value);
+                      }
+                    }}
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <React.Fragment>
+                          {loading2 ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                          {params.InputProps.endAdornment}
+                        </React.Fragment>
+                      ),
+                    }}
+                  />
+                )}
               />
             </div>
             <div className={styles.input}>
@@ -230,6 +361,7 @@ export const AddressRevamp = () => {
                 color="secondary"
                 value={data.street ? data.street : ""}
                 variant="outlined"
+                autoComplete={"chrome-off"}
                 onChange={(e) => setData({ ...data, street: e.target.value })}
               />
             </div>
