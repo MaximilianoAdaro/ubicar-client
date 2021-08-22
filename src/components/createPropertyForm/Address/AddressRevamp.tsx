@@ -37,14 +37,10 @@ export type CoordinatesDTO = {
 };
 
 export type AddressFormData = {
-  country: string;
-  countryId: string;
-  state: string;
-  stateId: string;
-  city: string;
   cityId: string;
+  stateId: string;
   street: string;
-  number: number | undefined;
+  number: number;
   coordinates: CoordinatesDTO;
 };
 
@@ -69,15 +65,13 @@ export const AddressRevamp = () => {
     latitude: -4114291.375798843,
   });
   const mounted = useRef(false);
-  const [data, setData] = useState<AddressFormData>({
-    country: "",
-    countryId: "",
+  const [data, setData] = useState({
     stateId: "",
     state: "",
     cityId: "",
     city: "",
     street: "",
-    number: undefined,
+    number: 0,
     coordinates: { lat: 0, long: 0 },
   });
   const [load, setLoad] = useState(false);
@@ -181,7 +175,6 @@ export const AddressRevamp = () => {
               lat: response.direcciones[0].ubicacion.lat,
               long: response.direcciones[0].ubicacion.lon,
             },
-            country: "Argentina",
             state: response.direcciones[0].provincia.nombre,
             city: response.direcciones[0].departamento.nombre,
             street: response.direcciones[0].calle.nombre.toLowerCase(),
@@ -209,7 +202,6 @@ export const AddressRevamp = () => {
   };
 
   const handleSubmit = () => {
-    debugger;
     if (data.state !== "" && data.street !== "" && data.number !== undefined) {
       dispatch(actions.createPropertyForm.setAddress(data));
       dispatch(actions.createPropertyForm.setStep(Step.Characteristics));

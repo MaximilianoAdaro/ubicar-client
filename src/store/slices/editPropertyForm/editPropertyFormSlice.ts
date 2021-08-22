@@ -59,8 +59,9 @@ const initialState: EditPropertyState = {
   openHouses: [],
   propertyType: undefined,
   address: {
-    country: "",
+    stateId: "",
     state: "",
+    cityId: "",
     city: "",
     street: "",
     number: 0,
@@ -106,10 +107,11 @@ export const editPropertyFormSlice = createSlice({
       state.basicInfo.expenses = action.payload.expenses;
       state.style = action.payload.style.id;
       state.address.state = action.payload.address.state;
+      state.address.stateId = action.payload.address.stateId;
       state.address.city = action.payload.address.city;
+      state.address.cityId = action.payload.address.cityId;
       state.address.street = action.payload.address.street;
       state.address.number = action.payload.address.number;
-      state.address.country = action.payload.address.country;
       state.address.coordinates = action.payload.address.coordinates;
       state.characteristics.constructionYear = action.payload.constructionDate;
       state.characteristics.coveredSurface = action.payload.coveredSquareFoot;

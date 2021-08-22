@@ -47,9 +47,10 @@ export const AddressRevamp = (address: AddressDTO) => {
 
   const mounted = useRef(!!address);
   const [data, setData] = useState<AddressDTO>({
-    country: address.country ? address.country : "",
+    stateId: address.stateId ? address.stateId : "",
     state: address.state ? address.state : "",
     city: address.city ? address.city : "",
+    cityId: address.cityId ? address.cityId : "",
     street: address.street ? address.street : "",
     number: address.number ? address.number : 0,
     coordinates: address.coordinates
@@ -151,7 +152,6 @@ export const AddressRevamp = (address: AddressDTO) => {
               lat: response.direcciones[0].ubicacion.lat,
               long: response.direcciones[0].ubicacion.lon,
             },
-            country: "Argentina",
             state: response.direcciones[0].provincia.nombre,
             city: response.direcciones[0].departamento.nombre,
             street: response.direcciones[0].calle.nombre.toLowerCase(),

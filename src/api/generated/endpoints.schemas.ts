@@ -15,9 +15,11 @@ export interface Address {
 
 export interface AddressDTO {
   cityId: string;
+  stateId: string;
+  city: string;
+  state: string;
   coordinates: CoordinatesDTO;
   number: number;
-  stateId: string;
   street: string;
 }
 
