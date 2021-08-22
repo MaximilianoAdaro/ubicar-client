@@ -1,17 +1,5 @@
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import {
-  Button,
-  CircularProgress,
-  Grid,
-  TextField,
-  TextFieldProps,
-} from "@material-ui/core";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 import { Container } from "react-bootstrap";
 import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
 import { actions, useAppDispatch } from "../../../store";
@@ -153,6 +141,7 @@ export const AddressRevamp = () => {
 
   useEffect(() => {
     if (mounted.current) {
+      console.log(data);
       const params = {
         direccion: data.street + " " + (data.number ?? 0),
         provincia: data.state,
@@ -226,7 +215,7 @@ export const AddressRevamp = () => {
   };
 
   const onChangeHandle2 = async (value: any) => {
-    if (data.state) {
+    if (data.stateId) {
       const stateid = data.stateId;
       const response = await fetch(
         "http://localhost:3000/public/cities/" + stateid + "?name=" + value
@@ -255,6 +244,13 @@ export const AddressRevamp = () => {
     }
   }, [open2]);
 
+  const handleChange1 = (value: { name: string; id: string }) => {
+    setData({ ...data, state: value.name, stateId: value.id });
+  };
+  const handleChange2 = (value: { name: string; id: string }) => {
+    setData({ ...data, city: value.name, cityId: value.id });
+  };
+
   return (
     <Container>
       <form autoComplete={"off"}>
@@ -267,8 +263,7 @@ export const AddressRevamp = () => {
                 open={open}
                 onChange={(e, value) => {
                   if (value) {
-                    setData({ ...data, state: value.name });
-                    setData({ ...data, stateId: value.id });
+                    handleChange1(value);
                   }
                 }}
                 onOpen={() => {
@@ -317,8 +312,7 @@ export const AddressRevamp = () => {
                 open={open2}
                 onChange={(e, value) => {
                   if (value) {
-                    setData({ ...data, city: value.name });
-                    setData({ ...data, cityId: value.id });
+                    handleChange2(value);
                   }
                 }}
                 onOpen={() => {
