@@ -20,7 +20,6 @@ import type {
   Unit,
   UserCreationDTO,
   RoleDTO,
-  CityDTO,
   PropertyDTO,
   ErrorUsingGET200,
   ErrorUsingHEAD200,
@@ -28,7 +27,10 @@ import type {
   ErrorUsingPUT200,
   ErrorUsingDELETE200,
   ErrorUsingPATCH200,
+  PropertyFilterDto,
   CreatePropertyDTOBody,
+  PageCityDTO,
+  GetCitiesUsingGETParams,
   AmenityDTO,
   MaterialDTO,
   SecurityDTO,
@@ -37,9 +39,9 @@ import type {
   UserContactDto,
   PagePropertyPreviewDTO,
   GetPropertiesUsingGETParams,
-  PropertyFilterDto,
   GetPropertiesFilteredUsingPOSTParams,
-  StateDTO,
+  PageStateDTO,
+  GetStatesUsingGETParams,
 } from "./endpoints.schemas";
 import { customInstance } from "../mutator/custom-instance";
 
@@ -273,50 +275,6 @@ export const useGetRolesUsingGET = <
   };
 };
 
-export const getCitiesUsingGET = <TData = CityDTO[]>(
-  stateId: string,
-  options?: SecondParameter<typeof customInstance>
-) => {
-  return customInstance<TData>(
-    { url: `/cities/${stateId}`, method: "get" },
-    // eslint-disable-next-line
-    // @ts-ignore
-    options
-  );
-};
-
-export const getGetCitiesUsingGETQueryKey = (stateId: string) => [
-  `/cities/${stateId}`,
-];
-
-export const useGetCitiesUsingGET = <
-  TQueryFnData = AsyncReturnType<typeof getCitiesUsingGET, CityDTO[]>,
-  TError = unknown,
-  TData = TQueryFnData
->(
-  stateId: string,
-  options?: {
-    query?: UseQueryOptions<TQueryFnData, TError, TData>;
-    request?: SecondParameter<typeof customInstance>;
-  }
-) => {
-  const { query: queryOptions, request: requestOptions } = options || {};
-
-  const queryKey =
-    queryOptions?.queryKey ?? getGetCitiesUsingGETQueryKey(stateId);
-
-  const query = useQuery<TQueryFnData, TError, TData>(
-    queryKey,
-    () => getCitiesUsingGET<TQueryFnData>(stateId, requestOptions),
-    { enabled: !!stateId, ...queryOptions }
-  );
-
-  return {
-    queryKey,
-    ...query,
-  };
-};
-
 export const dislikePropertyUsingPUT = <TData = PropertyDTO>(
   id: string,
   options?: SecondParameter<typeof customInstance>
@@ -512,6 +470,46 @@ export const useErrorUsingPATCH = <
     return errorUsingPATCH<TData>(requestOptions);
   }, mutationOptions);
 };
+export const getMyFiltersUsingGET = <TData = PropertyFilterDto[]>(
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/get-filters`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetMyFiltersUsingGETQueryKey = () => [`/get-filters`];
+
+export const useGetMyFiltersUsingGET = <
+  TQueryFnData = AsyncReturnType<
+    typeof getMyFiltersUsingGET,
+    PropertyFilterDto[]
+  >,
+  TError = unknown,
+  TData = TQueryFnData
+>(options?: {
+  query?: UseQueryOptions<TQueryFnData, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetMyFiltersUsingGETQueryKey();
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getMyFiltersUsingGET<TQueryFnData>(requestOptions),
+    queryOptions
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
 export const likePropertyUsingPUT = <TData = PropertyDTO>(
   id: string,
   options?: SecondParameter<typeof customInstance>
@@ -696,6 +694,53 @@ export const useEditPropertyUsingPUT = <
     return editPropertyUsingPUT<TData>(id, data, requestOptions);
   }, mutationOptions);
 };
+export const getCitiesUsingGET = <TData = PageCityDTO>(
+  stateId: string,
+  params?: GetCitiesUsingGETParams,
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/public/cities/${stateId}`, method: "get", params },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetCitiesUsingGETQueryKey = (
+  stateId: string,
+  params?: GetCitiesUsingGETParams
+) => [`/public/cities/${stateId}`, ...(params ? [params] : [])];
+
+export const useGetCitiesUsingGET = <
+  TQueryFnData = AsyncReturnType<typeof getCitiesUsingGET, PageCityDTO>,
+  TError = unknown,
+  TData = TQueryFnData
+>(
+  stateId: string,
+  params?: GetCitiesUsingGETParams,
+  options?: {
+    query?: UseQueryOptions<TQueryFnData, TError, TData>;
+    request?: SecondParameter<typeof customInstance>;
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetCitiesUsingGETQueryKey(stateId, params);
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getCitiesUsingGET<TQueryFnData>(stateId, params, requestOptions),
+    { enabled: !!stateId, ...queryOptions }
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
 export const getAmenitiesUsingGET = <TData = AmenityDTO[]>(
   options?: SecondParameter<typeof customInstance>
 ) => {
@@ -1101,34 +1146,41 @@ export const useGetPropertyUsingGET = <
   };
 };
 
-export const getStatesUsingGET = <TData = StateDTO[]>(
+export const getStatesUsingGET = <TData = PageStateDTO>(
+  params?: GetStatesUsingGETParams,
   options?: SecondParameter<typeof customInstance>
 ) => {
   return customInstance<TData>(
-    { url: `/states`, method: "get" },
+    { url: `/public/states`, method: "get", params },
     // eslint-disable-next-line
     // @ts-ignore
     options
   );
 };
 
-export const getGetStatesUsingGETQueryKey = () => [`/states`];
+export const getGetStatesUsingGETQueryKey = (
+  params?: GetStatesUsingGETParams
+) => [`/public/states`, ...(params ? [params] : [])];
 
 export const useGetStatesUsingGET = <
-  TQueryFnData = AsyncReturnType<typeof getStatesUsingGET, StateDTO[]>,
+  TQueryFnData = AsyncReturnType<typeof getStatesUsingGET, PageStateDTO>,
   TError = unknown,
   TData = TQueryFnData
->(options?: {
-  query?: UseQueryOptions<TQueryFnData, TError, TData>;
-  request?: SecondParameter<typeof customInstance>;
-}) => {
+>(
+  params?: GetStatesUsingGETParams,
+  options?: {
+    query?: UseQueryOptions<TQueryFnData, TError, TData>;
+    request?: SecondParameter<typeof customInstance>;
+  }
+) => {
   const { query: queryOptions, request: requestOptions } = options || {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetStatesUsingGETQueryKey();
+  const queryKey =
+    queryOptions?.queryKey ?? getGetStatesUsingGETQueryKey(params);
 
   const query = useQuery<TQueryFnData, TError, TData>(
     queryKey,
-    () => getStatesUsingGET<TQueryFnData>(requestOptions),
+    () => getStatesUsingGET<TQueryFnData>(params, requestOptions),
     queryOptions
   );
 

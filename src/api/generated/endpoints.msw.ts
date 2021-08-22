@@ -36,14 +36,13 @@ export const getRegisterUsingPOSTMock = () => ({
 
 export const getDislikePropertyUsingPUTMock = () => ({
   address: {
-    city: faker.random.word(),
+    cityId: faker.random.word(),
     coordinates: {
       lat: faker.datatype.number(),
       long: faker.datatype.number(),
     },
-    country: faker.random.word(),
     number: faker.datatype.number(),
-    state: faker.random.word(),
+    stateId: faker.random.word(),
     street: faker.random.word(),
   },
   amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -53,13 +52,17 @@ export const getDislikePropertyUsingPUTMock = () => ({
       () => ({
         address: {
           city: {
+            centroid: {},
+            gid: (() => faker.datatype.uuid())(),
             id: (() => faker.datatype.uuid())(),
             name: faker.random.word(),
             state: {
+              centroid: {},
               country: {
                 id: (() => faker.datatype.uuid())(),
                 name: faker.random.word(),
               },
+              gid: (() => faker.datatype.uuid())(),
               id: (() => faker.datatype.uuid())(),
               name: faker.random.word(),
             },
@@ -103,13 +106,17 @@ export const getDislikePropertyUsingPUTMock = () => ({
             ].map(() => ({
               address: {
                 city: {
+                  centroid: {},
+                  gid: (() => faker.datatype.uuid())(),
                   id: (() => faker.datatype.uuid())(),
                   name: faker.random.word(),
                   state: {
+                    centroid: {},
                     country: {
                       id: (() => faker.datatype.uuid())(),
                       name: faker.random.word(),
                     },
+                    gid: (() => faker.datatype.uuid())(),
                     id: (() => faker.datatype.uuid())(),
                     name: faker.random.word(),
                   },
@@ -293,13 +300,17 @@ export const getDislikePropertyUsingPUTMock = () => ({
           ].map(() => ({
             address: {
               city: {
+                centroid: {},
+                gid: (() => faker.datatype.uuid())(),
                 id: (() => faker.datatype.uuid())(),
                 name: faker.random.word(),
                 state: {
+                  centroid: {},
                   country: {
                     id: (() => faker.datatype.uuid())(),
                     name: faker.random.word(),
                   },
+                  gid: (() => faker.datatype.uuid())(),
                   id: (() => faker.datatype.uuid())(),
                   name: faker.random.word(),
                 },
@@ -566,14 +577,13 @@ export const getErrorUsingPATCHMock = () => ({});
 
 export const getLikePropertyUsingPUTMock = () => ({
   address: {
-    city: faker.random.word(),
+    cityId: faker.random.word(),
     coordinates: {
       lat: faker.datatype.number(),
       long: faker.datatype.number(),
     },
-    country: faker.random.word(),
     number: faker.datatype.number(),
-    state: faker.random.word(),
+    stateId: faker.random.word(),
     street: faker.random.word(),
   },
   amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -583,13 +593,17 @@ export const getLikePropertyUsingPUTMock = () => ({
       () => ({
         address: {
           city: {
+            centroid: {},
+            gid: (() => faker.datatype.uuid())(),
             id: (() => faker.datatype.uuid())(),
             name: faker.random.word(),
             state: {
+              centroid: {},
               country: {
                 id: (() => faker.datatype.uuid())(),
                 name: faker.random.word(),
               },
+              gid: (() => faker.datatype.uuid())(),
               id: (() => faker.datatype.uuid())(),
               name: faker.random.word(),
             },
@@ -633,13 +647,17 @@ export const getLikePropertyUsingPUTMock = () => ({
             ].map(() => ({
               address: {
                 city: {
+                  centroid: {},
+                  gid: (() => faker.datatype.uuid())(),
                   id: (() => faker.datatype.uuid())(),
                   name: faker.random.word(),
                   state: {
+                    centroid: {},
                     country: {
                       id: (() => faker.datatype.uuid())(),
                       name: faker.random.word(),
                     },
+                    gid: (() => faker.datatype.uuid())(),
                     id: (() => faker.datatype.uuid())(),
                     name: faker.random.word(),
                   },
@@ -823,13 +841,17 @@ export const getLikePropertyUsingPUTMock = () => ({
           ].map(() => ({
             address: {
               city: {
+                centroid: {},
+                gid: (() => faker.datatype.uuid())(),
                 id: (() => faker.datatype.uuid())(),
                 name: faker.random.word(),
                 state: {
+                  centroid: {},
                   country: {
                     id: (() => faker.datatype.uuid())(),
                     name: faker.random.word(),
                   },
+                  gid: (() => faker.datatype.uuid())(),
                   id: (() => faker.datatype.uuid())(),
                   name: faker.random.word(),
                 },
@@ -1084,14 +1106,13 @@ export const getLikePropertyUsingPUTMock = () => ({
 
 export const getCreatePropertyUsingPOSTMock = () => ({
   address: {
-    city: faker.random.word(),
+    cityId: faker.random.word(),
     coordinates: {
       lat: faker.datatype.number(),
       long: faker.datatype.number(),
     },
-    country: faker.random.word(),
     number: faker.datatype.number(),
-    state: faker.random.word(),
+    stateId: faker.random.word(),
     street: faker.random.word(),
   },
   amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -1101,13 +1122,17 @@ export const getCreatePropertyUsingPOSTMock = () => ({
       () => ({
         address: {
           city: {
+            centroid: {},
+            gid: (() => faker.datatype.uuid())(),
             id: (() => faker.datatype.uuid())(),
             name: faker.random.word(),
             state: {
+              centroid: {},
               country: {
                 id: (() => faker.datatype.uuid())(),
                 name: faker.random.word(),
               },
+              gid: (() => faker.datatype.uuid())(),
               id: (() => faker.datatype.uuid())(),
               name: faker.random.word(),
             },
@@ -1151,13 +1176,17 @@ export const getCreatePropertyUsingPOSTMock = () => ({
             ].map(() => ({
               address: {
                 city: {
+                  centroid: {},
+                  gid: (() => faker.datatype.uuid())(),
                   id: (() => faker.datatype.uuid())(),
                   name: faker.random.word(),
                   state: {
+                    centroid: {},
                     country: {
                       id: (() => faker.datatype.uuid())(),
                       name: faker.random.word(),
                     },
+                    gid: (() => faker.datatype.uuid())(),
                     id: (() => faker.datatype.uuid())(),
                     name: faker.random.word(),
                   },
@@ -1341,13 +1370,17 @@ export const getCreatePropertyUsingPOSTMock = () => ({
           ].map(() => ({
             address: {
               city: {
+                centroid: {},
+                gid: (() => faker.datatype.uuid())(),
                 id: (() => faker.datatype.uuid())(),
                 name: faker.random.word(),
                 state: {
+                  centroid: {},
                   country: {
                     id: (() => faker.datatype.uuid())(),
                     name: faker.random.word(),
                   },
+                  gid: (() => faker.datatype.uuid())(),
                   id: (() => faker.datatype.uuid())(),
                   name: faker.random.word(),
                 },
@@ -1602,14 +1635,13 @@ export const getCreatePropertyUsingPOSTMock = () => ({
 
 export const getEditPropertyUsingPUTMock = () => ({
   address: {
-    city: faker.random.word(),
+    cityId: faker.random.word(),
     coordinates: {
       lat: faker.datatype.number(),
       long: faker.datatype.number(),
     },
-    country: faker.random.word(),
     number: faker.datatype.number(),
-    state: faker.random.word(),
+    stateId: faker.random.word(),
     street: faker.random.word(),
   },
   amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -1619,13 +1651,17 @@ export const getEditPropertyUsingPUTMock = () => ({
       () => ({
         address: {
           city: {
+            centroid: {},
+            gid: (() => faker.datatype.uuid())(),
             id: (() => faker.datatype.uuid())(),
             name: faker.random.word(),
             state: {
+              centroid: {},
               country: {
                 id: (() => faker.datatype.uuid())(),
                 name: faker.random.word(),
               },
+              gid: (() => faker.datatype.uuid())(),
               id: (() => faker.datatype.uuid())(),
               name: faker.random.word(),
             },
@@ -1669,13 +1705,17 @@ export const getEditPropertyUsingPUTMock = () => ({
             ].map(() => ({
               address: {
                 city: {
+                  centroid: {},
+                  gid: (() => faker.datatype.uuid())(),
                   id: (() => faker.datatype.uuid())(),
                   name: faker.random.word(),
                   state: {
+                    centroid: {},
                     country: {
                       id: (() => faker.datatype.uuid())(),
                       name: faker.random.word(),
                     },
+                    gid: (() => faker.datatype.uuid())(),
                     id: (() => faker.datatype.uuid())(),
                     name: faker.random.word(),
                   },
@@ -1859,13 +1899,17 @@ export const getEditPropertyUsingPUTMock = () => ({
           ].map(() => ({
             address: {
               city: {
+                centroid: {},
+                gid: (() => faker.datatype.uuid())(),
                 id: (() => faker.datatype.uuid())(),
                 name: faker.random.word(),
                 state: {
+                  centroid: {},
                   country: {
                     id: (() => faker.datatype.uuid())(),
                     name: faker.random.word(),
                   },
+                  gid: (() => faker.datatype.uuid())(),
                   id: (() => faker.datatype.uuid())(),
                   name: faker.random.word(),
                 },
@@ -2118,18 +2162,70 @@ export const getEditPropertyUsingPUTMock = () => ({
   ]),
 });
 
+export const getGetCitiesUsingGETMock = () => ({
+  content: faker.helpers.randomize([
+    [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
+      id: (() => faker.datatype.uuid())(),
+      name: faker.random.word(),
+    })),
+    undefined,
+  ]),
+  empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  first: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  last: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  number: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  numberOfElements: faker.helpers.randomize([
+    faker.datatype.number(),
+    undefined,
+  ]),
+  pageable: faker.helpers.randomize([
+    {
+      offset: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      pageNumber: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      pageSize: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      paged: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      sort: faker.helpers.randomize([
+        {
+          empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+          sorted: faker.helpers.randomize([
+            faker.datatype.boolean(),
+            undefined,
+          ]),
+          unsorted: faker.helpers.randomize([
+            faker.datatype.boolean(),
+            undefined,
+          ]),
+        },
+        undefined,
+      ]),
+      unpaged: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+    },
+    undefined,
+  ]),
+  size: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  sort: faker.helpers.randomize([
+    {
+      empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      sorted: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      unsorted: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+    },
+    undefined,
+  ]),
+  totalElements: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  totalPages: faker.helpers.randomize([faker.datatype.number(), undefined]),
+});
+
 export const getGetPropertiesUsingGETMock = () => ({
   content: faker.helpers.randomize([
     [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
       address: {
-        city: faker.random.word(),
+        cityId: faker.random.word(),
         coordinates: {
           lat: faker.datatype.number(),
           long: faker.datatype.number(),
         },
-        country: faker.random.word(),
         number: faker.datatype.number(),
-        state: faker.random.word(),
+        stateId: faker.random.word(),
         street: faker.random.word(),
       },
       condition: faker.helpers.randomize(["RENT", "SALE"]),
@@ -2211,14 +2307,13 @@ export const getGetPropertiesFilteredUsingPOSTMock = () => ({
   content: faker.helpers.randomize([
     [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
       address: {
-        city: faker.random.word(),
+        cityId: faker.random.word(),
         coordinates: {
           lat: faker.datatype.number(),
           long: faker.datatype.number(),
         },
-        country: faker.random.word(),
         number: faker.datatype.number(),
-        state: faker.random.word(),
+        stateId: faker.random.word(),
         street: faker.random.word(),
       },
       condition: faker.helpers.randomize(["RENT", "SALE"]),
@@ -2298,14 +2393,13 @@ export const getGetPropertiesFilteredUsingPOSTMock = () => ({
 
 export const getGetPropertyUsingGETMock = () => ({
   address: {
-    city: faker.random.word(),
+    cityId: faker.random.word(),
     coordinates: {
       lat: faker.datatype.number(),
       long: faker.datatype.number(),
     },
-    country: faker.random.word(),
     number: faker.datatype.number(),
-    state: faker.random.word(),
+    stateId: faker.random.word(),
     street: faker.random.word(),
   },
   amenities: [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
@@ -2315,13 +2409,17 @@ export const getGetPropertyUsingGETMock = () => ({
       () => ({
         address: {
           city: {
+            centroid: {},
+            gid: (() => faker.datatype.uuid())(),
             id: (() => faker.datatype.uuid())(),
             name: faker.random.word(),
             state: {
+              centroid: {},
               country: {
                 id: (() => faker.datatype.uuid())(),
                 name: faker.random.word(),
               },
+              gid: (() => faker.datatype.uuid())(),
               id: (() => faker.datatype.uuid())(),
               name: faker.random.word(),
             },
@@ -2365,13 +2463,17 @@ export const getGetPropertyUsingGETMock = () => ({
             ].map(() => ({
               address: {
                 city: {
+                  centroid: {},
+                  gid: (() => faker.datatype.uuid())(),
                   id: (() => faker.datatype.uuid())(),
                   name: faker.random.word(),
                   state: {
+                    centroid: {},
                     country: {
                       id: (() => faker.datatype.uuid())(),
                       name: faker.random.word(),
                     },
+                    gid: (() => faker.datatype.uuid())(),
                     id: (() => faker.datatype.uuid())(),
                     name: faker.random.word(),
                   },
@@ -2555,13 +2657,17 @@ export const getGetPropertyUsingGETMock = () => ({
           ].map(() => ({
             address: {
               city: {
+                centroid: {},
+                gid: (() => faker.datatype.uuid())(),
                 id: (() => faker.datatype.uuid())(),
                 name: faker.random.word(),
                 state: {
+                  centroid: {},
                   country: {
                     id: (() => faker.datatype.uuid())(),
                     name: faker.random.word(),
                   },
+                  gid: (() => faker.datatype.uuid())(),
                   id: (() => faker.datatype.uuid())(),
                   name: faker.random.word(),
                 },
@@ -2814,6 +2920,59 @@ export const getGetPropertyUsingGETMock = () => ({
   ]),
 });
 
+export const getGetStatesUsingGETMock = () => ({
+  content: faker.helpers.randomize([
+    [...Array(faker.datatype.number({ min: 1, max: 10 }))].map(() => ({
+      id: (() => faker.datatype.uuid())(),
+      name: faker.random.word(),
+    })),
+    undefined,
+  ]),
+  empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  first: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  last: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+  number: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  numberOfElements: faker.helpers.randomize([
+    faker.datatype.number(),
+    undefined,
+  ]),
+  pageable: faker.helpers.randomize([
+    {
+      offset: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      pageNumber: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      pageSize: faker.helpers.randomize([faker.datatype.number(), undefined]),
+      paged: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      sort: faker.helpers.randomize([
+        {
+          empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+          sorted: faker.helpers.randomize([
+            faker.datatype.boolean(),
+            undefined,
+          ]),
+          unsorted: faker.helpers.randomize([
+            faker.datatype.boolean(),
+            undefined,
+          ]),
+        },
+        undefined,
+      ]),
+      unpaged: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+    },
+    undefined,
+  ]),
+  size: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  sort: faker.helpers.randomize([
+    {
+      empty: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      sorted: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+      unsorted: faker.helpers.randomize([faker.datatype.boolean(), undefined]),
+    },
+    undefined,
+  ]),
+  totalElements: faker.helpers.randomize([faker.datatype.number(), undefined]),
+  totalPages: faker.helpers.randomize([faker.datatype.number(), undefined]),
+});
+
 export const getApiDocumentationMSW = () => [
   rest.post("*/auth/google-login", (req, res, ctx) => {
     return res(
@@ -2851,9 +3010,6 @@ export const getApiDocumentationMSW = () => [
     );
   }),
   rest.get("*/auth/roles", (req, res, ctx) => {
-    return res(ctx.delay(1000), ctx.status(200, "Mocked status"));
-  }),
-  rest.get("*/cities/:stateId", (req, res, ctx) => {
     return res(ctx.delay(1000), ctx.status(200, "Mocked status"));
   }),
   rest.put("*/dislike/:id", (req, res, ctx) => {
@@ -2905,6 +3061,9 @@ export const getApiDocumentationMSW = () => [
       ctx.json(getErrorUsingPATCHMock())
     );
   }),
+  rest.get("*/get-filters", (req, res, ctx) => {
+    return res(ctx.delay(1000), ctx.status(200, "Mocked status"));
+  }),
   rest.put("*/like/:id", (req, res, ctx) => {
     return res(
       ctx.delay(1000),
@@ -2930,6 +3089,13 @@ export const getApiDocumentationMSW = () => [
       ctx.delay(1000),
       ctx.status(200, "Mocked status"),
       ctx.json(getEditPropertyUsingPUTMock())
+    );
+  }),
+  rest.get("*/public/cities/:stateId", (req, res, ctx) => {
+    return res(
+      ctx.delay(1000),
+      ctx.status(200, "Mocked status"),
+      ctx.json(getGetCitiesUsingGETMock())
     );
   }),
   rest.get("*/public/info/amenities", (req, res, ctx) => {
@@ -2971,7 +3137,11 @@ export const getApiDocumentationMSW = () => [
       ctx.json(getGetPropertyUsingGETMock())
     );
   }),
-  rest.get("*/states", (req, res, ctx) => {
-    return res(ctx.delay(1000), ctx.status(200, "Mocked status"));
+  rest.get("*/public/states", (req, res, ctx) => {
+    return res(
+      ctx.delay(1000),
+      ctx.status(200, "Mocked status"),
+      ctx.json(getGetStatesUsingGETMock())
+    );
   }),
 ];

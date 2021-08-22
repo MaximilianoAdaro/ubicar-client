@@ -14,29 +14,26 @@ export interface Address {
 }
 
 export interface AddressDTO {
-  city: string;
+  cityId: string;
   coordinates: CoordinatesDTO;
-  country: string;
   number: number;
-  state: string;
+  stateId: string;
   street: string;
 }
 
 export interface AddressDTOReq {
-  city: string;
+  cityId: string;
   coordinates: CoordinatesDTOReq;
-  country: string;
   number?: number;
-  state: string;
+  stateId: string;
   street: string;
 }
 
 export interface AddressDTORes {
-  city: string;
+  cityId: string;
   coordinates: CoordinatesDTORes;
-  country: string;
   number: number;
-  state: string;
+  stateId: string;
   street: string;
 }
 
@@ -52,6 +49,8 @@ export interface AmenityDTO {
 }
 
 export interface City {
+  centroid: Point;
+  gid: number;
   id: string;
   name: string;
   state: State;
@@ -363,6 +362,9 @@ export interface Permission {
   userRoles: UserRole[];
 }
 
+// tslint:disable-next-line:no-empty-interface
+export interface Point {}
+
 export type PropertyCondition = "RENT" | "SALE";
 
 export const PropertyCondition = {
@@ -649,7 +651,9 @@ export interface Sort {
 }
 
 export interface State {
+  centroid: Point;
   country: Country;
+  gid: number;
   id: string;
   name: string;
 }
@@ -725,8 +729,36 @@ export interface View {
   contentType?: string;
 }
 
+export interface PageCityDTO {
+  content?: CityDTO[];
+  empty?: boolean;
+  first?: boolean;
+  last?: boolean;
+  number?: number;
+  numberOfElements?: number;
+  pageable?: Pageable;
+  size?: number;
+  sort?: Sort;
+  totalElements?: number;
+  totalPages?: number;
+}
+
 export interface PagePropertyPreviewDTO {
   content?: PropertyPreviewDTO[];
+  empty?: boolean;
+  first?: boolean;
+  last?: boolean;
+  number?: number;
+  numberOfElements?: number;
+  pageable?: Pageable;
+  size?: number;
+  sort?: Sort;
+  totalElements?: number;
+  totalPages?: number;
+}
+
+export interface PageStateDTO {
+  content?: StateDTO[];
   empty?: boolean;
   first?: boolean;
   last?: boolean;
@@ -752,6 +784,12 @@ export type ErrorUsingPUT200 = { [key: string]: {} };
 export type ErrorUsingDELETE200 = { [key: string]: {} };
 
 export type ErrorUsingPATCH200 = { [key: string]: {} };
+
+export type GetCitiesUsingGETParams = {
+  name?: string;
+  page?: number;
+  size?: number;
+};
 
 export type GetTypesUsingGET200Item =
   | "Casa"
@@ -815,4 +853,10 @@ export const GetPropertiesFilteredUsingPOSTProperty = {
   CREATION_DATE: "CREATION_DATE" as GetPropertiesFilteredUsingPOSTProperty,
   ID: "ID" as GetPropertiesFilteredUsingPOSTProperty,
   PRICE: "PRICE" as GetPropertiesFilteredUsingPOSTProperty,
+};
+
+export type GetStatesUsingGETParams = {
+  name?: string;
+  page?: number;
+  size?: number;
 };
