@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import "./Calendar.scss";
 import { useState } from "react";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { selectOpenHouses } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { selectOpenHouses } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { FiTrash2 } from "react-icons/all";
 import styles from "./OpenHouse.module.scss";
 
@@ -81,7 +81,7 @@ export const OpenHouse = () => {
     }
 
     dispatch(
-      actions.createPropertyForm.addOpenHouse({
+      actions.editPropertyForm.addOpenHouse({
         initialTime,
         finalTime,
         day: day.toString(),
@@ -95,7 +95,7 @@ export const OpenHouse = () => {
     finalTime: string
   ) => {
     dispatch(
-      actions.createPropertyForm.removeOpenHouseDate({
+      actions.editPropertyForm.removeOpenHouseDate({
         day,
         initialTime,
         finalTime,

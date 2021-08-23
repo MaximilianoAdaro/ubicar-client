@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 import { Container } from "react-bootstrap";
-import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { actions, useAppDispatch } from "../../../store";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Address.module.scss";
@@ -11,6 +11,7 @@ import { MapView } from "../../../store/slices/map/mapSlice";
 import { transformFrom3857to4326 } from "../../Map/utils";
 import { toast } from "react-toastify";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { AddressDTO } from "../../../api";
 
 export type getApiRequestParams = {
   direccion: string;
@@ -24,13 +25,13 @@ export type CoordinatesDTO = {
   long?: number;
 };
 
-export type AddressFormData = {
-  cityId: string;
-  stateId: string;
-  street: string;
-  number: number;
-  coordinates: CoordinatesDTO;
-};
+// export type AddressFormData = {
+//   cityId: string;
+//   stateId: string;
+//   street: string;
+//   number: number;
+//   coordinates: CoordinatesDTO;
+// };
 
 const getApiRequest = (
   url: string,
@@ -46,7 +47,7 @@ const getApiRequest = (
   return customInstance<any>({ url: url, method: "get", params: params });
 };
 
-export const AddressRevamp = () => {
+export const AddressRevamp = (address: AddressDTO) => {
   const [zoom, setZoom] = useState(10);
   const [view, setView] = useState<MapView>({
     longitude: -6506056.858887733,
@@ -54,14 +55,18 @@ export const AddressRevamp = () => {
   });
   const mounted = useRef(false);
   const [data, setData] = useState({
-    stateId: "",
-    state: "",
-    cityId: "",
-    city: "",
-    street: "",
-    number: 0,
-    coordinates: { lat: 0, long: 0 },
+    stateId: address.stateId,
+    state: address.state,
+    cityId: address.cityId,
+    city: address.city,
+    street: address.street,
+    number: address.number,
+    coordinates: {
+      lat: address.coordinates.lat,
+      long: address.coordinates.long,
+    },
   });
+
   const [load, setLoad] = useState(false);
   const [load2, setLoad2] = useState(false);
   const [error, setError] = useState(true);
@@ -186,14 +191,14 @@ export const AddressRevamp = () => {
   }, [load]);
 
   const handlePreviousButton = async () => {
-    dispatch(actions.createPropertyForm.setAddress(data));
-    dispatch(actions.createPropertyForm.setStep(Step.BasicInfo));
+    dispatch(actions.editPropertyForm.setAddress(data));
+    dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
   };
 
   const handleSubmit = () => {
     if (data.state !== "" && data.street !== "" && data.number !== undefined) {
-      dispatch(actions.createPropertyForm.setAddress(data));
-      dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
+      dispatch(actions.editPropertyForm.setAddress(data));
+      dispatch(actions.editPropertyForm.setStep(Step.Characteristics));
     } else {
       throw Error;
     }
@@ -359,7 +364,7 @@ export const AddressRevamp = () => {
               <TextField
                 fullWidth
                 color="secondary"
-                value={data.street ? data.street : ""}
+                // value={data.street ? data.street : ""}
                 variant="outlined"
                 autoComplete={"chrome-off"}
                 onChange={(e) => setData({ ...data, street: e.target.value })}

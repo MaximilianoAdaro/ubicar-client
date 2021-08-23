@@ -5,7 +5,7 @@ import { createCustomTextInputArea } from "../../forms/customForm/TextAreaInput"
 import { CustomForm } from "../../forms/customForm/CustomForm";
 import { Col, Container, Form } from "react-bootstrap";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Additional.module.scss";
 import { OpenHouse } from "./OpenHouse";
@@ -21,7 +21,7 @@ const AdditionalTextArea = createCustomTextInputArea<AdditionalFormData>();
 export const Additional = () => {
   const defaults = useAppSelector(
     ({
-      createPropertyForm: {
+      editPropertyForm: {
         additional: { description },
       },
     }) => ({
@@ -32,13 +32,13 @@ export const Additional = () => {
   const customForm = useCustomForm<AdditionalFormData>({
     schema,
     onSubmit: (data) => {
-      dispatch(actions.createPropertyForm.setAdditional(data));
-      dispatch(actions.createPropertyForm.setStep(Step.Confirmation));
+      dispatch(actions.editPropertyForm.setAdditional(data));
+      dispatch(actions.editPropertyForm.setStep(Step.Confirmation));
     },
   });
 
   const handlePreviousButton = () => {
-    dispatch(actions.createPropertyForm.setStep(Step.Multimedia));
+    dispatch(actions.editPropertyForm.setStep(Step.Multimedia));
   };
 
   return (

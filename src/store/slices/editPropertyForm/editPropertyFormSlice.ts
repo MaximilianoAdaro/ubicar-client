@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
-import { BasicInfoFormData } from "../../../components/editProperty/BasicInfo/BasicInfo";
-import { CharacteristicsFormData } from "../../../components/editProperty/Characteristics/Characteristics";
-import { AdditionalFormData } from "../../../components/editProperty/Additional/Additional";
+import { BasicInfoFormData } from "../../../components/createPropertyForm/BasicInfo/BasicInfo";
+import { CharacteristicsFormData } from "../../../components/createPropertyForm/Characteristics/Characteristics";
+import { AdditionalFormData } from "../../../components/createPropertyForm/Additional/Additional";
 import { isEqualObjects } from "../../../utils/utils";
 import { AddressDTO, PropertyDTO } from "../../../api";
 
@@ -18,6 +18,11 @@ export interface EditPropertyState {
   contacts: Contact[];
   openHouses: OpenHouse[];
   propertyType: string | undefined;
+  addressDropdowns: {
+    state: string | undefined;
+    city: string | undefined;
+    town: string | undefined;
+  };
   address: AddressDTO;
   basicInfo: BasicInfoFormData;
   characteristics: CharacteristicsFormData;
@@ -67,21 +72,26 @@ const initialState: EditPropertyState = {
     number: 0,
     coordinates: { lat: 0, long: 0 },
   },
+  addressDropdowns: {
+    state: undefined,
+    city: undefined,
+    town: undefined,
+  },
   basicInfo: {
-    expenses: 0,
-    price: 0,
+    expenses: undefined,
+    price: undefined,
     title: "",
   },
   characteristics: {
-    constructionYear: 0,
-    coveredSurface: 0,
-    floors: 0,
-    fullBaths: 0,
+    constructionYear: undefined,
+    coveredSurface: undefined,
+    floors: undefined,
+    fullBaths: undefined,
     parkDescription: "",
-    rooms: 0,
-    toilets: 0,
-    totalSurface: 0,
-    environments: 0,
+    rooms: undefined,
+    toilets: undefined,
+    totalSurface: undefined,
+    environments: undefined,
   },
   additional: {
     description: "",
@@ -168,7 +178,15 @@ export const editPropertyFormSlice = createSlice({
     setAddress: (state, action: PayloadAction<AddressDTO>) => {
       state.address = action.payload;
     },
-
+    setState: (state, action: PayloadAction<string>) => {
+      state.addressDropdowns.state = action.payload;
+    },
+    setCity: (state, action: PayloadAction<string | undefined>) => {
+      state.addressDropdowns.city = action.payload;
+    },
+    setTown: (state, action: PayloadAction<string | undefined>) => {
+      state.addressDropdowns.town = action.payload;
+    },
     setBasicInfo: (state, action: PayloadAction<BasicInfoFormData>) => {
       state.basicInfo = action.payload;
     },

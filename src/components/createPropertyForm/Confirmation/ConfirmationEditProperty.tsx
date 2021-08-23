@@ -1,4 +1,3 @@
-import { Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../../constants";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
@@ -7,8 +6,6 @@ import {
   selectCreatePropertyState,
   Step,
 } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
-import { StepButtons } from "../StepButtons/StepButtons";
-import styles from "./Confirmation.module.scss";
 import { useQueryClient } from "react-query";
 import {
   CreatePropertyDTO,
@@ -16,6 +13,7 @@ import {
   useEditPropertyUsingPUT,
 } from "../../../api";
 import { toast } from "react-toastify";
+import { ConfirmationHTML } from "./ConfirmationHTML";
 
 const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
@@ -56,7 +54,8 @@ const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
 type Id = {
   id: string;
 };
-export const Confirmation = ({ id }: Id) => {
+
+export const ConfirmationEditProperty = ({ id }: Id) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const queryClient = useQueryClient();
@@ -108,24 +107,9 @@ export const Confirmation = ({ id }: Id) => {
   };
 
   return (
-    <Container>
-      <Preview />
-      <div className={styles.buttons}>
-        <StepButtons onNext={handleSend} onPrevious={handlePreviousButton} />
-      </div>
-    </Container>
-  );
-};
-
-export const Preview = () => {
-  return (
-    <div>
-      <div className={styles.container}>
-        <h4>Preview</h4>
-        <div className={styles.comingSoon}>
-          <h3>Proximamente...</h3>
-        </div>
-      </div>
-    </div>
+    <ConfirmationHTML
+      handleSend={handleSend}
+      handlePrevious={handlePreviousButton}
+    />
   );
 };

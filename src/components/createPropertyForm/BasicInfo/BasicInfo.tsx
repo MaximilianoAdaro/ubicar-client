@@ -8,13 +8,17 @@ import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   selectOperationType,
   Step,
-} from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+} from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { RadioInput } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { StepButtons } from "../StepButtons/StepButtons";
-import { useGetTypesUsingGET, PropertyDTOCondition } from "../../../api";
+import {
+  useGetTypesUsingGET,
+  PropertyDTOCondition,
+  PropertyType,
+} from "../../../api";
 import { errorMessages } from "../../../constants";
 
 const schema = yup.object({
@@ -39,9 +43,16 @@ export type BasicInfoFormData = {
 
 const BasicInfoTextInput = createCustomTextInput<BasicInfoFormData>();
 
-export const BasicInfo = () => {
+type propertyInfo = {
+  title: string | undefined;
+  price: number | undefined;
+  expenses: number | undefined;
+  type: PropertyType | undefined;
+};
+
+export const BasicInfo = (propertyInfo: propertyInfo) => {
   const defaults = useAppSelector(
-    ({ createPropertyForm: { basicInfo, propertyType } }) => ({
+    ({ editPropertyForm: { basicInfo, propertyType } }) => ({
       ...basicInfo,
       type: propertyType,
     })
@@ -53,17 +64,20 @@ export const BasicInfo = () => {
 
   useEffect(() => {
     if (defaults.type === undefined && types?.[0] !== undefined) {
-      dispatch(actions.createPropertyForm.setPropertyType(types[0]));
+      dispatch(actions.editPropertyForm.setPropertyType(types[0]));
     }
   }, [defaults.type, types, dispatch]);
 
   const customForm = useCustomForm<BasicInfoFormData>({
     schema,
     onSubmit: (data) => {
-      dispatch(actions.createPropertyForm.setBasicInfo(data));
-      dispatch(actions.createPropertyForm.setStep(Step.Address));
+      dispatch(actions.editPropertyForm.setBasicInfo(data));
+      dispatch(actions.editPropertyForm.setStep(Step.Address));
     },
   });
+
+  // if (!defaults.price) return <Loading />;
+
   return (
     <Container>
       <CustomForm {...customForm}>
@@ -87,7 +101,7 @@ export const BasicInfo = () => {
                   name="title"
                   label="Titulo"
                   placeholder={"Increible casa en la playa..."}
-                  defaultValue={defaults.title}
+                  defaultValue={propertyInfo.title}
                 />
               </Col>
             </Form.Row>
@@ -98,7 +112,7 @@ export const BasicInfo = () => {
                     <BasicInfoTextInput
                       name="price"
                       label="Precio"
-                      defaultValue={defaults.price?.toString()}
+                      defaultValue={propertyInfo.price?.toString()}
                       frontSymbol="$"
                     />
                   </Col>
@@ -106,7 +120,7 @@ export const BasicInfo = () => {
                     <BasicInfoTextInput
                       name="expenses"
                       label="Expensas"
-                      defaultValue={defaults.expenses?.toString()}
+                      defaultValue={propertyInfo.expenses?.toString()}
                       frontSymbol="$"
                     />
                   </Col>
@@ -132,10 +146,10 @@ export const BasicInfo = () => {
                       onSelected={(label) => {
                         if (types)
                           dispatch(
-                            actions.createPropertyForm.setPropertyType(label)
+                            actions.editPropertyForm.setPropertyType(label)
                           );
                       }}
-                      defaultValue={defaults.type}
+                      defaultValue={propertyInfo.type}
                     />
                   )}
                 </div>
@@ -169,7 +183,7 @@ const OperationTypeRadio = () => {
 
   const handleSelect = (value: string) => {
     setCurrentValue(value);
-    dispatch(actions.createPropertyForm.setOperationType(value));
+    dispatch(actions.editPropertyForm.setOperationType(value));
   };
   return (
     <>

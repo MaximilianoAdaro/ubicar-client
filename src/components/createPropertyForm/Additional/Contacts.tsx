@@ -1,7 +1,7 @@
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useRef, useState } from "react";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { selectContacts } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { selectContacts } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import styles from "./Contacts.module.scss";
 import { FiTrash2 } from "react-icons/all";
 
@@ -21,14 +21,14 @@ export const Contacts = () => {
         return;
       }
       setError("");
-      dispatch(actions.createPropertyForm.addContact({ label, email }));
+      dispatch(actions.editPropertyForm.addContact({ label, email }));
       labelRef.current.value = "";
       emailRef.current.value = "";
     }
   };
 
   const onRemoveContact = (email: string) => {
-    dispatch(actions.createPropertyForm.removeContact(email));
+    dispatch(actions.editPropertyForm.removeContact(email));
   };
   return (
     <>

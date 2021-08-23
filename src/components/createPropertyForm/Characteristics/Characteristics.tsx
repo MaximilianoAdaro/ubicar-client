@@ -5,7 +5,7 @@ import { useCustomForm } from "../../../hooks/useCustomForm";
 import { CustomForm } from "../../forms/customForm/CustomForm";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { createCustomTextInputArea } from "../../forms/customForm/TextAreaInput";
-import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { Select } from "../../forms/Select";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Characteristics.module.scss";
@@ -76,7 +76,7 @@ const CharacteristicsTextArea =
 
 export const Characteristics = () => {
   const defaults = useAppSelector(
-    ({ createPropertyForm: { characteristics, style } }) => ({
+    ({ editPropertyForm: { characteristics, style } }) => ({
       ...characteristics,
       style,
     })
@@ -87,15 +87,15 @@ export const Characteristics = () => {
 
   useEffect(() => {
     if (defaults.style === undefined && propertyStyles?.[0].id !== undefined) {
-      dispatch(actions.createPropertyForm.setStyle(propertyStyles[0].id));
+      dispatch(actions.editPropertyForm.setStyle(propertyStyles[0].id));
     }
   }, [defaults.style, propertyStyles, dispatch]);
 
   const customForm = useCustomForm<CharacteristicsFormData>({
     schema,
     onSubmit: (data) => {
-      dispatch(actions.createPropertyForm.setCharacteristics(data));
-      dispatch(actions.createPropertyForm.setStep(Step.OptionalInfo));
+      dispatch(actions.editPropertyForm.setCharacteristics(data));
+      dispatch(actions.editPropertyForm.setStep(Step.OptionalInfo));
     },
   });
 
@@ -103,8 +103,8 @@ export const Characteristics = () => {
     const isValid = await customForm.methods.trigger();
     if (isValid) {
       const data = customForm.methods.getValues();
-      dispatch(actions.createPropertyForm.setCharacteristics(data));
-      dispatch(actions.createPropertyForm.setStep(Step.Address));
+      dispatch(actions.editPropertyForm.setCharacteristics(data));
+      dispatch(actions.editPropertyForm.setStep(Step.Address));
     }
   };
 
@@ -215,7 +215,7 @@ export const Characteristics = () => {
                         id,
                       }))}
                       onSelect={(id) =>
-                        dispatch(actions.createPropertyForm.setStyle(id))
+                        dispatch(actions.editPropertyForm.setStyle(id))
                       }
                       defaultValue={defaults.style}
                     />

@@ -1,7 +1,7 @@
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { CheckInputList } from "../../forms/CheckInputList";
 import { Col, Container, Form } from "react-bootstrap";
-import { Step } from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
+import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import styles from "./OptionalInfo.module.scss";
 import { StepButtons } from "../StepButtons/StepButtons";
 import {
@@ -12,7 +12,7 @@ import {
 
 export const OptionalInfo = () => {
   const defaults = useAppSelector(
-    ({ createPropertyForm: { amenities, securities, materials } }) => ({
+    ({ editPropertyForm: { amenities, securities, materials } }) => ({
       amenities,
       securities,
       materials,
@@ -25,11 +25,11 @@ export const OptionalInfo = () => {
   const { data: materials } = useGetMaterialsUsingGET();
 
   const handleClick = () => {
-    dispatch(actions.createPropertyForm.setStep(Step.Multimedia));
+    dispatch(actions.editPropertyForm.setStep(Step.Multimedia));
   };
 
   const handlePreviousButton = () => {
-    dispatch(actions.createPropertyForm.setStep(Step.Characteristics));
+    dispatch(actions.editPropertyForm.setStep(Step.Characteristics));
   };
 
   return (
@@ -45,10 +45,10 @@ export const OptionalInfo = () => {
                     <CheckInputList
                       items={amenities}
                       onCheck={(id) =>
-                        dispatch(actions.createPropertyForm.addAmenity(id))
+                        dispatch(actions.editPropertyForm.addAmenity(id))
                       }
                       onUncheck={(id) =>
-                        dispatch(actions.createPropertyForm.removeAmenity(id))
+                        dispatch(actions.editPropertyForm.removeAmenity(id))
                       }
                       defaultValues={defaults.amenities}
                     />
@@ -68,10 +68,10 @@ export const OptionalInfo = () => {
                     <CheckInputList
                       items={securities}
                       onCheck={(id) =>
-                        dispatch(actions.createPropertyForm.addSecurity(id))
+                        dispatch(actions.editPropertyForm.addSecurity(id))
                       }
                       onUncheck={(id) =>
-                        dispatch(actions.createPropertyForm.removeSecurity(id))
+                        dispatch(actions.editPropertyForm.removeSecurity(id))
                       }
                       defaultValues={defaults.securities}
                     />
@@ -89,10 +89,10 @@ export const OptionalInfo = () => {
                     <CheckInputList
                       items={materials}
                       onCheck={(id) =>
-                        dispatch(actions.createPropertyForm.addMaterial(id))
+                        dispatch(actions.editPropertyForm.addMaterial(id))
                       }
                       onUncheck={(id) =>
-                        dispatch(actions.createPropertyForm.removeMaterial(id))
+                        dispatch(actions.editPropertyForm.removeMaterial(id))
                       }
                       defaultValues={defaults.materials}
                     />

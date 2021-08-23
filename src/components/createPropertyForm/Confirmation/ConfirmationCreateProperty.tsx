@@ -1,18 +1,16 @@
-import { Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { CreatePropertyDTO, useCreatePropertyUsingPOST } from "../../../api";
 import { urls } from "../../../constants";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
-  CreatePropertyState,
+  EditPropertyState,
   selectCreatePropertyState,
   Step,
-} from "../../../store/slices/createPropetyForm/createPropertyFormSlice";
-import { StepButtons } from "../StepButtons/StepButtons";
-import styles from "./Confirmation.module.scss";
+} from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { toast } from "react-toastify";
+import { ConfirmationHTML } from "./ConfirmationHTML";
 
-const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
+const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
@@ -48,9 +46,15 @@ const createRequestData = (data: CreatePropertyState): CreatePropertyDTO => ({
   comments: data.additional.description ?? "",
 });
 
-export const Confirmation = () => {
+type Id = {
+  id: string;
+};
+
+export const ConfirmationCreateProperty = ({ id }: Id) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
+  if (id == "Create") {
+  }
   const { mutateAsync } = useCreatePropertyUsingPOST({
     mutation: {
       onSuccess() {
@@ -84,7 +88,7 @@ export const Confirmation = () => {
       await mutateAsync({
         data: createRequestData(createPropertyState),
       });
-      dispatch(actions.createPropertyForm.reset());
+      dispatch(actions.editPropertyForm.reset());
       history.push(urls.home);
     } catch (e) {
       throw Error;
@@ -92,28 +96,12 @@ export const Confirmation = () => {
   };
 
   const handlePreviousButton = () => {
-    dispatch(actions.createPropertyForm.setStep(Step.Additional));
+    dispatch(actions.editPropertyForm.setStep(Step.Additional));
   };
-
   return (
-    <Container>
-      <Preview />
-      <div className={styles.buttons}>
-        <StepButtons onNext={handleSend} onPrevious={handlePreviousButton} />
-      </div>
-    </Container>
-  );
-};
-
-export const Preview = () => {
-  return (
-    <div>
-      <div className={styles.container}>
-        <h4>Preview</h4>
-        <div className={styles.comingSoon}>
-          <h3>Proximamente...</h3>
-        </div>
-      </div>
-    </div>
+    <ConfirmationHTML
+      handleSend={handleSend}
+      handlePrevious={handlePreviousButton}
+    />
   );
 };

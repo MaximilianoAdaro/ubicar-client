@@ -4,11 +4,11 @@ import { actions, useAppDispatch, useAppSelector } from "../../store";
 import {
   selectCurrentStep,
   Step,
-} from "../../store/slices/createPropetyForm/createPropertyFormSlice";
+} from "../../store/slices/editPropertyForm/editPropertyFormSlice";
 import { OptionalInfo } from "../../components/createPropertyForm/OptionalInfo/OptionalInfo";
 import { Multimedia } from "../../components/createPropertyForm/Multimedia/Multimedia";
 import { Additional } from "../../components/createPropertyForm/Additional/Additional";
-import { Confirmation } from "../../components/createPropertyForm/Confirmation/Confirmation";
+import { ConfirmationCreateProperty } from "../../components/createPropertyForm/Confirmation/ConfirmationCreateProperty";
 import styles from "./CreateProperty.module.scss";
 import clsx from "clsx";
 import { Container } from "react-bootstrap";
@@ -82,7 +82,7 @@ const StepBar = ({ currentStep }: StepBarProps) => {
             })}
             onClick={() => {
               if (enableSuperUser)
-                dispatch(actions.createPropertyForm.setStep(step));
+                dispatch(actions.editPropertyForm.setStep(step));
             }}
           >
             <span>{displayName}</span>
@@ -105,9 +105,26 @@ interface CurrentStepProps {
 const CurrentStep = ({ currentStep }: CurrentStepProps) => {
   switch (currentStep) {
     case Step.BasicInfo:
-      return <BasicInfo />;
+      return (
+        <BasicInfo
+          price={undefined}
+          expenses={undefined}
+          type={undefined}
+          title={undefined}
+        />
+      );
     case Step.Address:
-      return <AddressRevamp />;
+      return (
+        <AddressRevamp
+          coordinates={{ lat: 0, long: 0 }}
+          number={0}
+          city={""}
+          state={""}
+          street={""}
+          cityId={""}
+          stateId={""}
+        />
+      );
     case Step.Characteristics:
       return <Characteristics />;
     case Step.OptionalInfo:
@@ -117,6 +134,6 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     case Step.Additional:
       return <Additional />;
     case Step.Confirmation:
-      return <Confirmation />;
+      return <ConfirmationCreateProperty id={"Create"} />;
   }
 };
