@@ -6,7 +6,6 @@ import { Fill, Icon, Stroke, Style, Text } from "ol/style";
 import { MapContext } from "../../map";
 import { IMapContext } from "../../maptypes";
 import { GeoJSON } from "ol/format";
-import { bboxParams } from "../../utils";
 
 class UniversitiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
   layer: VectorLayer;
@@ -14,9 +13,6 @@ class UniversitiesLayer extends React.PureComponent<TVectorLayerComponentProps> 
   state = { visible: false };
 
   componentDidMount() {
-    const bbox = bboxParams(this.props.map);
-
-    debugger;
     this.source = new VectorSource({
       url: "./geojson/Universidad.geojson",
       format: new GeoJSON(),

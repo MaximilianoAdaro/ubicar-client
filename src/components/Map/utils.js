@@ -126,13 +126,13 @@ export function transformFrom3857to4326(coordinate) {
   return transform(coordinate, "EPSG:3857", "EPSG:4326");
 }
 
+export function transformFrom4326to3857(coordinate) {
+  return transform(coordinate, "EPSG:4326", "EPSG:3857");
+}
+
 export function getBounds(map) {
   const extent = map.getView().calculateExtent(map.getSize());
   return transformExtent(extent, "EPSG:3857", "EPSG:4326");
-}
-
-export function transformFrom4326to3857(coordinate) {
-  return transform(coordinate, "EPSG:4326", "EPSG:3857");
 }
 
 export function bboxParams(map) {
