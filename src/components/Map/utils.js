@@ -2,7 +2,7 @@ import * as ol from "ol";
 import { GeoJSON } from "ol/format";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
-import { transform } from "ol/proj";
+import { transform, transformExtent } from "ol/proj";
 
 // GET OPEN STREET MAP LAYER
 export function getOSMLayer() {
@@ -126,8 +126,23 @@ export function transformFrom3857to4326(coordinate) {
   return transform(coordinate, "EPSG:3857", "EPSG:4326");
 }
 
+export function getBounds(map) {
+  const extent = map.getView().calculateExtent(map.getSize());
+  return transformExtent(extent, "EPSG:3857", "EPSG:4326");
+}
+
 export function transformFrom4326to3857(coordinate) {
   return transform(coordinate, "EPSG:4326", "EPSG:3857");
+}
+
+export function bboxParams(map) {
+  const bbox = getBounds(map);
+  return {
+    NW: { long: bbox[0], lat: bbox[3] },
+    NE: { long: bbox[2], lat: bbox[3] },
+    SW: { long: bbox[0], lat: bbox[1] },
+    SE: { long: bbox[2], lat: bbox[1] },
+  };
 }
 
 export function getItemsFromStorage(key) {
