@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
-import { BasicInfoFormData } from "../../../components/createPropertyForm/BasicInfo/BasicInfo";
-import { CharacteristicsFormData } from "../../../components/createPropertyForm/Characteristics/Characteristics";
-import { AdditionalFormData } from "../../../components/createPropertyForm/Additional/Additional";
+import { BasicInfoFormData } from "../../../components/editCreatePropertyForm/BasicInfo/BasicInfo";
+import { CharacteristicsFormData } from "../../../components/editCreatePropertyForm/Characteristics/Characteristics";
+import { AdditionalFormData } from "../../../components/editCreatePropertyForm/Additional/Additional";
 import { isEqualObjects } from "../../../utils/utils";
 import { AddressDTO, PropertyDTO } from "../../../api";
 
@@ -99,7 +99,7 @@ const initialState: EditPropertyState = {
   currentStep: Step.BasicInfo,
 };
 
-export const editPropertyFormSlice = createSlice({
+export const editCreatePropertyFormSlice = createSlice({
   name: "editPropertyForm",
 
   initialState,
@@ -231,11 +231,11 @@ export const editPropertyFormSlice = createSlice({
 });
 
 export const editPropertyFormReducer = {
-  editPropertyForm: editPropertyFormSlice.reducer,
+  editPropertyForm: editCreatePropertyFormSlice.reducer,
 };
 
 export const editPropertyFormActions = {
-  editPropertyForm: editPropertyFormSlice.actions,
+  editPropertyForm: editCreatePropertyFormSlice.actions,
 };
 
 // Other code such as selectors can use the imported `RootState` type

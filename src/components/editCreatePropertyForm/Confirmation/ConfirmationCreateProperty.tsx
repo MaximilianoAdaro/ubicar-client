@@ -6,7 +6,7 @@ import {
   EditPropertyState,
   selectCreatePropertyState,
   Step,
-} from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+} from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { toast } from "react-toastify";
 import { ConfirmationHTML } from "./ConfirmationHTML";
 

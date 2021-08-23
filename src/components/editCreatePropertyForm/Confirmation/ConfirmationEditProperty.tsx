@@ -5,7 +5,7 @@ import {
   EditPropertyState,
   selectCreatePropertyState,
   Step,
-} from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+} from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { useQueryClient } from "react-query";
 import {
   CreatePropertyDTO,

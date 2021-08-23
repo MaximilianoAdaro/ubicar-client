@@ -1,7 +1,7 @@
 import { Badge, Button, Col, Form } from "react-bootstrap";
 import { useRef, useState } from "react";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { selectYoutubeLinks } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { selectYoutubeLinks } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import styles from "./VideoInput.module.scss";
 import { FiTrash2, ImSpinner9 } from "react-icons/all";
 

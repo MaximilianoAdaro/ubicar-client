@@ -5,7 +5,7 @@ import { useCustomForm } from "../../../hooks/useCustomForm";
 import { CustomForm } from "../../forms/customForm/CustomForm";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { createCustomTextInputArea } from "../../forms/customForm/TextAreaInput";
-import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { Step } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { Select } from "../../forms/Select";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Characteristics.module.scss";

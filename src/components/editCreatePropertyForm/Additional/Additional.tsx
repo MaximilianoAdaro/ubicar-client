@@ -5,7 +5,7 @@ import { createCustomTextInputArea } from "../../forms/customForm/TextAreaInput"
 import { CustomForm } from "../../forms/customForm/CustomForm";
 import { Col, Container, Form } from "react-bootstrap";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { Step } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Additional.module.scss";
 import { OpenHouse } from "./OpenHouse";

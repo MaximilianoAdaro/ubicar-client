@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
 import { Container } from "react-bootstrap";
-import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { Step } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { actions, useAppDispatch } from "../../../store";
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Address.module.scss";

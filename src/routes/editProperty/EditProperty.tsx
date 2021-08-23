@@ -1,14 +1,14 @@
-import { BasicInfo } from "../../components/createPropertyForm/BasicInfo/BasicInfo";
-import { Characteristics } from "../../components/createPropertyForm/Characteristics/Characteristics";
+import { BasicInfo } from "../../components/editCreatePropertyForm/BasicInfo/BasicInfo";
+import { Characteristics } from "../../components/editCreatePropertyForm/Characteristics/Characteristics";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
 import {
   selectCurrentStep,
   Step,
-} from "../../store/slices/editPropertyForm/editPropertyFormSlice";
-import { OptionalInfo } from "../../components/createPropertyForm/OptionalInfo/OptionalInfo";
-import { Multimedia } from "../../components/createPropertyForm/Multimedia/Multimedia";
-import { Additional } from "../../components/createPropertyForm/Additional/Additional";
-import { ConfirmationEditProperty } from "../../components/createPropertyForm/Confirmation/ConfirmationEditProperty";
+} from "../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
+import { OptionalInfo } from "../../components/editCreatePropertyForm/OptionalInfo/OptionalInfo";
+import { Multimedia } from "../../components/editCreatePropertyForm/Multimedia/Multimedia";
+import { Additional } from "../../components/editCreatePropertyForm/Additional/Additional";
+import { ConfirmationEditProperty } from "../../components/editCreatePropertyForm/Confirmation/ConfirmationEditProperty";
 import styles from "./EditProperty.module.scss";
 import clsx from "clsx";
 import { Container } from "react-bootstrap";
@@ -16,9 +16,9 @@ import { getFeatureFlag } from "../../utils/utils";
 import { useParams } from "react-router-dom";
 import { Loading } from "../../components/common/loading/Loading";
 import { Suspense, useEffect } from "react";
-import { selectIsInitialized } from "../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { selectIsInitialized } from "../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { useGetPropertyUsingGET } from "../../api";
-import { AddressRevamp } from "../../components/createPropertyForm/Address/AddressRevamp";
+import { AddressRevamp } from "../../components/editCreatePropertyForm/Address/AddressRevamp";
 
 export const EditProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);

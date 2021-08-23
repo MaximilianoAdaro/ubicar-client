@@ -1,6 +1,8 @@
 import styles from "./StepButtons.module.scss";
 import { Button } from "react-bootstrap";
 import { ReactNode } from "react";
+import { selectCreatePropertyState } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
+import { useAppSelector } from "../../../store";
 
 interface StepButtonsProps {
   type?: "submit" | "button";
@@ -19,9 +21,17 @@ export const StepButtons = ({
   onNext,
   onPrevious,
 }: StepButtonsProps) => {
+  const createPropertyState = useAppSelector(selectCreatePropertyState);
+
+  function handleSend() {
+    //aca deberia pegarle al endpoint con createPropertyState
+    console.log(createPropertyState);
+  }
+
   return (
     <div className={styles.stepButtonsContainer}>
       <div className={styles.stepButtons}>
+        <CustomButton onClick={handleSend}>Guardar cambios</CustomButton>
         {showPrevious && (
           <CustomButton onClick={onPrevious}>Anterior</CustomButton>
         )}

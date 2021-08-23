@@ -1,7 +1,7 @@
 import { VideoInput } from "./VideoInput";
 import { Col, Container, Row } from "react-bootstrap";
 import { actions, useAppDispatch } from "../../../store";
-import { Step } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { Step } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { StepButtons } from "../StepButtons/StepButtons";
 import { Photos } from "./Photos";
 import styles from "./Multimedia.module.scss";

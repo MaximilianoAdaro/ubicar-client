@@ -8,7 +8,7 @@ import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   selectOperationType,
   Step,
-} from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+} from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { RadioInput } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
 import clsx from "clsx";

@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import "./Calendar.scss";
 import { useState } from "react";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { selectOpenHouses } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { selectOpenHouses } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { FiTrash2 } from "react-icons/all";
 import styles from "./OpenHouse.module.scss";
 

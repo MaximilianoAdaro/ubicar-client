@@ -1,7 +1,7 @@
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useRef, useState } from "react";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { selectContacts } from "../../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { selectContacts } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import styles from "./Contacts.module.scss";
 import { FiTrash2 } from "react-icons/all";
 
