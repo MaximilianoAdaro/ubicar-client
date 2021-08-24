@@ -79,7 +79,7 @@ export function UserProfile() {
               {/*</ListItem>*/}
             </List>
           </Grid>
-          <Grid xs>
+          <Grid xs className={styles.currentUserProfileComponent}>
             {component === "PersonalData" && <PersonalData />}
             {component === "MyFavorites" && <MyFavorites />}
             {component === "MyProperties" && <MyProperties />}
