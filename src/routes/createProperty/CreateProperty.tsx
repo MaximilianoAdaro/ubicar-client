@@ -1,19 +1,19 @@
-import { BasicInfo } from "../../components/createPropertyForm/BasicInfo/BasicInfo";
-import { Characteristics } from "../../components/createPropertyForm/Characteristics/Characteristics";
+import { BasicInfo } from "../../components/editCreatePropertyForm/BasicInfo/BasicInfo";
+import { Characteristics } from "../../components/editCreatePropertyForm/Characteristics/Characteristics";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
 import {
   selectCurrentStep,
   Step,
-} from "../../store/slices/createPropetyForm/createPropertyFormSlice";
-import { OptionalInfo } from "../../components/createPropertyForm/OptionalInfo/OptionalInfo";
-import { Multimedia } from "../../components/createPropertyForm/Multimedia/Multimedia";
-import { Additional } from "../../components/createPropertyForm/Additional/Additional";
-import { Confirmation } from "../../components/createPropertyForm/Confirmation/Confirmation";
+} from "../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
+import { OptionalInfo } from "../../components/editCreatePropertyForm/OptionalInfo/OptionalInfo";
+import { Multimedia } from "../../components/editCreatePropertyForm/Multimedia/Multimedia";
+import { Additional } from "../../components/editCreatePropertyForm/Additional/Additional";
+import { ConfirmationCreateProperty } from "../../components/editCreatePropertyForm/Confirmation/ConfirmationCreateProperty";
 import styles from "./CreateProperty.module.scss";
 import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
-import { AddressRevamp } from "../../components/createPropertyForm/Address/AddressRevamp";
+import { AddressRevamp } from "../../components/editCreatePropertyForm/Address/AddressRevamp";
 
 export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
@@ -82,7 +82,7 @@ const StepBar = ({ currentStep }: StepBarProps) => {
             })}
             onClick={() => {
               if (enableSuperUser)
-                dispatch(actions.createPropertyForm.setStep(step));
+                dispatch(actions.editPropertyForm.setStep(step));
             }}
           >
             <span>{displayName}</span>
@@ -105,9 +105,26 @@ interface CurrentStepProps {
 const CurrentStep = ({ currentStep }: CurrentStepProps) => {
   switch (currentStep) {
     case Step.BasicInfo:
-      return <BasicInfo />;
+      return (
+        <BasicInfo
+          price={undefined}
+          expenses={undefined}
+          type={undefined}
+          title={undefined}
+        />
+      );
     case Step.Address:
-      return <AddressRevamp />;
+      return (
+        <AddressRevamp
+          coordinates={{ lat: 0, long: 0 }}
+          number={0}
+          city={""}
+          state={""}
+          street={""}
+          cityId={""}
+          stateId={""}
+        />
+      );
     case Step.Characteristics:
       return <Characteristics />;
     case Step.OptionalInfo:
@@ -117,6 +134,6 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     case Step.Additional:
       return <Additional />;
     case Step.Confirmation:
-      return <Confirmation />;
+      return <ConfirmationCreateProperty id={"Create"} />;
   }
 };
