@@ -37,6 +37,8 @@ import type {
   GetPropertiesFilteredUsingPOSTParams,
   PageStateDTO,
   GetStatesUsingGETParams,
+  UserDTORes,
+  UserDTOReq,
 } from "./endpoints.schemas";
 import { customInstance } from "../mutator/custom-instance";
 
@@ -1183,4 +1185,42 @@ export const useGetStatesUsingGET = <
     queryKey,
     ...query,
   };
+};
+
+export const editUserUsingPUT = <TData = UserDTORes>(
+  id: string,
+  userDTOReq: UserDTOReq,
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/user/${id}`, method: "put", data: userDTOReq },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const useEditUserUsingPUT = <
+  TData = AsyncReturnType<typeof editUserUsingPUT, UserDTORes>,
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    TData,
+    TError,
+    { id: string; data: UserDTOReq },
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { mutation: mutationOptions, request: requestOptions } = options || {};
+
+  return useMutation<TData, TError, { id: string; data: UserDTOReq }, TContext>(
+    (props) => {
+      const { id, data } = props || {};
+
+      return editUserUsingPUT<TData>(id, data, requestOptions);
+    },
+    mutationOptions
+  );
 };

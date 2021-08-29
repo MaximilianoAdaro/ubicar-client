@@ -16,7 +16,9 @@ export function ListingHouse(props: ListingHouseProps) {
   const history = useHistory();
   const house = props.house;
   const houseAddress = house.address;
-  const houseStreetNumber = `${houseAddress.street} ${houseAddress.number}`;
+  const houseStreetNumber = `${houseAddress?.street ?? ""} ${
+    houseAddress?.number ?? ""
+  }`;
   const baths = pluralize("baño", house.fullBaths);
   return (
     <Grid
@@ -66,7 +68,7 @@ export function ListingHouse(props: ListingHouseProps) {
           </p>
         </Tooltip>
         <p className={clsx(styles.propertyTownCity, styles.marginPaddingPTag)}>
-          {houseAddress.state}, {houseAddress.city}
+          {houseAddress?.state ?? ""}, {houseAddress?.city ?? ""}
         </p>
       </Grid>
     </Grid>
