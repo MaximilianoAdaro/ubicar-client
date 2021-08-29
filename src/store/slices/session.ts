@@ -4,11 +4,13 @@ import { RootState } from "../store";
 // Define a type for the slice state
 interface SessionState {
   redirectPath: string;
+  searchBar: string;
 }
 
 // Define the initial state using that type
 const initialState: SessionState = {
   redirectPath: "",
+  searchBar: "",
 };
 
 export const counterSlice = createSlice({
@@ -18,6 +20,9 @@ export const counterSlice = createSlice({
   reducers: {
     setRedirectPath: (state, action: PayloadAction<string>) => {
       state.redirectPath = action.payload;
+    },
+    setSearchBar: (state, action: PayloadAction<string>) => {
+      state.searchBar = action.payload;
     },
   },
 });
@@ -30,6 +35,8 @@ export const sessionActions = {
 
 export const selectRedirectPath = (state: RootState) =>
   state.session.redirectPath;
+
+export const selectSearchBar = (state: RootState) => state.session.searchBar;
 
 export const selectSession = (state: RootState) => state.session;
 

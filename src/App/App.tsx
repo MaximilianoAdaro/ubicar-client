@@ -22,8 +22,9 @@ import { Footer } from "../components/footer/Footer";
 import { useGetLoggedUsingGET } from "../api";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { Button, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -86,7 +87,7 @@ export default function App() {
 
 const WorkInProgress = () => {
   const { data: user } = useGetLoggedUsingGET();
-  const handleSearch = () => {};
+  const dispatch = useAppDispatch();
 
   return (
     <div className={styles.app}>
@@ -97,16 +98,20 @@ const WorkInProgress = () => {
           }}
         >
           <h4>Bienvenido {user.userName}</h4>
-
-          <TextField
-            label={"Buscar por zona"}
-            fullWidth
-            variant="outlined"
-            color={"secondary"}
-          />
-          <Button id="button" size="small" onClick={() => handleSearch()}>
-            Buscar
-          </Button>
+          <div style={{ margin: "auto" }}>
+            <TextField
+              style={{ width: "400px" }}
+              label={"Buscar por zona"}
+              variant="outlined"
+              color={"secondary"}
+              onChange={(e) =>
+                dispatch(actions.session.setSearchBar(e.target.value))
+              }
+            />
+            <Link to="/listing-page" className="btn btn-primary">
+              Buscar
+            </Link>
+          </div>
         </div>
       )}
     </div>
