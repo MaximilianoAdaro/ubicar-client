@@ -5,12 +5,17 @@ import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   EditPropertyState,
   selectCreatePropertyState,
+  selectCurrentStep,
   Step,
 } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { toast } from "react-toastify";
 import { ConfirmationHTML } from "./ConfirmationHTML";
+import { use } from "msw/lib/types/utils/internal/requestHandlerUtils";
 
-const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
+const createRequestData = (
+  data: EditPropertyState,
+  step: number
+): CreatePropertyDTO => ({
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
@@ -44,6 +49,7 @@ const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
     finalTime,
   })),
   comments: data.additional.description ?? "",
+  step: step,
 });
 
 type Id = {
@@ -58,7 +64,7 @@ export const ConfirmationCreateProperty = ({ id }: Id) => {
   const { mutateAsync } = useCreatePropertyUsingPOST({
     mutation: {
       onSuccess() {
-        toast.success(" ✅ Propriedad Creada!", {
+        toast.success(" ✅ Propiedad Creada!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -82,11 +88,12 @@ export const ConfirmationCreateProperty = ({ id }: Id) => {
     },
   });
   const createPropertyState = useAppSelector(selectCreatePropertyState);
+  const step = useAppSelector(selectCurrentStep).valueOf();
 
   const handleSend = async () => {
     try {
       await mutateAsync({
-        data: createRequestData(createPropertyState),
+        data: createRequestData(createPropertyState, step),
       });
       dispatch(actions.editPropertyForm.reset());
       history.push(urls.home);

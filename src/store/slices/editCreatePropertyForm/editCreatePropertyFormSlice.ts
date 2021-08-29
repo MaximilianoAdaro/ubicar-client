@@ -31,7 +31,7 @@ export interface EditPropertyState {
 }
 
 export enum Step {
-  BasicInfo,
+  BasicInfo = 1,
   Address,
   Characteristics,
   OptionalInfo,

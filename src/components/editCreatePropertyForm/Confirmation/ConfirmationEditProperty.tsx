@@ -4,6 +4,7 @@ import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   EditPropertyState,
   selectCreatePropertyState,
+  selectCurrentStep,
   Step,
 } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { useQueryClient } from "react-query";
@@ -15,7 +16,10 @@ import {
 import { toast } from "react-toastify";
 import { ConfirmationHTML } from "./ConfirmationHTML";
 
-const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
+const createRequestData = (
+  data: EditPropertyState,
+  step: number
+): CreatePropertyDTO => ({
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
@@ -49,6 +53,7 @@ const createRequestData = (data: EditPropertyState): CreatePropertyDTO => ({
     finalTime: finalTime as any,
   })),
   comments: data.additional.description ?? "",
+  step: step,
 });
 
 type Id = {
@@ -87,13 +92,14 @@ export const ConfirmationEditProperty = ({ id }: Id) => {
     },
   });
   const createPropertyState = useAppSelector(selectCreatePropertyState);
+  const step = useAppSelector(selectCurrentStep).valueOf();
 
   const handleSend = async () => {
     dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
     try {
       await mutateAsync({
         id,
-        data: createRequestData(createPropertyState),
+        data: createRequestData(createPropertyState, step),
       });
       dispatch(actions.editPropertyForm.reset());
       history.push(urls.home);
