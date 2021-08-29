@@ -26,11 +26,13 @@ class PropertiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
     if (this.props.properties !== null && this.props.properties) {
       features = this.props.properties.map((data) => {
         return new Feature({
-          fna: data.address.street + " " + data.address.number.toString(),
+          fna: `${data.address?.street ?? ""} ${
+            data.address?.number.toString() ?? ""
+          }`,
           geometry: new Point(
             convertCoordinates(
-              data.address.coordinates.long,
-              data.address.coordinates.lat
+              data.address?.coordinates.long ?? 0,
+              data.address?.coordinates.lat ?? 0
             )
           ),
         });
@@ -69,11 +71,13 @@ class PropertiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
         this.source.clear();
         let feat = this.props.properties.map((data) => {
           return new Feature({
-            fna: data.address.street + " " + data.address.number.toString(),
+            fna: `${data.address?.street ?? ""} ${
+              data.address?.number.toString() ?? ""
+            }`,
             geometry: new Point(
               convertCoordinates(
-                data.address.coordinates.long,
-                data.address.coordinates.lat
+                data.address?.coordinates.long ?? 0,
+                data.address?.coordinates.lat ?? 0
               )
             ),
           });
