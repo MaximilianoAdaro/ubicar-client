@@ -5,6 +5,8 @@
  * Api Documentation
  * OpenAPI spec version: 1.0
  */
+import { Step } from "../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
+
 export interface Address {
   city: City;
   coordinates: Coordinates;
@@ -140,6 +142,7 @@ export interface CreatePropertyDTO {
   title: string;
   toilets?: number;
   type: string;
+  step: number;
 }
 
 export interface GoogleLoginUserDTO {

@@ -1,6 +1,17 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
-import { Grid, List, ListItem, TextField } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  List,
+  ListItem,
+  TextField,
+} from "@material-ui/core";
 import { useGetLoggedUsingGET } from "../../api";
 
 export function PersonalData() {
@@ -10,6 +21,24 @@ export function PersonalData() {
   // const [cellphoneChangeButton, setCellphoneChangeButton] = useState(true);
   // const [phoneChangeButton, setPhoneChangeButton] = useState(true);
   const { data: user } = useGetLoggedUsingGET();
+  const [changeUsername, setChangeUsername] = React.useState(false);
+  const [changePassword, setChangePassword] = React.useState(false);
+
+  const openChangeUsername = () => {
+    setChangeUsername(true);
+  };
+
+  const openChangePassword = () => {
+    setChangePassword(true);
+  };
+
+  const closeChangeUsername = () => {
+    setChangeUsername(false);
+  };
+
+  const closeChangePassword = () => {
+    setChangePassword(false);
+  };
 
   if (!user) return <h4>Error</h4>;
 
@@ -40,9 +69,37 @@ export function PersonalData() {
                 fullWidth
                 disabled
               />
-              {/*<Button onClick={() => setNameChangeButton(!nameChangeButton)}>*/}
-              {/*  Edit*/}
-              {/*</Button>*/}
+              <Button onClick={openChangeUsername}>Edit</Button>
+              <Dialog
+                open={changeUsername}
+                onClose={closeChangeUsername}
+                aria-labelledby="form-dialog-title"
+              >
+                <DialogTitle id="form-dialog-title">
+                  Change Username
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Escribe el nuevo nombre de usuario.
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Nombre de usuario"
+                    type="username"
+                    fullWidth
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={closeChangeUsername} color="primary">
+                    Cancel
+                  </Button>
+                  <Button onClick={closeChangeUsername} color="primary">
+                    Subscribe
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </ListItem>
             <ListItem>
               <TextField
@@ -53,11 +110,63 @@ export function PersonalData() {
                 fullWidth
                 disabled
               />
-              {/*<Button*/}
-              {/*  onClick={() => setPasswordChangeButton(!passwordChangeButton)}*/}
-              {/*>*/}
-              {/*  Edit*/}
-              {/*</Button>*/}
+              <Button onClick={openChangePassword}>Edit</Button>
+              <Dialog
+                open={changePassword}
+                onClose={closeChangePassword}
+                aria-labelledby="form-dialog-title"
+              >
+                <DialogTitle id="form-dialog-title">
+                  Cambia tu contraseña
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Escribe tu antigua contraseña
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Antigua contraseña"
+                    type="password"
+                    fullWidth
+                  />
+                </DialogContent>
+                <DialogContent>
+                  <DialogContentText>
+                    Escribe tu nueva contraseña
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Nueva contraseña"
+                    type="password"
+                    fullWidth
+                  />
+                </DialogContent>
+                <DialogContent>
+                  <DialogContentText>
+                    Escribe denuevo tu nueva contraseña
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Nueva contraseña"
+                    type="password"
+                    fullWidth
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={closeChangePassword} color="primary">
+                    Cancel
+                  </Button>
+                  <Button onClick={closeChangePassword} color="primary">
+                    Subscribe
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </ListItem>
             <ListItem>
               <TextField

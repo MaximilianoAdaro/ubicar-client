@@ -1,14 +1,14 @@
-import { BasicInfo } from "../../components/editProperty/BasicInfo/BasicInfo";
-import { Characteristics } from "../../components/editProperty/Characteristics/Characteristics";
+import { BasicInfo } from "../../components/editCreatePropertyForm/BasicInfo/BasicInfo";
+import { Characteristics } from "../../components/editCreatePropertyForm/Characteristics/Characteristics";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
 import {
   selectCurrentStep,
   Step,
-} from "../../store/slices/editPropertyForm/editPropertyFormSlice";
-import { OptionalInfo } from "../../components/editProperty/OptionalInfo/OptionalInfo";
-import { Multimedia } from "../../components/editProperty/Multimedia/Multimedia";
-import { Additional } from "../../components/editProperty/Additional/Additional";
-import { Confirmation } from "../../components/editProperty/Confirmation/Confirmation";
+} from "../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
+import { OptionalInfo } from "../../components/editCreatePropertyForm/OptionalInfo/OptionalInfo";
+import { Multimedia } from "../../components/editCreatePropertyForm/Multimedia/Multimedia";
+import { Additional } from "../../components/editCreatePropertyForm/Additional/Additional";
+import { ConfirmationEditProperty } from "../../components/editCreatePropertyForm/Confirmation/ConfirmationEditProperty";
 import styles from "./EditProperty.module.scss";
 import clsx from "clsx";
 import { Container } from "react-bootstrap";
@@ -16,9 +16,9 @@ import { getFeatureFlag } from "../../utils/utils";
 import { useParams } from "react-router-dom";
 import { Loading } from "../../components/common/loading/Loading";
 import { Suspense, useEffect } from "react";
-import { selectIsInitialized } from "../../store/slices/editPropertyForm/editPropertyFormSlice";
+import { selectIsInitialized } from "../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { useGetPropertyUsingGET } from "../../api";
-import { AddressRevamp } from "../../components/editProperty/Address/AddressRevamp";
+import { AddressRevamp } from "../../components/editCreatePropertyForm/Address/AddressRevamp";
 
 export const EditProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
@@ -84,7 +84,7 @@ const StepBar = ({ currentStep }: StepBarProps) => {
             })}
             onClick={() => {
               if (enableSuperUser)
-                dispatch(actions.createPropertyForm.setStep(step));
+                dispatch(actions.editPropertyForm.setStep(step));
             }}
           >
             <span>{displayName}</span>
@@ -122,11 +122,19 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
 
   if (!property) return <h4>Error</h4>;
 
+  console.log(property);
   const address = property.address;
 
   switch (currentStep) {
     case Step.BasicInfo:
-      return <BasicInfo property={property} />;
+      return (
+        <BasicInfo
+          price={property.price}
+          expenses={property.expenses}
+          type={property.type}
+          title={property.title}
+        />
+      );
     case Step.Address:
       return (
         <AddressRevamp
@@ -148,7 +156,7 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     case Step.Additional:
       return <Additional />;
     case Step.Confirmation:
-      return <Confirmation id={id} />;
+      return <ConfirmationEditProperty id={id} />;
   }
   // }
 };
