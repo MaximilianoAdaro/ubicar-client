@@ -32,6 +32,28 @@ import {
   useContactPropertyOwnerUsingPOST,
 } from "../../api";
 import { toast } from "react-toastify";
+import React from "react";
+import Carousel, { Modal, ModalGateway } from "react-images";
+import { photos } from "./photos";
+
+import { makeStyles } from "@material-ui/core/styles";
+import ImageList from "@material-ui/core/ImageList";
+import ImageListItem from "@material-ui/core/ImageListItem";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: theme.palette.background.paper,
+  },
+  imageList: {
+    flexWrap: "nowrap",
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: "translateZ(0)",
+  },
+}));
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
@@ -47,12 +69,23 @@ type ViewProps = {
 };
 
 const View = ({ id }: ViewProps) => {
+  const classes = useStyles();
+  // const [currentImage, setCurrentImage] = useState(0);
+  const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const { data: currentUser } = useGetLoggedUsingGET();
   const { data: property } = useGetPropertyUsingGET(id, {
     query: {
       suspense: true,
     },
   });
+
+  const openPhotos = () => {
+    setViewerIsOpen(true);
+  };
+
+  const close = () => {
+    setViewerIsOpen(false);
+  };
 
   if (!property) return <h4>Error</h4>;
 
@@ -62,18 +95,39 @@ const View = ({ id }: ViewProps) => {
     property.security
   );
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <div className={styles.container}>
-      <div className={styles.mediaContainer}>
-        <img src="https://timberhavenloghomes.com/wp-content/uploads/2017/07/Barth-Log-Home-Greatroom-1030x687.jpg" />
-        <div>
-          <img src="https://media.architecturaldigest.com/photos/58f7cf1a8bfbf566da78acc2/master/pass/IShvzncvwa127j0000000000.jpg" />
-          <img src="https://shawhomes.com/wp-content/uploads/Exterior-Twilight-2-Shaw-Homes-12801-S.-Date-Street-Jenks-OK-Yorktown.jpg" />
-          <img src="https://www.maids.com/cleaning-hacks/wp-content/uploads/2018/01/Entire2-house-featured.jpg" />
-          <img src="https://media.architecturaldigest.com/photos/59382d7a3176b35c589a6af3/master/pass/adelman-house-frank-lloyd-wright-03.jpg" />
-          <img src="https://cdn.architecturendesign.net/wp-content/uploads/2014/07/House-in-Gorki-08.jpg" />
-          <img src="http://www.passivehousecanada.com/wp-content/uploads/2016/05/Alta-Lake-Passive-House-1024x637.jpg" />
+      {/*<div className={styles.mediaContainer}>*/}
+      {/*  <img src="https://timberhavenloghomes.com/wp-content/uploads/2017/07/Barth-Log-Home-Greatroom-1030x687.jpg" />*/}
+      {/*  <div>*/}
+      {/*    <img src="https://media.architecturaldigest.com/photos/58f7cf1a8bfbf566da78acc2/master/pass/IShvzncvwa127j0000000000.jpg" />*/}
+      {/*    <img src="https://shawhomes.com/wp-content/uploads/Exterior-Twilight-2-Shaw-Homes-12801-S.-Date-Street-Jenks-OK-Yorktown.jpg" />*/}
+      {/*    <img src="https://www.maids.com/cleaning-hacks/wp-content/uploads/2018/01/Entire2-house-featured.jpg" />*/}
+      {/*    <img src="https://media.architecturaldigest.com/photos/59382d7a3176b35c589a6af3/master/pass/adelman-house-frank-lloyd-wright-03.jpg" />*/}
+      {/*    <img src="https://cdn.architecturendesign.net/wp-content/uploads/2014/07/House-in-Gorki-08.jpg" />*/}
+      {/*    <img src="http://www.passivehousecanada.com/wp-content/uploads/2016/05/Alta-Lake-Passive-House-1024x637.jpg" />*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+      <div>
+        {/*<Gallery photos={photos} onClick={openLightbox} />*/}
+        <div className={classes.root}>
+          <ImageList className={classes.imageList} cols={6}>
+            {photos.map((item) => (
+              <ImageListItem key={item.src} onClick={openPhotos}>
+                <img src={item.src} alt={item.src} />
+              </ImageListItem>
+            ))}
+          </ImageList>
         </div>
+        <ModalGateway>
+          {viewerIsOpen ? (
+            <Modal onClose={close}>
+              <Carousel views={photos} />
+            </Modal>
+          ) : null}
+        </ModalGateway>
       </div>
       <div className={styles.infoContainer}>
         <div className={styles.leftInfo}>
