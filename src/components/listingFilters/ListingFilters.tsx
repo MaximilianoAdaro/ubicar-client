@@ -1,5 +1,5 @@
 import styles from "./ListingFilters.module.scss";
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useState } from "react";
 import {
   Button,
   Grid,
@@ -22,6 +22,7 @@ const parseIntOrUndefined = (n: string) => (n !== "" ? parseInt(n) : undefined);
 type ListingFiltersProp = {
   houseStyles: StyleDTO[] | null;
   houseTypes: GetTypesUsingGET200Item[] | null;
+  handleSubmit: (arg0: string) => void;
 };
 
 const StyledButton = withStyles({
@@ -41,7 +42,10 @@ const StyledButton = withStyles({
 export function ListingFilters({
   houseStyles,
   houseTypes,
+  handleSubmit,
 }: ListingFiltersProp) {
+  const [search, setSearch] = useState("");
+
   const [anchorSale, setAnchorSale] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -120,8 +124,11 @@ export function ListingFilters({
             <InputBase
               placeholder="Buscar"
               inputProps={{ "aria-label": "search" }}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onSubmit={() => handleSubmit(search)}
             />
-            <SearchIcon />
+            <SearchIcon onClick={() => handleSubmit(search)} />
           </Grid>
         </Grid>
         <StyledButton

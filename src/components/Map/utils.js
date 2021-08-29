@@ -135,16 +135,6 @@ export function getBounds(map) {
   return transformExtent(extent, "EPSG:3857", "EPSG:4326");
 }
 
-export function bboxParams(map) {
-  const bbox = getBounds(map);
-  return {
-    NW: { long: bbox[0], lat: bbox[3] },
-    NE: { long: bbox[2], lat: bbox[3] },
-    SW: { long: bbox[0], lat: bbox[1] },
-    SE: { long: bbox[2], lat: bbox[1] },
-  };
-}
-
 export function getItemsFromStorage(key) {
   const storage = localStorage.getItem(key);
   if (storage === null) return undefined;
