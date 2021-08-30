@@ -95,8 +95,6 @@ const View = ({ id }: ViewProps) => {
     property.security
   );
 
-  // @ts-ignore
-  // @ts-ignore
   return (
     <div className={styles.container}>
       {/*<div className={styles.mediaContainer}>*/}
@@ -135,8 +133,8 @@ const View = ({ id }: ViewProps) => {
           <div className={styles.firstSection}>
             <div className={styles.titleSection}>
               <Typography variant={"h5"} className={styles.mainTitle}>
-                {property.address.street} {property.address.number}{" "}
-                {property.address.city}
+                {property.address!.street} {property.address!.number}{" "}
+                {property.address!.city}
               </Typography>
               {currentUser && (
                 <FavoriteButton id={id} isLiked={property.liked} />
@@ -155,7 +153,7 @@ const View = ({ id }: ViewProps) => {
             </div>
             <span className={styles.subtitle}>{property.type}</span>
             <div className={styles.facts}>
-              {makeFact("Estilo", property.style.label, true, <FcHome />)}
+              {makeFact("Estilo", property.style!.label, true, <FcHome />)}
               {makeFact(
                 "Total",
                 `${property.squareFoot}m²`,
@@ -194,10 +192,10 @@ const View = ({ id }: ViewProps) => {
               {makeFact(
                 `${pluralize(
                   "Año",
-                  getYearDistance(property.constructionDate)
+                  getYearDistance(property.constructionDate!)
                 )} de
                 antiguedad`,
-                `${getYearDistance(property.constructionDate)}`,
+                `${getYearDistance(property.constructionDate!)}`,
                 false
               )}
             </div>
@@ -209,7 +207,7 @@ const View = ({ id }: ViewProps) => {
               <div>
                 <span>{property.comments}</span>
               </div>
-              {property.parkDescription.length !== 0 && (
+              {property.parkDescription!.length !== 0 && (
                 <div className={styles.parkDescription}>
                   <h6>Descripcion del parque</h6>
                   <span>{property.parkDescription}</span>
@@ -229,7 +227,7 @@ const View = ({ id }: ViewProps) => {
 
           <div className={styles.divider} />
           <div className={styles.addressSection}>
-            <AddressSection address={property.address} />
+            <AddressSection address={property.address!} />
           </div>
         </div>
         <div className={styles.rightSide}>
@@ -249,7 +247,7 @@ const View = ({ id }: ViewProps) => {
                 <div>
                   <span className={styles.priceSymbol}>$</span>
                   <span className={styles.priceColor}>
-                    {formatPrice(property.expenses)}
+                    {formatPrice(property.expenses!)}
                   </span>
                 </div>
               </div>
@@ -337,8 +335,8 @@ const AddressSection = ({ address }: AddressSectionProps) => {
       <div className={styles.addressItemsSection}>
         <table>
           <tbody>
-            {getAddressItem("Provincia", address.state)}
-            {getAddressItem("Localidad", address.city)}
+            {getAddressItem("Provincia", address.state!)}
+            {getAddressItem("Localidad", address.city!)}
             {getAddressItem("Calle", address.street)}
             {getAddressItem("Numero", address.number.toString())}
           </tbody>

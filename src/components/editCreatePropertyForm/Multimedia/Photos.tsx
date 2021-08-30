@@ -5,8 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import ImageListItemBar from "@material-ui/core/ImageListItemBar";
-import { IconButton } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
 import { TiDeleteOutline } from "react-icons/all";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Photos = () => {
-  const classes = useStyles();
+  const dispatch = useAppDispatch();
+  // const classes = useStyles();
   const [images, setImages] = useState([]);
-  const maxNumber = 50;
 
   // @ts-ignore
   const onChange = (imageList) => {
@@ -49,69 +50,76 @@ export const Photos = () => {
     }
   };
 
-  console.log(images);
+  const handleFiles = (event: any) => {
+    console.log(event.target.files);
+    setImages(event.target.files);
+    console.log(images);
+    dispatch(actions.editPropertyForm.addImages(images));
+  };
 
   return (
     <div>
       <div className={styles.container}>
         <h4>Fotos</h4>
         <div className={styles.comingSoon}>
-          <ImageUploading
-            multiple
-            value={images}
-            onChange={onChange}
-            maxNumber={maxNumber}
-            dataURLKey="data_url"
-          >
-            {({
-              imageList,
-              onImageUpload,
-              onImageRemoveAll,
-              onImageRemove,
-              isDragging,
-              dragProps,
-            }) => (
-              // write your building UI
-              <div className="upload__image-wrapper">
-                <button
-                  style={isDragging ? { color: "red" } : undefined}
-                  onClick={onImageUpload}
-                  {...dragProps}
-                >
-                  Agregar imagen
-                </button>
-                &nbsp;
-                <button onClick={onImageRemoveAll}>
-                  Eliminar todas las imagenes
-                </button>
-                <div className={classes.root}>
-                  <ImageList className={classes.imageList} cols={4}>
-                    {images.map((image, index) => (
-                      <ImageListItem key={""}>
-                        <img src={image["data_url"]} alt={"hola"} />
-                        <ImageListItemBar
-                          title={"casa"}
-                          classes={{
-                            root: classes.titleBar,
-                            title: classes.title,
-                          }}
-                          actionIcon={
-                            <IconButton>
-                              <TiDeleteOutline
-                                className={classes.title}
-                                onClick={() => onImageRemove(index)}
-                              />
-                            </IconButton>
-                          }
-                        />
-                      </ImageListItem>
-                    ))}
-                  </ImageList>
-                </div>
-              </div>
-            )}
-          </ImageUploading>
-          <button onClick={handleSubmit}>Upload</button>
+          {/*<ImageUploading*/}
+          {/*  multiple*/}
+          {/*  value={images}*/}
+          {/*  onChange={onChange}*/}
+          {/*  maxNumber={maxNumber}*/}
+          {/*  dataURLKey="data_url"*/}
+          {/*>*/}
+          {/*  {({*/}
+          {/*    imageList,*/}
+          {/*    onImageUpload,*/}
+          {/*    onImageRemoveAll,*/}
+          {/*    onImageRemove,*/}
+          {/*    isDragging,*/}
+          {/*    dragProps,*/}
+          {/*  }) => (*/}
+          {/*    // write your building UI*/}
+          {/*    <div className="upload__image-wrapper">*/}
+          {/*      <Button*/}
+          {/*          variant="contained"*/}
+          {/*          style={isDragging ? { color: "red" } : undefined}*/}
+          {/*        onClick={onImageUpload}*/}
+          {/*        {...dragProps}*/}
+          {/*      >*/}
+          {/*        Agregar imagen*/}
+          {/*      </Button>*/}
+          {/*      &nbsp;*/}
+          {/*      <Button variant="contained"  onClick={onImageRemoveAll}>*/}
+          {/*        Eliminar todas las imagenes*/}
+          {/*      </Button>*/}
+          {/*      <div className={classes.root}>*/}
+          {/*        <ImageList className={classes.imageList} cols={4}>*/}
+          {/*          {images.map((image, index) => (*/}
+          {/*            <ImageListItem key={""}>*/}
+          {/*              <img src={image["data_url"]} alt={"hola"} />*/}
+          {/*              <ImageListItemBar*/}
+          {/*                title={""}*/}
+          {/*                classes={{*/}
+          {/*                  root: classes.titleBar,*/}
+          {/*                  title: classes.title,*/}
+          {/*                }}*/}
+          {/*                actionIcon={*/}
+          {/*                  <IconButton>*/}
+          {/*                    <TiDeleteOutline*/}
+          {/*                      className={classes.title}*/}
+          {/*                      onClick={() => onImageRemove(index)}*/}
+          {/*                    />*/}
+          {/*                  </IconButton>*/}
+          {/*                }*/}
+          {/*              />*/}
+          {/*            </ImageListItem>*/}
+          {/*          ))}*/}
+          {/*        </ImageList>*/}
+          {/*      </div>*/}
+          {/*    </div>*/}
+          {/*  )}*/}
+          {/*</ImageUploading>*/}
+          <input type={"file"} onChange={handleFiles} multiple />
+          {/*<Button variant="contained" onClick={handleSubmit}>Upload</Button>*/}
         </div>
       </div>
     </div>

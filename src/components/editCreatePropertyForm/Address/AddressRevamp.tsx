@@ -397,6 +397,7 @@ export const AddressRevamp = (address: AddressDTO) => {
             <MapComponent
               additionalStyle={{ height: "500px", width: "100%" }}
               renderLayers={false}
+              editable={true}
               zoom={zoom}
               view={view}
               handleChangeClick={handleChangeClick}

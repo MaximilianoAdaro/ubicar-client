@@ -28,11 +28,11 @@ export interface EditPropertyState {
   characteristics: CharacteristicsFormData;
   additional: AdditionalFormData;
   currentStep: Step;
-  images: FormData | undefined;
+  images: File[];
 }
 
 export enum Step {
-  BasicInfo,
+  BasicInfo = 1,
   Address,
   Characteristics,
   OptionalInfo,
@@ -98,7 +98,7 @@ const initialState: EditPropertyState = {
     description: "",
   },
   currentStep: Step.BasicInfo,
-  images: undefined,
+  images: [],
 };
 
 export const editCreatePropertyFormSlice = createSlice({
@@ -117,21 +117,21 @@ export const editCreatePropertyFormSlice = createSlice({
       state.basicInfo.title = action.payload.title;
       state.basicInfo.price = action.payload.price;
       state.basicInfo.expenses = action.payload.expenses;
-      state.style = action.payload.style.id;
-      state.address.state = action.payload.address.state;
-      state.address.stateId = action.payload.address.stateId;
-      state.address.city = action.payload.address.city;
-      state.address.cityId = action.payload.address.cityId;
-      state.address.street = action.payload.address.street;
-      state.address.number = action.payload.address.number;
-      state.address.coordinates = action.payload.address.coordinates;
+      state.style = action.payload.style!.id;
+      state.address.state = action.payload.address!.state;
+      state.address.stateId = action.payload.address!.stateId;
+      state.address.city = action.payload.address!.city;
+      state.address.cityId = action.payload.address!.cityId;
+      state.address.street = action.payload.address!.street;
+      state.address.number = action.payload.address!.number;
+      state.address.coordinates = action.payload.address!.coordinates;
       state.characteristics.constructionYear = action.payload.constructionDate;
       state.characteristics.coveredSurface = action.payload.coveredSquareFoot;
       state.characteristics.environments = action.payload.environments;
       state.characteristics.floors = action.payload.levels;
       state.characteristics.rooms = action.payload.rooms;
       state.characteristics.fullBaths = action.payload.fullBaths;
-      state.characteristics.parkDescription = action.payload.parkDescription;
+      state.characteristics.parkDescription = action.payload.parkDescription!;
       state.characteristics.toilets = action.payload.toilets;
       state.characteristics.totalSurface = action.payload.squareFoot;
       state.additional.description = action.payload.comments;
@@ -151,6 +151,7 @@ export const editCreatePropertyFormSlice = createSlice({
         finalTime: date.finalTime as string,
       }));
       state.contacts = action.payload.contacts;
+      // state.images = action.payload.images;
       state.isInitialized = true;
     },
     setStyle: (state, action: PayloadAction<string>) => {
@@ -173,6 +174,9 @@ export const editCreatePropertyFormSlice = createSlice({
     },
     addOpenHouse: (state, action: PayloadAction<OpenHouse>) => {
       state.openHouses.push(action.payload);
+    },
+    addImages: (state, action: PayloadAction<File[]>) => {
+      state.images = action.payload;
     },
     setPropertyType: (state, action: PayloadAction<string>) => {
       state.propertyType = action.payload;
@@ -214,14 +218,6 @@ export const editCreatePropertyFormSlice = createSlice({
     setOperationType: (state, action: PayloadAction<string>) => {
       state.operationType = action.payload;
     },
-    // setImages: (state, action: PayloadAction<FormData>) => {
-    //   state.images = action.payload;
-    // },
-    // removeImage: (state, action: PayloadAction<FormData>) => {
-    //   state.images = state.images.filter(
-    //       (link) => link !== action.payload
-    //   );
-    // },
     removeYoutubeLink: (state, action: PayloadAction<string>) => {
       state.youtubeLinks = state.youtubeLinks.filter(
         (link) => link !== action.payload

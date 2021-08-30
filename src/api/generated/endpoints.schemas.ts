@@ -14,28 +14,32 @@ export interface Address {
 }
 
 export interface AddressDTO {
-  cityId: string;
-  stateId: string;
-  city: string;
-  state: string;
+  city?: string;
+  cityId?: string;
   coordinates: CoordinatesDTO;
   number: number;
+  state?: string;
+  stateId?: string;
   street: string;
 }
 
 export interface AddressDTOReq {
-  cityId: string;
+  city?: string;
+  cityId?: string;
   coordinates: CoordinatesDTOReq;
   number?: number;
-  stateId: string;
+  state?: string;
+  stateId?: string;
   street: string;
 }
 
 export interface AddressDTORes {
-  cityId: string;
+  city?: string;
+  cityId?: string;
   coordinates: CoordinatesDTORes;
   number: number;
-  stateId: string;
+  state?: string;
+  stateId?: string;
   street: string;
 }
 
@@ -136,6 +140,7 @@ export interface CreatePropertyDTO {
   rooms?: number;
   security: string[];
   squareFoot?: number;
+  step?: number;
   style: string;
   title: string;
   toilets?: number;
@@ -146,6 +151,16 @@ export interface GoogleLoginUserDTO {
   email: string;
   name: string;
 }
+
+export interface Image {
+  fileData: string;
+  fileName?: string;
+  fileType?: string;
+  id: string;
+}
+
+// tslint:disable-next-line:no-empty-interface
+export interface InputStream {}
 
 export interface LogInUserDTO {
   email: string;
@@ -412,32 +427,34 @@ export const PropertyType = {
 };
 
 export interface Property {
-  address: Address;
+  address?: Address;
   amenities: Amenity[];
-  comments: string;
+  comments?: string;
   condition: PropertyCondition;
-  constructionDate: number;
+  constructionDate?: number;
   contacts: Contact[];
-  coveredSquareFoot: number;
-  creationDate: string;
-  environments: number;
-  expenses: number;
-  fullBaths: number;
+  coveredSquareFoot?: number;
+  creationDate?: string;
+  environments?: number;
+  expenses?: number;
+  fullBaths?: number;
   id: string;
-  levels: number;
+  images: Image[];
+  levels?: number;
   likes: User[];
   links: string[];
   materials: ConstructionMaterial[];
   openHouse: OpenHouseDate[];
   owner: User;
-  parkDescription: string;
+  parkDescription?: string;
   price: number;
-  rooms: number;
+  rooms?: number;
   security: SecurityMeasure[];
-  squareFoot: number;
-  style: Style;
+  squareFoot?: number;
+  step: number;
+  style?: Style;
   title: string;
-  toilets: number;
+  toilets?: number;
   type: PropertyType;
 }
 
@@ -486,30 +503,32 @@ export const PropertyDTOType = {
 };
 
 export interface PropertyDTO {
-  address: AddressDTO;
+  address?: AddressDTO;
   amenities: Amenity[];
   comments: string;
   condition: PropertyDTOCondition;
-  constructionDate: number;
+  constructionDate?: number;
   contacts: ContactDto[];
-  coveredSquareFoot: number;
-  environments: number;
-  expenses: number;
-  fullBaths: number;
+  coveredSquareFoot?: number;
+  environments?: number;
+  expenses?: number;
+  fullBaths?: number;
   id: string;
-  levels: number;
+  images: string[];
+  levels?: number;
   liked: boolean;
   links: string[];
   materials: MaterialDTO[];
   openHouse: OpenHouseDateDto[];
-  parkDescription: string;
+  parkDescription?: string;
   price: number;
-  rooms: number;
+  rooms?: number;
   security: SecurityDTO[];
-  squareFoot: number;
-  style: Style;
+  squareFoot?: number;
+  step: number;
+  style?: Style;
   title: string;
-  toilets: number;
+  toilets?: number;
   type: PropertyDTOType;
 }
 
@@ -617,17 +636,28 @@ export const PropertyPreviewDTOType = {
 };
 
 export interface PropertyPreviewDTO {
-  address: AddressDTO;
+  address?: AddressDTO;
   condition: PropertyPreviewDTOCondition;
-  coveredSquareFoot: number;
-  fullBaths: number;
+  coveredSquareFoot?: number;
+  fullBaths?: number;
   id: string;
   price: number;
-  rooms: number;
-  squareFoot: number;
+  rooms?: number;
+  squareFoot?: number;
   title: string;
-  toilets: number;
+  toilets?: number;
   type: PropertyPreviewDTOType;
+}
+
+export interface Resource {
+  description?: string;
+  file?: Blob;
+  filename?: string;
+  inputStream?: InputStream;
+  open?: boolean;
+  readable?: boolean;
+  uri?: string;
+  url?: string;
 }
 
 export interface RoleDTO {
@@ -717,6 +747,18 @@ export interface UserDTO {
   userName: string;
 }
 
+export interface UserDTOReq {
+  email: string;
+  id: string;
+  userName: string;
+}
+
+export interface UserDTORes {
+  email: string;
+  id: string;
+  userName: string;
+}
+
 export interface UserRole {
   active: boolean;
   creationDate: string;
@@ -775,17 +817,14 @@ export interface PageStateDTO {
 
 export type CreatePropertyDTOBody = CreatePropertyDTO;
 
-export type ErrorUsingGET200 = { [key: string]: {} };
+export type CreatePropertyWithImagesUsingPOSTBody = {
+  images?: unknown[];
+};
 
-export type ErrorUsingHEAD200 = { [key: string]: {} };
-
-export type ErrorUsingPOST200 = { [key: string]: {} };
-
-export type ErrorUsingPUT200 = { [key: string]: {} };
-
-export type ErrorUsingDELETE200 = { [key: string]: {} };
-
-export type ErrorUsingPATCH200 = { [key: string]: {} };
+export type EditPropertyWithImagesUsingPUTBody = {
+  imagesToDelete?: string[];
+  images?: unknown[];
+};
 
 export type GetCitiesUsingGETParams = {
   name?: string;
