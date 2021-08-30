@@ -3,10 +3,10 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import { PropertyList } from "./PropertyList";
 import { useGetMyPropertiesUsingGET } from "../../api";
+import { Loading } from "../common/loading/Loading";
 
 export function MyProperties() {
   const data = useGetMyPropertiesUsingGET();
-  console.log(data);
   return (
     <div>
       <Grid className={styles.personalDataMainDiv}>
@@ -30,6 +30,9 @@ export function MyProperties() {
             .map((casa) => (
               <PropertyList key={casa.id} house={casa} from={"properties"} />
             ))}
+        <br />
+        <br />
+        <br />
       </Grid>
     </div>
   );
