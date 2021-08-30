@@ -23,13 +23,20 @@ export function MyProperties() {
             ))}
       </Grid>
       <Grid className={styles.properties}>
-        <h3>Propiedades sin publicar</h3>
+        {/*<h3>Propiedades sin publicar</h3>*/}
         {data.status === "success" &&
-          data?.data
-            .filter((casa) => casa.step < 7)
-            .map((casa) => (
-              <PropertyList key={casa.id} house={casa} from={"properties"} />
-            ))}
+        data?.data.filter((casa) => casa.step < 7).length > 0 ? (
+          <div>
+            <h3>Propiedades sin publicar</h3>
+            {data?.data
+              .filter((casa) => casa.step < 7)
+              .map((casa) => (
+                <PropertyList key={casa.id} house={casa} from={"properties"} />
+              ))}
+          </div>
+        ) : (
+          <div></div>
+        )}
         <br />
         <br />
         <br />
