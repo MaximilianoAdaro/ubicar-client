@@ -1,5 +1,4 @@
 import { Route, Switch } from "react-router-dom";
-import logo from "../assets/Logo-Ubicar.png";
 import ProtectedRoute, {
   ProtectedRouteProps,
 } from "../components/common/protectedRoute/ProtectedRoute";
@@ -23,6 +22,9 @@ import { Footer } from "../components/footer/Footer";
 import { useGetLoggedUsingGET } from "../api";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { TextField } from "@material-ui/core";
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -85,6 +87,7 @@ export default function App() {
 
 const WorkInProgress = () => {
   const { data: user } = useGetLoggedUsingGET();
+  const dispatch = useAppDispatch();
 
   return (
     <div className={styles.app}>
@@ -95,19 +98,22 @@ const WorkInProgress = () => {
           }}
         >
           <h4>Bienvenido {user.userName}</h4>
+          <div style={{ margin: "auto" }}>
+            <TextField
+              style={{ width: "400px" }}
+              label={"Buscar por zona"}
+              variant="outlined"
+              color={"secondary"}
+              onChange={(e) =>
+                dispatch(actions.session.setSearchBar(e.target.value))
+              }
+            />
+            <Link to="/listing-page" className="btn btn-primary">
+              Buscar
+            </Link>
+          </div>
         </div>
       )}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 20,
-        }}
-      >
-        <img src={logo} height={90} alt={"logo"} />
-        <h1>Ubicar in progress...</h1>
-      </div>
     </div>
   );
 };

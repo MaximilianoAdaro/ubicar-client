@@ -41,8 +41,7 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
   check2BoxRef: React.RefObject<HTMLInputElement>;
   state: TMapState = {
     view: { longitude: -6506056.858887733, latitude: -4114291.375798843 },
-    zoom: 10,
-    editable: false,
+    zoom: 20,
     markerLayer: null,
     properties: null,
   };
@@ -53,6 +52,7 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
   additionalStyle: React.CSSProperties | null | undefined;
   additionalLayers: TileLayer | null | undefined;
   map: Map;
+  editable: false;
 
   constructor(props: TMapProps) {
     super(props);
@@ -140,8 +140,57 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
     snapshot?: any
   ) {
     if (prevProps.view !== this.props.view) {
-      if (this.state.markerLayer !== null) {
-        this.map.removeLayer(this.state.markerLayer);
+      if (this.props.editable) {
+        if (this.state.markerLayer !== null) {
+          this.map.removeLayer(this.state.markerLayer);
+        }
+        this.map.setView(
+          new View({
+            projection: "EPSG:3857",
+            center: [this.props.view.longitude, this.props.view.latitude],
+            zoom: this.props.zoom,
+          })
+        );
+        this.setState({ view: this.props.view });
+        const style = new Style({
+          image: new Icon({
+            src: "./icons/house.png",
+            scale: 200 / 1024,
+            anchor: [0.5, 0.75],
+          }),
+        });
+        const markerLayer = new VectorLayer({
+          source: new VectorSource({
+            features: [
+              new Feature({
+                geometry: new Point([
+                  this.props.view.longitude,
+                  this.props.view.latitude,
+                ]),
+                fna: "Tu casa!",
+              }),
+            ],
+          }),
+          style: style,
+        });
+        this.setState({ markerLayer: markerLayer });
+        this.map.addLayer(markerLayer);
+
+        const onMapClick = (event: MapBrowserEvent) => {
+          const featureToAdd = new Feature({
+            geometry: new Point(event.coordinate),
+            fna: "Tu casa!",
+          });
+
+          markerLayer.getSource().clear();
+          markerLayer.getSource().addFeatures([featureToAdd]);
+          // @ts-ignore
+          this.props.handleChangeClick(
+            event.coordinate[1],
+            event.coordinate[0]
+          );
+        };
+        this.map.on("singleclick", onMapClick);
       }
       this.map.setView(
         new View({
@@ -150,43 +199,6 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
           zoom: this.props.zoom,
         })
       );
-      this.setState({ view: this.props.view });
-      const style = new Style({
-        image: new Icon({
-          src: "./icons/house.png",
-          scale: 200 / 1024,
-          anchor: [0.5, 0.75],
-        }),
-      });
-      const markerLayer = new VectorLayer({
-        source: new VectorSource({
-          features: [
-            new Feature({
-              geometry: new Point([
-                this.props.view.longitude,
-                this.props.view.latitude,
-              ]),
-              fna: "Tu casa!",
-            }),
-          ],
-        }),
-        style: style,
-      });
-      this.setState({ markerLayer: markerLayer });
-      this.map.addLayer(markerLayer);
-
-      const onMapClick = (event: MapBrowserEvent) => {
-        const featureToAdd = new Feature({
-          geometry: new Point(event.coordinate),
-          fna: "Tu casa!",
-        });
-
-        markerLayer.getSource().clear();
-        markerLayer.getSource().addFeatures([featureToAdd]);
-        // @ts-ignore
-        this.props.handleChangeClick(event.coordinate[1], event.coordinate[0]);
-      };
-      this.map.on("singleclick", onMapClick);
     }
     if (prevProps.zoom !== this.props.zoom) {
       this.setState({ zoom: this.props.zoom });
