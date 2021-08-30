@@ -1,5 +1,5 @@
 import styles from "./ListingFilters.module.scss";
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useState } from "react";
 import {
   Button,
   Grid,
@@ -16,12 +16,15 @@ import { Dropdown } from "react-bootstrap";
 import { StyleDTO, GetTypesUsingGET200Item } from "../../api";
 import { useHistory, useLocation } from "react-router-dom";
 import QueryString from "query-string";
+import { actions, useAppDispatch, useAppSelector } from "../../store";
+import { selectSearchBar } from "../../store/slices/session";
 
 const parseIntOrUndefined = (n: string) => (n !== "" ? parseInt(n) : undefined);
 
 type ListingFiltersProp = {
   houseStyles: StyleDTO[] | null;
   houseTypes: GetTypesUsingGET200Item[] | null;
+  handleSearch: (arg0: string) => void;
 };
 
 const StyledButton = withStyles({
@@ -41,6 +44,7 @@ const StyledButton = withStyles({
 export function ListingFilters({
   houseStyles,
   houseTypes,
+  handleSearch,
 }: ListingFiltersProp) {
   const [anchorSale, setAnchorSale] = React.useState<HTMLButtonElement | null>(
     null
@@ -88,6 +92,8 @@ export function ListingFilters({
 
   const location = useLocation();
   const history = useHistory();
+  const [search, setSearch] = useState(useAppSelector(selectSearchBar));
+  const dispatch = useAppDispatch();
 
   const clearFilters = useCallback(() => {
     history.push({
@@ -120,8 +126,16 @@ export function ListingFilters({
             <InputBase
               placeholder="Buscar"
               inputProps={{ "aria-label": "search" }}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  dispatch(actions.session.setSearchBar(search));
+                  handleSearch(search);
+                }
+              }}
             />
-            <SearchIcon />
+            <SearchIcon onClick={() => handleSearch(search)} />
           </Grid>
         </Grid>
         <StyledButton

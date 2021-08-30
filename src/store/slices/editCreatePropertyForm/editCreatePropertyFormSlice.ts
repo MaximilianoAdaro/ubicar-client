@@ -32,7 +32,7 @@ export interface EditPropertyState {
 }
 
 export enum Step {
-  BasicInfo,
+  BasicInfo = 1,
   Address,
   Characteristics,
   OptionalInfo,
@@ -117,21 +117,21 @@ export const editCreatePropertyFormSlice = createSlice({
       state.basicInfo.title = action.payload.title;
       state.basicInfo.price = action.payload.price;
       state.basicInfo.expenses = action.payload.expenses;
-      state.style = action.payload.style.id;
-      state.address.state = action.payload.address.state;
-      state.address.stateId = action.payload.address.stateId;
-      state.address.city = action.payload.address.city;
-      state.address.cityId = action.payload.address.cityId;
-      state.address.street = action.payload.address.street;
-      state.address.number = action.payload.address.number;
-      state.address.coordinates = action.payload.address.coordinates;
+      state.style = action.payload.style!.id;
+      state.address.state = action.payload.address!.state;
+      state.address.stateId = action.payload.address!.stateId;
+      state.address.city = action.payload.address!.city;
+      state.address.cityId = action.payload.address!.cityId;
+      state.address.street = action.payload.address!.street;
+      state.address.number = action.payload.address!.number;
+      state.address.coordinates = action.payload.address!.coordinates;
       state.characteristics.constructionYear = action.payload.constructionDate;
       state.characteristics.coveredSurface = action.payload.coveredSquareFoot;
       state.characteristics.environments = action.payload.environments;
       state.characteristics.floors = action.payload.levels;
       state.characteristics.rooms = action.payload.rooms;
       state.characteristics.fullBaths = action.payload.fullBaths;
-      state.characteristics.parkDescription = action.payload.parkDescription;
+      state.characteristics.parkDescription = action.payload.parkDescription!;
       state.characteristics.toilets = action.payload.toilets;
       state.characteristics.totalSurface = action.payload.squareFoot;
       state.additional.description = action.payload.comments;

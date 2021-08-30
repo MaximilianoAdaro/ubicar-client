@@ -33,7 +33,9 @@ export function PropertyList(props: ListingHouseProps) {
   const house = props.house;
   const history = useHistory();
   const houseAddress = house.address;
-  const houseStreetNumber = `${houseAddress.street} ${houseAddress.number}`;
+  const houseStreetNumber = `${houseAddress?.street ?? ""} ${
+    houseAddress?.number ?? ""
+  }`;
   const baths = pluralize("baño", house.fullBaths);
   const toilets = pluralize("toilet", house.toilets);
   const specificationsTooltip = `${house.squareFoot} m²
@@ -93,7 +95,7 @@ export function PropertyList(props: ListingHouseProps) {
             </Tooltip>
             <p className={styles.myPropertyStreetNumber}>{houseStreetNumber}</p>
             <p className={styles.myPropertyTownCity}>
-              {houseAddress.state}, {houseAddress.city}
+              {houseAddress?.state ?? ""}, {houseAddress?.city ?? ""}
             </p>
           </Grid>
           <Grid className={styles.editAndViewPropertyButtons}>

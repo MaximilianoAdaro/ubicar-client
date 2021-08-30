@@ -15,7 +15,7 @@ interface MapState {
 // Define the initial state using that type
 const initialState: MapState = {
   view: { longitude: -6506056.858887733, latitude: -4114291.375798843 },
-  zoom: 10,
+  zoom: 15,
 };
 
 export const mapSlice = createSlice({
