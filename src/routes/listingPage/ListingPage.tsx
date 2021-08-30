@@ -2,7 +2,7 @@ import Grid from "@material-ui/core/Grid";
 import { ListingFilters } from "../../components/listingFilters/";
 import { ListingHouse } from "../../components/listingHouse/";
 import { MapComponent } from "../../components/Map/map";
-import { useAppSelector } from "../../store";
+import { actions, useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import styles from "./ListingPage.module.scss";
 import { useEffect, useMemo, useState } from "react";
@@ -17,6 +17,7 @@ import QueryString from "query-string";
 import { Loading } from "../../components/common/loading/Loading";
 import { convertCoordinates } from "../../components/Map/utils";
 import { selectSearchBar } from "../../store/slices/session";
+import { useDispatch } from "react-redux";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -26,6 +27,8 @@ export const ListingPage = () => {
   const location = useLocation();
 
   const search = useAppSelector(selectSearchBar);
+
+  const dispatch = useDispatch();
 
   const [init, setInit] = useState(true);
 
@@ -52,8 +55,60 @@ export const ListingPage = () => {
     },
   });
 
+  const buildDataset = async (data: PropertyPreviewDTO[]) => {
+    const response = await fetch(
+      "http://localhost:3000/public/property/viewBox2?b1=" +
+        bbox[1] +
+        "&b2=" +
+        bbox[0] +
+        "&b3=" +
+        bbox[3] +
+        "&b4=" +
+        bbox[2]
+    );
+
+    const propsInViewBox = await response.json();
+    if (propsInViewBox) {
+      if (data) {
+        if (propsInViewBox.length > 0) {
+          let obj: PropertyPreviewDTO[] = [];
+          data.map((house) => {
+            let matched = propsInViewBox.filter(
+              (h: PropertyPreviewDTO) => house.id === h.id
+            );
+            if (matched.length) {
+              obj?.push(matched[0]);
+            }
+          });
+
+          debugger;
+          setFinalData(obj);
+          setLoad(false);
+          debugger;
+        } else {
+        }
+      }
+    }
+  };
+
   const [zoom, setZoom] = useState(useAppSelector(selectZoom));
   const [view, setView] = useState(useAppSelector(selectView));
+  const [bbox, setBbox] = useState([0]);
+  const [load, setLoad] = useState(true);
+  const [finalData, setFinalData] = useState<PropertyPreviewDTO[]>();
+
+  useEffect(() => {
+    dispatch(actions.map.setZoom(zoom));
+  }, [zoom]);
+  useEffect(() => {
+    dispatch(actions.map.setView(view));
+  }, [view]);
+
+  useEffect(() => {
+    if (!isLoading && data && data.content) {
+      buildDataset(data.content);
+    }
+  }, [bbox]);
 
   const handleSearch = async (input: string) => {
     if (search !== "") {
@@ -105,14 +160,17 @@ export const ListingPage = () => {
             view={view}
             renderLayers={true}
             editable={false}
+            setZoom={setZoom}
+            setView={setView}
+            setBbox={setBbox}
           />
         </Grid>
         <Grid item xl={3} sm={4} className={styles.propertyList}>
           <Switch>
             {isLoading && <Loading />}
             {isError && <h2>Hubo un error</h2>}
-            {data?.content && data?.content.length > 0 ? (
-              <PropertyList properties={data.content} />
+            {!load && finalData ? (
+              <PropertyList properties={finalData} />
             ) : (
               <h2>No hay publicaciones disponibles</h2>
             )}
@@ -124,13 +182,14 @@ export const ListingPage = () => {
 };
 
 type PropertyListProps = {
-  properties: PropertyPreviewDTO[];
+  properties?: PropertyPreviewDTO[] | null;
 };
 
 const PropertyList = ({ properties }: PropertyListProps) => {
+  debugger;
   return (
     <>
-      {properties.map((property) => (
+      {properties?.map((property) => (
         <ListingHouse key={property.id} house={property} />
       ))}
     </>

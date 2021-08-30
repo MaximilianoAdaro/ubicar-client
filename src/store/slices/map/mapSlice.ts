@@ -23,8 +23,8 @@ export const mapSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setView: (state, action: PayloadAction<MapState>) => {
-      state.view = action.payload.view;
+    setView: (state, action: PayloadAction<MapView>) => {
+      state.view = action.payload;
     },
     setZoom: (state, action: PayloadAction<number>) => {
       state.zoom = action.payload;

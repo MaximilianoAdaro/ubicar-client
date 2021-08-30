@@ -1,5 +1,5 @@
 import React from "react";
-import { TVectorLayerComponentProps } from "./vector-types";
+import { PropertyProps } from "./vector-types";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { Icon, Style } from "ol/style";
@@ -13,14 +13,20 @@ import { convertCoordinates, getBounds } from "../../utils";
 import { bbox } from "ol/loadingstrategy";
 import GeoJSON from "ol/format/GeoJSON";
 
-class PropertiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
+class PropertiesLayer extends React.PureComponent<PropertyProps> {
   layer: VectorLayer;
   source: VectorSource;
+  editable: boolean;
   state: PropertyState = {
     visible: false,
     properties: [],
     propsGeom: [],
+    editable: false,
   };
+
+  constructor(props: PropertyProps) {
+    super(props);
+  }
 
   componentDidMount() {
     let format = new GeoJSON();
@@ -119,13 +125,12 @@ class PropertiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
     this.props.map.removeLayer(this.layer);
   }
 
-  componentDidUpdate(
-    prevProps: TVectorLayerComponentProps,
-    prevState: Readonly<any>
-  ) {
+  componentDidUpdate(prevProps: PropertyProps, prevState: Readonly<any>) {
     if (prevProps.properties !== this.props.properties) {
       if (this.props.properties) {
-        this.source.clear();
+        if (this.state.editable) {
+          this.source.clear();
+        }
         let feat = this.props.properties.map((data) => {
           return new Feature({
             fna: `${data.address?.street ?? ""} ${
@@ -150,7 +155,8 @@ class PropertiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
 }
 
 export const PropertiesLayerWithContext = (props: {
-  properties: PropertyPreviewDTO[];
+  properties?: PropertyPreviewDTO[] | null;
+  editable: boolean;
 }) => {
   return (
     <MapContext.Consumer>
@@ -160,6 +166,7 @@ export const PropertiesLayerWithContext = (props: {
             <PropertiesLayer
               properties={props.properties}
               map={mapContext.map}
+              editable={props.editable}
             />
           );
         }
