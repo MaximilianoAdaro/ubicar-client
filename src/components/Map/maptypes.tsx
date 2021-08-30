@@ -16,6 +16,9 @@ export type TMapProps = {
   additionalLayers?: TileLayer | null;
   properties?: PropertyPreviewDTO[] | null;
   editable: boolean;
+  setZoom: (arg0: number) => void;
+  setView: (arg0: MapView) => void;
+  setBbox: (arg0: number[]) => void;
 };
 
 export type PropertyState = {

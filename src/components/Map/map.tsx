@@ -32,10 +32,11 @@ import VectorLayer from "ol/layer/Vector";
 import { PropertyPreviewDTO } from "../../api";
 import { Icon, Style } from "ol/style";
 import { MapBrowserEvent } from "ol";
+import { getBounds } from "./utils";
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
-export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
+export class MapComponent extends React.Component<TMapProps, TMapState> {
   mapDivRef: React.RefObject<HTMLDivElement>;
   check1BoxRef: React.RefObject<HTMLInputElement>;
   check2BoxRef: React.RefObject<HTMLInputElement>;
@@ -96,13 +97,24 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
       }),
     });
 
-    let currZoom = this.map.getView().getZoom();
+    let currView = this.props.view;
+    let currZoom = this.props.zoom;
     this.map.on("moveend", () => {
       let newZoom = this.map.getView().getZoom();
       if (currZoom !== newZoom) {
         if (newZoom) {
+          console.log("setting new Zoom");
           this.state.zoom = newZoom;
+          this.props.setZoom(newZoom);
         }
+      }
+      let newView = this.map.getView().getCenter();
+      const bbox = getBounds(this.map);
+      if (newView) {
+        console.log("setting new View");
+        this.state.view = { longitude: newView[0], latitude: newView[1] };
+        this.props.setBbox(bbox);
+        this.props.setView({ longitude: newView[0], latitude: newView[1] });
       }
     });
 
