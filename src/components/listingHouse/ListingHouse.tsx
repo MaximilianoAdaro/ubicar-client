@@ -10,11 +10,11 @@ import clsx from "clsx";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
+  clickable?: boolean;
 }
 
-export function ListingHouse(props: ListingHouseProps) {
+export function ListingHouse({ house, clickable = true }: ListingHouseProps) {
   const history = useHistory();
-  const house = props.house;
   const houseAddress = house.address;
   const houseStreetNumber = `${houseAddress?.street ?? ""} ${
     houseAddress?.number ?? ""
@@ -24,7 +24,9 @@ export function ListingHouse(props: ListingHouseProps) {
     <Grid
       container
       className={styles.propertyInformation}
-      onClick={() => history.push(urls.viewProperty.byId(house.id))}
+      onClick={() =>
+        clickable && history.push(urls.viewProperty.byId(house.id))
+      }
     >
       <Grid xs={6}>
         <Image

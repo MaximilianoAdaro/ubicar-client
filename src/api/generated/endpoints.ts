@@ -24,8 +24,11 @@ import type {
   ModelAndView,
   PropertyFilterDto,
   CreatePropertyDTOBody,
+  CreatePropertyWithImagesUsingPOSTBody,
+  EditPropertyWithImagesUsingPUTBody,
   PageCityDTO,
   GetCitiesUsingGETParams,
+  Resource,
   AmenityDTO,
   MaterialDTO,
   SecurityDTO,
@@ -571,6 +574,51 @@ export const useCreatePropertyUsingPOST = <
     mutationOptions
   );
 };
+export const createPropertyWithImagesUsingPOST = <TData = PropertyDTO>(
+  createPropertyWithImagesUsingPOSTBody: CreatePropertyWithImagesUsingPOSTBody,
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    {
+      url: `/property/create-with-images`,
+      method: "post",
+      data: createPropertyWithImagesUsingPOSTBody,
+    },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const useCreatePropertyWithImagesUsingPOST = <
+  TData = AsyncReturnType<
+    typeof createPropertyWithImagesUsingPOST,
+    PropertyDTO
+  >,
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    TData,
+    TError,
+    { data: CreatePropertyWithImagesUsingPOSTBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { mutation: mutationOptions, request: requestOptions } = options || {};
+
+  return useMutation<
+    TData,
+    TError,
+    { data: CreatePropertyWithImagesUsingPOSTBody },
+    TContext
+  >((props) => {
+    const { data } = props || {};
+
+    return createPropertyWithImagesUsingPOST<TData>(data, requestOptions);
+  }, mutationOptions);
+};
 export const getFavoritePropertiesUsingGET = <TData = PropertyDTO[]>(
   options?: SecondParameter<typeof customInstance>
 ) => {
@@ -652,6 +700,49 @@ export const useGetMyPropertiesUsingGET = <
   };
 };
 
+export const editPropertyWithImagesUsingPUT = <TData = PropertyDTO>(
+  id: string,
+  editPropertyWithImagesUsingPUTBody: EditPropertyWithImagesUsingPUTBody,
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    {
+      url: `/property/with-images/${id}`,
+      method: "put",
+      data: editPropertyWithImagesUsingPUTBody,
+    },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const useEditPropertyWithImagesUsingPUT = <
+  TData = AsyncReturnType<typeof editPropertyWithImagesUsingPUT, PropertyDTO>,
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    TData,
+    TError,
+    { id: string; data: EditPropertyWithImagesUsingPUTBody },
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { mutation: mutationOptions, request: requestOptions } = options || {};
+
+  return useMutation<
+    TData,
+    TError,
+    { id: string; data: EditPropertyWithImagesUsingPUTBody },
+    TContext
+  >((props) => {
+    const { id, data } = props || {};
+
+    return editPropertyWithImagesUsingPUT<TData>(id, data, requestOptions);
+  }, mutationOptions);
+};
 export const editPropertyUsingPUT = <TData = PropertyDTO>(
   id: string,
   createPropertyDTOBody: CreatePropertyDTOBody,
@@ -730,6 +821,49 @@ export const useGetCitiesUsingGET = <
     queryKey,
     () => getCitiesUsingGET<TQueryFnData>(stateId, params, requestOptions),
     { enabled: !!stateId, ...queryOptions }
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
+export const getImageUsingGET = <TData = Resource>(
+  id: string,
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/public/image/${id}`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetImageUsingGETQueryKey = (id: string) => [
+  `/public/image/${id}`,
+];
+
+export const useGetImageUsingGET = <
+  TQueryFnData = AsyncReturnType<typeof getImageUsingGET, Resource>,
+  TError = unknown,
+  TData = TQueryFnData
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<TQueryFnData, TError, TData>;
+    request?: SecondParameter<typeof customInstance>;
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetImageUsingGETQueryKey(id);
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getImageUsingGET<TQueryFnData>(id, requestOptions),
+    { enabled: !!id, ...queryOptions }
   );
 
   return {

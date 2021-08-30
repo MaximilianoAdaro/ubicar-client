@@ -33,8 +33,6 @@ import {
 } from "../../api";
 import { toast } from "react-toastify";
 import React from "react";
-import Carousel, { Modal, ModalGateway } from "react-images";
-import { photos } from "./photos";
 
 import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
@@ -57,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const ViewProperty = () => {
   const { id } = useParams<{ id: string }>();
+
   return (
     <Suspense fallback={<Loading />}>
       <View id={id} />
@@ -71,7 +70,8 @@ type ViewProps = {
 const View = ({ id }: ViewProps) => {
   const classes = useStyles();
   // const [currentImage, setCurrentImage] = useState(0);
-  const [viewerIsOpen, setViewerIsOpen] = useState(false);
+  // const [viewerIsOpen, setViewerIsOpen] = useState(false);
+  // const[images,setImages] = useState([])
   const { data: currentUser } = useGetLoggedUsingGET();
   const { data: property } = useGetPropertyUsingGET(id, {
     query: {
@@ -79,13 +79,13 @@ const View = ({ id }: ViewProps) => {
     },
   });
 
-  const openPhotos = () => {
-    setViewerIsOpen(true);
-  };
-
-  const close = () => {
-    setViewerIsOpen(false);
-  };
+  // const openPhotos = () => {
+  //   setViewerIsOpen(true);
+  // };
+  //
+  // const close = () => {
+  //   setViewerIsOpen(false);
+  // };
 
   if (!property) return <h4>Error</h4>;
 
@@ -95,8 +95,6 @@ const View = ({ id }: ViewProps) => {
     property.security
   );
 
-  // @ts-ignore
-  // @ts-ignore
   return (
     <div className={styles.container}>
       {/*<div className={styles.mediaContainer}>*/}
@@ -110,25 +108,52 @@ const View = ({ id }: ViewProps) => {
       {/*    <img src="http://www.passivehousecanada.com/wp-content/uploads/2016/05/Alta-Lake-Passive-House-1024x637.jpg" />*/}
       {/*  </div>*/}
       {/*</div>*/}
-      <div>
-        {/*<Gallery photos={photos} onClick={openLightbox} />*/}
+      {property.images.length < 1 ? (
+        <div className={styles.mediaContainer}>
+          <img src="https://timberhavenloghomes.com/wp-content/uploads/2017/07/Barth-Log-Home-Greatroom-1030x687.jpg" />
+          <div>
+            <img src="https://media.architecturaldigest.com/photos/58f7cf1a8bfbf566da78acc2/master/pass/IShvzncvwa127j0000000000.jpg" />
+            <img src="https://shawhomes.com/wp-content/uploads/Exterior-Twilight-2-Shaw-Homes-12801-S.-Date-Street-Jenks-OK-Yorktown.jpg" />
+            <img src="https://www.maids.com/cleaning-hacks/wp-content/uploads/2018/01/Entire2-house-featured.jpg" />
+            <img src="https://media.architecturaldigest.com/photos/59382d7a3176b35c589a6af3/master/pass/adelman-house-frank-lloyd-wright-03.jpg" />
+            <img src="https://cdn.architecturendesign.net/wp-content/uploads/2014/07/House-in-Gorki-08.jpg" />
+            <img src="http://www.passivehousecanada.com/wp-content/uploads/2016/05/Alta-Lake-Passive-House-1024x637.jpg" />
+          </div>
+        </div>
+      ) : (
         <div className={classes.root}>
-          <ImageList className={classes.imageList} cols={6}>
-            {photos.map((item) => (
-              <ImageListItem key={item.src} onClick={openPhotos}>
-                <img src={item.src} alt={item.src} />
+          <ImageList className={classes.imageList} cols={5}>
+            {property.images.map((imageId) => (
+              <ImageListItem key={imageId}>
+                <img
+                  src={`http://localhost:8080/public/image/${imageId}`}
+                  alt={imageId}
+                />
               </ImageListItem>
             ))}
           </ImageList>
         </div>
-        <ModalGateway>
-          {viewerIsOpen ? (
-            <Modal onClose={close}>
-              <Carousel views={photos} />
-            </Modal>
-          ) : null}
-        </ModalGateway>
-      </div>
+      )}
+
+      {/*<div>*/}
+      {/*<div>*/}
+      {/*  <div className={classes.root}>*/}
+      {/*    <ImageList className={classes.imageList} cols={5}>*/}
+      {/*      {property.images.map((imageId) => (*/}
+      {/*        <ImageListItem key={imageId} onClick={openPhotos}>*/}
+      {/*          <img src={`http://localhost:8080/public/image/${imageId}`} alt={imageId} />*/}
+      {/*        </ImageListItem>*/}
+      {/*      ))}*/}
+      {/*    </ImageList>*/}
+      {/*  </div>*/}
+      {/*<ModalGateway>*/}
+      {/*  {viewerIsOpen ? (*/}
+      {/*    <Modal onClose={close}>*/}
+      {/*      <Carousel views={property.images} />*/}
+      {/*    </Modal>*/}
+      {/*  ) : null}*/}
+      {/*</ModalGateway>*/}
+      {/*</div>*/}
       <div className={styles.infoContainer}>
         <div className={styles.leftInfo}>
           <div className={styles.divider} />
