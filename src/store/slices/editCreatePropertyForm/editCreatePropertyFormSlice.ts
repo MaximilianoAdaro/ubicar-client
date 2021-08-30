@@ -28,6 +28,7 @@ export interface EditPropertyState {
   characteristics: CharacteristicsFormData;
   additional: AdditionalFormData;
   currentStep: Step;
+  images: File[];
 }
 
 export enum Step {
@@ -97,6 +98,7 @@ const initialState: EditPropertyState = {
     description: "",
   },
   currentStep: Step.BasicInfo,
+  images: [],
 };
 
 export const editCreatePropertyFormSlice = createSlice({
@@ -149,6 +151,7 @@ export const editCreatePropertyFormSlice = createSlice({
         finalTime: date.finalTime as string,
       }));
       state.contacts = action.payload.contacts;
+      // state.images = action.payload.images;
       state.isInitialized = true;
     },
     setStyle: (state, action: PayloadAction<string>) => {
@@ -171,6 +174,9 @@ export const editCreatePropertyFormSlice = createSlice({
     },
     addOpenHouse: (state, action: PayloadAction<OpenHouse>) => {
       state.openHouses.push(action.payload);
+    },
+    addImages: (state, action: PayloadAction<File[]>) => {
+      state.images = action.payload;
     },
     setPropertyType: (state, action: PayloadAction<string>) => {
       state.propertyType = action.payload;
@@ -274,3 +280,5 @@ export const selectOpenHouses = (state: RootState) =>
 
 export const selectIsInitialized = (state: RootState) =>
   state.editPropertyForm.isInitialized;
+
+export const selectImages = (state: RootState) => state.editPropertyForm.images;

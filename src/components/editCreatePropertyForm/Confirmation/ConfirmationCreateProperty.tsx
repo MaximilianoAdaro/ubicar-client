@@ -1,10 +1,11 @@
 import { useHistory } from "react-router-dom";
-import { CreatePropertyDTO, useCreatePropertyUsingPOST } from "../../../api";
+import { useCreatePropertyUsingPOST } from "../../../api";
 import { urls } from "../../../constants";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   selectCreatePropertyState,
   selectCurrentStep,
+  selectImages,
   Step,
 } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { toast } from "react-toastify";
@@ -47,6 +48,7 @@ export const ConfirmationCreateProperty = ({ id }: Id) => {
     },
   });
   const createPropertyState = useAppSelector(selectCreatePropertyState);
+  const images = useAppSelector(selectImages);
   const step = useAppSelector(selectCurrentStep).valueOf();
 
   const { data: property, isLoading: propertyLoading } = useGetPropertyDto(
@@ -55,9 +57,30 @@ export const ConfirmationCreateProperty = ({ id }: Id) => {
 
   const handleSend = async () => {
     try {
-      await mutateAsync({
-        data: createRequestData(createPropertyState, step),
+      const json = JSON.stringify(createRequestData(createPropertyState, step));
+      const blob = new Blob([json], {
+        type: "application/json",
       });
+      const formData = new FormData();
+      formData.append("property", blob);
+      for (var i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
+      // formData.append("property",JSON.stringify(createRequestData(createPropertyState, step)))
+      // await mutateAsync({
+      //   data: createRequestData(createPropertyState, step),
+      // });
+      var requestOptions = {
+        method: "POST",
+        body: formData,
+        // headers: {'Content-Type':'multipart/form-data'}
+        // redirect: 'follow'
+      };
+
+      fetch("/property/create-with-images", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log("error", error));
       dispatch(actions.editPropertyForm.reset());
       history.push(urls.home);
     } catch (e) {
@@ -68,10 +91,6 @@ export const ConfirmationCreateProperty = ({ id }: Id) => {
   const handlePreviousButton = () => {
     dispatch(actions.editPropertyForm.setStep(Step.Additional));
   };
-
-  // if (propertyLoading) return <Loadi
-
-  // if (!property) return null;
 
   return (
     <ConfirmationHTML
