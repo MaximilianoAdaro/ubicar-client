@@ -75,10 +75,6 @@ export const ConfirmationCreateProperty = ({ id }: Id) => {
     dispatch(actions.editPropertyForm.setStep(Step.Additional));
   };
 
-  // if (propertyLoading) return <Loadi
-
-  // if (!property) return null;
-
   return (
     <ConfirmationHTML
       handleSend={handleSend}
