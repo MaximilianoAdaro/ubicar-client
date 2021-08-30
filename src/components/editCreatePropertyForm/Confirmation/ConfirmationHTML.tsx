@@ -1,19 +1,23 @@
 import { Container } from "react-bootstrap";
 import styles from "./Confirmation.module.scss";
 import { StepButtons } from "../StepButtons/StepButtons";
+import { ListingHouse } from "../../listingHouse";
+import { PropertyDTO } from "../../../api/generated/endpoints.schemas";
 
-type confirmationHTMLProps = {
+type ConfirmationHTMLProps = {
   handleSend: () => void;
   handlePrevious: () => void;
+  property?: PropertyDTO;
 };
 
 export const ConfirmationHTML = ({
   handleSend,
   handlePrevious,
-}: confirmationHTMLProps) => {
+  property,
+}: ConfirmationHTMLProps) => {
   return (
     <Container>
-      <Preview />
+      {property && <Preview property={property} />}
       <div className={styles.buttons}>
         <StepButtons onNext={handleSend} onPrevious={handlePrevious} />
       </div>
@@ -21,13 +25,29 @@ export const ConfirmationHTML = ({
   );
 };
 
-export const Preview = () => {
+type PreviewProps = {
+  property: PropertyDTO;
+};
+
+export const Preview = ({ property }: PreviewProps) => {
   return (
     <div>
       <div className={styles.container}>
         <h4>Preview</h4>
-        <div className={styles.comingSoon}>
-          <h3>Proximamente...</h3>
+        <div
+          style={{
+            // width: "70%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              width: "80%",
+            }}
+          >
+            <ListingHouse house={property} clickable={false} />
+          </div>
         </div>
       </div>
     </div>

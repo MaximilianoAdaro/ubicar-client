@@ -95,8 +95,6 @@ const View = ({ id }: ViewProps) => {
     property.security
   );
 
-  // @ts-ignore
-  // @ts-ignore
   return (
     <div className={styles.container}>
       {/*<div className={styles.mediaContainer}>*/}
