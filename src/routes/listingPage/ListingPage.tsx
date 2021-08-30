@@ -66,7 +66,6 @@ export const ListingPage = () => {
         "&b4=" +
         bbox[2]
     );
-
     const propsInViewBox = await response.json();
     if (propsInViewBox) {
       if (data) {
@@ -80,12 +79,10 @@ export const ListingPage = () => {
               obj?.push(matched[0]);
             }
           });
-
-          debugger;
           setFinalData(obj);
           setLoad(false);
-          debugger;
         } else {
+          setFinalData([]);
         }
       }
     }
