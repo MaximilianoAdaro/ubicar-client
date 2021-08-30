@@ -9,52 +9,13 @@ import {
 } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { useQueryClient } from "react-query";
 import {
-  CreatePropertyDTO,
   getGetPropertyUsingGETQueryKey,
   useEditPropertyUsingPUT,
+  useGetPropertyDto,
 } from "../../../api";
 import { toast } from "react-toastify";
 import { ConfirmationHTML } from "./ConfirmationHTML";
-
-const createRequestData = (
-  data: EditPropertyState,
-  step: number
-): CreatePropertyDTO => ({
-  title: data.basicInfo.title,
-  price: data.basicInfo.price,
-  expenses: data.basicInfo.expenses,
-  condition: data.operationType,
-  type: data.propertyType ?? "",
-  address: {
-    stateId: data.address.stateId,
-    cityId: data.address.cityId,
-    street: data.address.street,
-    number: data.address.number,
-    coordinates: data.address.coordinates,
-  },
-  environments: data.characteristics.environments,
-  coveredSquareFoot: data.characteristics.coveredSurface,
-  squareFoot: data.characteristics.totalSurface,
-  levels: data.characteristics.floors,
-  constructionDate: data.characteristics.constructionYear,
-  style: data.style ?? "",
-  rooms: data.characteristics.rooms,
-  fullBaths: data.characteristics.fullBaths,
-  toilets: data.characteristics.toilets,
-  amenities: data.amenities,
-  materials: data.materials,
-  security: data.securities,
-  parkDescription: data.characteristics.parkDescription ?? "",
-  links: data.youtubeLinks,
-  contacts: data.contacts,
-  openHouse: data.openHouses.map(({ day, initialTime, finalTime }) => ({
-    day: new Date(day).toISOString(),
-    initialTime: initialTime as any,
-    finalTime: finalTime as any,
-  })),
-  comments: data.additional.description ?? "",
-  step: step,
-});
+import { createRequestData } from "./confirmationUtils";
 
 type Id = {
   id: string;
@@ -94,6 +55,10 @@ export const ConfirmationEditProperty = ({ id }: Id) => {
   const createPropertyState = useAppSelector(selectCreatePropertyState);
   const step = useAppSelector(selectCurrentStep).valueOf();
 
+  const { data: property, isLoading: propertyLoading } = useGetPropertyDto(
+    createRequestData(createPropertyState, step)
+  );
+
   const handleSend = async () => {
     dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
     try {
@@ -116,6 +81,7 @@ export const ConfirmationEditProperty = ({ id }: Id) => {
     <ConfirmationHTML
       handleSend={handleSend}
       handlePrevious={handlePreviousButton}
+      property={property}
     />
   );
 };

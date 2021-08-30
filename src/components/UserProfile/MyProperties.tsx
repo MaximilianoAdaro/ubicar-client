@@ -11,10 +11,20 @@ export function MyProperties() {
     <div>
       <Grid className={styles.personalDataMainDiv}>
         <h1>Mis Propiedades</h1>
-        <p>Aqui puedes ver las propiedades que publicaste.</p>
+        <p>
+          Aqui puedes ver las propiedades que publicaste y las que todavia no
+          terminaste de publicar.
+        </p>
       </Grid>
       <Grid className={styles.properties}>
         <h3>Propiedades Publicadas</h3>
+        {data.status === "success" &&
+          data?.data?.map((casa) => (
+            <PropertyList key={casa.id} house={casa} from={"properties"} />
+          ))}
+      </Grid>
+      <Grid className={styles.properties}>
+        <h3>Propiedades sin publicar</h3>
         {data.status === "success" &&
           data?.data
             .filter((casa) => casa.step === 7)
