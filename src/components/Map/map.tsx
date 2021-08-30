@@ -238,11 +238,10 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
                 <HospitalLayer />
                 <PoliceLayer />
                 <PrisonLayer />
-                {this.state.properties && (
-                  <PropertiesLayerWithContext
-                    properties={this.state.properties}
-                  />
-                )}
+                <PropertiesLayerWithContext
+                  editable={this.props.editable}
+                  properties={this.state.properties}
+                />
                 <IndustrialAreaLayers />
               </>
             )}

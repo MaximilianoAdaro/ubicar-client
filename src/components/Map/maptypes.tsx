@@ -15,13 +15,14 @@ export type TMapProps = {
   additionalStyle?: React.CSSProperties | null;
   additionalLayers?: TileLayer | null;
   properties?: PropertyPreviewDTO[] | null;
-  editable?: boolean | null;
+  editable: boolean;
 };
 
 export type PropertyState = {
   visible: boolean;
   properties: PropertyPreviewDTO[];
   propsGeom: Feature<Geometry>[];
+  editable: boolean;
 };
 
 export type TMapState = {
