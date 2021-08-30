@@ -19,19 +19,13 @@ export function MyProperties() {
       <Grid className={styles.properties}>
         <h3>Propiedades Publicadas</h3>
         {data.status === "success" &&
-          data?.data?.map((casa) => (
-            <PropertyList key={casa.id} house={casa} from={"properties"} />
-          ))}
-      </Grid>
-      <Grid className={styles.properties}>
-        <h3>Propiedades sin publicar</h3>
-        {data.status === "success" &&
           data?.data
             .filter((casa) => casa.step === 7)
             .map((casa) => (
               <PropertyList key={casa.id} house={casa} from={"properties"} />
             ))}
       </Grid>
+
       <Grid className={styles.properties}>
         {/*<h3>Propiedades sin publicar</h3>*/}
         {data.status === "success" &&
