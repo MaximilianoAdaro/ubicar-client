@@ -3,6 +3,7 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import { PropertyList } from "./PropertyList";
 import { useGetMyPropertiesUsingGET } from "../../api";
+import { Loading } from "../common/loading/Loading";
 
 export function MyProperties() {
   const data = useGetMyPropertiesUsingGET();
@@ -18,16 +19,31 @@ export function MyProperties() {
       <Grid className={styles.properties}>
         <h3>Propiedades Publicadas</h3>
         {data.status === "success" &&
-          data?.data?.map((casa) => (
-            <PropertyList key={casa.id} house={casa} from={"properties"} />
-          ))}
+          data?.data
+            .filter((casa) => casa.step === 7)
+            .map((casa) => (
+              <PropertyList key={casa.id} house={casa} from={"properties"} />
+            ))}
       </Grid>
+
       <Grid className={styles.properties}>
-        <h3>Propiedades sin publicar</h3>
+        {/*<h3>Propiedades sin publicar</h3>*/}
         {data.status === "success" &&
-          data?.data?.map((casa) => (
-            <PropertyList key={casa.id} house={casa} from={"properties"} />
-          ))}
+        data?.data.filter((casa) => casa.step < 7).length > 0 ? (
+          <div>
+            <h3>Propiedades sin publicar</h3>
+            {data?.data
+              .filter((casa) => casa.step < 7)
+              .map((casa) => (
+                <PropertyList key={casa.id} house={casa} from={"properties"} />
+              ))}
+          </div>
+        ) : (
+          <div></div>
+        )}
+        <br />
+        <br />
+        <br />
       </Grid>
     </div>
   );
