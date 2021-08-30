@@ -55,7 +55,9 @@ export const ConfirmationEditProperty = ({ id }: Id) => {
   const createPropertyState = useAppSelector(selectCreatePropertyState);
   const step = useAppSelector(selectCurrentStep).valueOf();
 
-  // useGetPropertyDto(build);
+  const { data: property, isLoading: propertyLoading } = useGetPropertyDto(
+    createRequestData(createPropertyState, step)
+  );
 
   const handleSend = async () => {
     dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
@@ -79,6 +81,7 @@ export const ConfirmationEditProperty = ({ id }: Id) => {
     <ConfirmationHTML
       handleSend={handleSend}
       handlePrevious={handlePreviousButton}
+      property={property}
     />
   );
 };
