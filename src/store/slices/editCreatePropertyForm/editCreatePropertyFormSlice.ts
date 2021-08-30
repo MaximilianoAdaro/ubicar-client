@@ -28,6 +28,7 @@ export interface EditPropertyState {
   characteristics: CharacteristicsFormData;
   additional: AdditionalFormData;
   currentStep: Step;
+  images: FormData | undefined;
 }
 
 export enum Step {
@@ -97,6 +98,7 @@ const initialState: EditPropertyState = {
     description: "",
   },
   currentStep: Step.BasicInfo,
+  images: undefined,
 };
 
 export const editCreatePropertyFormSlice = createSlice({
@@ -212,6 +214,14 @@ export const editCreatePropertyFormSlice = createSlice({
     setOperationType: (state, action: PayloadAction<string>) => {
       state.operationType = action.payload;
     },
+    // setImages: (state, action: PayloadAction<FormData>) => {
+    //   state.images = action.payload;
+    // },
+    // removeImage: (state, action: PayloadAction<FormData>) => {
+    //   state.images = state.images.filter(
+    //       (link) => link !== action.payload
+    //   );
+    // },
     removeYoutubeLink: (state, action: PayloadAction<string>) => {
       state.youtubeLinks = state.youtubeLinks.filter(
         (link) => link !== action.payload

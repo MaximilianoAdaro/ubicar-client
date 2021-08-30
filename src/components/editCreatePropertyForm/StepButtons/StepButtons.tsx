@@ -1,7 +1,10 @@
 import styles from "./StepButtons.module.scss";
 import { Button } from "react-bootstrap";
 import { ReactNode } from "react";
-import { selectCreatePropertyState } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
+import {
+  selectCreatePropertyState,
+  selectCurrentStep,
+} from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { useAppSelector } from "../../../store";
 
 interface StepButtonsProps {
@@ -22,10 +25,12 @@ export const StepButtons = ({
   onPrevious,
 }: StepButtonsProps) => {
   const createPropertyState = useAppSelector(selectCreatePropertyState);
+  const step = useAppSelector(selectCurrentStep);
 
   function handleSend() {
     //aca deberia pegarle al endpoint con createPropertyState
     console.log(createPropertyState);
+    console.log(step);
   }
 
   return (

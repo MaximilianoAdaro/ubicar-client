@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export const Photos = () => {
   const classes = useStyles();
   const [images, setImages] = useState([]);
-  const maxNumber = 69;
+  const maxNumber = 50;
 
   // @ts-ignore
   const onChange = (imageList) => {
@@ -41,7 +41,16 @@ export const Photos = () => {
     setImages(imageList);
   };
 
+  const handleSubmit = () => {
+    const formData = new FormData();
+    for (let i = 0; i < images.length; i++) {
+      // @ts-ignore
+      formData.append(`images[${i}]`, images[i].file);
+    }
+  };
+
   console.log(images);
+
   return (
     <div>
       <div className={styles.container}>
@@ -69,30 +78,25 @@ export const Photos = () => {
                   onClick={onImageUpload}
                   {...dragProps}
                 >
-                  Click or Drop here
+                  Agregar imagen
                 </button>
                 &nbsp;
-                <button onClick={onImageRemoveAll}>Remove all images</button>
+                <button onClick={onImageRemoveAll}>
+                  Eliminar todas las imagenes
+                </button>
                 <div className={classes.root}>
                   <ImageList className={classes.imageList} cols={4}>
-                    {imageList.map((image, index) => (
-                      // <div key={index} className="image-item">
-                      //     <img src={image['data_url']} alt="" width="100" />
-                      //     <div className="image-item__btn-wrapper">
-                      //         <button onClick={() => onImageUpdate(index)}>Update</button>
-                      //         <button onClick={() => onImageRemove(index)}>Remove</button>
-                      //     </div>
-                      // </div>
-                      <ImageListItem key={image.img}>
-                        <img src={image["data_url"]} alt={image.title} />
+                    {images.map((image, index) => (
+                      <ImageListItem key={""}>
+                        <img src={image["data_url"]} alt={"hola"} />
                         <ImageListItemBar
-                          title={image.title}
+                          title={"casa"}
                           classes={{
                             root: classes.titleBar,
                             title: classes.title,
                           }}
                           actionIcon={
-                            <IconButton aria-label={`star ${image.title}`}>
+                            <IconButton>
                               <TiDeleteOutline
                                 className={classes.title}
                                 onClick={() => onImageRemove(index)}
@@ -107,6 +111,7 @@ export const Photos = () => {
               </div>
             )}
           </ImageUploading>
+          <button onClick={handleSubmit}>Upload</button>
         </div>
       </div>
     </div>
