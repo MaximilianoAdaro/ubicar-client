@@ -5,6 +5,7 @@ import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
   selectCreatePropertyState,
   selectCurrentStep,
+  selectImages,
   Step,
 } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { toast } from "react-toastify";
@@ -47,6 +48,12 @@ export const ConfirmationCreateProperty = ({ id }: Id) => {
     },
   });
   const createPropertyState = useAppSelector(selectCreatePropertyState);
+  const images = useAppSelector(selectImages);
+  const formData = new FormData();
+  for (var i = 0; i < images.length; i++) {
+    formData.append("image", images[i]);
+  }
+
   const step = useAppSelector(selectCurrentStep).valueOf();
 
   const { data: property, isLoading: propertyLoading } = useGetPropertyDto(

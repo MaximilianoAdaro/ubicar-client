@@ -280,3 +280,5 @@ export const selectOpenHouses = (state: RootState) =>
 
 export const selectIsInitialized = (state: RootState) =>
   state.editPropertyForm.isInitialized;
+
+export const selectImages = (state: RootState) => state.editPropertyForm.images;

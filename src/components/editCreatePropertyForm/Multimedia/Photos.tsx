@@ -51,10 +51,7 @@ export const Photos = () => {
   };
 
   const handleFiles = (event: any) => {
-    console.log(event.target.files);
-    setImages(event.target.files);
-    console.log(images);
-    dispatch(actions.editPropertyForm.addImages(images));
+    dispatch(actions.editPropertyForm.addImages(event.target.files));
   };
 
   return (
