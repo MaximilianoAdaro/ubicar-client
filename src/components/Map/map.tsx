@@ -97,24 +97,34 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
       }),
     });
 
-    let currView = this.props.view;
-    let currZoom = this.props.zoom;
-    this.map.on("moveend", () => {
+    this.map.on(["moveend", "dblclick"], () => {
       let newZoom = this.map.getView().getZoom();
-      if (currZoom !== newZoom) {
-        if (newZoom) {
-          console.log("setting new Zoom");
-          this.state.zoom = newZoom;
+      let currZoom = this.state.zoom;
+      const bbox = getBounds(this.map);
+      if (newZoom) {
+        if (currZoom !== newZoom) {
+          this.setState({ zoom: newZoom });
           this.props.setZoom(newZoom);
+          this.props.setBbox(bbox);
         }
       }
+    });
+
+    this.map.on(["moveend", "dblclick"], () => {
       let newView = this.map.getView().getCenter();
+      let currView = this.state.view;
       const bbox = getBounds(this.map);
       if (newView) {
-        console.log("setting new View");
-        this.state.view = { longitude: newView[0], latitude: newView[1] };
-        this.props.setBbox(bbox);
-        this.props.setView({ longitude: newView[0], latitude: newView[1] });
+        if (
+          newView[0] !== currView.longitude ||
+          newView[1] !== currView.latitude
+        ) {
+          this.setState({
+            view: { longitude: newView[0], latitude: newView[1] },
+          });
+          this.props.setView({ longitude: newView[0], latitude: newView[1] });
+          this.props.setBbox(bbox);
+        }
       }
     });
 
@@ -163,7 +173,6 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
             zoom: this.props.zoom,
           })
         );
-        this.setState({ view: this.props.view });
         const style = new Style({
           image: new Icon({
             src: "./icons/house.png",
@@ -213,7 +222,6 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
       );
     }
     if (prevProps.zoom !== this.props.zoom) {
-      this.setState({ zoom: this.props.zoom });
       this.map.setView(
         new View({
           projection: "EPSG:3857",

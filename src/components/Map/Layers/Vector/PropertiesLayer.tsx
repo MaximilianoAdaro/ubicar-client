@@ -53,13 +53,13 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
         const bbox = getBounds(this.props.map);
         let url =
           "http://localhost:3000/public/property/viewBox?b1=" +
-          bbox[1] +
-          "&b2=" +
           bbox[0] +
+          "&b2=" +
+          bbox[1] +
           "&b3=" +
-          bbox[3] +
+          bbox[2] +
           "&b4=" +
-          bbox[2];
+          bbox[3];
         let xhr = new XMLHttpRequest();
         xhr.open("GET", url);
         xhr.onerror = () => {

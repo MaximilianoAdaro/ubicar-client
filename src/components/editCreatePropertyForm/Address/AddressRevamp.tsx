@@ -147,7 +147,6 @@ export const AddressRevamp = (address: AddressDTO) => {
 
   useEffect(() => {
     if (mounted.current) {
-      console.log(data);
       const params = {
         direccion: data.street + " " + (data.number ?? 0),
         provincia: data.state,
