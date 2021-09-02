@@ -199,6 +199,52 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
     prevState: Readonly<TMapState>,
     snapshot?: any
   ) {
+    if (prevProps.editable !== this.props.editable) {
+      if (this.props.editable) {
+        if (this.state.markerLayer) {
+          this.map.removeLayer(this.state.markerLayer);
+        }
+        const markerLayer = new VectorLayer({
+          source: new VectorSource({
+            features: [
+              new Feature({
+                geometry: new Point([
+                  this.props.view.longitude,
+                  this.props.view.latitude,
+                ]),
+                fna: "Tu casa!",
+              }),
+            ],
+          }),
+          style: new Style({
+            image: new Icon({
+              src: "https://static.thenounproject.com/png/1661278-200.png",
+              scale: 200 / 1024,
+              anchor: [0.5, 0.75],
+            }),
+          }),
+        });
+        this.setState({ ...this.state, markerLayer: markerLayer });
+        this.map.addLayer(markerLayer);
+
+        const onMapClick = (event: MapBrowserEvent) => {
+          const featureToAdd = new Feature({
+            geometry: new Point(event.coordinate),
+            fna: "Tu casa!",
+          });
+
+          markerLayer.getSource().clear();
+          markerLayer.getSource().addFeatures([featureToAdd]);
+          // @ts-ignore
+          this.props.handleChangeClick(
+            event.coordinate[1],
+            event.coordinate[0]
+          );
+        };
+        this.map.on("singleclick", onMapClick);
+      }
+    }
+
     if (prevProps.view !== this.props.view) {
       this.map.setView(
         new View({
