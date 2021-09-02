@@ -15,6 +15,7 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
   layer: VectorLayer;
   source: VectorSource;
   state: PropertyState = {
+    xhr: new XMLHttpRequest(),
     visible: false,
     properties: [],
     propsGeom: [],
@@ -42,43 +43,44 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
           "&b4=" +
           bbox[3];
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
+        xhr.open("POST", url);
         xhr.onerror = () => {
           this.source.removeLoadedExtent(extent);
           //This threw an error
         };
         xhr.onload = () => {
-          while (xhr.status !== 200) {
-            console.log("loading");
-          }
-          if (xhr.responseText.length > 3) {
-            let arrayMap = JSON.parse(xhr.responseText).map((data: any) => {
-              return JSON.parse(data);
-            });
-            let newArray = arrayMap.map((feature: any) => {
-              feature.geometry.coordinates = convertCoordinates(
-                feature.geometry.coordinates[0],
-                feature.geometry.coordinates[1]
-              );
-              return feature;
-            });
-
-            let geojsonObject = {
-              type: "FeatureCollection",
-              features: newArray,
-            };
-            let fet = new GeoJSON()
-              .readFeatures(geojsonObject)
-              .map((feature: any) => {
-                feature.values_.fna =
-                  feature.values_.street + " " + feature.values_.number;
+          if (xhr.status === 200) {
+            if (xhr.responseText.length > 3) {
+              let arrayMap = JSON.parse(xhr.responseText).map((data: any) => {
+                return JSON.parse(data);
+              });
+              let newArray = arrayMap.map((feature: any) => {
+                feature.geometry.coordinates = convertCoordinates(
+                  feature.geometry.coordinates[0],
+                  feature.geometry.coordinates[1]
+                );
                 return feature;
               });
 
-            this.source.addFeatures(fet);
+              let geojsonObject = {
+                type: "FeatureCollection",
+                features: newArray,
+              };
+              let fet = new GeoJSON()
+                .readFeatures(geojsonObject)
+                .map((feature: any) => {
+                  feature.values_.fna =
+                    feature.values_.street + " " + feature.values_.number;
+                  return feature;
+                });
+
+              this.source.addFeatures(fet);
+            }
           }
         };
-        xhr.send();
+        xhr.setRequestHeader("Content-Type", "application/json");
+        this.setState({ ...this.state, xhr: xhr });
+        xhr.send(this.props.body);
       },
       strategy: bbox,
       features: features,
@@ -109,6 +111,21 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
   componentDidUpdate(prevProps: PropertyProps, prevState: Readonly<any>) {
     this.props.map.removeLayer(this.layer); //Refresh?
     this.props.map.addLayer(this.layer);
+    if (prevProps.body !== this.props.body) {
+      const bbox = getBounds(this.props.map);
+      let url =
+        "http://localhost:3000/public/property/viewBox?b1=" +
+        bbox[0] +
+        "&b2=" +
+        bbox[1] +
+        "&b3=" +
+        bbox[2] +
+        "&b4=" +
+        bbox[3];
+      this.state.xhr.open("POST", url);
+      this.state.xhr.setRequestHeader("Content-Type", "application/json");
+      this.state.xhr.send(this.props.body);
+    }
   }
 
   render() {
@@ -116,12 +133,12 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
   }
 }
 
-export const PropertiesLayerWithContext = () => {
+export const PropertiesLayerWithContext = (props: { body: string }) => {
   return (
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          return <PropertiesLayer map={mapContext.map} />;
+          return <PropertiesLayer map={mapContext.map} body={props.body} />;
         }
       }}
     </MapContext.Consumer>

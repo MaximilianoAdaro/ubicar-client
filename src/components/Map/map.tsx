@@ -92,7 +92,7 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
       }),
     });
 
-    this.map.on(["moveend", "dblclick"], () => {
+    this.map.on(["moveend"], () => {
       let newZoom = this.map.getView().getZoom();
       let currZoom = this.state.zoom;
       const bbox = getBounds(this.map);
@@ -287,7 +287,7 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
                 <HospitalLayer />
                 <PoliceLayer />
                 <PrisonLayer />
-                <PropertiesLayerWithContext />
+                <PropertiesLayerWithContext body={this.props.body} />
                 <IndustrialAreaLayers />
               </>
             )}

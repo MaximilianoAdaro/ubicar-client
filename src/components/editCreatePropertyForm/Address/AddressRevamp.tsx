@@ -410,6 +410,7 @@ export const AddressRevamp = (address: AddressDTO) => {
               setView={setView}
               setZoom={setZoom}
               setBbox={() => {}}
+              body={""}
             />
           </Grid>
         </Grid>

@@ -39,8 +39,21 @@ export const ListingPage = () => {
   const { data: houseStyles } = useGetStylesUsingGET();
   const { data: houseTypes } = useGetTypesUsingGET();
 
+  const body = JSON.stringify({
+    condition: checkNotUndefined(query.condition),
+    typeProperty: checkNotUndefined(query.typeProperty),
+    minPrice: parseFloat(checkNotUndefined(query.minPrice)),
+    maxPrice: parseFloat(checkNotUndefined(query.maxPrice)),
+    style: checkNotUndefined(query.style),
+    minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
+    minAmountRoom: checkNotUndefined(query.minAmountRoom),
+    minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
+    maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
+  });
+
   const buildDataset = async () => {
     setLoad(true);
+
     const mapData = await fetch(
       "http://localhost:3000/public/property/preview/by-filter?b1=" +
         bbox[0] +
@@ -56,17 +69,7 @@ export const ListingPage = () => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          condition: checkNotUndefined(query.condition),
-          typeProperty: checkNotUndefined(query.typeProperty),
-          minPrice: parseFloat(checkNotUndefined(query.minPrice)),
-          maxPrice: parseFloat(checkNotUndefined(query.maxPrice)),
-          style: checkNotUndefined(query.style),
-          minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
-          minAmountRoom: checkNotUndefined(query.minAmountRoom),
-          minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
-          maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
-        }),
+        body: body,
       }
     );
 
@@ -118,6 +121,7 @@ export const ListingPage = () => {
             setZoom={setter1}
             setView={setter2}
             setBbox={setBbox}
+            body={body}
           />
         </Grid>
         <Grid item xl={3} sm={4} className={styles.propertyList}>
