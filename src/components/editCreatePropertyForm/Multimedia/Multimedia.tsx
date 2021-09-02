@@ -17,6 +17,10 @@ export const Multimedia = () => {
     dispatch(actions.editPropertyForm.setStep(Step.OptionalInfo));
   };
 
+  const canSave = async () => {
+    return true;
+  };
+
   return (
     <Container>
       <Row>
@@ -33,7 +37,11 @@ export const Multimedia = () => {
           </div>
         </Col>
       </Row>
-      <StepButtons onNext={handleClick} onPrevious={handlePreviousButton} />
+      <StepButtons
+        onNext={handleClick}
+        onPrevious={handlePreviousButton}
+        canPartialSave={canSave}
+      />
     </Container>
   );
 };

@@ -205,6 +205,11 @@ export const AddressRevamp = (address: AddressDTO) => {
     }
   };
 
+  const canSave = async () => {
+    dispatch(actions.editPropertyForm.setAddress(data));
+    return true;
+  };
+
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([{ id: "", name: "" }]);
   const loading = open && options.length === 0;
@@ -414,6 +419,7 @@ export const AddressRevamp = (address: AddressDTO) => {
         onNext={() => handleSubmit()}
         disabledNext={error}
         onPrevious={handlePreviousButton}
+        canPartialSave={canSave}
       />
     </Container>
   );
