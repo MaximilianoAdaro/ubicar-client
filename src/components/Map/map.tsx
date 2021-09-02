@@ -244,25 +244,6 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
         this.map.on("singleclick", onMapClick);
       }
     }
-
-    if (prevProps.view !== this.props.view) {
-      this.map.setView(
-        new View({
-          projection: "EPSG:3857",
-          center: [this.props.view.longitude, this.props.view.latitude],
-          zoom: this.props.zoom,
-        })
-      );
-    }
-    if (prevProps.zoom !== this.props.zoom) {
-      this.map.setView(
-        new View({
-          projection: "EPSG:3857",
-          center: [this.props.view.longitude, this.props.view.latitude],
-          zoom: this.props.zoom,
-        })
-      );
-    }
   }
 
   render() {
