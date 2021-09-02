@@ -43,13 +43,13 @@ export const ListingPage = () => {
     setLoad(true);
     const mapData = await fetch(
       "http://localhost:3000/public/property/preview/by-filter?b1=" +
-        bbox[1] +
-        "&b2=" +
         bbox[0] +
+        "&b2=" +
+        bbox[1] +
         "&b3=" +
-        bbox[3] +
+        bbox[2] +
         "&b4=" +
-        bbox[2],
+        bbox[3],
       {
         method: "POST",
         headers: {
