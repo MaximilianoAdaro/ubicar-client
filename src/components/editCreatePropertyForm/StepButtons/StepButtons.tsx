@@ -1,65 +1,26 @@
 import styles from "./StepButtons.module.scss";
 import { Button } from "react-bootstrap";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
-  EditPropertyState,
   selectCreatePropertyState,
   selectCurrentStep,
 } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { urls } from "../../../constants";
 import { useHistory } from "react-router-dom";
-import { CreatePropertyDTO, useCreatePropertyUsingPOST } from "../../../api";
+import { useCreatePropertyUsingPOST } from "../../../api";
 import { toast } from "react-toastify";
+import { createRequestData } from "../Confirmation/ConfirmationCreateProperty";
 
 interface StepButtonsProps {
   type?: "submit" | "button";
   onNext?: () => void;
   onPrevious?: () => void;
+  canPartialSave?: () => Promise<boolean> | boolean;
   showPrevious?: boolean;
   showNext?: boolean;
   disabledNext?: boolean;
 }
-
-const createRequestData = (
-  data: EditPropertyState,
-  step: number
-): CreatePropertyDTO => ({
-  title: data.basicInfo.title,
-  price: data.basicInfo.price,
-  expenses: data.basicInfo.expenses,
-  condition: data.operationType,
-  type: data.propertyType ?? "",
-  address: {
-    stateId: data.address.stateId,
-    cityId: data.address.cityId,
-    street: data.address.street,
-    number: data.address.number,
-    coordinates: data.address.coordinates,
-  },
-  environments: data.characteristics.environments,
-  coveredSquareFoot: data.characteristics.coveredSurface,
-  squareFoot: data.characteristics.totalSurface,
-  levels: data.characteristics.floors,
-  constructionDate: data.characteristics.constructionYear,
-  style: data.style ?? "",
-  rooms: data.characteristics.rooms,
-  fullBaths: data.characteristics.fullBaths,
-  toilets: data.characteristics.toilets,
-  amenities: data.amenities,
-  materials: data.materials,
-  security: data.securities,
-  parkDescription: data.characteristics.parkDescription ?? "",
-  links: data.youtubeLinks,
-  contacts: data.contacts,
-  openHouse: data.openHouses.map(({ day, initialTime, finalTime }) => ({
-    day: new Date(day).toISOString(),
-    initialTime,
-    finalTime,
-  })),
-  comments: data.additional.description ?? "",
-  step: step,
-});
 
 export const StepButtons = ({
   type = "button",
@@ -68,6 +29,7 @@ export const StepButtons = ({
   disabledNext = false,
   onNext,
   onPrevious,
+  canPartialSave,
 }: StepButtonsProps) => {
   const createPropertyState = useAppSelector(selectCreatePropertyState);
   const step = useAppSelector(selectCurrentStep).valueOf();
@@ -102,22 +64,40 @@ export const StepButtons = ({
     },
   });
 
+  const [partialSave, setPartialSave] = useState(false);
+
+  useEffect(() => {
+    const fun = async () => {
+      try {
+        await mutateAsync({
+          data: createRequestData(createPropertyState, step),
+        });
+        console.log(createPropertyState);
+        dispatch(actions.editPropertyForm.reset());
+        history.push(urls.home);
+      } catch (e) {
+        throw Error;
+      }
+    };
+    if (partialSave) fun();
+  }, [createPropertyState, dispatch, history, mutateAsync, partialSave, step]);
+
   const handleSend = async () => {
-    try {
-      await mutateAsync({
-        data: createRequestData(createPropertyState, step),
-      });
-      dispatch(actions.editPropertyForm.reset());
-      history.push(urls.home);
-    } catch (e) {
-      throw Error;
-    }
+    const canSave = canPartialSave?.();
+    Promise.resolve(canSave).then(async function (value) {
+      if (!value) {
+        return;
+      }
+      setPartialSave(true);
+    });
   };
 
   return (
     <div className={styles.stepButtonsContainer}>
       <div className={styles.stepButtons}>
-        <CustomButton onClick={handleSend}>Guardar cambios</CustomButton>
+        {step !== 7 && (
+          <CustomButton onClick={handleSend}>Guardar cambios</CustomButton>
+        )}
         {showPrevious && (
           <CustomButton onClick={onPrevious}>Anterior</CustomButton>
         )}

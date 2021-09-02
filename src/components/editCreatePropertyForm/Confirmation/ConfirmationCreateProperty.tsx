@@ -10,9 +10,8 @@ import {
 } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { toast } from "react-toastify";
 import { ConfirmationHTML } from "./ConfirmationHTML";
-import { use } from "msw/lib/types/utils/internal/requestHandlerUtils";
 
-const createRequestData = (
+export const createRequestData = (
   data: EditPropertyState,
   step: number
 ): CreatePropertyDTO => ({

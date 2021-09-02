@@ -117,6 +117,7 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
   useEffect(() => {
     if (property && !isInitialized) {
       dispatch(actions.editPropertyForm.setInitialValues(property));
+      dispatch(actions.editPropertyForm.setStep(property.step));
     }
   }, [property]);
 

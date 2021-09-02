@@ -188,7 +188,9 @@ export const editCreatePropertyFormSlice = createSlice({
       state.addressDropdowns.town = action.payload;
     },
     setBasicInfo: (state, action: PayloadAction<BasicInfoFormData>) => {
+      // console.log(action.payload);
       state.basicInfo = action.payload;
+      console.log(state.basicInfo);
     },
     removeAmenity: (state, action: PayloadAction<string>) => {
       state.amenities = state.amenities.filter((id) => id !== action.payload);
