@@ -111,7 +111,6 @@ export const ListingPage = () => {
       <Grid container className={styles.mapAndProperties}>
         <Grid item xl={9} sm={8} className={styles.map}>
           <MapComponent
-            properties={[]}
             zoom={zoom}
             view={view}
             renderLayers={true}

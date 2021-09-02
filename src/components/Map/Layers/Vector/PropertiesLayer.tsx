@@ -7,8 +7,6 @@ import { MapContext } from "../../map";
 import { IMapContext, PropertyState } from "../../maptypes";
 import { Vector } from "ol/source";
 import Feature from "ol/Feature";
-import { PropertyPreviewDTO } from "../../../../api";
-import { Point } from "ol/geom";
 import { convertCoordinates, getBounds } from "../../utils";
 import { bbox } from "ol/loadingstrategy";
 import GeoJSON from "ol/format/GeoJSON";
@@ -31,21 +29,6 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
   componentDidMount() {
     let format = new GeoJSON();
     let features = [new Feature()];
-    if (this.props.properties !== null && this.props.properties) {
-      features = this.props.properties.map((data) => {
-        return new Feature({
-          fna: `${data.address?.street ?? ""} ${
-            data.address?.number.toString() ?? ""
-          }`,
-          geometry: new Point(
-            convertCoordinates(
-              data.address?.coordinates.long ?? 0,
-              data.address?.coordinates.lat ?? 0
-            )
-          ),
-        });
-      });
-    }
 
     this.source = new Vector({
       format: format,
@@ -126,27 +109,8 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
   }
 
   componentDidUpdate(prevProps: PropertyProps, prevState: Readonly<any>) {
-    if (prevProps.properties !== this.props.properties) {
-      if (this.props.properties) {
-        if (this.state.editable) {
-          this.source.clear();
-        }
-        let feat = this.props.properties.map((data) => {
-          return new Feature({
-            fna: `${data.address?.street ?? ""} ${
-              data.address?.number.toString() ?? ""
-            }`,
-            geometry: new Point(
-              convertCoordinates(
-                data.address?.coordinates.long ?? 0,
-                data.address?.coordinates.lat ?? 0
-              )
-            ),
-          });
-        });
-        this.source.addFeatures(feat);
-      }
-    }
+    this.props.map.removeLayer(this.layer); //Refresh?
+    this.props.map.addLayer(this.layer);
   }
 
   render() {
@@ -154,20 +118,13 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
   }
 }
 
-export const PropertiesLayerWithContext = (props: {
-  properties?: PropertyPreviewDTO[] | null;
-  editable: boolean;
-}) => {
+export const PropertiesLayerWithContext = (props: { editable: boolean }) => {
   return (
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
           return (
-            <PropertiesLayer
-              properties={props.properties}
-              map={mapContext.map}
-              editable={props.editable}
-            />
+            <PropertiesLayer map={mapContext.map} editable={props.editable} />
           );
         }
       }}

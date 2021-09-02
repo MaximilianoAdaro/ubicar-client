@@ -122,7 +122,6 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
 
   if (!property) return <h4>Error</h4>;
 
-  console.log(property);
   const address = property.address!;
 
   switch (currentStep) {

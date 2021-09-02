@@ -14,7 +14,6 @@ export type TMapProps = {
   renderLayers?: boolean | null;
   additionalStyle?: React.CSSProperties | null;
   additionalLayers?: TileLayer | null;
-  properties?: PropertyPreviewDTO[] | null;
   editable: boolean;
   setZoom: (arg0: number) => void;
   setView: (arg0: MapView) => void;

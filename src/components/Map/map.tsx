@@ -29,7 +29,6 @@ import VectorSource from "ol/source/Vector";
 import Feature from "ol/Feature";
 import { Point } from "ol/geom";
 import VectorLayer from "ol/layer/Vector";
-import { PropertyPreviewDTO } from "../../api";
 import { Icon, Style } from "ol/style";
 import { MapBrowserEvent } from "ol";
 import { getBounds } from "./utils";
@@ -46,14 +45,12 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
     markerLayer: null,
     properties: null,
   };
-  properties: PropertyPreviewDTO[] | null | undefined;
   zoom: number;
   view: MapView;
   renderLayers: boolean | null | undefined;
   additionalStyle: React.CSSProperties | null | undefined;
   additionalLayers: TileLayer | null | undefined;
   map: Map;
-  editable: false;
 
   constructor(props: TMapProps) {
     super(props);
@@ -65,14 +62,11 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
     this.renderLayers = props.renderLayers;
     this.additionalStyle = props.additionalStyle;
     this.additionalLayers = props.additionalLayers;
-    this.properties = props.properties;
   }
   componentDidMount() {
     if (!this.mapDivRef.current) {
       return;
     }
-
-    this.setState({ properties: this.properties });
 
     const layers = [
       new TileLayer({
@@ -161,25 +155,11 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
     prevState: Readonly<TMapState>,
     snapshot?: any
   ) {
-    if (prevProps.view !== this.props.view) {
+    if (prevProps.editable !== this.props.editable) {
       if (this.props.editable) {
-        if (this.state.markerLayer !== null) {
+        if (this.state.markerLayer) {
           this.map.removeLayer(this.state.markerLayer);
         }
-        this.map.setView(
-          new View({
-            projection: "EPSG:3857",
-            center: [this.props.view.longitude, this.props.view.latitude],
-            zoom: this.props.zoom,
-          })
-        );
-        const style = new Style({
-          image: new Icon({
-            src: "./icons/house.png",
-            scale: 200 / 1024,
-            anchor: [0.5, 0.75],
-          }),
-        });
         const markerLayer = new VectorLayer({
           source: new VectorSource({
             features: [
@@ -192,7 +172,13 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
               }),
             ],
           }),
-          style: style,
+          style: new Style({
+            image: new Icon({
+              src: "./icons/house.png",
+              scale: 200 / 1024,
+              anchor: [0.5, 0.75],
+            }),
+          }),
         });
         this.setState({ markerLayer: markerLayer });
         this.map.addLayer(markerLayer);
@@ -213,6 +199,9 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
         };
         this.map.on("singleclick", onMapClick);
       }
+    }
+
+    if (prevProps.view !== this.props.view) {
       this.map.setView(
         new View({
           projection: "EPSG:3857",
@@ -229,10 +218,6 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
           zoom: this.props.zoom,
         })
       );
-    }
-
-    if (prevProps.properties !== this.props.properties) {
-      this.setState({ properties: this.props.properties });
     }
   }
 
@@ -258,10 +243,7 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
                 <HospitalLayer />
                 <PoliceLayer />
                 <PrisonLayer />
-                <PropertiesLayerWithContext
-                  editable={this.props.editable}
-                  properties={this.state.properties}
-                />
+                <PropertiesLayerWithContext editable={this.props.editable} />
                 <IndustrialAreaLayers />
               </>
             )}
