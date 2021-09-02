@@ -8,15 +8,12 @@ import styles from "./ListingPage.module.scss";
 import { useEffect, useMemo, useState } from "react";
 import {
   PropertyPreviewDTO,
-  useGetFilteredProperties,
   useGetStylesUsingGET,
   useGetTypesUsingGET,
 } from "../../api";
 import { Switch, useLocation } from "react-router-dom";
 import QueryString from "query-string";
 import { Loading } from "../../components/common/loading/Loading";
-import { convertCoordinates } from "../../components/Map/utils";
-import { selectSearchBar } from "../../store/slices/session";
 import { useDispatch } from "react-redux";
 
 const checkNotUndefined = (value: any) => {
@@ -26,11 +23,13 @@ const checkNotUndefined = (value: any) => {
 export const ListingPage = () => {
   const location = useLocation();
 
-  const search = useAppSelector(selectSearchBar);
+  const [zoom, setZoom] = useState(useAppSelector(selectZoom));
+  const [view, setView] = useState(useAppSelector(selectView));
+  const [bbox, setBbox] = useState([0]);
+  const [load, setLoad] = useState(true);
+  const [rightSideData, setRightSideData] = useState<PropertyPreviewDTO[]>();
 
   const dispatch = useDispatch();
-
-  const [init, setInit] = useState(true);
 
   const query = useMemo(
     () => QueryString.parse(location.search) as any,
@@ -40,134 +39,92 @@ export const ListingPage = () => {
   const { data: houseStyles } = useGetStylesUsingGET();
   const { data: houseTypes } = useGetTypesUsingGET();
 
-  const { data, isLoading, isError } = useGetFilteredProperties({
-    params: { page: 0 },
-    data: {
-      condition: checkNotUndefined(query.condition),
-      typeProperty: checkNotUndefined(query.typeProperty),
-      minPrice: parseFloat(checkNotUndefined(query.minPrice)),
-      maxPrice: parseFloat(checkNotUndefined(query.maxPrice)),
-      style: checkNotUndefined(query.style),
-      minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
-      minAmountRoom: checkNotUndefined(query.minAmountRoom),
-      minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
-      maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
-    },
-  });
-
-  const buildDataset = async (data: PropertyPreviewDTO[]) => {
-    const response = await fetch(
-      "http://localhost:3000/public/property/viewBox2?b1=" +
-        bbox[1] +
-        "&b2=" +
+  const buildDataset = async () => {
+    setLoad(true);
+    const mapData = await fetch(
+      "http://localhost:3000/public/property/preview/by-filter?b1=" +
         bbox[0] +
+        "&b2=" +
+        bbox[1] +
         "&b3=" +
-        bbox[3] +
+        bbox[2] +
         "&b4=" +
-        bbox[2]
+        bbox[3],
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          condition: checkNotUndefined(query.condition),
+          typeProperty: checkNotUndefined(query.typeProperty),
+          minPrice: parseFloat(checkNotUndefined(query.minPrice)),
+          maxPrice: parseFloat(checkNotUndefined(query.maxPrice)),
+          style: checkNotUndefined(query.style),
+          minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
+          minAmountRoom: checkNotUndefined(query.minAmountRoom),
+          minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
+          maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
+        }),
+      }
     );
-    const propsInViewBox = await response.json();
-    if (propsInViewBox) {
-      if (data) {
-        if (propsInViewBox.length > 0) {
-          let obj: PropertyPreviewDTO[] = [];
-          data.map((house) => {
-            let matched = propsInViewBox.filter(
-              (h: PropertyPreviewDTO) => house.id === h.id
-            );
-            if (matched.length) {
-              obj?.push(matched[0]);
-            }
-          });
-          setFinalData(obj);
-          setLoad(false);
-        } else {
-          setFinalData([]);
-        }
+
+    const response2 = await mapData.json();
+    if (response2) {
+      if (response2.content?.length > 0) {
+        setRightSideData(response2.content);
+      } else {
+        setRightSideData([]);
       }
+      setLoad(false);
     }
   };
 
-  const [zoom, setZoom] = useState(useAppSelector(selectZoom));
-  const [view, setView] = useState(useAppSelector(selectView));
-  const [bbox, setBbox] = useState([0]);
-  const [load, setLoad] = useState(true);
-  const [finalData, setFinalData] = useState<PropertyPreviewDTO[]>();
-
-  useEffect(() => {
+  const setter1 = (number: number) => {
+    setZoom(number);
     dispatch(actions.map.setZoom(zoom));
-  }, [zoom]);
-  useEffect(() => {
-    dispatch(actions.map.setView(view));
-  }, [view]);
+  };
 
-  useEffect(() => {
-    if (!isLoading && data && data.content) {
-      buildDataset(data.content);
-    }
-  }, [bbox]);
-
-  const handleSearch = async (input: string) => {
-    if (search !== "") {
-      input = search;
-    }
-    if (input !== "") {
-      //reverse query, set zoom on field.
-      const response = await fetch(
-        "https://apis.datos.gob.ar/georef/api/municipios?provincia=06&campos=id,nombre,centroide&nombre=" +
-          input,
-        {
-          method: "GET",
-        }
-      );
-
-      const res = await response.json();
-      if (res) {
-        if (res.municipios) {
-          const cord = convertCoordinates(
-            res.municipios[0].centroide.lon,
-            res.municipios[0].centroide.lat
-          );
-          setView({ latitude: cord[1], longitude: cord[0] });
-          setZoom(13);
-        }
-      }
-    }
+  const setter2 = (arg0: { longitude: number; latitude: number }) => {
+    setView({ longitude: arg0.longitude, latitude: arg0.latitude });
+    dispatch(
+      actions.map.setView({
+        longitude: arg0.longitude,
+        latitude: arg0.latitude,
+      })
+    );
   };
 
   useEffect(() => {
-    if (init) {
-      handleSearch(search);
-    }
-    setInit(true);
-  }, [search]);
+    buildDataset();
+  }, [bbox, query]);
 
   return (
     <div>
       <ListingFilters
         houseStyles={houseStyles ? houseStyles : null}
         houseTypes={houseTypes ? houseTypes : null}
-        handleSearch={handleSearch}
+        setZoom={setter1}
+        setView={setter2}
       />
       <Grid container className={styles.mapAndProperties}>
         <Grid item xl={9} sm={8} className={styles.map}>
           <MapComponent
-            properties={[]}
             zoom={zoom}
             view={view}
             renderLayers={true}
             editable={false}
-            setZoom={setZoom}
-            setView={setView}
+            setZoom={setter1}
+            setView={setter2}
             setBbox={setBbox}
           />
         </Grid>
         <Grid item xl={3} sm={4} className={styles.propertyList}>
           <Switch>
-            {isLoading && <Loading />}
-            {isError && <h2>Hubo un error</h2>}
-            {!load && finalData ? (
-              <PropertyList properties={finalData} />
+            {load && <Loading />}
+            {!load && rightSideData && rightSideData.length > 0 ? (
+              <PropertyList properties={rightSideData} />
             ) : (
               <h2>No hay publicaciones disponibles</h2>
             )}
@@ -183,7 +140,6 @@ type PropertyListProps = {
 };
 
 const PropertyList = ({ properties }: PropertyListProps) => {
-  debugger;
   return (
     <>
       {properties?.map((property) => (

@@ -99,7 +99,9 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                   name="title"
                   label="Titulo"
                   placeholder={"Increible casa en la playa..."}
-                  defaultValue={defaults.title}
+                  defaultValue={
+                    propertyInfo.title ? propertyInfo.title : defaults.title
+                  }
                 />
               </Col>
             </Form.Row>
@@ -110,7 +112,11 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                     <BasicInfoTextInput
                       name="price"
                       label="Precio"
-                      defaultValue={defaults.price?.toString()}
+                      defaultValue={
+                        propertyInfo.price
+                          ? propertyInfo.price.toString()
+                          : defaults.price?.toString()
+                      }
                       frontSymbol="$"
                     />
                   </Col>
@@ -118,7 +124,11 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                     <BasicInfoTextInput
                       name="expenses"
                       label="Expensas"
-                      defaultValue={defaults.expenses?.toString()}
+                      defaultValue={
+                        propertyInfo.expenses
+                          ? propertyInfo.expenses.toString()
+                          : defaults.expenses?.toString()
+                      }
                       frontSymbol="$"
                     />
                   </Col>
@@ -147,7 +157,9 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                             actions.editPropertyForm.setPropertyType(label)
                           );
                       }}
-                      defaultValue={defaults.type}
+                      defaultValue={
+                        propertyInfo.type ? propertyInfo.type : defaults.type
+                      }
                     />
                   )}
                 </div>

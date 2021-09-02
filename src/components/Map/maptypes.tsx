@@ -14,7 +14,6 @@ export type TMapProps = {
   renderLayers?: boolean | null;
   additionalStyle?: React.CSSProperties | null;
   additionalLayers?: TileLayer | null;
-  properties?: PropertyPreviewDTO[] | null;
   editable: boolean;
   setZoom: (arg0: number) => void;
   setView: (arg0: MapView) => void;
@@ -25,7 +24,6 @@ export type PropertyState = {
   visible: boolean;
   properties: PropertyPreviewDTO[];
   propsGeom: Feature<Geometry>[];
-  editable: boolean;
 };
 
 export type TMapState = {
@@ -33,7 +31,7 @@ export type TMapState = {
   zoom: number;
   view: MapView;
   markerLayer: BaseLayer | null;
-  properties?: PropertyPreviewDTO[] | null;
+  editable: boolean;
 };
 
 export interface IMapContext {
