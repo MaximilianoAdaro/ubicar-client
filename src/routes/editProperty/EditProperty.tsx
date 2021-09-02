@@ -118,7 +118,7 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     if (property && !isInitialized) {
       dispatch(actions.editPropertyForm.setInitialValues(property));
     }
-  }, [property]);
+  }, [dispatch, isInitialized, property]);
 
   if (!property) return <h4>Error</h4>;
 

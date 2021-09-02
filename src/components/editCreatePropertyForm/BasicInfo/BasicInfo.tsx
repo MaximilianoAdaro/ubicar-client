@@ -76,8 +76,6 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
     },
   });
 
-  // if (!defaults.price) return <Loading />;
-
   return (
     <Container>
       <CustomForm {...customForm}>
@@ -101,7 +99,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                   name="title"
                   label="Titulo"
                   placeholder={"Increible casa en la playa..."}
-                  defaultValue={propertyInfo.title}
+                  defaultValue={defaults.title}
                 />
               </Col>
             </Form.Row>
@@ -112,7 +110,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                     <BasicInfoTextInput
                       name="price"
                       label="Precio"
-                      defaultValue={propertyInfo.price?.toString()}
+                      defaultValue={defaults.price?.toString()}
                       frontSymbol="$"
                     />
                   </Col>
@@ -120,7 +118,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                     <BasicInfoTextInput
                       name="expenses"
                       label="Expensas"
-                      defaultValue={propertyInfo.expenses?.toString()}
+                      defaultValue={defaults.expenses?.toString()}
                       frontSymbol="$"
                     />
                   </Col>
@@ -149,7 +147,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                             actions.editPropertyForm.setPropertyType(label)
                           );
                       }}
-                      defaultValue={propertyInfo.type}
+                      defaultValue={defaults.type}
                     />
                   )}
                 </div>
