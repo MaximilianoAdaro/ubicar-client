@@ -49,6 +49,7 @@ const getApiRequest = (
 
 export const AddressRevamp = (address: AddressDTO) => {
   const [zoom, setZoom] = useState(10);
+  const [bbox, setBbox] = useState([0]);
   const [view, setView] = useState<MapView>({
     longitude: -6506056.858887733,
     latitude: -4114291.375798843,
@@ -397,9 +398,13 @@ export const AddressRevamp = (address: AddressDTO) => {
             <MapComponent
               additionalStyle={{ height: "500px", width: "100%" }}
               renderLayers={false}
+              editable={true}
               zoom={zoom}
               view={view}
               handleChangeClick={handleChangeClick}
+              setView={setView}
+              setZoom={setZoom}
+              setBbox={setBbox}
             />
           </Grid>
         </Grid>

@@ -131,6 +131,7 @@ export interface CreatePropertyDTO {
   environments?: number;
   expenses?: number;
   fullBaths?: number;
+  id?: string;
   levels?: number;
   links: string[];
   materials: string[];
@@ -151,6 +152,16 @@ export interface GoogleLoginUserDTO {
   email: string;
   name: string;
 }
+
+export interface Image {
+  fileData: string;
+  fileName?: string;
+  fileType?: string;
+  id: string;
+}
+
+// tslint:disable-next-line:no-empty-interface
+export interface InputStream {}
 
 export interface LogInUserDTO {
   email: string;
@@ -429,6 +440,7 @@ export interface Property {
   expenses?: number;
   fullBaths?: number;
   id: string;
+  images: Image[];
   levels?: number;
   likes: User[];
   links: string[];
@@ -494,7 +506,7 @@ export const PropertyDTOType = {
 export interface PropertyDTO {
   address?: AddressDTO;
   amenities: Amenity[];
-  comments?: string;
+  comments: string;
   condition: PropertyDTOCondition;
   constructionDate?: number;
   contacts: ContactDto[];
@@ -503,6 +515,7 @@ export interface PropertyDTO {
   expenses?: number;
   fullBaths?: number;
   id: string;
+  images: string[];
   levels?: number;
   liked: boolean;
   links: string[];
@@ -635,6 +648,17 @@ export interface PropertyPreviewDTO {
   title: string;
   toilets?: number;
   type: PropertyPreviewDTOType;
+}
+
+export interface Resource {
+  description?: string;
+  file?: Blob;
+  filename?: string;
+  inputStream?: InputStream;
+  open?: boolean;
+  readable?: boolean;
+  uri?: string;
+  url?: string;
 }
 
 export interface RoleDTO {
@@ -793,6 +817,15 @@ export interface PageStateDTO {
 }
 
 export type CreatePropertyDTOBody = CreatePropertyDTO;
+
+export type CreatePropertyWithImagesUsingPOSTBody = {
+  images?: unknown[];
+};
+
+export type EditPropertyWithImagesUsingPUTBody = {
+  imagesToDelete?: string[];
+  images?: unknown[];
+};
 
 export type GetCitiesUsingGETParams = {
   name?: string;

@@ -7,5 +7,10 @@ export type TVectorLayerProps = {};
 export type TVectorLayerComponentProps = TVectorLayerProps & {
   map: Map;
   features?: Feature[];
+};
+
+export type PropertyProps = TVectorLayerProps & {
+  map: Map;
+  editable: boolean;
   properties?: PropertyPreviewDTO[] | null;
 };

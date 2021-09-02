@@ -10,7 +10,7 @@ import { urls } from "../../../constants";
 import { useHistory } from "react-router-dom";
 import { useCreatePropertyUsingPOST } from "../../../api";
 import { toast } from "react-toastify";
-import { createRequestData } from "../Confirmation/ConfirmationCreateProperty";
+import { createRequestData } from "../Confirmation/confirmationUtils";
 
 interface StepButtonsProps {
   type?: "submit" | "button";
@@ -72,14 +72,16 @@ export const StepButtons = ({
         await mutateAsync({
           data: createRequestData(createPropertyState, step),
         });
-        console.log(createPropertyState);
         dispatch(actions.editPropertyForm.reset());
         history.push(urls.home);
       } catch (e) {
         throw Error;
       }
     };
-    if (partialSave) fun();
+    if (partialSave) {
+      fun();
+      setPartialSave(false);
+    }
   }, [createPropertyState, dispatch, history, mutateAsync, partialSave, step]);
 
   const handleSend = async () => {

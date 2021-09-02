@@ -9,13 +9,13 @@ import {
 } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { useQueryClient } from "react-query";
 import {
-  CreatePropertyDTO,
   getGetPropertyUsingGETQueryKey,
   useEditPropertyUsingPUT,
+  useGetPropertyDto,
 } from "../../../api";
 import { toast } from "react-toastify";
 import { ConfirmationHTML } from "./ConfirmationHTML";
-import { createRequestData } from "./ConfirmationCreateProperty";
+import { createRequestData } from "./confirmationUtils";
 
 type Id = {
   id: string;
@@ -55,6 +55,10 @@ export const ConfirmationEditProperty = ({ id }: Id) => {
   const createPropertyState = useAppSelector(selectCreatePropertyState);
   const step = useAppSelector(selectCurrentStep).valueOf();
 
+  const { data: property, isLoading: propertyLoading } = useGetPropertyDto(
+    createRequestData(createPropertyState, step)
+  );
+
   const handleSend = async () => {
     dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
     try {
@@ -77,6 +81,7 @@ export const ConfirmationEditProperty = ({ id }: Id) => {
     <ConfirmationHTML
       handleSend={handleSend}
       handlePrevious={handlePreviousButton}
+      property={property}
     />
   );
 };
