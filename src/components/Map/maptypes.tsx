@@ -18,12 +18,14 @@ export type TMapProps = {
   setZoom: (arg0: number) => void;
   setView: (arg0: MapView) => void;
   setBbox: (arg0: number[]) => void;
+  body: string;
 };
 
 export type PropertyState = {
   visible: boolean;
   properties: PropertyPreviewDTO[];
   propsGeom: Feature<Geometry>[];
+  xhr: XMLHttpRequest;
 };
 
 export type TMapState = {

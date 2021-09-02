@@ -10,4 +10,5 @@ export type TVectorLayerComponentProps = TVectorLayerProps & {
 
 export type PropertyProps = TVectorLayerProps & {
   map: Map;
+  body: string;
 };
