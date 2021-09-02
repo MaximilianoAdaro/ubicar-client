@@ -52,15 +52,13 @@ export const AddressRevamp = (address: AddressDTO) => {
 
   let coord = [-6506056.858887733, -4114291.375798843];
   if (address.coordinates.long !== -6506056.858887733) {
-    console.log(address.coordinates);
     coord = convertCoordinates(
       address.coordinates.long,
       address.coordinates.lat
     );
   }
-  console.log(coord);
 
-  const [zoom, setZoom] = useState(10);
+  const [zoom, setZoom] = useState(13);
   const [view, setView] = useState<MapView>({
     longitude: coord[0],
     latitude: coord[1],
@@ -74,8 +72,8 @@ export const AddressRevamp = (address: AddressDTO) => {
   const [editable, setEditable] = useState(address.stateId !== ""); //Si existe es true, sino es false.
   const dispatch = useAppDispatch();
 
-  console.log(editable);
   const handleChangeClick = (lat: number, lon: number) => {
+    setEditable(true);
     if (!load2) {
       ////Nos devuelve en 3857 lo tenemos que convertir 4326
       setLoad2(true);
@@ -371,7 +369,6 @@ export const AddressRevamp = (address: AddressDTO) => {
               <TextField
                 fullWidth
                 color="secondary"
-                // value={data.street ? data.street : ""}
                 variant="outlined"
                 value={data.street}
                 autoComplete={"chrome-off"}

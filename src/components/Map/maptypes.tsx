@@ -24,7 +24,6 @@ export type PropertyState = {
   visible: boolean;
   properties: PropertyPreviewDTO[];
   propsGeom: Feature<Geometry>[];
-  editable: boolean;
 };
 
 export type TMapState = {
@@ -32,7 +31,7 @@ export type TMapState = {
   zoom: number;
   view: MapView;
   markerLayer: BaseLayer | null;
-  properties?: PropertyPreviewDTO[] | null;
+  editable: boolean;
 };
 
 export interface IMapContext {

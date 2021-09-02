@@ -10,5 +10,4 @@ export type TVectorLayerComponentProps = TVectorLayerProps & {
 
 export type PropertyProps = TVectorLayerProps & {
   map: Map;
-  editable: boolean;
 };

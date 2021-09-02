@@ -14,12 +14,10 @@ import GeoJSON from "ol/format/GeoJSON";
 class PropertiesLayer extends React.PureComponent<PropertyProps> {
   layer: VectorLayer;
   source: VectorSource;
-  editable: boolean;
   state: PropertyState = {
     visible: false,
     properties: [],
     propsGeom: [],
-    editable: false,
   };
 
   constructor(props: PropertyProps) {
@@ -88,7 +86,7 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
 
     const style = new Style({
       image: new Icon({
-        src: "./icons/house.png",
+        src: "https://static.thenounproject.com/png/1661278-200.png",
         scale: 200 / 1024,
         anchor: [0.5, 0.75],
       }),
@@ -118,14 +116,12 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
   }
 }
 
-export const PropertiesLayerWithContext = (props: { editable: boolean }) => {
+export const PropertiesLayerWithContext = () => {
   return (
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          return (
-            <PropertiesLayer map={mapContext.map} editable={props.editable} />
-          );
+          return <PropertiesLayer map={mapContext.map} />;
         }
       }}
     </MapContext.Consumer>
