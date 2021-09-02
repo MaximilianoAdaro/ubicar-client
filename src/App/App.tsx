@@ -145,68 +145,68 @@ const WorkInProgress = () => {
 
   return (
     <div className={styles.app}>
-      {user && (
-        <div
-          style={{
-            marginBottom: 20,
-          }}
-        >
-          <h4>Bienvenido {user.userName}</h4>
-          <div style={{ margin: "auto" }}>
-            <Autocomplete
-              id="asyncState"
-              style={{ width: "500px" }}
-              open={open}
-              onChange={(e, value) => {
-                if (value) {
-                  let coords = convertCoordinates(
-                    value.centroid.long,
-                    value.centroid.lat
-                  );
-                  handleChangeName(handleOptionLabel(value));
-                  handleChangeView(coords[0], coords[1]);
-                  handleOption(value);
-                }
-              }}
-              onOpen={() => {
-                setOpen(true);
-              }}
-              onClose={() => {
-                setOpen(false);
-              }}
-              getOptionSelected={(option, value) => option.name === value.name}
-              getOptionLabel={(option) => handleOptionLabel(option)}
-              options={options}
-              loading={loading}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  fullWidth
-                  variant="outlined"
-                  color={"secondary"}
-                  onChange={(ev) => {
-                    // dont fire API if the user delete or not entered anything
-                    if (ev.target.value !== "" || ev.target.value !== null) {
-                      onChangeHandle(ev.target.value);
-                    }
-                  }}
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <React.Fragment>
-                        {loading ? (
-                          <CircularProgress color="inherit" size={20} />
-                        ) : null}
-                        {params.InputProps.endAdornment}
-                      </React.Fragment>
-                    ),
-                  }}
-                />
-              )}
-            />
-          </div>
+      <div
+        style={{
+          marginBottom: 20,
+        }}
+      >
+        {user && <h4>Bienvenido {user.userName}</h4>}
+
+        <div style={{ margin: "auto" }}>
+          <Autocomplete
+            id="asyncState"
+            style={{ width: "500px" }}
+            open={open}
+            onChange={(e, value) => {
+              if (value) {
+                let coords = convertCoordinates(
+                  value.centroid.long,
+                  value.centroid.lat
+                );
+                handleChangeName(handleOptionLabel(value));
+                handleChangeView(coords[0], coords[1]);
+                handleOption(value);
+              }
+            }}
+            onOpen={() => {
+              setOpen(true);
+            }}
+            onClose={() => {
+              setOpen(false);
+            }}
+            getOptionSelected={(option, value) => option.name === value.name}
+            getOptionLabel={(option) => handleOptionLabel(option)}
+            options={options}
+            loading={loading}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                fullWidth
+                label={"Introduzca una dirección!"}
+                variant="outlined"
+                color={"secondary"}
+                onChange={(ev) => {
+                  // dont fire API if the user delete or not entered anything
+                  if (ev.target.value !== "" || ev.target.value !== null) {
+                    onChangeHandle(ev.target.value);
+                  }
+                }}
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <React.Fragment>
+                      {loading ? (
+                        <CircularProgress color="inherit" size={20} />
+                      ) : null}
+                      {params.InputProps.endAdornment}
+                    </React.Fragment>
+                  ),
+                }}
+              />
+            )}
+          />
         </div>
-      )}
+      </div>
     </div>
   );
 };
