@@ -131,6 +131,7 @@ export interface CreatePropertyDTO {
   environments?: number;
   expenses?: number;
   fullBaths?: number;
+  id?: string;
   levels?: number;
   links: string[];
   materials: string[];

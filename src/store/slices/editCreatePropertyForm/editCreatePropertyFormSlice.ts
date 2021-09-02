@@ -8,6 +8,7 @@ import { AddressDTO, PropertyDTO } from "../../../api";
 
 // Define a type for the slice state
 export interface EditPropertyState {
+  id: string;
   isInitialized: boolean;
   operationType: string;
   style: string | undefined;
@@ -54,6 +55,7 @@ interface Contact {
 
 // Define the initial state using that type
 const initialState: EditPropertyState = {
+  id: "",
   isInitialized: false,
   operationType: "SALE",
   style: undefined,
@@ -113,6 +115,7 @@ export const editCreatePropertyFormSlice = createSlice({
       state.currentStep = action.payload;
     },
     setInitialValues: (state, action: PayloadAction<PropertyDTO>) => {
+      state.id = action.payload.id;
       state.operationType = action.payload.condition;
       state.basicInfo.title = action.payload.title;
       state.basicInfo.price = action.payload.price;
@@ -153,6 +156,9 @@ export const editCreatePropertyFormSlice = createSlice({
       state.contacts = action.payload.contacts;
       // state.images = action.payload.images;
       state.isInitialized = true;
+    },
+    setId: (state, action: PayloadAction<string>) => {
+      state.id = action.payload;
     },
     setStyle: (state, action: PayloadAction<string>) => {
       state.style = action.payload;
@@ -250,6 +256,8 @@ export const selectCurrentStep = (state: RootState) =>
 
 export const selectYoutubeLinks = (state: RootState) =>
   state.editPropertyForm.youtubeLinks;
+
+export const selectPropertyId = (state: RootState) => state.editPropertyForm.id;
 
 export const selectAmenities = (state: RootState) =>
   state.editPropertyForm.amenities;

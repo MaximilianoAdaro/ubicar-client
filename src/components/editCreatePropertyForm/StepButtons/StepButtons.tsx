@@ -5,6 +5,7 @@ import {
   EditPropertyState,
   selectCreatePropertyState,
   selectCurrentStep,
+  selectPropertyId,
 } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { urls } from "../../../constants";
@@ -25,6 +26,7 @@ const createRequestData = (
   data: EditPropertyState,
   step: number
 ): CreatePropertyDTO => ({
+  id: data.id,
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,
