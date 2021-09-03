@@ -71,6 +71,7 @@ export const ConfirmationEditProperty = ({ id }: Id) => {
     } catch (e) {
       throw Error;
     }
+    dispatch(actions.editPropertyForm.reset());
   };
 
   const handlePreviousButton = () => {
