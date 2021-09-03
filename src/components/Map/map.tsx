@@ -244,6 +244,11 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
         this.map.on("singleclick", onMapClick);
       }
     }
+    if (prevProps.view !== this.props.view) {
+      this.map
+        .getView()
+        .setCenter([this.props.view.longitude, this.props.view.latitude]);
+    }
   }
 
   render() {
