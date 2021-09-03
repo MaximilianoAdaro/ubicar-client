@@ -3,9 +3,6 @@ import { MapView } from "../../store/slices/map/mapSlice";
 import React from "react";
 import TileLayer from "ol/layer/Tile";
 import BaseLayer from "ol/layer/Base";
-import { PropertyPreviewDTO } from "../../api";
-import { Feature } from "ol";
-import { Geometry } from "ol/geom";
 
 export type TMapProps = {
   handleChangeClick?: (lat: number, lon: number) => void | null;
@@ -23,9 +20,6 @@ export type TMapProps = {
 
 export type PropertyState = {
   visible: boolean;
-  properties: PropertyPreviewDTO[];
-  propsGeom: Feature<Geometry>[];
-  xhr: XMLHttpRequest;
 };
 
 export type TMapState = {

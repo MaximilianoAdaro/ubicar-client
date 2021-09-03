@@ -15,10 +15,7 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
   layer: VectorLayer;
   source: VectorSource;
   state: PropertyState = {
-    xhr: new XMLHttpRequest(),
     visible: false,
-    properties: [],
-    propsGeom: [],
   };
 
   constructor(props: PropertyProps) {
@@ -79,7 +76,6 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
           }
         };
         xhr.setRequestHeader("Content-Type", "application/json");
-        this.setState({ ...this.state, xhr: xhr });
         xhr.send(this.props.body);
       },
       strategy: bbox,
@@ -109,22 +105,14 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
   }
 
   componentDidUpdate(prevProps: PropertyProps, prevState: Readonly<any>) {
-    this.props.map.removeLayer(this.layer); //Refresh?
-    this.props.map.addLayer(this.layer);
     if (prevProps.body !== this.props.body) {
-      const bbox = getBounds(this.props.map);
-      let url =
-        "http://localhost:3000/public/property/viewBox?b1=" +
-        bbox[0] +
-        "&b2=" +
-        bbox[1] +
-        "&b3=" +
-        bbox[2] +
-        "&b4=" +
-        bbox[3];
-      this.state.xhr.open("POST", url);
-      this.state.xhr.setRequestHeader("Content-Type", "application/json");
-      this.state.xhr.send(this.props.body);
+      this.layer
+        .getSource()
+        .getFeatures()
+        .forEach((feature) => {
+          this.layer.getSource().removeFeature(feature); //remove all the features
+        });
+      this.layer.getSource().refresh(); //call the loader fn again.
     }
   }
 
