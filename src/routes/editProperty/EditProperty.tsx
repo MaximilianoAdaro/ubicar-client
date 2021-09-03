@@ -108,7 +108,6 @@ interface CurrentStepProps {
 const CurrentStep = ({ currentStep }: CurrentStepProps) => {
   const dispatch = useAppDispatch();
   const isInitialized = useAppSelector(selectIsInitialized);
-  const currentStep2 = useAppSelector(selectCurrentStep);
   const { id } = useParams<{ id: string }>();
   const { data: property } = useGetPropertyUsingGET(id, {
     query: {
@@ -117,10 +116,13 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
   });
 
   useEffect(() => {
-    if (property && !isInitialized) {
+    if (property) {
       dispatch(actions.editPropertyForm.setInitialValues(property));
-      dispatch(actions.editPropertyForm.setStep(property.step));
-      console.log("selectorstep", currentStep2);
+      if (property.step === 7) {
+        dispatch(actions.editPropertyForm.setStep(1));
+      } else {
+        dispatch(actions.editPropertyForm.setStep(property.step));
+      }
       console.log("property.step", property.step);
     }
   }, [dispatch, isInitialized, property]);
