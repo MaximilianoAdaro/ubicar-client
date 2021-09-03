@@ -12,6 +12,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
   from: string;
+  state: string;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -38,11 +39,6 @@ export function PropertyList(props: ListingHouseProps) {
   }`;
   const baths = pluralize("baño", house.fullBaths);
   const toilets = pluralize("toilet", house.toilets);
-  const specificationsTooltip = `${house.squareFoot} m²
-   ${house.coveredSquareFoot} m² cubiertos 
-   ${house.rooms} habitaciones
-   ${house.fullBaths} ${baths}
-   ${house.toilets} ${toilets}`;
   return (
     <div>
       <Grid className={styles.myPropertyOuterDiv}>
@@ -100,12 +96,16 @@ export function PropertyList(props: ListingHouseProps) {
           </Grid>
           <Grid className={styles.editAndViewPropertyButtons}>
             <Grid xs>
-              <Tooltip title={"Ver propiedad"}>
-                <VisibilityIcon
-                  onClick={() => history.push(urls.viewProperty.byId(house.id))}
-                  className={styles.propertyListIcons}
-                />
-              </Tooltip>
+              {props.state !== "notfinished" && (
+                <Tooltip title={"Ver propiedad"}>
+                  <VisibilityIcon
+                    onClick={() =>
+                      history.push(urls.viewProperty.byId(house.id))
+                    }
+                    className={styles.propertyListIcons}
+                  />
+                </Tooltip>
+              )}
             </Grid>
             <Grid xs>
               {props.from === "properties" && (

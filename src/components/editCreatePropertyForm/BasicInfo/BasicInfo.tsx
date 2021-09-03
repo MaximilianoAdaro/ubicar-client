@@ -76,13 +76,10 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
     },
   });
 
-  // if (!defaults.price) return <Loading />;
-
   const canSave = async () => {
     const isValidToSave = await customForm.methods.trigger();
     if (isValidToSave) {
       const data = customForm.methods.getValues();
-      // console.log("data",data)
       dispatch(actions.editPropertyForm.setBasicInfo(data));
     }
     return isValidToSave;
@@ -111,7 +108,9 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                   name="title"
                   label="Titulo"
                   placeholder={"Increible casa en la playa..."}
-                  defaultValue={propertyInfo.title}
+                  defaultValue={
+                    propertyInfo.title ? propertyInfo.title : defaults.title
+                  }
                 />
               </Col>
             </Form.Row>
@@ -122,7 +121,11 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                     <BasicInfoTextInput
                       name="price"
                       label="Precio"
-                      defaultValue={propertyInfo.price?.toString()}
+                      defaultValue={
+                        propertyInfo.price
+                          ? propertyInfo.price.toString()
+                          : defaults.price?.toString()
+                      }
                       frontSymbol="$"
                     />
                   </Col>
@@ -130,7 +133,11 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                     <BasicInfoTextInput
                       name="expenses"
                       label="Expensas"
-                      defaultValue={propertyInfo.expenses?.toString()}
+                      defaultValue={
+                        propertyInfo.expenses
+                          ? propertyInfo.expenses.toString()
+                          : defaults.expenses?.toString()
+                      }
                       frontSymbol="$"
                     />
                   </Col>
@@ -159,7 +166,9 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                             actions.editPropertyForm.setPropertyType(label)
                           );
                       }}
-                      defaultValue={propertyInfo.type}
+                      defaultValue={
+                        propertyInfo.type ? propertyInfo.type : defaults.type
+                      }
                     />
                   )}
                 </div>

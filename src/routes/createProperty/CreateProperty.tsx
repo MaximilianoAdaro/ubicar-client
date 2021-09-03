@@ -116,7 +116,7 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     case Step.Address:
       return (
         <AddressRevamp
-          coordinates={{ lat: 0, long: 0 }}
+          coordinates={{ lat: -4114291.375798843, long: -6506056.858887733 }}
           number={0}
           city={""}
           state={""}

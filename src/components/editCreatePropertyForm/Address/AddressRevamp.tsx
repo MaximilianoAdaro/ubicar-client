@@ -12,6 +12,7 @@ import { transformFrom3857to4326 } from "../../Map/utils";
 import { toast } from "react-toastify";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { AddressDTO } from "../../../api";
+import { convertCoordinates } from "../../Map/utils";
 
 export type getApiRequestParams = {
   direccion: string;
@@ -20,18 +21,6 @@ export type getApiRequestParams = {
   localidad: string;
   max: number;
 };
-export type CoordinatesDTO = {
-  lat?: number;
-  long?: number;
-};
-
-// export type AddressFormData = {
-//   cityId: string;
-//   stateId: string;
-//   street: string;
-//   number: number;
-//   coordinates: CoordinatesDTO;
-// };
 
 const getApiRequest = (
   url: string,
@@ -48,13 +37,6 @@ const getApiRequest = (
 };
 
 export const AddressRevamp = (address: AddressDTO) => {
-  const [zoom, setZoom] = useState(10);
-  const [bbox, setBbox] = useState([0]);
-  const [view, setView] = useState<MapView>({
-    longitude: -6506056.858887733,
-    latitude: -4114291.375798843,
-  });
-  const mounted = useRef(false);
   const [data, setData] = useState({
     stateId: address.stateId,
     state: address.state,
@@ -68,22 +50,34 @@ export const AddressRevamp = (address: AddressDTO) => {
     },
   });
 
+  let coord = [-6506056.858887733, -4114291.375798843];
+  if (address.coordinates.long !== -6506056.858887733) {
+    coord = convertCoordinates(
+      address.coordinates.long,
+      address.coordinates.lat
+    );
+  }
+
+  const [zoom, setZoom] = useState(13);
+  const [view, setView] = useState<MapView>({
+    longitude: coord[0],
+    latitude: coord[1],
+  });
+
+  const mounted = useRef(false);
+
   const [load, setLoad] = useState(false);
   const [load2, setLoad2] = useState(false);
   const [error, setError] = useState(true);
+  const [editable, setEditable] = useState(address.stateId !== ""); //Si existe es true, sino es false.
   const dispatch = useAppDispatch();
 
-  const convertCoordinates = (lon: number, lat: number) => {
-    let x = (lon * 20037508.34) / 180;
-    let y = Math.log(Math.tan(((90 + lat) * Math.PI) / 360)) / (Math.PI / 180);
-    y = (y * 20037508.34) / 180;
-    return [x, y];
-  };
-
   const handleChangeClick = (lat: number, lon: number) => {
+    setEditable(true);
     if (!load2) {
       ////Nos devuelve en 3857 lo tenemos que convertir 4326
       setLoad2(true);
+
       const coord = transformFrom3857to4326([lon, lat]);
 
       //tenemos que hacer un reverse geocoding para verificar si esta en el mismo municipio que el geocoding original
@@ -147,7 +141,6 @@ export const AddressRevamp = (address: AddressDTO) => {
 
   useEffect(() => {
     if (mounted.current) {
-      console.log(data);
       const params = {
         direccion: data.street + " " + (data.number ?? 0),
         provincia: data.state,
@@ -184,6 +177,7 @@ export const AddressRevamp = (address: AddressDTO) => {
           setView({ longitude: coord[0], latitude: coord[1] });
           setZoom(17);
           setError(false);
+          setEditable(true);
         })
         .catch(() => {});
     } else {
@@ -218,14 +212,14 @@ export const AddressRevamp = (address: AddressDTO) => {
   const [options, setOptions] = useState([{ id: "", name: "" }]);
   const loading = open && options.length === 0;
 
-  const onChangeHandle = async (value: any) => {
+  const onChangeHandle = async (value: string) => {
     const response = await fetch(
       "http://localhost:3000/public/states" + "?name=" + value
     );
 
-    const countries = await response.json();
-    if (countries) {
-      setOptions(countries.content);
+    const provincias = await response.json();
+    if (provincias) {
+      setOptions(provincias.content);
     }
   };
 
@@ -276,6 +270,11 @@ export const AddressRevamp = (address: AddressDTO) => {
               <Autocomplete
                 id="asyncState"
                 open={open}
+                defaultValue={
+                  data.state && data.stateId
+                    ? { id: data.stateId, name: data.state }
+                    : null
+                }
                 onChange={(e, value) => {
                   if (value) {
                     handleChange1(value);
@@ -325,6 +324,11 @@ export const AddressRevamp = (address: AddressDTO) => {
               <Autocomplete
                 id="asyncCity"
                 open={open2}
+                defaultValue={
+                  data.city && data.cityId
+                    ? { id: data.cityId, name: data.city }
+                    : null
+                }
                 onChange={(e, value) => {
                   if (value) {
                     handleChange2(value);
@@ -374,8 +378,8 @@ export const AddressRevamp = (address: AddressDTO) => {
               <TextField
                 fullWidth
                 color="secondary"
-                // value={data.street ? data.street : ""}
                 variant="outlined"
+                value={data.street}
                 autoComplete={"chrome-off"}
                 onChange={(e) => setData({ ...data, street: e.target.value })}
               />
@@ -386,6 +390,7 @@ export const AddressRevamp = (address: AddressDTO) => {
                 fullWidth
                 color="secondary"
                 type="number"
+                value={data.number}
                 variant="outlined"
                 onChange={(e) =>
                   setData({ ...data, number: parseInt(e.target.value) })
@@ -407,13 +412,14 @@ export const AddressRevamp = (address: AddressDTO) => {
             <MapComponent
               additionalStyle={{ height: "500px", width: "100%" }}
               renderLayers={false}
-              editable={true}
+              editable={editable}
               zoom={zoom}
               view={view}
               handleChangeClick={handleChangeClick}
               setView={setView}
               setZoom={setZoom}
-              setBbox={setBbox}
+              setBbox={() => {}}
+              body={""}
             />
           </Grid>
         </Grid>

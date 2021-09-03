@@ -2,29 +2,32 @@ import styles from "./ListingFilters.module.scss";
 import React, { useMemo, useCallback, useState } from "react";
 import {
   Button,
+  CircularProgress,
   Grid,
-  InputBase,
   List,
   ListItem,
   Popover,
   TextField,
   withStyles,
 } from "@material-ui/core";
-import { MdSearch as SearchIcon } from "react-icons/md";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import { Dropdown } from "react-bootstrap";
 import { StyleDTO, GetTypesUsingGET200Item } from "../../api";
 import { useHistory, useLocation } from "react-router-dom";
 import QueryString from "query-string";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
-import { selectSearchBar } from "../../store/slices/session";
+import { selectOption } from "../../store/slices/session";
+import { convertCoordinates } from "../Map/utils";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { MapView } from "../../store/slices/map/mapSlice";
 
 const parseIntOrUndefined = (n: string) => (n !== "" ? parseInt(n) : undefined);
 
 type ListingFiltersProp = {
   houseStyles: StyleDTO[] | null;
   houseTypes: GetTypesUsingGET200Item[] | null;
-  handleSearch: (arg0: string) => void;
+  setZoom: (arg0: number) => void;
+  setView: (arg0: MapView) => void;
 };
 
 const StyledButton = withStyles({
@@ -44,7 +47,8 @@ const StyledButton = withStyles({
 export function ListingFilters({
   houseStyles,
   houseTypes,
-  handleSearch,
+  setZoom,
+  setView,
 }: ListingFiltersProp) {
   const [anchorSale, setAnchorSale] = React.useState<HTMLButtonElement | null>(
     null
@@ -92,7 +96,7 @@ export function ListingFilters({
 
   const location = useLocation();
   const history = useHistory();
-  const [search, setSearch] = useState(useAppSelector(selectSearchBar));
+  const search = useAppSelector(selectOption);
   const dispatch = useAppDispatch();
 
   const clearFilters = useCallback(() => {
@@ -118,24 +122,108 @@ export function ListingFilters({
     [location.search]
   );
 
+  const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState([
+    { id: "", name: "", stateName: "", centroid: { lat: 0, long: 0 } },
+  ]);
+  const loading = open && options.length === 0;
+
+  const onChangeHandle = async (value: any) => {
+    const response = await fetch(
+      "http://localhost:3000/public/cities-and-states?name=" + value
+    );
+
+    const citiesAndStates = await response.json();
+    if (citiesAndStates && citiesAndStates.content) {
+      const options = citiesAndStates.content.map((option: any) => {
+        if (option.type === "STATE") {
+          return option.state;
+        } else {
+          return option.city;
+        }
+      });
+      setOptions(options);
+    }
+  };
+
+  const handleChangeView = (longitude: number, latitude: number) => {
+    setView({ longitude: longitude, latitude: latitude });
+    setZoom(12);
+  };
+  const handleChangeName = (name: string) => {
+    dispatch(actions.session.setSearchBar(name));
+  };
+
+  const handleOptionLabel = (option: any) => {
+    if (option.id !== "") {
+      if (option.stateName)
+        return (
+          option.name[0].toUpperCase() +
+          option.name.substr(1).toLowerCase() +
+          ", " +
+          option.stateName
+        );
+      return option.name[0].toUpperCase() + option.name.substr(1).toLowerCase();
+    }
+    return "";
+  };
+
   return (
     <div>
       <Grid container className={styles.OptionsFilters}>
         <Grid className={styles.searchBar}>
           <Grid>
-            <InputBase
-              placeholder="Buscar"
-              inputProps={{ "aria-label": "search" }}
+            <Autocomplete
+              id="asyncState"
+              style={{ width: "500px" }}
+              open={open}
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  dispatch(actions.session.setSearchBar(search));
-                  handleSearch(search);
+              onChange={(e, value) => {
+                if (value) {
+                  let coords = convertCoordinates(
+                    value.centroid.long,
+                    value.centroid.lat
+                  );
+                  handleChangeName(handleOptionLabel(value));
+                  handleChangeView(coords[0], coords[1]);
                 }
               }}
+              onOpen={() => {
+                setOpen(true);
+              }}
+              onClose={() => {
+                setOpen(false);
+              }}
+              getOptionSelected={(option, value) => option.id === value.id}
+              getOptionLabel={(option) => handleOptionLabel(option)}
+              options={options}
+              loading={loading}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  fullWidth
+                  variant="outlined"
+                  color={"secondary"}
+                  onChange={(ev) => {
+                    // dont fire API if the user delete or not entered anything
+                    if (ev.target.value !== "" || ev.target.value !== null) {
+                      onChangeHandle(ev.target.value);
+                    }
+                  }}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <React.Fragment>
+                        {loading ? (
+                          <CircularProgress color="inherit" size={20} />
+                        ) : null}
+                        {params.InputProps.endAdornment}
+                      </React.Fragment>
+                    ),
+                  }}
+                />
+              )}
             />
-            <SearchIcon onClick={() => handleSearch(search)} />
           </Grid>
         </Grid>
         <StyledButton

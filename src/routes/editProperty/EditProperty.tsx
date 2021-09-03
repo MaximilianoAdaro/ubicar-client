@@ -108,6 +108,7 @@ interface CurrentStepProps {
 const CurrentStep = ({ currentStep }: CurrentStepProps) => {
   const dispatch = useAppDispatch();
   const isInitialized = useAppSelector(selectIsInitialized);
+  const currentStep2 = useAppSelector(selectCurrentStep);
   const { id } = useParams<{ id: string }>();
   const { data: property } = useGetPropertyUsingGET(id, {
     query: {
@@ -119,13 +120,15 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     if (property && !isInitialized) {
       dispatch(actions.editPropertyForm.setInitialValues(property));
       dispatch(actions.editPropertyForm.setStep(property.step));
+      console.log("selectorstep", currentStep2);
+      console.log("property.step", property.step);
     }
-  }, [property]);
+  }, [dispatch, isInitialized, property]);
 
   const addressSelected = useAppSelector(selectAddress);
   if (!property) return <h4>Error</h4>;
 
-  console.log("editProperty", property);
+  // console.log("editProperty", property);
   const address = addressSelected;
 
   switch (currentStep) {

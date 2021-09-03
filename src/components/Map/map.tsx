@@ -29,7 +29,6 @@ import VectorSource from "ol/source/Vector";
 import Feature from "ol/Feature";
 import { Point } from "ol/geom";
 import VectorLayer from "ol/layer/Vector";
-import { PropertyPreviewDTO } from "../../api";
 import { Icon, Style } from "ol/style";
 import { MapBrowserEvent } from "ol";
 import { getBounds } from "./utils";
@@ -44,16 +43,14 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
     view: { longitude: -6506056.858887733, latitude: -4114291.375798843 },
     zoom: 20,
     markerLayer: null,
-    properties: null,
+    editable: false,
   };
-  properties: PropertyPreviewDTO[] | null | undefined;
   zoom: number;
   view: MapView;
   renderLayers: boolean | null | undefined;
   additionalStyle: React.CSSProperties | null | undefined;
   additionalLayers: TileLayer | null | undefined;
   map: Map;
-  editable: false;
 
   constructor(props: TMapProps) {
     super(props);
@@ -65,14 +62,12 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
     this.renderLayers = props.renderLayers;
     this.additionalStyle = props.additionalStyle;
     this.additionalLayers = props.additionalLayers;
-    this.properties = props.properties;
+    this.setState({ ...this.state, editable: this.props.editable });
   }
   componentDidMount() {
     if (!this.mapDivRef.current) {
       return;
     }
-
-    this.setState({ properties: this.properties });
 
     const layers = [
       new TileLayer({
@@ -97,24 +92,35 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
       }),
     });
 
-    let currView = this.props.view;
-    let currZoom = this.props.zoom;
-    this.map.on("moveend", () => {
+    this.map.on(["moveend"], () => {
       let newZoom = this.map.getView().getZoom();
-      if (currZoom !== newZoom) {
-        if (newZoom) {
-          console.log("setting new Zoom");
-          this.state.zoom = newZoom;
+      let currZoom = this.state.zoom;
+      const bbox = getBounds(this.map);
+      if (newZoom) {
+        if (currZoom !== newZoom) {
+          this.setState({ ...this.state, zoom: newZoom });
           this.props.setZoom(newZoom);
+          this.props.setBbox(bbox);
         }
       }
+    });
+
+    this.map.on(["moveend", "dblclick"], () => {
       let newView = this.map.getView().getCenter();
+      let currView = this.state.view;
       const bbox = getBounds(this.map);
       if (newView) {
-        console.log("setting new View");
-        this.state.view = { longitude: newView[0], latitude: newView[1] };
-        this.props.setBbox(bbox);
-        this.props.setView({ longitude: newView[0], latitude: newView[1] });
+        if (
+          newView[0] !== currView.longitude ||
+          newView[1] !== currView.latitude
+        ) {
+          this.setState({
+            ...this.state,
+            view: { longitude: newView[0], latitude: newView[1] },
+          });
+          this.props.setView({ longitude: newView[0], latitude: newView[1] });
+          this.props.setBbox(bbox);
+        }
       }
     });
 
@@ -129,6 +135,7 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
 
     const mapContext: IMapContext = { map: this.map };
     this.setState({
+      ...this.state,
       mapContext: mapContext,
     });
 
@@ -141,6 +148,47 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
       reverse: false,
     });
 
+    if (this.props.editable) {
+      if (this.state.markerLayer) {
+        this.map.removeLayer(this.state.markerLayer);
+      }
+      const markerLayer = new VectorLayer({
+        source: new VectorSource({
+          features: [
+            new Feature({
+              geometry: new Point([
+                this.props.view.longitude,
+                this.props.view.latitude,
+              ]),
+              fna: "Tu casa!",
+            }),
+          ],
+        }),
+        style: new Style({
+          image: new Icon({
+            src: "https://static.thenounproject.com/png/1661278-200.png",
+            scale: 200 / 1024,
+            anchor: [0.5, 0.75],
+          }),
+        }),
+      });
+      this.setState({ ...this.state, markerLayer: markerLayer });
+      this.map.addLayer(markerLayer);
+
+      const onMapClick = (event: MapBrowserEvent) => {
+        const featureToAdd = new Feature({
+          geometry: new Point(event.coordinate),
+          fna: "Tu casa!",
+        });
+
+        markerLayer.getSource().clear();
+        markerLayer.getSource().addFeatures([featureToAdd]);
+        // @ts-ignore
+        this.props.handleChangeClick(event.coordinate[1], event.coordinate[0]);
+      };
+      this.map.on("singleclick", onMapClick);
+    }
+
     if (this.renderLayers) {
       this.map.addControl(layerSwitcher);
     }
@@ -151,26 +199,11 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
     prevState: Readonly<TMapState>,
     snapshot?: any
   ) {
-    if (prevProps.view !== this.props.view) {
+    if (prevProps.editable !== this.props.editable) {
       if (this.props.editable) {
-        if (this.state.markerLayer !== null) {
+        if (this.state.markerLayer) {
           this.map.removeLayer(this.state.markerLayer);
         }
-        this.map.setView(
-          new View({
-            projection: "EPSG:3857",
-            center: [this.props.view.longitude, this.props.view.latitude],
-            zoom: this.props.zoom,
-          })
-        );
-        this.setState({ view: this.props.view });
-        const style = new Style({
-          image: new Icon({
-            src: "./icons/house.png",
-            scale: 200 / 1024,
-            anchor: [0.5, 0.75],
-          }),
-        });
         const markerLayer = new VectorLayer({
           source: new VectorSource({
             features: [
@@ -183,9 +216,15 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
               }),
             ],
           }),
-          style: style,
+          style: new Style({
+            image: new Icon({
+              src: "https://static.thenounproject.com/png/1661278-200.png",
+              scale: 200 / 1024,
+              anchor: [0.5, 0.75],
+            }),
+          }),
         });
-        this.setState({ markerLayer: markerLayer });
+        this.setState({ ...this.state, markerLayer: markerLayer });
         this.map.addLayer(markerLayer);
 
         const onMapClick = (event: MapBrowserEvent) => {
@@ -204,27 +243,11 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
         };
         this.map.on("singleclick", onMapClick);
       }
-      this.map.setView(
-        new View({
-          projection: "EPSG:3857",
-          center: [this.props.view.longitude, this.props.view.latitude],
-          zoom: this.props.zoom,
-        })
-      );
     }
-    if (prevProps.zoom !== this.props.zoom) {
-      this.setState({ zoom: this.props.zoom });
-      this.map.setView(
-        new View({
-          projection: "EPSG:3857",
-          center: [this.props.view.longitude, this.props.view.latitude],
-          zoom: this.props.zoom,
-        })
-      );
-    }
-
-    if (prevProps.properties !== this.props.properties) {
-      this.setState({ properties: this.props.properties });
+    if (prevProps.view !== this.props.view) {
+      this.map
+        .getView()
+        .setCenter([this.props.view.longitude, this.props.view.latitude]);
     }
   }
 
@@ -250,10 +273,7 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
                 <HospitalLayer />
                 <PoliceLayer />
                 <PrisonLayer />
-                <PropertiesLayerWithContext
-                  editable={this.props.editable}
-                  properties={this.state.properties}
-                />
+                <PropertiesLayerWithContext body={this.props.body} />
                 <IndustrialAreaLayers />
               </>
             )}
