@@ -68,7 +68,7 @@ export const AddressRevamp = (address: AddressDTO) => {
 
   const [load, setLoad] = useState(false);
   const [load2, setLoad2] = useState(false);
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(address.stateId === ""); //si es igual, ===> error, disable next button. (prop vacia)
   const [editable, setEditable] = useState(address.stateId !== ""); //Si existe es true, sino es false.
   const dispatch = useAppDispatch();
 
