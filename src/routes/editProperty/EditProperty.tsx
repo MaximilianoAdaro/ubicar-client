@@ -2,6 +2,7 @@ import { BasicInfo } from "../../components/editCreatePropertyForm/BasicInfo/Bas
 import { Characteristics } from "../../components/editCreatePropertyForm/Characteristics/Characteristics";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
 import {
+  selectAddress,
   selectCurrentStep,
   Step,
 } from "../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
@@ -121,10 +122,11 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
     }
   }, [property]);
 
+  const addressSelected = useAppSelector(selectAddress);
   if (!property) return <h4>Error</h4>;
 
-  console.log(property);
-  const address = property.address!;
+  console.log("editProperty", property);
+  const address = addressSelected;
 
   switch (currentStep) {
     case Step.BasicInfo:

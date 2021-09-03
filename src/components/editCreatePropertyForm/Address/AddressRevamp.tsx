@@ -63,8 +63,8 @@ export const AddressRevamp = (address: AddressDTO) => {
     street: address.street,
     number: address.number,
     coordinates: {
-      lat: address.coordinates.lat,
-      long: address.coordinates.long,
+      lat: address.coordinates?.lat,
+      long: address.coordinates?.long,
     },
   });
 
@@ -192,13 +192,17 @@ export const AddressRevamp = (address: AddressDTO) => {
   }, [load]);
 
   const handlePreviousButton = async () => {
-    dispatch(actions.editPropertyForm.setAddress(data));
+    if (data) {
+      dispatch(actions.editPropertyForm.setAddress(data));
+    }
     dispatch(actions.editPropertyForm.setStep(Step.BasicInfo));
   };
 
   const handleSubmit = () => {
     if (data.state !== "" && data.street !== "" && data.number !== undefined) {
-      dispatch(actions.editPropertyForm.setAddress(data));
+      if (data) {
+        dispatch(actions.editPropertyForm.setAddress(data));
+      }
       dispatch(actions.editPropertyForm.setStep(Step.Characteristics));
     } else {
       throw Error;
@@ -207,7 +211,7 @@ export const AddressRevamp = (address: AddressDTO) => {
 
   const canSave = async () => {
     dispatch(actions.editPropertyForm.setAddress(data));
-    return true;
+    return data.cityId !== "";
   };
 
   const [open, setOpen] = useState(false);

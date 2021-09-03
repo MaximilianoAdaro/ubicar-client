@@ -72,6 +72,7 @@ export const StepButtons = ({
         await mutateAsync({
           data: createRequestData(createPropertyState, step),
         });
+        console.log("CreatePropState", createPropertyState);
         dispatch(actions.editPropertyForm.reset());
         history.push(urls.home);
       } catch (e) {
@@ -98,7 +99,9 @@ export const StepButtons = ({
     <div className={styles.stepButtonsContainer}>
       <div className={styles.stepButtons}>
         {step !== 7 && (
-          <CustomButton onClick={handleSend}>Guardar cambios</CustomButton>
+          <CustomButton onClick={handleSend} disabled={disabledNext}>
+            Guardar cambios
+          </CustomButton>
         )}
         {showPrevious && (
           <CustomButton onClick={onPrevious}>Anterior</CustomButton>
