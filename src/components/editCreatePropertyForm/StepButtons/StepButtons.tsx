@@ -72,7 +72,6 @@ export const StepButtons = ({
         await mutateAsync({
           data: createRequestData(createPropertyState, step),
         });
-        console.log("CreatePropState", createPropertyState);
         dispatch(actions.editPropertyForm.reset());
         history.push(urls.home);
       } catch (e) {
