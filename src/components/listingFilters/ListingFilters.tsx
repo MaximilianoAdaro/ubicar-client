@@ -353,12 +353,12 @@ export function ListingFilters({
               <DropdownItem
                 key={data.id}
                 onClick={() =>
-                  query.style === data
+                  query.style === data.id
                     ? pushQueryParams({ style: undefined })
                     : pushQueryParams({ style: data.id })
                 }
                 style={
-                  query.style === data ? { background: "antiquewhite" } : {}
+                  query.style === data.id ? { background: "antiquewhite" } : {}
                 }
               >
                 {data.label}
