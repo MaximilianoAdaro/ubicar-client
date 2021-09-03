@@ -76,6 +76,15 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
     },
   });
 
+  const canSave = async () => {
+    const isValidToSave = await customForm.methods.trigger();
+    if (isValidToSave) {
+      const data = customForm.methods.getValues();
+      dispatch(actions.editPropertyForm.setBasicInfo(data));
+    }
+    return isValidToSave;
+  };
+
   return (
     <Container>
       <CustomForm {...customForm}>
@@ -168,7 +177,11 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
           </Col>
         </Form.Row>
         <Form.Row>
-          <StepButtons type={"submit"} showPrevious={false} />
+          <StepButtons
+            type={"submit"}
+            showPrevious={false}
+            canPartialSave={canSave}
+          />
         </Form.Row>
       </CustomForm>
     </Container>

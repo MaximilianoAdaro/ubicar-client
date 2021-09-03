@@ -11,7 +11,7 @@ import {
 import { toast } from "react-toastify";
 import { ConfirmationHTML } from "./ConfirmationHTML";
 import { createRequestData } from "./confirmationUtils";
-import { useGetPropertyDto } from "../../../api/custom/property";
+import { useGetPropertyDto } from "../../../api";
 
 type Id = {
   id: string;
@@ -86,12 +86,12 @@ export const ConfirmationCreateProperty = ({ id }: Id) => {
     } catch (e) {
       throw Error;
     }
+    dispatch(actions.editPropertyForm.reset());
   };
 
   const handlePreviousButton = () => {
     dispatch(actions.editPropertyForm.setStep(Step.Additional));
   };
-
   return (
     <ConfirmationHTML
       handleSend={handleSend}

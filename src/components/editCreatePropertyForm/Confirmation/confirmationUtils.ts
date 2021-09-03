@@ -1,10 +1,11 @@
-import { CreatePropertyDTO, PropertyDTO } from "../../../api";
+import { CreatePropertyDTO } from "../../../api";
 import { EditPropertyState } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 
 export const createRequestData = (
   data: EditPropertyState,
   step: number
 ): CreatePropertyDTO => ({
+  id: data.id,
   title: data.basicInfo.title,
   price: data.basicInfo.price,
   expenses: data.basicInfo.expenses,

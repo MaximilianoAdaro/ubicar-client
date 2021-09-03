@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 import styles from "./Confirmation.module.scss";
 import { StepButtons } from "../StepButtons/StepButtons";
 import { ListingHouse } from "../../listingHouse";
-import { PropertyDTO } from "../../../api/generated/endpoints.schemas";
+import { PropertyDTO } from "../../../api";
 
 type ConfirmationHTMLProps = {
   handleSend: () => void;

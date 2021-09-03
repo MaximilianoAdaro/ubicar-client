@@ -108,6 +108,15 @@ export const Characteristics = () => {
     }
   };
 
+  const canSave = async () => {
+    const isValidToSave = await customForm.methods.trigger();
+    if (isValidToSave) {
+      const data = customForm.methods.getValues();
+      dispatch(actions.editPropertyForm.setCharacteristics(data));
+    }
+    return isValidToSave;
+  };
+
   return (
     <Container>
       <CustomForm {...customForm}>
@@ -237,7 +246,11 @@ export const Characteristics = () => {
             </Form.Row>
           </Col>
         </Form.Row>
-        <StepButtons type={"submit"} onPrevious={handlePreviousButton} />
+        <StepButtons
+          type={"submit"}
+          onPrevious={handlePreviousButton}
+          canPartialSave={canSave}
+        />
       </CustomForm>
     </Container>
   );

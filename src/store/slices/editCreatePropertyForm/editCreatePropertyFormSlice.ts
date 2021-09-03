@@ -120,14 +120,17 @@ export const editCreatePropertyFormSlice = createSlice({
       state.basicInfo.title = action.payload.title;
       state.basicInfo.price = action.payload.price;
       state.basicInfo.expenses = action.payload.expenses;
-      state.style = action.payload.style!.id;
-      state.address.state = action.payload.address!.state;
-      state.address.stateId = action.payload.address!.stateId;
-      state.address.city = action.payload.address!.city;
-      state.address.cityId = action.payload.address!.cityId;
-      state.address.street = action.payload.address!.street;
-      state.address.number = action.payload.address!.number;
-      state.address.coordinates = action.payload.address!.coordinates;
+      state.style = action.payload.style?.id;
+      state.address.state = action.payload.address?.state;
+      state.address.stateId = action.payload.address?.stateId;
+      state.address.city = action.payload.address?.city;
+      state.address.cityId = action.payload.address?.cityId;
+      state.address.street = action.payload.address?.street ?? "";
+      state.address.number = action.payload.address?.number ?? 0;
+      state.address.coordinates = action.payload.address?.coordinates ?? {
+        lat: 0,
+        long: 0,
+      };
       state.characteristics.constructionYear = action.payload.constructionDate;
       state.characteristics.coveredSurface = action.payload.coveredSquareFoot;
       state.characteristics.environments = action.payload.environments;
@@ -200,7 +203,9 @@ export const editCreatePropertyFormSlice = createSlice({
       state.addressDropdowns.town = action.payload;
     },
     setBasicInfo: (state, action: PayloadAction<BasicInfoFormData>) => {
+      // console.log(action.payload);
       state.basicInfo = action.payload;
+      console.log(state.basicInfo);
     },
     removeAmenity: (state, action: PayloadAction<string>) => {
       state.amenities = state.amenities.filter((id) => id !== action.payload);

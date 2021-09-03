@@ -32,6 +32,10 @@ export const OptionalInfo = () => {
     dispatch(actions.editPropertyForm.setStep(Step.Characteristics));
   };
 
+  const canSave = async () => {
+    return true;
+  };
+
   return (
     <Container>
       <Form.Row>
@@ -107,6 +111,7 @@ export const OptionalInfo = () => {
         type={"submit"}
         onNext={handleClick}
         onPrevious={handlePreviousButton}
+        canPartialSave={canSave}
       />
     </Container>
   );

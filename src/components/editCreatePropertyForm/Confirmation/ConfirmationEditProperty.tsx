@@ -2,7 +2,6 @@ import { useHistory } from "react-router-dom";
 import { urls } from "../../../constants";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import {
-  EditPropertyState,
   selectCreatePropertyState,
   selectCurrentStep,
   Step,
@@ -71,6 +70,7 @@ export const ConfirmationEditProperty = ({ id }: Id) => {
     } catch (e) {
       throw Error;
     }
+    dispatch(actions.editPropertyForm.reset());
   };
 
   const handlePreviousButton = () => {

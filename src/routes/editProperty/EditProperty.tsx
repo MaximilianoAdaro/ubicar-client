@@ -2,6 +2,7 @@ import { BasicInfo } from "../../components/editCreatePropertyForm/BasicInfo/Bas
 import { Characteristics } from "../../components/editCreatePropertyForm/Characteristics/Characteristics";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
 import {
+  selectAddress,
   selectCurrentStep,
   Step,
 } from "../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
@@ -107,6 +108,7 @@ interface CurrentStepProps {
 const CurrentStep = ({ currentStep }: CurrentStepProps) => {
   const dispatch = useAppDispatch();
   const isInitialized = useAppSelector(selectIsInitialized);
+  const currentStep2 = useAppSelector(selectCurrentStep);
   const { id } = useParams<{ id: string }>();
   const { data: property } = useGetPropertyUsingGET(id, {
     query: {
@@ -117,12 +119,17 @@ const CurrentStep = ({ currentStep }: CurrentStepProps) => {
   useEffect(() => {
     if (property && !isInitialized) {
       dispatch(actions.editPropertyForm.setInitialValues(property));
+      dispatch(actions.editPropertyForm.setStep(property.step));
+      console.log("selectorstep", currentStep2);
+      console.log("property.step", property.step);
     }
   }, [dispatch, isInitialized, property]);
 
+  const addressSelected = useAppSelector(selectAddress);
   if (!property) return <h4>Error</h4>;
 
-  const address = property.address!;
+  // console.log("editProperty", property);
+  const address = addressSelected;
 
   switch (currentStep) {
     case Step.BasicInfo:

@@ -41,6 +41,15 @@ export const Additional = () => {
     dispatch(actions.editPropertyForm.setStep(Step.Multimedia));
   };
 
+  const canSave = async () => {
+    const isValidToSave = await customForm.methods.trigger();
+    if (isValidToSave) {
+      const data = customForm.methods.getValues();
+      dispatch(actions.editPropertyForm.setAdditional(data));
+    }
+    return isValidToSave;
+  };
+
   return (
     <Container>
       <CustomForm {...customForm}>
@@ -61,7 +70,11 @@ export const Additional = () => {
             />
           </Col>
         </Form.Row>
-        <StepButtons type={"submit"} onPrevious={handlePreviousButton} />
+        <StepButtons
+          type={"submit"}
+          onPrevious={handlePreviousButton}
+          canPartialSave={canSave}
+        />
       </CustomForm>
     </Container>
   );
