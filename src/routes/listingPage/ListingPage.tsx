@@ -2,85 +2,153 @@ import Grid from "@material-ui/core/Grid";
 import { ListingFilters } from "../../components/listingFilters/";
 import { ListingHouse } from "../../components/listingHouse/";
 import { MapComponent } from "../../components/Map/map";
-import { useAppSelector } from "../../store";
+import { actions, useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import styles from "./ListingPage.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  PropertyFilterDto,
-  PagePropertyPreviewDTO,
+  PropertyPreviewDTO,
   useGetStylesUsingGET,
   useGetTypesUsingGET,
-  useGetPropertiesFilteredUsingPOST,
 } from "../../api";
+import { Switch, useLocation } from "react-router-dom";
+import QueryString from "query-string";
+import { Loading } from "../../components/common/loading/Loading";
+import { useDispatch } from "react-redux";
 
-export function ListingPage() {
-  const [filters, setFilters] = useState<PropertyFilterDto>({});
+const checkNotUndefined = (value: any) => {
+  return value ? value : null;
+};
 
-  const [data, setData] = useState<PagePropertyPreviewDTO | null>(null);
+export const ListingPage = () => {
+  const location = useLocation();
+
+  const [zoom, setZoom] = useState(useAppSelector(selectZoom));
+  const [view, setView] = useState(useAppSelector(selectView));
+  const [bbox, setBbox] = useState([0]);
+  const [load, setLoad] = useState(true);
+  const [rightSideData, setRightSideData] = useState<PropertyPreviewDTO[]>();
+
+  const dispatch = useDispatch();
+
+  const query = useMemo(
+    () => QueryString.parse(location.search) as any,
+    [location.search]
+  );
 
   const { data: houseStyles } = useGetStylesUsingGET();
   const { data: houseTypes } = useGetTypesUsingGET();
 
-  const checkNotUndefined = (value: any) => {
-    return value ? value : null;
+  const body = JSON.stringify({
+    condition: checkNotUndefined(query.condition),
+    typeProperty: checkNotUndefined(query.typeProperty),
+    minPrice: parseFloat(checkNotUndefined(query.minPrice)),
+    maxPrice: parseFloat(checkNotUndefined(query.maxPrice)),
+    style: checkNotUndefined(query.style),
+    minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
+    minAmountRoom: checkNotUndefined(query.minAmountRoom),
+    minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
+    maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
+  });
+
+  const buildDataset = async () => {
+    setLoad(true);
+
+    const mapData = await fetch(
+      "http://localhost:3000/public/property/preview/by-filter?b1=" +
+        bbox[0] +
+        "&b2=" +
+        bbox[1] +
+        "&b3=" +
+        bbox[2] +
+        "&b4=" +
+        bbox[3],
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: body,
+      }
+    );
+
+    const response2 = await mapData.json();
+    if (response2) {
+      if (response2.content?.length > 0) {
+        setRightSideData(response2.content);
+      } else {
+        setRightSideData([]);
+      }
+      setLoad(false);
+    }
   };
 
-  const { mutateAsync: getFilteredProperties } =
-    useGetPropertiesFilteredUsingPOST();
-  useEffect(() => {
-    const f = async () => {
-      const data = await getFilteredProperties({
-        params: { page: 0 },
-        data: {
-          condition: checkNotUndefined(filters.condition),
-          typeProperty: checkNotUndefined(filters.typeProperty),
-          minPrice: parseFloat(checkNotUndefined(filters.minPrice)),
-          maxPrice: parseFloat(checkNotUndefined(filters.maxPrice)),
-          style: checkNotUndefined(filters.style),
-          minAmountBathroom: checkNotUndefined(filters.minAmountBathroom),
-          minAmountRoom: checkNotUndefined(filters.minAmountRoom),
-          minAmountSquareMeter: checkNotUndefined(filters.minAmountSquareMeter),
-          maxAmountSquareMeter: checkNotUndefined(filters.maxAmountSquareMeter),
-        },
-      });
-      setData(data);
-    };
-    f();
-  }, [filters]);
+  const setter1 = (number: number) => {
+    setZoom(number);
+    dispatch(actions.map.setZoom(zoom));
+  };
 
-  const zoom = useAppSelector(selectZoom);
-  const view = useAppSelector(selectView);
+  const setter2 = (arg0: { longitude: number; latitude: number }) => {
+    setView({ longitude: arg0.longitude, latitude: arg0.latitude });
+    dispatch(
+      actions.map.setView({
+        longitude: arg0.longitude,
+        latitude: arg0.latitude,
+      })
+    );
+  };
+
+  useEffect(() => {
+    buildDataset();
+  }, [bbox, query]);
+
   return (
     <div>
       <ListingFilters
-        filters={filters}
-        setFilters={setFilters}
         houseStyles={houseStyles ? houseStyles : null}
         houseTypes={houseTypes ? houseTypes : null}
+        setZoom={setter1}
+        setView={setter2}
       />
       <Grid container className={styles.mapAndProperties}>
         <Grid item xl={9} sm={8} className={styles.map}>
-          {data && data.content !== null ? (
-            <MapComponent
-              properties={data.content}
-              zoom={zoom}
-              view={view}
-              renderLayers={true}
-            />
-          ) : null}
+          <MapComponent
+            zoom={zoom}
+            view={view}
+            renderLayers={true}
+            editable={false}
+            setZoom={setter1}
+            setView={setter2}
+            setBbox={setBbox}
+            body={body}
+          />
         </Grid>
         <Grid item xl={3} sm={4} className={styles.propertyList}>
-          {!data && <h2>There was an error retrieving the properties</h2>}
-          {data && data.content && data.content.length > 0 ? (
-            data.content.map((casa) => (
-              <ListingHouse key={casa.id} house={casa} />
-            ))
-          ) : (
-            <h2>There are no properties with these filters</h2>
-          )}
+          <Switch>
+            {load && <Loading />}
+            {!load && rightSideData && rightSideData.length > 0 ? (
+              <PropertyList properties={rightSideData} />
+            ) : (
+              <h2>No hay publicaciones disponibles</h2>
+            )}
+          </Switch>
         </Grid>
       </Grid>
     </div>
   );
-}
+};
+
+type PropertyListProps = {
+  properties?: PropertyPreviewDTO[] | null;
+};
+
+const PropertyList = ({ properties }: PropertyListProps) => {
+  return (
+    <>
+      {properties?.map((property) => (
+        <ListingHouse key={property.id} house={property} />
+      ))}
+    </>
+  );
+};

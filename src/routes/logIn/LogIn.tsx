@@ -8,15 +8,18 @@ import { RoundedButton } from "../../components/common/buttons/RoundedButton";
 import { DividerWithText } from "../../components/common/DividerWithText";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
-import { urls } from "../../constants";
+import { errorMessages, urls } from "../../constants";
 import { useAppSelector } from "../../store";
 import { selectRedirectPath } from "../../store/slices/session";
 import GoogleLogin from "./GoogleLogin";
 import styles from "./LogIn.module.scss";
 
 const schema = yup.object({
-  email: yup.string().email().required(),
-  password: yup.string().required(),
+  email: yup
+    .string()
+    .email(errorMessages.email)
+    .required(errorMessages.required),
+  password: yup.string().required(errorMessages.required),
 });
 
 type LogInFormData = yup.InferType<typeof schema>;

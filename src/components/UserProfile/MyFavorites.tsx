@@ -14,10 +14,23 @@ export function MyFavorites() {
       </Grid>
       <Grid className={styles.properties}>
         <div className={styles.propertyList}>
-          {data.status === "success" &&
-            data?.data?.map((casa) => (
-              <PropertyList key={casa.id} house={casa} from={"favorites"} />
-            ))}
+          {data.status === "success" && data?.data.length > 0 ? (
+            <div>
+              <h3>Propiedades publicadas</h3>
+              {data?.data
+                .filter((casa) => casa.step < 7)
+                .map((casa) => (
+                  <PropertyList
+                    key={casa.id}
+                    house={casa}
+                    from={"properties"}
+                    state={""}
+                  />
+                ))}
+            </div>
+          ) : (
+            <h3>No tienes propiedades en favoritos.</h3>
+          )}
         </div>
       </Grid>
     </div>

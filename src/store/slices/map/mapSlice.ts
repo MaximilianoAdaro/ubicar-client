@@ -15,7 +15,7 @@ interface MapState {
 // Define the initial state using that type
 const initialState: MapState = {
   view: { longitude: -6506056.858887733, latitude: -4114291.375798843 },
-  zoom: 10,
+  zoom: 15,
 };
 
 export const mapSlice = createSlice({
@@ -23,8 +23,8 @@ export const mapSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setView: (state, action: PayloadAction<MapState>) => {
-      state.view = action.payload.view;
+    setView: (state, action: PayloadAction<MapView>) => {
+      state.view = action.payload;
     },
     setZoom: (state, action: PayloadAction<number>) => {
       state.zoom = action.payload;

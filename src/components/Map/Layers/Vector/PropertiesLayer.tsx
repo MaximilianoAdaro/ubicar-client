@@ -1,49 +1,90 @@
 import React from "react";
-import { TVectorLayerComponentProps } from "./vector-types";
+import { PropertyProps } from "./vector-types";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { Icon, Style } from "ol/style";
 import { MapContext } from "../../map";
 import { IMapContext, PropertyState } from "../../maptypes";
-import { GeoJSON } from "ol/format";
 import { Vector } from "ol/source";
 import Feature from "ol/Feature";
-import { PropertyPreviewDTO } from "../../../../api";
-import { Point } from "ol/geom";
-import { convertCoordinates } from "../../utils";
+import { convertCoordinates, getBounds } from "../../utils";
+import { bbox } from "ol/loadingstrategy";
+import GeoJSON from "ol/format/GeoJSON";
 
-class PropertiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
+class PropertiesLayer extends React.PureComponent<PropertyProps> {
   layer: VectorLayer;
   source: VectorSource;
   state: PropertyState = {
     visible: false,
-    properties: [],
   };
+
+  constructor(props: PropertyProps) {
+    super(props);
+  }
 
   componentDidMount() {
     let format = new GeoJSON();
     let features = [new Feature()];
-    if (this.props.properties !== null && this.props.properties) {
-      features = this.props.properties.map((data) => {
-        return new Feature({
-          fna: data.address.street + " " + data.address.number.toString(),
-          geometry: new Point(
-            convertCoordinates(
-              data.address.coordinates.long,
-              data.address.coordinates.lat
-            )
-          ),
-        });
-      });
-    }
+
     this.source = new Vector({
       format: format,
+      loader: (extent) => {
+        const bbox = getBounds(this.props.map);
+        let url =
+          "http://localhost:3000/public/property/viewBox?b1=" +
+          bbox[0] +
+          "&b2=" +
+          bbox[1] +
+          "&b3=" +
+          bbox[2] +
+          "&b4=" +
+          bbox[3];
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.onerror = () => {
+          this.source.removeLoadedExtent(extent);
+          //This threw an error
+        };
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            if (xhr.responseText.length > 3) {
+              let arrayMap = JSON.parse(xhr.responseText).map((data: any) => {
+                return JSON.parse(data);
+              });
+              let newArray = arrayMap.map((feature: any) => {
+                feature.geometry.coordinates = convertCoordinates(
+                  feature.geometry.coordinates[0],
+                  feature.geometry.coordinates[1]
+                );
+                return feature;
+              });
+
+              let geojsonObject = {
+                type: "FeatureCollection",
+                features: newArray,
+              };
+              let fet = new GeoJSON()
+                .readFeatures(geojsonObject)
+                .map((feature: any) => {
+                  feature.values_.fna =
+                    feature.values_.street + " " + feature.values_.number;
+                  return feature;
+                });
+
+              this.source.addFeatures(fet);
+            }
+          }
+        };
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(this.props.body);
+      },
+      strategy: bbox,
       features: features,
     });
 
     const style = new Style({
       image: new Icon({
-        src: "./icons/house.png",
+        src: "https://static.thenounproject.com/png/1661278-200.png",
         scale: 200 / 1024,
         anchor: [0.5, 0.75],
       }),
@@ -63,23 +104,15 @@ class PropertiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
     this.props.map.removeLayer(this.layer);
   }
 
-  componentDidUpdate(prevProps: TVectorLayerComponentProps) {
-    if (prevProps.properties !== this.props.properties) {
-      if (this.props.properties) {
-        this.source.clear();
-        let feat = this.props.properties.map((data) => {
-          return new Feature({
-            fna: data.address.street + " " + data.address.number.toString(),
-            geometry: new Point(
-              convertCoordinates(
-                data.address.coordinates.long,
-                data.address.coordinates.lat
-              )
-            ),
-          });
+  componentDidUpdate(prevProps: PropertyProps, prevState: Readonly<any>) {
+    if (prevProps.body !== this.props.body) {
+      this.layer
+        .getSource()
+        .getFeatures()
+        .forEach((feature) => {
+          this.layer.getSource().removeFeature(feature); //remove all the features
         });
-        this.source.addFeatures(feat);
-      }
+      this.layer.getSource().refresh(); //call the loader fn again.
     }
   }
 
@@ -88,19 +121,12 @@ class PropertiesLayer extends React.PureComponent<TVectorLayerComponentProps> {
   }
 }
 
-export const PropertiesLayerWithContext = (props: {
-  properties: PropertyPreviewDTO[];
-}) => {
+export const PropertiesLayerWithContext = (props: { body: string }) => {
   return (
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          return (
-            <PropertiesLayer
-              properties={props.properties}
-              map={mapContext.map}
-            />
-          );
+          return <PropertiesLayer map={mapContext.map} body={props.body} />;
         }
       }}
     </MapContext.Consumer>

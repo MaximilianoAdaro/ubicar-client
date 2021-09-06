@@ -14,29 +14,32 @@ export interface Address {
 }
 
 export interface AddressDTO {
-  city: string;
+  city?: string;
+  cityId?: string;
   coordinates: CoordinatesDTO;
-  country: string;
   number: number;
-  state: string;
+  state?: string;
+  stateId?: string;
   street: string;
 }
 
 export interface AddressDTOReq {
-  city: string;
+  city?: string;
+  cityId?: string;
   coordinates: CoordinatesDTOReq;
-  country: string;
   number?: number;
-  state: string;
+  state?: string;
+  stateId?: string;
   street: string;
 }
 
 export interface AddressDTORes {
-  city: string;
+  city?: string;
+  cityId?: string;
   coordinates: CoordinatesDTORes;
-  country: string;
   number: number;
-  state: string;
+  state?: string;
+  stateId?: string;
   street: string;
 }
 
@@ -52,6 +55,8 @@ export interface AmenityDTO {
 }
 
 export interface City {
+  centroid: Point;
+  gid: number;
   id: string;
   name: string;
   state: State;
@@ -126,6 +131,7 @@ export interface CreatePropertyDTO {
   environments?: number;
   expenses?: number;
   fullBaths?: number;
+  id?: string;
   levels?: number;
   links: string[];
   materials: string[];
@@ -135,6 +141,7 @@ export interface CreatePropertyDTO {
   rooms?: number;
   security: string[];
   squareFoot?: number;
+  step?: number;
   style: string;
   title: string;
   toilets?: number;
@@ -145,6 +152,16 @@ export interface GoogleLoginUserDTO {
   email: string;
   name: string;
 }
+
+export interface Image {
+  fileData: string;
+  fileName?: string;
+  fileType?: string;
+  id: string;
+}
+
+// tslint:disable-next-line:no-empty-interface
+export interface InputStream {}
 
 export interface LogInUserDTO {
   email: string;
@@ -363,6 +380,9 @@ export interface Permission {
   userRoles: UserRole[];
 }
 
+// tslint:disable-next-line:no-empty-interface
+export interface Point {}
+
 export type PropertyCondition = "RENT" | "SALE";
 
 export const PropertyCondition = {
@@ -408,32 +428,34 @@ export const PropertyType = {
 };
 
 export interface Property {
-  address: Address;
+  address?: Address;
   amenities: Amenity[];
-  comments: string;
+  comments?: string;
   condition: PropertyCondition;
-  constructionDate: number;
+  constructionDate?: number;
   contacts: Contact[];
-  coveredSquareFoot: number;
-  creationDate: string;
-  environments: number;
-  expenses: number;
-  fullBaths: number;
+  coveredSquareFoot?: number;
+  creationDate?: string;
+  environments?: number;
+  expenses?: number;
+  fullBaths?: number;
   id: string;
-  levels: number;
+  images: Image[];
+  levels?: number;
   likes: User[];
   links: string[];
   materials: ConstructionMaterial[];
   openHouse: OpenHouseDate[];
   owner: User;
-  parkDescription: string;
+  parkDescription?: string;
   price: number;
-  rooms: number;
+  rooms?: number;
   security: SecurityMeasure[];
-  squareFoot: number;
-  style: Style;
+  squareFoot?: number;
+  step: number;
+  style?: Style;
   title: string;
-  toilets: number;
+  toilets?: number;
   type: PropertyType;
 }
 
@@ -482,30 +504,32 @@ export const PropertyDTOType = {
 };
 
 export interface PropertyDTO {
-  address: AddressDTO;
+  address?: AddressDTO;
   amenities: Amenity[];
   comments: string;
   condition: PropertyDTOCondition;
-  constructionDate: number;
+  constructionDate?: number;
   contacts: ContactDto[];
-  coveredSquareFoot: number;
-  environments: number;
-  expenses: number;
-  fullBaths: number;
+  coveredSquareFoot?: number;
+  environments?: number;
+  expenses?: number;
+  fullBaths?: number;
   id: string;
-  levels: number;
+  images: string[];
+  levels?: number;
   liked: boolean;
   links: string[];
   materials: MaterialDTO[];
   openHouse: OpenHouseDateDto[];
-  parkDescription: string;
+  parkDescription?: string;
   price: number;
-  rooms: number;
+  rooms?: number;
   security: SecurityDTO[];
-  squareFoot: number;
-  style: Style;
+  squareFoot?: number;
+  step: number;
+  style?: Style;
   title: string;
-  toilets: number;
+  toilets?: number;
   type: PropertyDTOType;
 }
 
@@ -564,7 +588,7 @@ export interface PropertyFilterDto {
   minAmountRoom?: number;
   minAmountSquareMeter?: number;
   minPrice?: number;
-  style?: StyleDTO;
+  style?: string;
   typeProperty?: PropertyFilterDtoTypeProperty;
 }
 
@@ -613,17 +637,28 @@ export const PropertyPreviewDTOType = {
 };
 
 export interface PropertyPreviewDTO {
-  address: AddressDTO;
+  address?: AddressDTO;
   condition: PropertyPreviewDTOCondition;
-  coveredSquareFoot: number;
-  fullBaths: number;
+  coveredSquareFoot?: number;
+  fullBaths?: number;
   id: string;
   price: number;
-  rooms: number;
-  squareFoot: number;
+  rooms?: number;
+  squareFoot?: number;
   title: string;
-  toilets: number;
+  toilets?: number;
   type: PropertyPreviewDTOType;
+}
+
+export interface Resource {
+  description?: string;
+  file?: Blob;
+  filename?: string;
+  inputStream?: InputStream;
+  open?: boolean;
+  readable?: boolean;
+  uri?: string;
+  url?: string;
 }
 
 export interface RoleDTO {
@@ -649,7 +684,9 @@ export interface Sort {
 }
 
 export interface State {
+  centroid: Point;
   country: Country;
+  gid: number;
   id: string;
   name: string;
 }
@@ -711,6 +748,18 @@ export interface UserDTO {
   userName: string;
 }
 
+export interface UserDTOReq {
+  email: string;
+  id: string;
+  userName: string;
+}
+
+export interface UserDTORes {
+  email: string;
+  id: string;
+  userName: string;
+}
+
 export interface UserRole {
   active: boolean;
   creationDate: string;
@@ -723,6 +772,20 @@ export interface UserRole {
 
 export interface View {
   contentType?: string;
+}
+
+export interface PageCityDTO {
+  content?: CityDTO[];
+  empty?: boolean;
+  first?: boolean;
+  last?: boolean;
+  number?: number;
+  numberOfElements?: number;
+  pageable?: Pageable;
+  size?: number;
+  sort?: Sort;
+  totalElements?: number;
+  totalPages?: number;
 }
 
 export interface PagePropertyPreviewDTO {
@@ -739,7 +802,36 @@ export interface PagePropertyPreviewDTO {
   totalPages?: number;
 }
 
+export interface PageStateDTO {
+  content?: StateDTO[];
+  empty?: boolean;
+  first?: boolean;
+  last?: boolean;
+  number?: number;
+  numberOfElements?: number;
+  pageable?: Pageable;
+  size?: number;
+  sort?: Sort;
+  totalElements?: number;
+  totalPages?: number;
+}
+
 export type CreatePropertyDTOBody = CreatePropertyDTO;
+
+export type CreatePropertyWithImagesUsingPOSTBody = {
+  images?: unknown[];
+};
+
+export type EditPropertyWithImagesUsingPUTBody = {
+  imagesToDelete?: string[];
+  images?: unknown[];
+};
+
+export type GetCitiesUsingGETParams = {
+  name?: string;
+  page?: number;
+  size?: number;
+};
 
 export type GetTypesUsingGET200Item =
   | "Casa"
@@ -803,4 +895,10 @@ export const GetPropertiesFilteredUsingPOSTProperty = {
   CREATION_DATE: "CREATION_DATE" as GetPropertiesFilteredUsingPOSTProperty,
   ID: "ID" as GetPropertiesFilteredUsingPOSTProperty,
   PRICE: "PRICE" as GetPropertiesFilteredUsingPOSTProperty,
+};
+
+export type GetStatesUsingGETParams = {
+  name?: string;
+  page?: number;
+  size?: number;
 };
