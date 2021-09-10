@@ -4,7 +4,7 @@
   margin-top: 1em;
   margin-bottom: 1em;
   margin-left: 0.5em;
-  color: $theme-goldish;
+  color: #ff4000;
 }
 
 .stepBarContainer {
@@ -33,7 +33,8 @@
 }
 
 .active {
-  border-color: $theme-darker-blue;
+  border-color: #ff4000;
+  background: #ff4000;
 }
 
 .cursorPointer {
