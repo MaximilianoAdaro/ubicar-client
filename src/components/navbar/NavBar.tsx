@@ -1,8 +1,13 @@
-import { Button, Grid, List, ListItem, Popover } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  List,
+  ListItem,
+  Popover,
+  withStyles,
+} from "@material-ui/core";
 import styles from "./NavBar.module.scss";
 import { useState } from "react";
-import logo from "./Logo/Logo-Ubicar.png";
-import { Image } from "react-bootstrap";
 import { IoMdArrowDropdown } from "react-icons/all";
 import { Link, useHistory } from "react-router-dom";
 import { urls } from "../../constants";
@@ -10,6 +15,29 @@ import firebase from "firebase";
 import { useGetLoggedUsingGET, useLogOut } from "../../api";
 import clsx from "clsx";
 
+const StyledButton = withStyles({
+  root: {
+    background: "#297278",
+    color: "white",
+    textTransform: "none",
+    border: "none",
+    fontSize: "large",
+    "&:hover": {
+      background: "#297278",
+    },
+  },
+})(Button);
+
+// .navbar_user_dropdown_button {
+//     background: #297278;
+//     color: white;
+//     border: none;
+//     font-weight: bold;
+//     text-transform: none;
+// &:hover {
+//         background: #297278;
+//     }
+// }
 export function NavBar() {
   const [anchorAccount, setAnchorAccount] = useState(null);
 
@@ -57,7 +85,7 @@ export function NavBar() {
           <div>
             {user ? (
               <div>
-                <Button
+                <StyledButton
                   className={styles.navbar_user_dropdown_button}
                   id="buttonForm"
                   onClick={openAccountPopover}
@@ -66,7 +94,7 @@ export function NavBar() {
                   <IoMdArrowDropdown
                     className={styles.navbar_user_dropdown_icon}
                   />
-                </Button>
+                </StyledButton>
                 <Popover
                   open={Boolean(anchorAccount)}
                   anchorEl={anchorAccount}
