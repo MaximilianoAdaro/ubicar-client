@@ -12,7 +12,7 @@
   width: auto;
   flex-wrap: nowrap;
   justify-content: space-between;
-  margin-bottom: 5em;
+  //margin-bottom: 5em;
   margin-left: 7%;
   margin-right: 7%;
 }
@@ -27,7 +27,7 @@
 
 .highlighter {
   height: 4px;
-  width: 80%;
+  width: 100%;
   border: 1px solid $theme-light-blue;
   border-radius: 30px;
 }
@@ -39,4 +39,11 @@
 
 .cursorPointer {
   cursor: pointer;
+}
+
+.progressBar {
+  margin-left: 7%;
+  width: 86%;
+  background-color: red;
+  //color:white;
 }

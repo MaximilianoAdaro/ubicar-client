@@ -14,6 +14,41 @@ import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
 import { AddressRevamp } from "../../components/editCreatePropertyForm/Address/AddressRevamp";
+import ProgressBar from "@ramonak/react-progress-bar";
+import { LinearProgress } from "@material-ui/core";
+import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
+import { useState } from "react";
+import { Loading } from "../../components/common/loading/Loading";
+
+// const useStyles = withStyles((theme: Theme) => createStyles{
+//   root: {
+//     marginLeft: '7%',
+//     width:'86%',
+//     color:'red'
+//   },
+//   bar: {
+//     backgroundColor: '#ff4400',
+//   },
+// })(LinearProgress);
+
+const BorderLinearProgress = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      height: 5,
+      borderRadius: 5,
+      width: "88%",
+      marginLeft: "6%",
+      marginBottom: "3em",
+    },
+    colorPrimary: {
+      backgroundColor: "grey",
+    },
+    bar: {
+      borderRadius: 5,
+      backgroundColor: "#ff4400",
+    },
+  })
+)(LinearProgress);
 
 export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
@@ -71,6 +106,7 @@ interface StepBarProps {
 const StepBar = ({ currentStep }: StepBarProps) => {
   const dispatch = useAppDispatch();
   const enableSuperUser = getFeatureFlag("enableSuperUser");
+  const [progressValue, setProgressValue] = useState(0);
   return (
     <>
       <div className={styles.stepBarContainer}>
@@ -86,14 +122,18 @@ const StepBar = ({ currentStep }: StepBarProps) => {
             }}
           >
             <span>{displayName}</span>
-            <div
-              className={clsx(styles.highlighter, {
-                [styles.active]: step === currentStep,
-              })}
-            />
+            {/*<div*/}
+            {/*  className={clsx(styles.highlighter, {*/}
+            {/*    [styles.active]: step === currentStep,*/}
+            {/*  })}*/}
+            {/*/>*/}
           </div>
         ))}
       </div>
+      <BorderLinearProgress
+        variant="determinate"
+        value={currentStep * 14.2857}
+      />
     </>
   );
 };
