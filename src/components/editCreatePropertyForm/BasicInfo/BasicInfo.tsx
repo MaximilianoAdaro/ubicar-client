@@ -129,8 +129,8 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
     <Grid className={styles.basic_info_container}>
       <CustomForm {...customForm}>
         <Grid container>
-          <Grid xs={6}>
-            <h3>Tipo de operación</h3>
+          <Grid xl={4} xs={5}>
+            <h3 className={styles.basic_info_titles}>Tipo de operación</h3>
             <Grid className={styles.basic_info_buttons}>
               <OperationTypeRadio />
             </Grid>
@@ -171,9 +171,9 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid xs />
-          <Grid xs={5}>
-            <h3>Tipo de inmueble</h3>
+          <Grid lg />
+          <Grid lg={4}>
+            <h3 className={styles.basic_info_titles}>Tipo de inmueble</h3>
             {/*<div className={styles.typeContainer}>*/}
             {/*  {types && (*/}
             {/*      <RadioInput*/}
@@ -211,6 +211,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
               </List>
             </div>
           </Grid>
+          <Grid lg={1} />
         </Grid>
         {/*<Form.Row>*/}
         {/*  <Col>*/}
