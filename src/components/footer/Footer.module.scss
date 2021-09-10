@@ -1,55 +1,5 @@
 @import "src/styles/common";
 
-.footerContainer {
-  padding: 1em 5%;
-  border-top: 3px solid $theme-goldish;
-}
-
-.footerContainer h4 {
-  font-weight: bold;
-}
-
-.footerUbicar {
-  padding-right: 5em;
-}
-
-.footerUbicar p {
-  font-size: 1.2em;
-}
-
-.footerContact p {
-  font-size: 1.2em;
-  margin-bottom: 1.5em;
-}
-
-.footerOptionsATag {
-  margin-bottom: 0.5em;
-  color: black;
-  text-decoration: none;
-}
-
-.footerOptionsATag:hover {
-  text-decoration: none;
-  color: $theme-goldish;
-}
-
-.footerOptions {
-  margin-left: 2em;
-}
-
-.footerOptionsGrid {
-  margin-bottom: 0.5em;
-}
-
-.socialMediaLinks img {
-  height: 2em;
-  width: 2em;
-}
-
-.socialMediaText {
-  margin-bottom: 0.5em;
-}
-
 .footer_container {
   color: white;
   background: #297278;
