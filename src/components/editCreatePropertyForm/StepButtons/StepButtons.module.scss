@@ -1,19 +1,35 @@
 .stepButtonsContainer {
   margin-top: 1em;
   width: 100%;
-  //display: flex;
-  //flex-direction: row;
-  //justify-content: flex-end;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .stepButtons {
-  //display: flex;
-  //justify-content: space-evenly;
   //width: 300px;
+  text-align: right;
+  vertical-align: middle;
   float: right;
   margin-bottom: 5vh;
 }
 
 .customButton {
   margin-right: 30px;
+}
+
+.step_button_next {
+  text-align: right;
+  vertical-align: middle;
+  margin-left: 1em;
+}
+
+.step_button_save_changes {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.step_button_previous {
+  margin-left: 1em;
+  text-align: left;
+  vertical-align: middle;
 }

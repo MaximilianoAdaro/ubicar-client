@@ -11,6 +11,9 @@ import { useHistory } from "react-router-dom";
 import { useCreatePropertyUsingPOST } from "../../../api";
 import { toast } from "react-toastify";
 import { createRequestData } from "../Confirmation/confirmationUtils";
+import { Grid } from "@material-ui/core";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 interface StepButtonsProps {
   type?: "submit" | "button";
@@ -96,21 +99,30 @@ export const StepButtons = ({
 
   return (
     <div className={styles.stepButtonsContainer}>
-      <div className={styles.stepButtons}>
-        {step !== 7 && (
-          <CustomButton onClick={handleSend} disabled={disabledNext}>
-            Guardar cambios
-          </CustomButton>
-        )}
-        {showPrevious && (
-          <CustomButton onClick={onPrevious}>Anterior</CustomButton>
-        )}
-        {showNext && (
-          <CustomButton onClick={onNext} type={type} disabled={disabledNext}>
-            Siguiente
-          </CustomButton>
-        )}
-      </div>
+      <Grid container className={styles.stepButtons}>
+        <Grid xs className={styles.step_button_previous}>
+          {showPrevious && (
+            <CustomButton onClick={onPrevious}>
+              <ArrowBackIcon />
+              Anterior
+            </CustomButton>
+          )}
+        </Grid>
+        <Grid xs className={styles.step_button_save_changes}>
+          {step !== 7 && (
+            <CustomButton onClick={handleSend} disabled={disabledNext}>
+              Guardar cambios
+            </CustomButton>
+          )}
+        </Grid>
+        <Grid xs className={styles.step_button_next}>
+          {showNext && (
+            <CustomButton onClick={onNext} type={type} disabled={disabledNext}>
+              Siguiente <ArrowForwardIcon />
+            </CustomButton>
+          )}
+        </Grid>
+      </Grid>
     </div>
   );
 };

@@ -3,7 +3,8 @@
 }
 
 .input {
-  padding-right: 5vw;
+  //padding-right: 5vw;
+  padding: 0 5vw;
   margin-bottom: 2vh;
 }
 
@@ -17,16 +18,19 @@
 }
 
 .address_container {
-  padding: 1em 5%;
+  padding-right: 5%;
+  padding-left: 5%;
+  padding-top: 2em;
   margin: 0 7%;
   background: rgba(211, 211, 211, 0.25);
 }
 
 .address_inputs {
-  //background: #429EA6;
+  background: #429ea6;
+  border-radius: 20px;
+  padding: 2em 0;
 }
 .autocomplete {
   background: white;
   border: none;
-  //border-radius: 15px;
 }

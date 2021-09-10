@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, CircularProgress, Grid, TextField } from "@material-ui/core";
-import { Container } from "react-bootstrap";
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  TextField,
+  withStyles,
+} from "@material-ui/core";
+import { Row } from "react-bootstrap";
 import { Step } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { actions, useAppDispatch } from "../../../store";
 import { StepButtons } from "../StepButtons/StepButtons";
@@ -35,6 +41,15 @@ const getApiRequest = (
 ) => {
   return customInstance<any>({ url: url, method: "get", params: params });
 };
+
+const StyledButton = withStyles({
+  root: {
+    background: "#2D557A",
+    color: "white",
+    textTransform: "none",
+    width: "15%",
+  },
+})(Button);
 
 export const AddressRevamp = (address: AddressDTO) => {
   const [data, setData] = useState({
@@ -264,154 +279,173 @@ export const AddressRevamp = (address: AddressDTO) => {
     <Grid className={styles.address_container}>
       <form autoComplete={"off"}>
         <Grid container>
-          <Grid item xl={6} sm={6} className={styles.address_inputs}>
-            <div className={styles.input}>
-              <span style={{ color: "black" }}>Provincia</span>
-              <Autocomplete
-                size={"small"}
-                id="asyncState"
-                open={open}
-                defaultValue={
-                  data.state && data.stateId
-                    ? { id: data.stateId, name: data.state }
-                    : null
-                }
-                onChange={(e, value) => {
-                  if (value) {
-                    handleChange1(value);
+          <Grid xl={5} sm={5}>
+            <Grid>
+              <h3>Ubicación de tu propiedad</h3>
+            </Grid>
+            <Grid item className={styles.address_inputs}>
+              <div className={styles.input}>
+                <span style={{ color: "black" }}>Provincia</span>
+                <Autocomplete
+                  size={"small"}
+                  className={styles.autocomplete}
+                  id="asyncState"
+                  open={open}
+                  defaultValue={
+                    data.state && data.stateId
+                      ? { id: data.stateId, name: data.state }
+                      : null
                   }
-                }}
-                onOpen={() => {
-                  setOpen(true);
-                }}
-                onClose={() => {
-                  setOpen(false);
-                }}
-                getOptionSelected={(option, value) =>
-                  option.name === value.name
-                }
-                getOptionLabel={(option) => option.name}
-                options={options}
-                loading={loading}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    variant="outlined"
-                    color={"secondary"}
-                    onChange={(ev) => {
-                      // dont fire API if the user delete or not entered anything
-                      if (ev.target.value !== "" || ev.target.value !== null) {
-                        onChangeHandle(ev.target.value);
-                      }
-                    }}
-                    InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                        <React.Fragment>
-                          {loading ? (
-                            <CircularProgress color="inherit" size={20} />
-                          ) : null}
-                          {params.InputProps.endAdornment}
-                        </React.Fragment>
-                      ),
-                    }}
-                  />
-                )}
-              />
-            </div>
-            <div className={styles.input}>
-              <span style={{ color: "black" }}>Localidad</span>
-              <Autocomplete
-                id="asyncCity"
-                open={open2}
-                size={"small"}
-                defaultValue={
-                  data.city && data.cityId
-                    ? { id: data.cityId, name: data.city }
-                    : null
-                }
-                onChange={(e, value) => {
-                  if (value) {
-                    handleChange2(value);
+                  onChange={(e, value) => {
+                    if (value) {
+                      handleChange1(value);
+                    }
+                  }}
+                  onOpen={() => {
+                    setOpen(true);
+                  }}
+                  onClose={() => {
+                    setOpen(false);
+                  }}
+                  getOptionSelected={(option, value) =>
+                    option.name === value.name
                   }
-                }}
-                onOpen={() => {
-                  setOpen2(true);
-                }}
-                onClose={() => {
-                  setOpen2(false);
-                }}
-                getOptionSelected={(option, value) =>
-                  option.name === value.name
-                }
-                getOptionLabel={(option) => option.name}
-                options={options2}
-                loading={loading2}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    variant="outlined"
-                    color={"secondary"}
-                    onChange={(ev) => {
-                      // dont fire API if the user delete or not entered anything
-                      if (ev.target.value !== "" || ev.target.value !== null) {
-                        onChangeHandle2(ev.target.value);
-                      }
-                    }}
-                    InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                        <React.Fragment>
-                          {loading2 ? (
-                            <CircularProgress color="inherit" size={20} />
-                          ) : null}
-                          {params.InputProps.endAdornment}
-                        </React.Fragment>
-                      ),
-                    }}
-                  />
-                )}
-              />
-            </div>
-            <div className={styles.input}>
-              <span style={{ color: "black" }}>Calle</span>
-              <TextField
-                fullWidth
-                size={"small"}
-                color="secondary"
-                variant="outlined"
-                value={data.street}
-                autoComplete={"chrome-off"}
-                onChange={(e) => setData({ ...data, street: e.target.value })}
-              />
-            </div>
-            <div className={styles.input}>
-              <span style={{ color: "black" }}>Número</span>
-              <TextField
-                fullWidth
-                size={"small"}
-                color="secondary"
-                type="number"
-                value={data.number}
-                variant="outlined"
-                onChange={(e) =>
-                  setData({ ...data, number: parseInt(e.target.value) })
-                }
-              />
-            </div>
-            <div className={styles.input}>
-              <Button
-                className={styles.filtersButton}
-                id="button"
-                size="small"
-                onClick={() => setLoad(!load)}
-              >
-                Buscar
-              </Button>
-            </div>
+                  getOptionLabel={(option) => option.name}
+                  options={options}
+                  loading={loading}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      placeholder={"Provincia"}
+                      variant="outlined"
+                      color={"secondary"}
+                      onChange={(ev) => {
+                        // dont fire API if the user delete or not entered anything
+                        if (
+                          ev.target.value !== "" ||
+                          ev.target.value !== null
+                        ) {
+                          onChangeHandle(ev.target.value);
+                        }
+                      }}
+                      InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                          <React.Fragment>
+                            {loading ? (
+                              <CircularProgress color="inherit" size={20} />
+                            ) : null}
+                            {params.InputProps.endAdornment}
+                          </React.Fragment>
+                        ),
+                      }}
+                    />
+                  )}
+                />
+              </div>
+              <div className={styles.input}>
+                <span style={{ color: "black" }}>Localidad</span>
+                <Autocomplete
+                  className={styles.autocomplete}
+                  id="asyncCity"
+                  open={open2}
+                  size={"small"}
+                  defaultValue={
+                    data.city && data.cityId
+                      ? { id: data.cityId, name: data.city }
+                      : null
+                  }
+                  onChange={(e, value) => {
+                    if (value) {
+                      handleChange2(value);
+                    }
+                  }}
+                  onOpen={() => {
+                    setOpen2(true);
+                  }}
+                  onClose={() => {
+                    setOpen2(false);
+                  }}
+                  getOptionSelected={(option, value) =>
+                    option.name === value.name
+                  }
+                  getOptionLabel={(option) => option.name}
+                  options={options2}
+                  loading={loading2}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      variant="outlined"
+                      placeholder={"Localidad"}
+                      color={"secondary"}
+                      onChange={(ev) => {
+                        // dont fire API if the user delete or not entered anything
+                        if (
+                          ev.target.value !== "" ||
+                          ev.target.value !== null
+                        ) {
+                          onChangeHandle2(ev.target.value);
+                        }
+                      }}
+                      InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                          <React.Fragment>
+                            {loading2 ? (
+                              <CircularProgress color="inherit" size={20} />
+                            ) : null}
+                            {params.InputProps.endAdornment}
+                          </React.Fragment>
+                        ),
+                      }}
+                    />
+                  )}
+                />
+              </div>
+              <div className={styles.input}>
+                <span style={{ color: "black" }}>Calle</span>
+                <TextField
+                  fullWidth
+                  className={styles.autocomplete}
+                  size={"small"}
+                  placeholder={"Calle"}
+                  color="secondary"
+                  variant="outlined"
+                  value={data.street}
+                  autoComplete={"chrome-off"}
+                  onChange={(e) => setData({ ...data, street: e.target.value })}
+                />
+              </div>
+              <div className={styles.input}>
+                <span style={{ color: "black" }}>Número</span>
+                <TextField
+                  fullWidth
+                  size={"small"}
+                  className={styles.autocomplete}
+                  color="secondary"
+                  type="number"
+                  value={data.number}
+                  variant="outlined"
+                  onChange={(e) =>
+                    setData({ ...data, number: parseInt(e.target.value) })
+                  }
+                />
+              </div>
+              <div className={styles.input}>
+                <StyledButton
+                  className={styles.filtersButton}
+                  id="button"
+                  size="small"
+                  onClick={() => setLoad(!load)}
+                >
+                  Buscar
+                </StyledButton>
+              </div>
+            </Grid>
           </Grid>
+          <Grid xs />
           <Grid item xs={6} sm={6}>
             <MapComponent
               additionalStyle={{ height: "500px", width: "100%" }}
@@ -428,13 +462,15 @@ export const AddressRevamp = (address: AddressDTO) => {
           </Grid>
         </Grid>
       </form>
-      <StepButtons
-        type={"submit"}
-        onNext={() => handleSubmit()}
-        disabledNext={error}
-        onPrevious={handlePreviousButton}
-        canPartialSave={canSave}
-      />
+      <Row>
+        <StepButtons
+          type={"submit"}
+          onNext={() => handleSubmit()}
+          disabledNext={error}
+          onPrevious={handlePreviousButton}
+          canPartialSave={canSave}
+        />
+      </Row>
     </Grid>
   );
 };
