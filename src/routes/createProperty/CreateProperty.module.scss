@@ -11,8 +11,10 @@
   display: flex;
   width: auto;
   flex-wrap: nowrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
   margin-bottom: 5em;
+  margin-left: 7%;
+  margin-right: 7%;
 }
 
 .stepBarItem {

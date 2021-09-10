@@ -261,13 +261,14 @@ export const AddressRevamp = (address: AddressDTO) => {
   };
 
   return (
-    <Container>
+    <Grid className={styles.address_container}>
       <form autoComplete={"off"}>
         <Grid container>
-          <Grid item xl={6} sm={6}>
+          <Grid item xl={6} sm={6} className={styles.address_inputs}>
             <div className={styles.input}>
               <span style={{ color: "black" }}>Provincia</span>
               <Autocomplete
+                size={"small"}
                 id="asyncState"
                 open={open}
                 defaultValue={
@@ -324,6 +325,7 @@ export const AddressRevamp = (address: AddressDTO) => {
               <Autocomplete
                 id="asyncCity"
                 open={open2}
+                size={"small"}
                 defaultValue={
                   data.city && data.cityId
                     ? { id: data.cityId, name: data.city }
@@ -377,6 +379,7 @@ export const AddressRevamp = (address: AddressDTO) => {
               <span style={{ color: "black" }}>Calle</span>
               <TextField
                 fullWidth
+                size={"small"}
                 color="secondary"
                 variant="outlined"
                 value={data.street}
@@ -388,6 +391,7 @@ export const AddressRevamp = (address: AddressDTO) => {
               <span style={{ color: "black" }}>Número</span>
               <TextField
                 fullWidth
+                size={"small"}
                 color="secondary"
                 type="number"
                 value={data.number}
@@ -431,6 +435,6 @@ export const AddressRevamp = (address: AddressDTO) => {
         onPrevious={handlePreviousButton}
         canPartialSave={canSave}
       />
-    </Container>
+    </Grid>
   );
 };

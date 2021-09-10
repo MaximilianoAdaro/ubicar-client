@@ -20,6 +20,7 @@ import {
   PropertyType,
 } from "../../../api";
 import { errorMessages } from "../../../constants";
+import { Grid, Input, TextField } from "@material-ui/core";
 
 const schema = yup.object({
   price: yup
@@ -86,8 +87,77 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
   };
 
   return (
-    <Container>
+    <Grid className={styles.basic_info_container}>
       <CustomForm {...customForm}>
+        {/*<Grid container>*/}
+        {/*  <Grid xs>*/}
+        {/*    <h3>Tipo de operación</h3>*/}
+        {/*    <Grid>*/}
+        {/*      <OperationTypeRadio />*/}
+        {/*      <TextField>*/}
+        {/*        name="title"*/}
+        {/*        label="Titulo"*/}
+        {/*      </TextField>*/}
+        {/*      <BasicInfoTextInput*/}
+        {/*          name="title"*/}
+        {/*          label="Titulo"*/}
+        {/*          placeholder={"Increible casa en la playa..."}*/}
+        {/*          defaultValue={*/}
+        {/*            propertyInfo.title ? propertyInfo.title : defaults.title*/}
+        {/*          }*/}
+        {/*      />*/}
+        {/*    </Grid>*/}
+        {/*    <Grid>*/}
+        {/*      <BasicInfoTextInput*/}
+        {/*          name="price"*/}
+        {/*          label="Precio"*/}
+        {/*          defaultValue={*/}
+        {/*            propertyInfo.price*/}
+        {/*                ? propertyInfo.price.toString()*/}
+        {/*                : defaults.price?.toString()*/}
+        {/*          }*/}
+        {/*          frontSymbol="$"*/}
+        {/*      />*/}
+        {/*    </Grid>*/}
+        {/*    <Grid>*/}
+        {/*      <BasicInfoTextInput*/}
+        {/*          name="expenses"*/}
+        {/*          label="Expensas"*/}
+        {/*          defaultValue={*/}
+        {/*            propertyInfo.expenses*/}
+        {/*                ? propertyInfo.expenses.toString()*/}
+        {/*                : defaults.expenses?.toString()*/}
+        {/*          }*/}
+        {/*          frontSymbol="$"*/}
+        {/*      />*/}
+        {/*    </Grid>*/}
+        {/*  </Grid>*/}
+        {/*  <Grid xs>*/}
+        {/*    <h3>Tipo de inmueble</h3>*/}
+        {/*    <div className={styles.typeContainer}>*/}
+        {/*      {types && (*/}
+        {/*          <RadioInput*/}
+        {/*              items={types}*/}
+        {/*              name={"propertyType"}*/}
+        {/*              onSelected={(label) => {*/}
+        {/*                if (types)*/}
+        {/*                  dispatch(*/}
+        {/*                      actions.editPropertyForm.setPropertyType(label)*/}
+        {/*                  );*/}
+        {/*              }}*/}
+        {/*              defaultValue={*/}
+        {/*                propertyInfo.type ? propertyInfo.type : defaults.type*/}
+        {/*              }*/}
+        {/*          />*/}
+        {/*      )}*/}
+        {/*    </div>*/}
+        {/*  </Grid>*/}
+        {/*  <StepButtons*/}
+        {/*      type={"submit"}*/}
+        {/*      showPrevious={false}*/}
+        {/*      canPartialSave={canSave}*/}
+        {/*  />*/}
+        {/*</Grid>*/}
         <Form.Row>
           <Col>
             <div className={styles.operationTypeContainer}>
@@ -184,7 +254,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
           />
         </Form.Row>
       </CustomForm>
-    </Container>
+    </Grid>
   );
 };
 

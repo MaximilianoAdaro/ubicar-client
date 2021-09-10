@@ -28,16 +28,6 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-// .navbar_user_dropdown_button {
-//     background: #297278;
-//     color: white;
-//     border: none;
-//     font-weight: bold;
-//     text-transform: none;
-// &:hover {
-//         background: #297278;
-//     }
-// }
 export function NavBar() {
   const [anchorAccount, setAnchorAccount] = useState(null);
 
