@@ -12,3 +12,19 @@
   display: flex;
   justify-content: center;
 }
+
+.photos_input {
+  text-align: center;
+  vertical-align: middle;
+  margin-bottom: 2%;
+}
+
+.photos_description {
+  font-size: small;
+  color: rgba(0, 0, 0, 0.7);
+  text-align: left;
+}
+
+.photos_description p {
+  margin: 0 0 0 5%;
+}

@@ -5,9 +5,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import ImageListItemBar from "@material-ui/core/ImageListItemBar";
-import { Button, IconButton } from "@material-ui/core";
+import { Button, Grid, IconButton } from "@material-ui/core";
 import { TiDeleteOutline } from "react-icons/all";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
+import { useDropzone } from "react-dropzone";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,7 @@ export const Photos = () => {
   const dispatch = useAppDispatch();
   // const classes = useStyles();
   const [images, setImages] = useState([]);
+  console.log(images);
 
   // @ts-ignore
   const onChange = (imageList) => {
@@ -58,7 +60,14 @@ export const Photos = () => {
     <div>
       <div className={styles.container}>
         <h4>Fotos</h4>
-        <div className={styles.comingSoon}>
+        <Grid container className={styles.comingSoon}>
+          <Grid xs={12} className={styles.photos_input}>
+            <input type={"file"} onChange={handleFiles} multiple />
+          </Grid>
+          <Grid className={styles.photos_description} xs>
+            <p>Admite hasta 1 mb por foto</p>
+            <p>Se pide un mínimo de 5 fotos y un máximo de 30</p>
+          </Grid>
           {/*<ImageUploading*/}
           {/*  multiple*/}
           {/*  value={images}*/}
@@ -115,9 +124,16 @@ export const Photos = () => {
           {/*    </div>*/}
           {/*  )}*/}
           {/*</ImageUploading>*/}
-          <input type={"file"} onChange={handleFiles} multiple />
+          {/*<div {...getRootProps()}>*/}
+          {/*  <input {...getInputProps()} />*/}
+          {/*  {*/}
+          {/*    isDragActive ?*/}
+          {/*        <p>Drop the files here ...</p> :*/}
+          {/*        <p>Drag 'n' drop some files here, or click to select files</p>*/}
+          {/*  }*/}
+          {/*</div>*/}
           {/*<Button variant="contained" onClick={handleSubmit}>Upload</Button>*/}
-        </div>
+        </Grid>
       </div>
     </div>
   );
