@@ -66,7 +66,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
-      maxWidth: 360,
       backgroundColor: theme.palette.background.paper,
       position: "relative",
       overflow: "auto",
@@ -86,7 +85,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const BasicInfo = (propertyInfo: propertyInfo) => {
   const classes = useStyles();
-  const [propertyType, setPropertyType] = useState(propertyInfo.type);
   const defaults = useAppSelector(
     ({ editPropertyForm: { basicInfo, propertyType } }) => ({
       ...basicInfo,
@@ -120,8 +118,8 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
     }
     return isValidToSave;
   };
-  const handleClick = (type: any) => {
-    setPropertyType(type);
+
+  const listSetPropertyType = (type: PropertyType) => {
     dispatch(actions.editPropertyForm.setPropertyType(type));
   };
 
@@ -171,8 +169,8 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid lg />
-          <Grid lg={4}>
+          <Grid xl xs />
+          <Grid xl={3} xs={4}>
             <h3 className={styles.basic_info_titles}>Tipo de inmueble</h3>
             {/*<div className={styles.typeContainer}>*/}
             {/*  {types && (*/}
@@ -193,9 +191,10 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
             {/*</div>*/}
             <div>
               <TextField
-                value={propertyType}
+                value={propertyInfo.type ? propertyInfo.type : defaults.type}
                 fullWidth
                 disabled
+                variant="outlined"
                 className={styles.textfield}
               />
               <List className={classes.root}>
@@ -203,7 +202,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                   types.map((type) => (
                     <ListItem
                       className={styles.listitem}
-                      onClick={() => handleClick(type)}
+                      onClick={() => listSetPropertyType(type)}
                     >
                       <ListItemText>{type}</ListItemText>
                     </ListItem>
@@ -211,7 +210,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
               </List>
             </div>
           </Grid>
-          <Grid lg={1} />
+          <Grid xl={2} xs={1} />
         </Grid>
         {/*<Form.Row>*/}
         {/*  <Col>*/}

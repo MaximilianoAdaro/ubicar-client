@@ -9,6 +9,7 @@ import { Step } from "../../../store/slices/editCreatePropertyForm/editCreatePro
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Additional.module.scss";
 import { OpenHouse } from "./OpenHouse";
+import { Grid } from "@material-ui/core";
 
 const schema = yup.object({
   description: yup.string(),
@@ -51,7 +52,7 @@ export const Additional = () => {
   };
 
   return (
-    <Container>
+    <Grid className={styles.additional_container}>
       <CustomForm {...customForm}>
         <Form.Row>
           <Col>
@@ -76,6 +77,6 @@ export const Additional = () => {
           canPartialSave={canSave}
         />
       </CustomForm>
-    </Container>
+    </Grid>
   );
 };

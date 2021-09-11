@@ -279,7 +279,7 @@ export const AddressRevamp = (address: AddressDTO) => {
     <Grid className={styles.address_container}>
       <form autoComplete={"off"}>
         <Grid container>
-          <Grid xl={5} sm={5}>
+          <Grid xl={4} xs={5}>
             <Grid>
               <h3>Ubicación de tu propiedad</h3>
             </Grid>
