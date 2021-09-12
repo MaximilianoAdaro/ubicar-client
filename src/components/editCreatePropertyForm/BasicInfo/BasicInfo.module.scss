@@ -63,6 +63,8 @@
 .basic_info_operation_type {
   background: #429ea6;
   padding: 3em 4em;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
 }
 
 .basic_info_buttons button {
@@ -74,9 +76,10 @@
 .border {
   border: none;
   border-radius: 25px;
+  padding-top: 0.3em;
 }
 
-.listitem:hover {
+.property_type_list_item:hover {
   background: rgba(128, 128, 128, 0.19);
   cursor: pointer;
 }
@@ -87,4 +90,16 @@
 
 .basic_info_titles {
   margin-bottom: 1em;
+}
+
+.basic_info_input_description {
+  margin-top: 0;
+  color: white;
+  font-size: 0.9em;
+  margin-left: 0.5em;
+}
+
+.basic_info_containerinside {
+  border: none;
+  border-radius: 25px;
 }

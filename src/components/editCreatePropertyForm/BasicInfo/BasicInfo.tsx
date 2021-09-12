@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.background.paper,
       position: "relative",
       overflow: "auto",
-      maxHeight: 300,
+      maxHeight: "23em",
       borderRadius: "15px",
       marginTop: "1em",
     },
@@ -126,7 +126,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
   return (
     <Grid className={styles.basic_info_container}>
       <CustomForm {...customForm}>
-        <Grid container>
+        <Grid container className={styles.basic_info_containerinside}>
           <Grid xl={4} xs={5}>
             <h3 className={styles.basic_info_titles}>Tipo de operación</h3>
             <Grid className={styles.basic_info_buttons}>
@@ -136,17 +136,20 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
               <Grid>
                 <BasicInfoTextInput
                   name="title"
-                  label="Titulo"
+                  // label="Titulo"
                   placeholder={"Increible casa en la playa..."}
                   defaultValue={
                     propertyInfo.title ? propertyInfo.title : defaults.title
                   }
                 />
+                <span className={styles.basic_info_input_description}>
+                  Título*
+                </span>
               </Grid>
               <Grid>
                 <BasicInfoTextInput
                   name="price"
-                  label="Precio"
+                  // label="Precio"
                   defaultValue={
                     propertyInfo.price
                       ? propertyInfo.price.toString()
@@ -154,11 +157,14 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                   }
                   frontSymbol="$"
                 />
+                <span className={styles.basic_info_input_description}>
+                  Precio*
+                </span>
               </Grid>
               <Grid>
                 <BasicInfoTextInput
                   name="expenses"
-                  label="Expensas"
+                  // label="Expensas"
                   defaultValue={
                     propertyInfo.expenses
                       ? propertyInfo.expenses.toString()
@@ -166,6 +172,9 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                   }
                   frontSymbol="$"
                 />
+                <span className={styles.basic_info_input_description}>
+                  Expensas*
+                </span>
               </Grid>
             </Grid>
           </Grid>
@@ -201,7 +210,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                 {types &&
                   types.map((type) => (
                     <ListItem
-                      className={styles.listitem}
+                      className={styles.property_type_list_item}
                       onClick={() => listSetPropertyType(type)}
                     >
                       <ListItemText>{type}</ListItemText>

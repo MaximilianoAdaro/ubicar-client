@@ -60,7 +60,7 @@ export const CreateProperty = () => {
           marginBottom: 50,
         }}
       >
-        <h1 className={styles.mainTitle}>Publica tu propiedad</h1>
+        <h1 className={styles.mainTitle}>Publicá tu propiedad</h1>
         <StepBar currentStep={currentStep} />
         <CurrentStep currentStep={currentStep} />
       </Container>
@@ -71,19 +71,19 @@ export const CreateProperty = () => {
 const steps = [
   {
     step: Step.BasicInfo,
-    displayName: "Informacion Basica",
+    displayName: "Datos Inmueble",
   },
   {
     step: Step.Address,
-    displayName: "Ubicacion",
+    displayName: "Ubicación",
   },
   {
     step: Step.Characteristics,
-    displayName: "Caracteristicas",
+    displayName: "Información",
   },
   {
     step: Step.OptionalInfo,
-    displayName: "Informacion Opcional",
+    displayName: "Servicios",
   },
   {
     step: Step.Multimedia,
@@ -95,7 +95,7 @@ const steps = [
   },
   {
     step: Step.Confirmation,
-    displayName: "Confirmacion",
+    displayName: "Confirmación",
   },
 ];
 

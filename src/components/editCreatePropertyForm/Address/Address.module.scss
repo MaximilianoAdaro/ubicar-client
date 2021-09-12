@@ -4,7 +4,7 @@
 
 .input {
   //padding-right: 5vw;
-  padding: 0 5vw;
+  padding: 0 3.5vw;
   margin-bottom: 2vh;
 }
 
@@ -28,9 +28,18 @@
 .address_inputs {
   background: #429ea6;
   border-radius: 20px;
-  padding: 2em 0;
+  //padding: 2em 0;
+  padding-bottom: 1.5em;
+  padding-top: 3em;
 }
 .autocomplete {
   background: white;
   border: none;
+  //border-radius: 1em;
+}
+
+.address_input_titles {
+  color: white;
+  font-size: small;
+  margin-left: 0.4em;
 }

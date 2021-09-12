@@ -46,8 +46,9 @@ const StyledButton = withStyles({
   root: {
     background: "#2D557A",
     color: "white",
+    fontSize: "1em",
     textTransform: "none",
-    width: "15%",
+    width: "25%",
   },
 })(Button);
 
@@ -285,7 +286,7 @@ export const AddressRevamp = (address: AddressDTO) => {
             </Grid>
             <Grid item className={styles.address_inputs}>
               <div className={styles.input}>
-                <span style={{ color: "black" }}>Provincia</span>
+                {/*<span style={{ color: "black" }}>Provincia</span>*/}
                 <Autocomplete
                   size={"small"}
                   className={styles.autocomplete}
@@ -343,9 +344,12 @@ export const AddressRevamp = (address: AddressDTO) => {
                     />
                   )}
                 />
+                <span className={styles.address_input_titles}>
+                  Ingrese una provincia
+                </span>
               </div>
               <div className={styles.input}>
-                <span style={{ color: "black" }}>Localidad</span>
+                {/*<span style={{ color: "black" }}>Localidad</span>*/}
                 <Autocomplete
                   className={styles.autocomplete}
                   id="asyncCity"
@@ -403,9 +407,12 @@ export const AddressRevamp = (address: AddressDTO) => {
                     />
                   )}
                 />
+                <span className={styles.address_input_titles}>
+                  Ingrese una localidad
+                </span>
               </div>
               <div className={styles.input}>
-                <span style={{ color: "black" }}>Calle</span>
+                {/*<span style={{ color: "black" }}>Calle</span>*/}
                 <TextField
                   fullWidth
                   className={styles.autocomplete}
@@ -417,9 +424,12 @@ export const AddressRevamp = (address: AddressDTO) => {
                   autoComplete={"chrome-off"}
                   onChange={(e) => setData({ ...data, street: e.target.value })}
                 />
+                <span className={styles.address_input_titles}>
+                  Ingrese una calle
+                </span>
               </div>
               <div className={styles.input}>
-                <span style={{ color: "black" }}>Número</span>
+                {/*<span style={{ color: "black" }}>Número</span>*/}
                 <TextField
                   fullWidth
                   size={"small"}
@@ -432,6 +442,9 @@ export const AddressRevamp = (address: AddressDTO) => {
                     setData({ ...data, number: parseInt(e.target.value) })
                   }
                 />
+                <span className={styles.address_input_titles}>
+                  Ingrese un N° de calle
+                </span>
               </div>
               <div className={styles.input}>
                 <StyledButton
