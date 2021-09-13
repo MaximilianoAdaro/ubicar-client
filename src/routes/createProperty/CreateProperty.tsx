@@ -36,8 +36,8 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     root: {
       height: 5,
       borderRadius: 5,
-      width: "88%",
-      marginLeft: "6%",
+      width: "86%",
+      marginLeft: "7%",
       marginBottom: "3em",
     },
     colorPrimary: {
@@ -132,7 +132,7 @@ const StepBar = ({ currentStep }: StepBarProps) => {
       </div>
       <BorderLinearProgress
         variant="determinate"
-        value={currentStep * 14.2857}
+        value={currentStep * (100 / 7)}
       />
     </>
   );

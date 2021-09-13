@@ -28,6 +28,7 @@ export const Multimedia = () => {
         <Grid xs>
           <Photos />
         </Grid>
+        <Grid xs={1} />
         <Grid xs={4}>
           <VideoInput />
         </Grid>
