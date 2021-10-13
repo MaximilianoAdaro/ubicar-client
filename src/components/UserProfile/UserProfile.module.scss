@@ -64,6 +64,11 @@
   margin-left: 2%;
   margin-top: 2%;
   width: 80%;
+  //padding-right: 5%;
+  //padding-left: 5%;
+  //padding-top: 2em;
+  //margin: 0 7%;
+  //background: rgba(211, 211, 211, 0.25);
 }
 
 .properties {
@@ -71,11 +76,8 @@
 }
 
 .personalDataTitle {
-  border-bottom: 1px solid black;
 }
-.personalDataTitle p {
-  margin-bottom: 1em;
-}
+
 .personalDataInformation {
   margin-top: 1em;
 }
@@ -104,4 +106,28 @@
 .userProfileToolTips p {
   margin: 0;
   padding: 0;
+}
+
+.persona_data_subtitles {
+  color: #ff4400;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+.personal_data_textfield_span {
+  width: 100%;
+}
+.personal_data_textfield {
+  width: 80%;
+  background-color: white;
+  margin-bottom: 2em;
+}
+
+.personal_data_contact_textfield {
+  background-color: white;
+}
+.personal_data_contact_warning {
+  font-size: small;
+  margin-left: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 2em;
 }

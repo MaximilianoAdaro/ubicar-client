@@ -11,8 +11,18 @@ import {
   List,
   ListItem,
   TextField,
+  withStyles,
 } from "@material-ui/core";
 import { useGetLoggedUsingGET } from "../../api";
+
+const Editbutton = withStyles({
+  root: {
+    textTransform: "none",
+    "&:hover": {
+      background: "#f2f2f2",
+    },
+  },
+})(Button);
 
 export function PersonalData() {
   // const [emailChangeButton, setEmailChangeButton] = useState(true);
@@ -50,7 +60,6 @@ export function PersonalData() {
       }}
     >
       <Grid className={styles.personalDataTitle}>
-        <h1>Datos</h1>
         <p>
           Puedes cambiar tus datos personales o agregar algunos para que podamos
           comunicarnos con usted.
@@ -58,161 +67,147 @@ export function PersonalData() {
       </Grid>
       <Grid container className={styles.personalDataInformation}>
         <Grid xs>
-          <h3>Personales</h3>
-          <List>
-            <ListItem>
-              <TextField
-                label="Nombre"
-                variant="outlined"
-                value={user.userName}
-                size={"small"}
-                fullWidth
-                disabled
-              />
-              <Button onClick={openChangeUsername}>Edit</Button>
-              <Dialog
-                open={changeUsername}
-                onClose={closeChangeUsername}
-                aria-labelledby="form-dialog-title"
-              >
-                <DialogTitle id="form-dialog-title">
-                  Change Username
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Escribe el nuevo nombre de usuario.
-                  </DialogContentText>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Nombre de usuario"
-                    type="username"
-                    fullWidth
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={closeChangeUsername} color="primary">
-                    Cancel
-                  </Button>
-                  <Button onClick={closeChangeUsername} color="primary">
-                    Subscribe
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </ListItem>
-            <ListItem>
-              <TextField
-                label="Contraseña"
-                variant="outlined"
-                size={"small"}
-                value={"********"}
-                fullWidth
-                disabled
-              />
-              <Button onClick={openChangePassword}>Edit</Button>
-              <Dialog
-                open={changePassword}
-                onClose={closeChangePassword}
-                aria-labelledby="form-dialog-title"
-              >
-                <DialogTitle id="form-dialog-title">
-                  Cambia tu contraseña
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Escribe tu antigua contraseña
-                  </DialogContentText>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Antigua contraseña"
-                    type="password"
-                    fullWidth
-                  />
-                </DialogContent>
-                <DialogContent>
-                  <DialogContentText>
-                    Escribe tu nueva contraseña
-                  </DialogContentText>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Nueva contraseña"
-                    type="password"
-                    fullWidth
-                  />
-                </DialogContent>
-                <DialogContent>
-                  <DialogContentText>
-                    Escribe denuevo tu nueva contraseña
-                  </DialogContentText>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Nueva contraseña"
-                    type="password"
-                    fullWidth
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={closeChangePassword} color="primary">
-                    Cancel
-                  </Button>
-                  <Button onClick={closeChangePassword} color="primary">
-                    Subscribe
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </ListItem>
-            <ListItem>
-              <TextField
-                label="Email"
-                variant="outlined"
-                size={"small"}
-                value={user.email}
-                fullWidth
-                disabled
-              />
-              {/*<Button className={styles.emailButton}></Button>*/}
-            </ListItem>
-          </List>
+          <h3 className={styles.persona_data_subtitles}>Personales</h3>
+          <span>Nombre de usuario</span>
+          <Grid xs>
+            <TextField
+              variant="outlined"
+              value={user.userName}
+              className={styles.personal_data_textfield}
+              size={"small"}
+              disabled
+            />
+            <Editbutton onClick={openChangeUsername}>Editar</Editbutton>
+          </Grid>
+          <span className={styles.spantags}>Contraseña</span>
+          <Grid xs>
+            <TextField
+              variant="outlined"
+              size={"small"}
+              value={"********"}
+              className={styles.personal_data_textfield}
+              disabled
+            />
+            <Editbutton onClick={openChangePassword}>Editar</Editbutton>
+          </Grid>
+          <span>Email</span>
+          <Grid>
+            <TextField
+              variant="outlined"
+              size={"small"}
+              value={user.email}
+              className={styles.personal_data_textfield}
+              disabled
+            />
+          </Grid>
         </Grid>
         <Grid xs>
-          <h3>Contacto</h3>
-          <List>
-            <ListItem>
-              <TextField
-                label="Celular"
-                variant="outlined"
-                size={"small"}
-                fullWidth
-                disabled
-              />
-              {/*<Button*/}
-              {/*  onClick={() => setCellphoneChangeButton(!cellphoneChangeButton)}*/}
-              {/*>*/}
-              {/*  Edit*/}
-              {/*</Button>*/}
-            </ListItem>
-            <ListItem>
-              <TextField
-                label="Telefono Fijo"
-                variant="outlined"
-                size={"small"}
-                fullWidth
-                disabled
-              />
-              {/*<Button onClick={() => setPhoneChangeButton(!phoneChangeButton)}>*/}
-              {/*  Edit*/}
-              {/*</Button>*/}
-            </ListItem>
-          </List>
+          <h3 className={styles.persona_data_subtitles}>Contacto</h3>
+          <Grid>
+            <span>Celular</span>
+            <TextField
+              variant="outlined"
+              className={styles.personal_data_contact_textfield}
+              size={"small"}
+              placeholder={"Ej: 1153232343"}
+              fullWidth
+              disabled
+            />
+            <p className={styles.personal_data_contact_warning}>
+              Te vamos a confirmar el numero por telefono o mensaje de texto.{" "}
+              <br />
+              Sujeto a las tarifas estandar para mensaje y datos.
+            </p>
+            <span>Telefono fijo</span>
+            <TextField
+              placeholder={"Ej: 47816234"}
+              className={styles.personal_data_contact_textfield}
+              variant="outlined"
+              size={"small"}
+              fullWidth
+              disabled
+            />
+          </Grid>
         </Grid>
       </Grid>
+      <Dialog
+        open={changeUsername}
+        onClose={closeChangeUsername}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Change Username</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Escribe el nuevo nombre de usuario.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Nombre de usuario"
+            type="username"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeChangeUsername} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={closeChangeUsername} color="primary">
+            Subscribe
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={changePassword}
+        onClose={closeChangePassword}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Cambia tu contraseña</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Escribe tu antigua contraseña</DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Antigua contraseña"
+            type="password"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogContent>
+          <DialogContentText>Escribe tu nueva contraseña</DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Nueva contraseña"
+            type="password"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogContent>
+          <DialogContentText>
+            Escribe denuevo tu nueva contraseña
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Nueva contraseña"
+            type="password"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeChangePassword} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={closeChangePassword} color="primary">
+            Subscribe
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
