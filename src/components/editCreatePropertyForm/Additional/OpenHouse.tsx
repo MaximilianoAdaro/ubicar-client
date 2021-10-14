@@ -2,11 +2,18 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { SelectString } from "../../forms/SelectString";
 import Calendar from "react-calendar";
 import "./Calendar.scss";
-import { useState } from "react";
+import React, { useState } from "react";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { selectOpenHouses } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { FiTrash2 } from "react-icons/all";
 import styles from "./OpenHouse.module.scss";
+import DateFnsUtils from "@date-io/date-fns"; // choose your lib
+import {
+  DatePicker,
+  TimePicker,
+  DateTimePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
 
 const hours = [
   "08:00",
@@ -62,6 +69,15 @@ const printDate = (date: Date) => {
 };
 
 export const OpenHouse = () => {
+  const [selectedDate, handleDateChange] = useState<Date | null>(new Date());
+  const [fromTime, handleFromTime] = useState<Date | null>(new Date());
+  const [toTime, handleToTime] = useState<Date | null>(new Date());
+  const [value, setValue] = React.useState(new Date("2014-08-18T21:11:54"));
+
+  const handleChange = (newValue: any) => {
+    setValue(newValue);
+  };
+
   const [initialTime, setInitialTime] = useState(hours[0].value);
   const [finalTime, setFinalTime] = useState(hours[0].value);
   const [day, setDay] = useState(new Date());
@@ -108,45 +124,74 @@ export const OpenHouse = () => {
       <div className={styles.titleContainer}>
         <h4>Open House</h4>
       </div>
-      <Row>
-        <Col>
-          <Calendar
-            defaultValue={day}
-            onChange={(date) => {
-              if (date instanceof Date) setDay(date);
-            }}
-          />
-        </Col>
-        <Col>
-          <Row>
-            <SelectString
-              name={"hours"}
-              placeholder={"Desde"}
-              options={hours}
-              onSelect={(value) => setInitialTime(value)}
-              defaultValue={initialTime}
-            />
-          </Row>
-          <br />
-          <Row>
-            <SelectString
-              name={"hours"}
-              placeholder={"Hasta"}
-              options={hours}
-              onSelect={(value) => setFinalTime(value)}
-              defaultValue={finalTime}
-            />
-          </Row>
-          <Button
-            onClick={onAddHouseDate}
-            type="button"
-            variant={"outline-dark"}
-            className={styles.button}
-          >
-            +
-          </Button>
-        </Col>
-      </Row>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <span>Dia de la visita</span>
+        <br />
+        <span style={{ fontSize: "small" }}>Se pueden agregar mas que uno</span>
+        <br />
+        <DatePicker value={selectedDate} onChange={handleDateChange} />
+        <br />
+        <br />
+        <span style={{ marginTop: "1em" }}>Desde que hora:</span>
+        <br />
+        <TimePicker value={fromTime} onChange={handleFromTime} />
+        <br />
+        <br />
+        <span>Hasta que hora:</span>
+        <br />
+        <TimePicker value={toTime} onChange={handleToTime} />
+        {/*<DateTimePicker value={selectedDate} onChange={handleDateChange} />*/}
+      </MuiPickersUtilsProvider>
+      {/*<LocalizationProvider dateAdapter={AdapterDateFns}>*/}
+      {/*  <DatePicker*/}
+      {/*      label="Basic example"*/}
+      {/*      value={value}*/}
+      {/*      onChange={(newValue:any) => {*/}
+      {/*        setValue(newValue);*/}
+      {/*      }}*/}
+      {/*      renderInput={(params:any) => <TextField {...params} />}*/}
+      {/*  />*/}
+      {/*</LocalizationProvider>*/}
+
+      {/*<Row>*/}
+      {/*  <Col>*/}
+      {/*    <Calendar*/}
+      {/*      defaultValue={day}*/}
+      {/*      onChange={(date) => {*/}
+      {/*        if (date instanceof Date) setDay(date);*/}
+      {/*      }}*/}
+      {/*    />*/}
+      {/*  </Col>*/}
+      {/*  <Col>*/}
+      {/*    <Row>*/}
+      {/*      <SelectString*/}
+      {/*        name={"hours"}*/}
+      {/*        placeholder={"Desde"}*/}
+      {/*        options={hours}*/}
+      {/*        onSelect={(value) => setInitialTime(value)}*/}
+      {/*        defaultValue={initialTime}*/}
+      {/*      />*/}
+      {/*    </Row>*/}
+      {/*    <br />*/}
+      {/*    <Row>*/}
+      {/*      <SelectString*/}
+      {/*        name={"hours"}*/}
+      {/*        placeholder={"Hasta"}*/}
+      {/*        options={hours}*/}
+      {/*        onSelect={(value) => setFinalTime(value)}*/}
+      {/*        defaultValue={finalTime}*/}
+      {/*      />*/}
+      {/*    </Row>*/}
+      {/*    <Button*/}
+      {/*      onClick={onAddHouseDate}*/}
+      {/*      type="button"*/}
+      {/*      variant={"outline-dark"}*/}
+      {/*      className={styles.button}*/}
+      {/*    >*/}
+      {/*      +*/}
+      {/*    </Button>*/}
+      {/*  </Col>*/}
+      {/*</Row>*/}
       <Row className={styles.cardsContainer}>
         <Col>
           {openHouseDates.map(({ initialTime, finalTime, day }) => (
