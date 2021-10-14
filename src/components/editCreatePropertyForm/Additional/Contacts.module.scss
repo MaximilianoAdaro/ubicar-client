@@ -34,3 +34,46 @@
     cursor: pointer;
   }
 }
+
+.contacts_add_button {
+  //background: rgba(211, 211, 211, 0.25);
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.contacts_container {
+  width: 85%;
+  //padding: 0 2%;
+  //background-color: #429EA6;
+  border-radius: 1em;
+}
+
+.contacts_buttons_grid {
+  padding-top: 1.5em;
+  text-align: center;
+}
+
+.contacts_button_grid_span_tags {
+  font-size: x-large;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.contacts_form_control {
+  border-radius: 0 1em 1em;
+  background-color: #429ea6;
+  padding: 3em 2em 2em;
+}
+
+.contacts_button_subtitle_grid {
+  background-color: #429ea6;
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
+}
+
+.contacts_text_inputs_span {
+  color: white;
+  margin-left: 1em;
+  padding-top: 1em;
+}

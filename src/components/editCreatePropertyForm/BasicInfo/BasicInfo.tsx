@@ -155,7 +155,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                       ? propertyInfo.price.toString()
                       : defaults.price?.toString()
                   }
-                  frontSymbol="$"
+                  frontSymbol="USD"
                 />
                 <span className={styles.basic_info_input_description}>
                   Precio*
@@ -170,7 +170,7 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
                       ? propertyInfo.expenses.toString()
                       : defaults.expenses?.toString()
                   }
-                  frontSymbol="$"
+                  frontSymbol="USD"
                 />
                 <span className={styles.basic_info_input_description}>
                   Expensas*
