@@ -62,49 +62,51 @@ export const Preview = ({ property }: PreviewProps) => {
         <h5>Listado de propiedades</h5>
         <ListingHouse house={property} clickable={false} />
       </Grid>
-      <Grid xs className={styles.property_view_confirmation}>
-        <h5>Vista de propiedades</h5>
-        <Grid className={styles.photos_visualizer}>Photos</Grid>
-        <Grid>
-          <h2>{property.title}</h2>
-        </Grid>
-        <Grid className={styles.facts}>
-          {makeFact(
-            "Total",
-            `${property.squareFoot}m²`,
-            false,
-            <img src={surfaceIcon} alt="surface icon" />
-          )}
-          {makeFact(
-            "Cubierta",
-            `${property.coveredSquareFoot}m²`,
-            false,
-            <img src={surfaceIcon} alt="surface icon" />
-          )}
-          {makeFact(
-            pluralize("Ambiente", property.environments),
-            `${property.environments}`,
-            false,
-            <img src={roomIcon} alt="toilet icon" />
-          )}
-          {makeFact(
-            pluralize("Baño", property.fullBaths),
-            `${property.fullBaths}`,
-            false,
-            <img src={bathroomIcon} alt="bathroom icon" />
-          )}
-          {makeFact(
-            pluralize("Toilets", property.toilets),
-            `${property.toilets}`,
-            false,
-            <img src={toiletIcon} alt="toilet icon" />
-          )}
-          {makeFact(
-            pluralize("Cuarto", property.rooms),
-            `${property.rooms}`,
-            false,
-            <img src={roomIcon} alt="toilet icon" />
-          )}
+      <Grid xs>
+        <h5 className={styles.title}>Vista de propiedades</h5>
+        <Grid className={styles.property_view_confirmation}>
+          <Grid className={styles.photos_visualizer}>Photos</Grid>
+          <Grid>
+            <h2>{property.title}</h2>
+          </Grid>
+          <Grid className={styles.facts}>
+            {makeFact(
+              "Total",
+              `${property.squareFoot}m²`,
+              false,
+              <img src={surfaceIcon} alt="surface icon" />
+            )}
+            {makeFact(
+              "Cubierta",
+              `${property.coveredSquareFoot}m²`,
+              false,
+              <img src={surfaceIcon} alt="surface icon" />
+            )}
+            {makeFact(
+              pluralize("Ambiente", property.environments),
+              `${property.environments}`,
+              false,
+              <img src={roomIcon} alt="toilet icon" />
+            )}
+            {makeFact(
+              pluralize("Baño", property.fullBaths),
+              `${property.fullBaths}`,
+              false,
+              <img src={bathroomIcon} alt="bathroom icon" />
+            )}
+            {makeFact(
+              pluralize("Toilets", property.toilets),
+              `${property.toilets}`,
+              false,
+              <img src={toiletIcon} alt="toilet icon" />
+            )}
+            {makeFact(
+              pluralize("Cuarto", property.rooms),
+              `${property.rooms}`,
+              false,
+              <img src={roomIcon} alt="toilet icon" />
+            )}
+          </Grid>
         </Grid>
         <Grid>
           <span>{property.comments}</span>
