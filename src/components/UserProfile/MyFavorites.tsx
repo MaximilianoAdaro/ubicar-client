@@ -59,12 +59,13 @@ export function MyFavorites() {
                   flexDirection: "row",
                   padding: 0,
                   overflow: "auto",
+                  margin: "0",
                 }}
               >
                 {data?.data
                   .filter((casa) => casa.step == 7)
                   .map((casa) => (
-                    <ListItem>
+                    <ListItem style={{ width: "20em" }}>
                       <PropretyCardMyFavorites
                         key={casa.id}
                         house={casa}

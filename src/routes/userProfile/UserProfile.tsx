@@ -23,13 +23,13 @@ const useStyles = makeStyles({
 const StyledButton = withStyles({
   root: {
     textTransform: "none",
+    justifyContent: "center",
     fontWeight: "bold",
     "&:hover": {
       background: "#f2f2f2",
     },
     color: "#ff4400",
     fontSize: "x-large",
-    textAlign: "center",
   },
 })(Button);
 
@@ -86,7 +86,7 @@ export function UserProfile() {
                   Mis Favoritos
                 </StyledButton>
               </Grid>
-              <BorderLinearProgress variant="determinate" value={20} />
+              <BorderLinearProgress variant="determinate" value={0} />
             </Grid>
             {/*<List className={styles.optionsList}>*/}
             {/*  <ListItem>*/}
