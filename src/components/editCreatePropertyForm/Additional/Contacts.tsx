@@ -42,7 +42,7 @@ export const Contacts = () => {
               Contactos{" "}
             </span>
           </Grid>
-          <Grid xs>
+          <Grid xs className={styles.contacts_button_subtitle_add}>
             <span
               onClick={onAddContact}
               className={clsx(

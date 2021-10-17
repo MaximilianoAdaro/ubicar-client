@@ -12,6 +12,7 @@ import bathroomIcon from "../../../assets/bathroomIcon.svg";
 import toiletIcon from "../../../assets/toiletIcon.svg";
 import roomIcon from "../../../assets/roomIcon.svg";
 import { PropertyCard } from "./PropertyCard";
+import { photos } from "../../../routes/viewProperty/photos";
 
 type ConfirmationHTMLProps = {
   handleSend: () => void;
@@ -66,7 +67,20 @@ export const Preview = ({ property }: PreviewProps) => {
       <Grid xs>
         <h5 className={styles.title}>Vista de propiedades</h5>
         <Grid className={styles.property_view_confirmation}>
-          <Grid className={styles.photos_visualizer}>Photos</Grid>
+          <Grid className={styles.photos_visualizer}>
+            <div className={styles.mediaContainer}>
+              <img src="https://timberhavenloghomes.com/wp-content/uploads/2017/07/Barth-Log-Home-Greatroom-1030x687.jpg" />
+              <div>
+                <img src="https://media.architecturaldigest.com/photos/58f7cf1a8bfbf566da78acc2/master/pass/IShvzncvwa127j0000000000.jpg" />
+                <img src="https://shawhomes.com/wp-content/uploads/Exterior-Twilight-2-Shaw-Homes-12801-S.-Date-Street-Jenks-OK-Yorktown.jpg" />
+                {/*<img src="https://www.maids.com/cleaning-hacks/wp-content/uploads/2018/01/Entire2-house-featured.jpg" />*/}
+                <img src="https://media.architecturaldigest.com/photos/59382d7a3176b35c589a6af3/master/pass/adelman-house-frank-lloyd-wright-03.jpg" />
+                <img src="https://cdn.architecturendesign.net/wp-content/uploads/2014/07/House-in-Gorki-08.jpg" />
+                <img src="http://www.passivehousecanada.com/wp-content/uploads/2016/05/Alta-Lake-Passive-House-1024x637.jpg" />
+                <img src="https://media.architecturaldigest.com/photos/59382d7a3176b35c589a6af3/master/pass/adelman-house-frank-lloyd-wright-03.jpg" />
+              </div>
+            </div>
+          </Grid>
           <Grid>
             <h2>{property.title}</h2>
           </Grid>

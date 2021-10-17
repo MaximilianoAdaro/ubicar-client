@@ -40,7 +40,7 @@ export function PropertyCard(props: ListingHouseProps) {
   return (
     <div>
       <Grid className={styles.my_favorite_card_outer_div}>
-        <Grid className={styles.container}>
+        <Grid className={styles.property_card_container}>
           <Grid>
             <Image
               className={styles.my_favorities_property_image}

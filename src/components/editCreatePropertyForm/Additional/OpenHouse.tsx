@@ -14,6 +14,7 @@ import {
   DateTimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
+import { Grid } from "@material-ui/core";
 
 const hours = [
   "08:00",
@@ -97,7 +98,10 @@ export const OpenHouse = () => {
     ) {
       return;
     }
-    if (selectedDate) {
+    if (selectedDate && fromTime && toTime) {
+      if (toTime < fromTime) {
+        return;
+      }
       dispatch(
         actions.editPropertyForm.addOpenHouse({
           initialTime,
@@ -123,7 +127,7 @@ export const OpenHouse = () => {
   };
 
   return (
-    <>
+    <Grid className={styles.open_house_container}>
       <div className={styles.titleContainer}>
         <h4>Open House</h4>
       </div>
@@ -132,17 +136,29 @@ export const OpenHouse = () => {
         <br />
         <span style={{ fontSize: "small" }}>Se pueden agregar mas que uno</span>
         <br />
-        <DatePicker value={selectedDate} onChange={handleDateChange} />
+        <DatePicker
+          value={selectedDate}
+          style={{ width: "60%" }}
+          onChange={handleDateChange}
+        />
         <br />
         <br />
         <span style={{ marginTop: "1em" }}>Desde que hora:</span>
         <br />
-        <TimePicker value={fromTime} onChange={handleFromTime} />
+        <TimePicker
+          value={fromTime}
+          style={{ width: "60%" }}
+          onChange={handleFromTime}
+        />
         <br />
         <br />
         <span>Hasta que hora:</span>
         <br />
-        <TimePicker value={toTime} onChange={handleToTime} />
+        <TimePicker
+          value={toTime}
+          style={{ width: "60%" }}
+          onChange={handleToTime}
+        />
         {/*<DateTimePicker value={selectedDate} onChange={handleDateChange} />*/}
       </MuiPickersUtilsProvider>
       <br />
@@ -209,6 +225,6 @@ export const OpenHouse = () => {
           ))}
         </Col>
       </Row>
-    </>
+    </Grid>
   );
 };

@@ -22,7 +22,7 @@
   padding-bottom: 2%;
   align-items: center;
   justify-content: space-between;
-  background: rgba(196, 196, 196, 0.1);
+  //background: rgba(196, 196, 196, 0.1);
   border-radius: 15px 15px 0 0;
 }
 
@@ -31,11 +31,12 @@
   //width: 80%;
   //border: 1px solid $theme-light-blue;
   //border-radius: 30px;
-  background: rgba(196, 196, 196, 0.1);
+  //background: rgba(196, 196, 196, 0.1);
 }
 
 .active {
   background: #429ea6;
+  padding-bottom: 3em;
 }
 
 .typeContainer {
@@ -62,9 +63,14 @@
 
 .basic_info_operation_type {
   background: #429ea6;
-  padding: 3em 4em;
+  padding: 2em 3em;
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
+  margin-bottom: 20px;
+}
+
+.basic_info_buttons {
+  //height: 100%;
 }
 
 .basic_info_buttons button {
@@ -76,7 +82,9 @@
 .border {
   border: none;
   border-radius: 25px;
-  padding-top: 0.3em;
+  padding: 15px;
+  margin-bottom: 15px;
+  font-size: x-large;
 }
 
 .property_type_list_item:hover {

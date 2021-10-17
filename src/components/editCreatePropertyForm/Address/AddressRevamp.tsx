@@ -49,6 +49,9 @@ const StyledButton = withStyles({
     fontSize: "1em",
     textTransform: "none",
     width: "25%",
+    "&:hover": {
+      background: "rgba(45,85,122,0.7)",
+    },
   },
 })(Button);
 
@@ -282,7 +285,9 @@ export const AddressRevamp = (address: AddressDTO) => {
         <Grid container>
           <Grid xl={4} xs={5}>
             <Grid>
-              <h3>Ubicación de tu propiedad</h3>
+              <h3 className={styles.address_title}>
+                Ubicación de tu propiedad
+              </h3>
             </Grid>
             <Grid item className={styles.address_inputs}>
               <div className={styles.input}>
@@ -459,7 +464,7 @@ export const AddressRevamp = (address: AddressDTO) => {
             </Grid>
           </Grid>
           <Grid xs />
-          <Grid item xs={6} sm={6}>
+          <Grid item xs={6} sm={6} className={styles.address_map}>
             <MapComponent
               additionalStyle={{ height: "500px", width: "100%" }}
               renderLayers={false}

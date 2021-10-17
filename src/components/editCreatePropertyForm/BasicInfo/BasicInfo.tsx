@@ -129,52 +129,55 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
         <Grid container className={styles.basic_info_containerinside}>
           <Grid xl={4} xs={5}>
             <h3 className={styles.basic_info_titles}>Tipo de operación</h3>
+
             <Grid className={styles.basic_info_buttons}>
               <OperationTypeRadio />
             </Grid>
-            <Grid className={styles.basic_info_operation_type}>
-              <Grid>
-                <BasicInfoTextInput
-                  name="title"
-                  // label="Titulo"
-                  placeholder={"Increible casa en la playa..."}
-                  defaultValue={
-                    propertyInfo.title ? propertyInfo.title : defaults.title
-                  }
-                />
-                <span className={styles.basic_info_input_description}>
-                  Título*
-                </span>
-              </Grid>
-              <Grid>
-                <BasicInfoTextInput
-                  name="price"
-                  // label="Precio"
-                  defaultValue={
-                    propertyInfo.price
-                      ? propertyInfo.price.toString()
-                      : defaults.price?.toString()
-                  }
-                  frontSymbol="USD"
-                />
-                <span className={styles.basic_info_input_description}>
-                  Precio*
-                </span>
-              </Grid>
-              <Grid>
-                <BasicInfoTextInput
-                  name="expenses"
-                  // label="Expensas"
-                  defaultValue={
-                    propertyInfo.expenses
-                      ? propertyInfo.expenses.toString()
-                      : defaults.expenses?.toString()
-                  }
-                  frontSymbol="USD"
-                />
-                <span className={styles.basic_info_input_description}>
-                  Expensas*
-                </span>
+            <Grid>
+              <Grid className={styles.basic_info_operation_type}>
+                <Grid>
+                  <BasicInfoTextInput
+                    name="title"
+                    // label="Titulo"
+                    placeholder={"Increible casa en la playa..."}
+                    defaultValue={
+                      propertyInfo.title ? propertyInfo.title : defaults.title
+                    }
+                  />
+                  <span className={styles.basic_info_input_description}>
+                    Título*
+                  </span>
+                </Grid>
+                <Grid>
+                  <BasicInfoTextInput
+                    name="price"
+                    // label="Precio"
+                    defaultValue={
+                      propertyInfo.price
+                        ? propertyInfo.price.toString()
+                        : defaults.price?.toString()
+                    }
+                    frontSymbol="USD"
+                  />
+                  <span className={styles.basic_info_input_description}>
+                    Precio*
+                  </span>
+                </Grid>
+                <Grid>
+                  <BasicInfoTextInput
+                    name="expenses"
+                    // label="Expensas"
+                    defaultValue={
+                      propertyInfo.expenses
+                        ? propertyInfo.expenses.toString()
+                        : defaults.expenses?.toString()
+                    }
+                    frontSymbol="USD"
+                  />
+                  <span className={styles.basic_info_input_description}>
+                    Expensas*
+                  </span>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -342,26 +345,29 @@ const OperationTypeRadio = () => {
     dispatch(actions.editPropertyForm.setOperationType(value));
   };
   return (
-    <>
-      <div className={styles.itemContainer}>
-        {operationTypes.map(({ displayName, value }) => (
-          <Grid
-            key={value}
-            className={clsx(styles.highlighter, styles.item, {
+    <div className={styles.itemContainer}>
+      {operationTypes.map(({ displayName, value }) => (
+        <Grid
+          key={value}
+          className={clsx(
+            styles.highlighter,
+            styles.item,
+            {
               [styles.active]: value === currentValue,
-            })}
-            onClick={() => handleSelect(value)}
-            xs
-          >
-            <span className={styles.border}>{displayName}</span>
-            {/*<div*/}
-            {/*  className={clsx(styles.highlighter, {*/}
-            {/*    [styles.active]: value === currentValue,*/}
-            {/*  })}*/}
-            {/*/>*/}
-          </Grid>
-        ))}
-      </div>
-    </>
+            },
+            styles.basic_info_buttons
+          )}
+          onClick={() => handleSelect(value)}
+          xs
+        >
+          <span className={styles.border}>{displayName}</span>
+          {/*<div*/}
+          {/*  className={clsx(styles.highlighter, {*/}
+          {/*    [styles.active]: value === currentValue,*/}
+          {/*  })}*/}
+          {/*/>*/}
+        </Grid>
+      ))}
+    </div>
   );
 };

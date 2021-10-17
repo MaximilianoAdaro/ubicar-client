@@ -36,11 +36,8 @@
   }
 }
 
-.contacts_add_button {
-  //background: rgba(211, 211, 211, 0.25);
-  &:hover {
-    cursor: pointer;
-  }
+.contacts_add_button:hover {
+  cursor: pointer;
 }
 
 .contacts_container {
@@ -64,13 +61,20 @@
 .contacts_form_control {
   border-radius: 0 1em 1em;
   background-color: #429ea6;
-  padding: 3em 2em 2em;
+  padding: 3em 2em 1em;
 }
 
 .contacts_button_subtitle_grid {
   background-color: #429ea6;
   border-top-right-radius: 1em;
   border-top-left-radius: 1em;
+  padding: 15px;
+}
+
+.contacts_button_subtitle_add {
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
+  padding: 15px;
 }
 
 .contacts_text_inputs_span {

@@ -52,6 +52,7 @@
   background-color: white;
   padding: 2em;
   margin-left: 5%;
+  box-shadow: 2px 5px rgba(128, 128, 128, 0.15);
 }
 
 .title {
@@ -59,12 +60,12 @@
   margin-bottom: 1.5em;
 }
 
-.propertiesImages {
+.myPropertiesImages {
   height: 100%;
   width: 95%;
 }
 
-.propertyInformation {
+.myPropertyInformation {
   margin-bottom: 3%;
   margin-top: 1.5%;
   border: 1px solid #d9d9d9;
@@ -77,34 +78,36 @@
   margin: 0;
 }
 
-.propertyTitle {
+.myPropertyTitle {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: bold;
   padding: 0;
-  margin: 0;
+  margin-top: 0.5em;
 }
 
-.propertyStreetNumber {
+.myPropertyStreetNumber {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: "...";
   font-weight: bold;
   font-size: 1em;
   text-transform: capitalize;
+  margin-bottom: 0;
+  margin-top: 1em;
 }
 
-.propertyTownCity {
+.myPropertyTownCity {
   font-size: 0.9em;
   text-transform: capitalize;
 }
 
-.propertySpecifications {
-  margin-bottom: 1%;
+.myPropertySpecifications {
+  //margin-bottom: 1%;
 }
 
-.propertyPriceCondition {
+.myPropertyPriceCondition {
   font-weight: bold;
 }
 .propertyRight {
@@ -123,4 +126,65 @@
 
 .my_favorite_card_outer_div {
   max-width: 30em;
+  background: white;
+  padding: 1em;
+  border-radius: 1em;
+  box-shadow: 2px 5px rgba(128, 128, 128, 0.15);
 }
+
+.mediaContainer {
+  display: inline-flex;
+  img {
+    width: 15em;
+    height: 12.5em;
+    margin: 0.2em;
+    border-radius: 5%;
+  }
+  div img {
+    width: 10em;
+    height: 6em;
+    //margin: 0.2em;
+  }
+}
+//.mediaContainer div img {
+//
+//}
+//.mediaContainer img {
+//
+//}
+//.mediaContainer {
+//  display: flex;
+//  gap: 5px;
+//  width: 100%;
+//  height: 400px;
+//  padding: 0 5px;
+//
+//  > * {
+//    height: 400px;
+//    //width: fill;
+//  }
+//  //
+//  > div {
+//    display: grid;
+//    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+//    grid-gap: 5px;
+//    align-items: stretch;
+//
+//    > img {
+//      width: 50px;
+//      height: 30px;
+//    }
+//  }
+//
+//  img {
+//    // border: 1px solid lightgrey;
+//    border-right: unset;
+//    border-radius: 10px;
+//    border-collapse: collapse;
+//    transition: transform 0.5s;
+//
+//    &:hover {
+//      transform: scale(1.05);
+//    }
+//  }
+//}
