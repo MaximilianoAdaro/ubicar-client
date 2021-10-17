@@ -8,6 +8,10 @@
   background: rgba(211, 211, 211, 0.25);
 }
 
+.containers_subtitles {
+  margin-bottom: 1.5em;
+}
+
 .comingSoon {
   margin-top: 30px;
   display: flex;
@@ -52,4 +56,71 @@
 
 .title {
   padding-left: 2.5em;
+  margin-bottom: 1.5em;
+}
+
+.propertiesImages {
+  height: 100%;
+  width: 95%;
+}
+
+.propertyInformation {
+  margin-bottom: 3%;
+  margin-top: 1.5%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background: white;
+}
+
+.marginPaddingPTag {
+  padding: 0;
+  margin: 0;
+}
+
+.propertyTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+}
+
+.propertyStreetNumber {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: "...";
+  font-weight: bold;
+  font-size: 1em;
+  text-transform: capitalize;
+}
+
+.propertyTownCity {
+  font-size: 0.9em;
+  text-transform: capitalize;
+}
+
+.propertySpecifications {
+  margin-bottom: 1%;
+}
+
+.propertyPriceCondition {
+  font-weight: bold;
+}
+.propertyRight {
+  padding-top: 0.5em;
+}
+
+.published_property_list {
+  overflow: auto;
+  max-height: 80vh;
+}
+
+.my_favorities_property_image {
+  width: 100%;
+  height: 90%;
+}
+
+.my_favorite_card_outer_div {
+  max-width: 30em;
 }

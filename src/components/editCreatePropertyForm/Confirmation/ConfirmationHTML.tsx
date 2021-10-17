@@ -11,6 +11,7 @@ import pluralize from "pluralize";
 import bathroomIcon from "../../../assets/bathroomIcon.svg";
 import toiletIcon from "../../../assets/toiletIcon.svg";
 import roomIcon from "../../../assets/roomIcon.svg";
+import { PropertyCard } from "./PropertyCard";
 
 type ConfirmationHTMLProps = {
   handleSend: () => void;
@@ -59,8 +60,8 @@ export const Preview = ({ property }: PreviewProps) => {
     <Grid container>
       <h3 style={{ width: "100%" }}>Previsualizar</h3>
       <Grid xs={3}>
-        <h5>Listado de propiedades</h5>
-        <ListingHouse house={property} clickable={false} />
+        <h5 className={styles.containers_subtitles}>Listado de propiedades</h5>
+        <PropertyCard house={property} />
       </Grid>
       <Grid xs>
         <h5 className={styles.title}>Vista de propiedades</h5>
@@ -107,9 +108,9 @@ export const Preview = ({ property }: PreviewProps) => {
               <img src={roomIcon} alt="toilet icon" />
             )}
           </Grid>
-        </Grid>
-        <Grid>
-          <span>{property.comments}</span>
+          <Grid>
+            <span>{property.comments}</span>
+          </Grid>
         </Grid>
       </Grid>
       {/*<div className={styles.container}>*/}

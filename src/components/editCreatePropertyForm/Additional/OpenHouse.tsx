@@ -70,10 +70,8 @@ const printDate = (date: Date) => {
 
 export const OpenHouse = () => {
   const [selectedDate, handleDateChange] = useState<Date | null>(new Date());
-  const [previousDate, setPreviousDate] = useState<Date | null>(new Date());
   const [fromTime, handleFromTime] = useState<Date | null>(new Date());
   const [toTime, handleToTime] = useState<Date | null>(new Date());
-  const [date, setDate] = React.useState(new Date());
 
   // const handleChange = (newValue: any) => {
   //   setValue(newValue);
@@ -84,39 +82,30 @@ export const OpenHouse = () => {
   // const [day, setDay] = useState(new Date());
   const dispatch = useAppDispatch();
   const openHouseDates = useAppSelector(selectOpenHouses);
-  console.log(selectedDate);
   const onAddHouseDate = async () => {
-    // console.log(typeof initialTime)
-    // console.log(typeof finalTime)
-    // console.log(typeof day)
-    //
-    // console.log("Date",selectedDate?.getDate(), selectedDate?.getMonth())
-    // console.log('fromTime', fromTime?.getHours(), fromTime?.getMinutes())
-    // console.log('toTime', toTime?.getHours(), toTime?.getMinutes())
-    const initialTime = `${fromTime?.getHours()}:${fromTime?.getMinutes()}`;
-    const finalTime = `${toTime?.getHours()}:${toTime?.getMinutes()}`;
-    if (selectedDate) {
-      setDate(selectedDate);
-    }
-    // console.log(selectedDate?.toString())
-    // console.log(initialTimu)
-    // console.log(finalTimu)
-    // console.log(day.toString())
+    const initialTime = `${fromTime?.getHours()}:${fromTime
+      ?.toString()
+      .slice(19, 21)}`;
+    const finalTime = `${toTime?.getHours()}:${toTime
+      ?.toString()
+      .slice(19, 21)}`;
 
     if (
       openHouseDates.find(
-        (openHouse) => openHouse.day === selectedDate?.toString()
+        (openHouse) => openHouse.day === selectedDate?.toString().slice(0, 15)
       )
     ) {
       return;
     }
-    dispatch(
-      actions.editPropertyForm.addOpenHouse({
-        initialTime,
-        finalTime,
-        day: date.toString(),
-      })
-    );
+    if (selectedDate) {
+      dispatch(
+        actions.editPropertyForm.addOpenHouse({
+          initialTime,
+          finalTime,
+          day: selectedDate?.toString().slice(0, 15),
+        })
+      );
+    }
   };
 
   const onRemoveOpenHouseDate = (
@@ -156,6 +145,7 @@ export const OpenHouse = () => {
         <TimePicker value={toTime} onChange={handleToTime} />
         {/*<DateTimePicker value={selectedDate} onChange={handleDateChange} />*/}
       </MuiPickersUtilsProvider>
+      <br />
 
       {/*<Row>*/}
       {/*  <Col>*/}
@@ -192,7 +182,7 @@ export const OpenHouse = () => {
         variant={"outline-dark"}
         className={styles.button}
       >
-        +
+        Agregar
       </Button>
       {/*  </Col>*/}
       {/*</Row>*/}
