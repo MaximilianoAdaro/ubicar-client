@@ -79,13 +79,12 @@ export function PropertyCard(props: ListingHouseProps) {
               <p className={styles.myPropertySpecifications}>
                 {house.rooms} hab. &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths}{" "}
                 {baths} &nbsp;&nbsp;|&nbsp;&nbsp; {house.coveredSquareFoot} m²
-                &nbsp;&nbsp;
+                &nbsp;&nbsp;|&nbsp;&nbsp; En{" "}
+                {house.condition == "SALE" ? "Venta" : "Alquiler"}{" "}
               </p>
             </Tooltip>
             <p className={styles.myPropertyPriceCondition}>
               ${house.price.toLocaleString()}
-              &nbsp;|&nbsp; En{" "}
-              {house.condition == "SALE" ? "Venta" : "Alquiler"}{" "}
             </p>
           </Grid>
           {/*<Grid className={styles.editAndViewPropertyButtons}>*/}

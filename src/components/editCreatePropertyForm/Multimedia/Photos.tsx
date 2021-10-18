@@ -8,7 +8,7 @@ import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import { Button, Grid, IconButton } from "@material-ui/core";
 import { TiDeleteOutline } from "react-icons/all";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { useDropzone } from "react-dropzone";
+// import { useDropzone } from "react-dropzone";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +87,7 @@ export const Photos = () => {
                     style={isDragging ? { color: "red" } : undefined}
                     onClick={onImageUpload}
                     {...dragProps}
+                    className={styles.add_image}
                   >
                     Agregar imagen
                   </Button>

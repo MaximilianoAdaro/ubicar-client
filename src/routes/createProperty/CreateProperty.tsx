@@ -14,11 +14,9 @@ import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
 import { AddressRevamp } from "../../components/editCreatePropertyForm/Address/AddressRevamp";
-import ProgressBar from "@ramonak/react-progress-bar";
 import { LinearProgress } from "@material-ui/core";
 import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
 import { useState } from "react";
-import { Loading } from "../../components/common/loading/Loading";
 
 // const useStyles = withStyles((theme: Theme) => createStyles{
 //   root: {
