@@ -1,7 +1,7 @@
 import { CustomForm } from "../../forms/customForm/CustomForm";
 import { useCustomForm } from "../../../hooks/useCustomForm";
 import * as yup from "yup";
-import { Col, Container, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import { RadioOption } from "../../forms/ComposedRadioInput";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
@@ -9,7 +9,6 @@ import {
   selectOperationType,
   Step,
 } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
-import { RadioInput } from "../../forms/RadioInput";
 import styles from "./BasicInfo.module.scss";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
@@ -21,7 +20,6 @@ import {
 } from "../../../api";
 import { errorMessages } from "../../../constants";
 import {
-  Button,
   createStyles,
   Grid,
   List,
@@ -30,7 +28,6 @@ import {
   TextField,
   Theme,
 } from "@material-ui/core";
-import { ListingHouse } from "../../listingHouse";
 import { makeStyles } from "@material-ui/core/styles";
 
 const schema = yup.object({

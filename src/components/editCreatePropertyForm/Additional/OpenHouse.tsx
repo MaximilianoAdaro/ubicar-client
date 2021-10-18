@@ -1,6 +1,4 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
-import { SelectString } from "../../forms/SelectString";
-import Calendar from "react-calendar";
 import "./Calendar.scss";
 import React, { useState } from "react";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
@@ -11,7 +9,6 @@ import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import {
   DatePicker,
   TimePicker,
-  DateTimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import { Grid } from "@material-ui/core";

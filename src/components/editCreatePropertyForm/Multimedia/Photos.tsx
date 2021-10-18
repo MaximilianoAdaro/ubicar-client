@@ -8,7 +8,6 @@ import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import { Button, Grid, IconButton } from "@material-ui/core";
 import { TiDeleteOutline } from "react-icons/all";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-// import { useDropzone } from "react-dropzone";
 
 const useStyles = makeStyles((theme) => ({
   root: {

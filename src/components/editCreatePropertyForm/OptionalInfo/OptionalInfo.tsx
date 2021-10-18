@@ -1,6 +1,5 @@
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
 import { CheckInputList } from "../../forms/CheckInputList";
-import { Col, Container, Form } from "react-bootstrap";
 import { Step } from "../../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import styles from "./OptionalInfo.module.scss";
 import { StepButtons } from "../StepButtons/StepButtons";

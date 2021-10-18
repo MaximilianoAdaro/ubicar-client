@@ -1,13 +1,10 @@
-// import { PropertyPreviewDTO } from "../../api";
 import { PropertyDTO } from "../../../api";
-import { Button, Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import { Image } from "react-bootstrap";
 import styles from "./Confirmation.module.scss";
 import { useHistory } from "react-router-dom";
 import pluralize from "pluralize";
-import EditIcon from "@material-ui/icons/Edit";
 import { Tooltip } from "@material-ui/core";
-import VisibilityIcon from "@material-ui/icons/Visibility";
 
 interface ListingHouseProps {
   house: PropertyDTO;
