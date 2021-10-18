@@ -87,12 +87,15 @@ export const Photos = () => {
                     style={isDragging ? { color: "red" } : undefined}
                     onClick={onImageUpload}
                     {...dragProps}
-                    className={styles.add_image}
                   >
                     Agregar imagen
                   </Button>
                   &nbsp;
-                  <Button variant="contained" onClick={onImageRemoveAll}>
+                  <Button
+                    variant="contained"
+                    onClick={onImageRemoveAll}
+                    style={{ marginLeft: "2em" }}
+                  >
                     Eliminar todas las imagenes
                   </Button>
                   <div className={classes.root}>
