@@ -8,8 +8,6 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
-  List,
-  ListItem,
   TextField,
   withStyles,
 } from "@material-ui/core";

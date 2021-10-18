@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import { Tooltip } from "@material-ui/core";
 import pluralize from "pluralize";
 import { useHistory } from "react-router-dom";
-import { urls } from "../../constants";
 import { PropertyPreviewDTO } from "../../api";
 import clsx from "clsx";
 

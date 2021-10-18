@@ -1,7 +1,6 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { PropertyList } from "./PropertyList";
 import {
   useGetFavoritePropertiesUsingGET,
   useGetMyPropertiesUsingGET,
