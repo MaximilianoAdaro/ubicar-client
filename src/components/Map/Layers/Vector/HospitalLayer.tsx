@@ -26,8 +26,8 @@ class HospitalLayer extends React.PureComponent<TVectorLayerComponentProps> {
         color: "rgba(0, 100, 240, 0.8)",
       }),
       image: new Icon({
-        src: "./icons/hospital.png",
-        scale: 30 / 1024,
+        src: "./newIcons/hospital.svg",
+        scale: 666 / 1024,
         anchor: [0.5, 0.75],
       }),
       text: new Text(),
