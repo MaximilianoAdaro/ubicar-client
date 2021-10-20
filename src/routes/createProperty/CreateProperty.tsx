@@ -18,17 +18,6 @@ import { LinearProgress } from "@material-ui/core";
 import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
 import { useState } from "react";
 
-// const useStyles = withStyles((theme: Theme) => createStyles{
-//   root: {
-//     marginLeft: '7%',
-//     width:'86%',
-//     color:'red'
-//   },
-//   bar: {
-//     backgroundColor: '#ff4400',
-//   },
-// })(LinearProgress);
-
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -43,7 +32,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     },
     bar: {
       borderRadius: 5,
-      backgroundColor: "#ff4400",
+      backgroundColor: "#FF701F",
     },
   })
 )(LinearProgress);
@@ -104,7 +93,6 @@ interface StepBarProps {
 const StepBar = ({ currentStep }: StepBarProps) => {
   const dispatch = useAppDispatch();
   const enableSuperUser = getFeatureFlag("enableSuperUser");
-  const [progressValue, setProgressValue] = useState(0);
   return (
     <>
       <div className={styles.stepBarContainer}>
@@ -120,11 +108,6 @@ const StepBar = ({ currentStep }: StepBarProps) => {
             }}
           >
             <span>{displayName}</span>
-            {/*<div*/}
-            {/*  className={clsx(styles.highlighter, {*/}
-            {/*    [styles.active]: step === currentStep,*/}
-            {/*  })}*/}
-            {/*/>*/}
           </div>
         ))}
       </div>

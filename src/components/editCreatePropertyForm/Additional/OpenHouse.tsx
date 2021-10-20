@@ -13,34 +13,6 @@ import {
 } from "@material-ui/pickers";
 import { Grid } from "@material-ui/core";
 
-const hours = [
-  "08:00",
-  "08:30",
-  "09:00",
-  "09:30",
-  "10:00",
-  "10:30",
-  "11:00",
-  "11:30",
-  "12:00",
-  "12:30",
-  "13:00",
-  "13:30",
-  "14:00",
-  "14:30",
-  "15:00",
-  "15:30",
-  "16:00",
-  "16:30",
-  "17:00",
-  "17:30",
-  "18:00",
-  "18:30",
-  "19:00",
-  "19:30",
-  "20:00",
-].map((value) => ({ name: value, value }));
-
 const months = [
   "Enero",
   "Febrero",
@@ -71,13 +43,6 @@ export const OpenHouse = () => {
   const [fromTime, handleFromTime] = useState<Date | null>(new Date());
   const [toTime, handleToTime] = useState<Date | null>(new Date());
 
-  // const handleChange = (newValue: any) => {
-  //   setValue(newValue);
-  // };
-
-  // const [initialTime, setInitialTime] = useState(hours[0].value);
-  // const [finalTime, setFinalTime] = useState(hours[0].value);
-  // const [day, setDay] = useState(new Date());
   const dispatch = useAppDispatch();
   const openHouseDates = useAppSelector(selectOpenHouses);
   const onAddHouseDate = async () => {
@@ -156,39 +121,9 @@ export const OpenHouse = () => {
           style={{ width: "60%" }}
           onChange={handleToTime}
         />
-        {/*<DateTimePicker value={selectedDate} onChange={handleDateChange} />*/}
       </MuiPickersUtilsProvider>
       <br />
 
-      {/*<Row>*/}
-      {/*  <Col>*/}
-      {/*    <Calendar*/}
-      {/*      defaultValue={day}*/}
-      {/*      onChange={(date) => {*/}
-      {/*        if (date instanceof Date) setDay(date);*/}
-      {/*      }}*/}
-      {/*    />*/}
-      {/*  </Col>*/}
-      {/*  <Col>*/}
-      {/*    <Row>*/}
-      {/*      <SelectString*/}
-      {/*        name={"hours"}*/}
-      {/*        placeholder={"Desde"}*/}
-      {/*        options={hours}*/}
-      {/*        onSelect={(value) => setInitialTime(value)}*/}
-      {/*        defaultValue={initialTime}*/}
-      {/*      />*/}
-      {/*    </Row>*/}
-      {/*    <br />*/}
-      {/*    <Row>*/}
-      {/*      <SelectString*/}
-      {/*        name={"hours"}*/}
-      {/*        placeholder={"Hasta"}*/}
-      {/*        options={hours}*/}
-      {/*        onSelect={(value) => setFinalTime(value)}*/}
-      {/*        defaultValue={finalTime}*/}
-      {/*      />*/}
-      {/*    </Row>*/}
       <Button
         onClick={onAddHouseDate}
         type="button"
@@ -197,8 +132,6 @@ export const OpenHouse = () => {
       >
         Agregar
       </Button>
-      {/*  </Col>*/}
-      {/*</Row>*/}
       <Row className={styles.cardsContainer}>
         <Col>
           {openHouseDates.map(({ initialTime, finalTime, day }) => (
