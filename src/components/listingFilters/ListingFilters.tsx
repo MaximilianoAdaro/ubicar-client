@@ -178,7 +178,7 @@ export function ListingFilters({
               size={"small"}
               style={{ width: "500px" }}
               open={open}
-              value={search}
+              defaultValue={search}
               onChange={(e, value) => {
                 if (value) {
                   let coords = convertCoordinates(
