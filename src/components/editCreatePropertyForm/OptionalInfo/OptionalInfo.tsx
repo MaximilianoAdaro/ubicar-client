@@ -97,77 +97,7 @@ export const OptionalInfo = () => {
             </div>
           </Grid>
         </Grid>
-        {/*<Grid xl={1}/>*/}
       </Grid>
-      {/*<Form.Row>*/}
-      {/*  <Col xs={7} className={styles.optional_info_services}>*/}
-      {/*    <Form.Row>*/}
-      {/*      <Col>*/}
-      {/*        <div>*/}
-      {/*          <h3>Seleccioná los servicios que ofrece tu propiedad</h3>*/}
-      {/*          <div className={styles.checkContainer}>*/}
-      {/*            {amenities && (*/}
-      {/*              <CheckInputList*/}
-      {/*                items={amenities}*/}
-      {/*                onCheck={(id) =>*/}
-      {/*                  dispatch(actions.editPropertyForm.addAmenity(id))*/}
-      {/*                }*/}
-      {/*                onUncheck={(id) =>*/}
-      {/*                  dispatch(actions.editPropertyForm.removeAmenity(id))*/}
-      {/*                }*/}
-      {/*                defaultValues={defaults.amenities}*/}
-      {/*              />*/}
-      {/*            )}*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-      {/*      </Col>*/}
-      {/*    </Form.Row>*/}
-      {/*  </Col>*/}
-      {/*  <Col>*/}
-      {/*    <Form.Row>*/}
-      {/*      <Col>*/}
-      {/*        <div>*/}
-      {/*          <h3>Medidas de seguridad</h3>*/}
-      {/*          <div className={styles.checkContainer}>*/}
-      {/*            {securities && (*/}
-      {/*              <CheckInputList*/}
-      {/*                items={securities}*/}
-      {/*                onCheck={(id) =>*/}
-      {/*                  dispatch(actions.editPropertyForm.addSecurity(id))*/}
-      {/*                }*/}
-      {/*                onUncheck={(id) =>*/}
-      {/*                  dispatch(actions.editPropertyForm.removeSecurity(id))*/}
-      {/*                }*/}
-      {/*                defaultValues={defaults.securities}*/}
-      {/*              />*/}
-      {/*            )}*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-      {/*      </Col>*/}
-      {/*    </Form.Row>*/}
-      {/*    <Form.Row>*/}
-      {/*      <Col>*/}
-      {/*        <div className={styles.constructionContainer}>*/}
-      {/*          <h3>Materiales de construccion</h3>*/}
-      {/*          <div className={styles.checkContainer}>*/}
-      {/*            {materials && (*/}
-      {/*              <CheckInputList*/}
-      {/*                items={materials}*/}
-      {/*                onCheck={(id) =>*/}
-      {/*                  dispatch(actions.editPropertyForm.addMaterial(id))*/}
-      {/*                }*/}
-      {/*                onUncheck={(id) =>*/}
-      {/*                  dispatch(actions.editPropertyForm.removeMaterial(id))*/}
-      {/*                }*/}
-      {/*                defaultValues={defaults.materials}*/}
-      {/*              />*/}
-      {/*            )}*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-      {/*      </Col>*/}
-      {/*    </Form.Row>*/}
-      {/*  </Col>*/}
-      {/*</Form.Row>*/}
       <StepButtons
         type={"submit"}
         onNext={handleClick}

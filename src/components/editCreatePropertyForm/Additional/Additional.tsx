@@ -108,24 +108,6 @@ export const Additional = () => {
             </span>
           </Grid>
         </Grid>
-
-        {/*<Form.Row>*/}
-        {/*  <Col>*/}
-        {/*    <Contacts />*/}
-        {/*  </Col>*/}
-        {/*  <Col>*/}
-        {/*    <OpenHouse />*/}
-        {/*  </Col>*/}
-        {/*</Form.Row>*/}
-        {/*<Form.Row>*/}
-        {/*  <Col className={styles.textContainer}>*/}
-        {/*    <h5>Contanos qué amas de esta propiedad, ¿qué la hace única...?</h5>*/}
-        {/*    <AdditionalTextArea*/}
-        {/*      name="description"*/}
-        {/*      defaultValue={defaults.description}*/}
-        {/*    />*/}
-        {/*  </Col>*/}
-        {/*</Form.Row>*/}
         <StepButtons
           type={"submit"}
           onPrevious={handlePreviousButton}

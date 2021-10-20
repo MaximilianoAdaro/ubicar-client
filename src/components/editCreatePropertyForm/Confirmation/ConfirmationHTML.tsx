@@ -127,24 +127,6 @@ export const Preview = ({ property }: PreviewProps) => {
           </Grid>
         </Grid>
       </Grid>
-      {/*<div className={styles.container}>*/}
-      {/*  <h4>Preview</h4>*/}
-      {/*  <div*/}
-      {/*    style={{*/}
-      {/*      // width: "70%",*/}
-      {/*      display: "flex",*/}
-      {/*      justifyContent: "center",*/}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    <div*/}
-      {/*      style={{*/}
-      {/*        width: "80%",*/}
-      {/*      }}*/}
-      {/*    >*/}
-      {/*      /!*<ListingHouse house={property} clickable={false} />*!/*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </Grid>
   );
 };

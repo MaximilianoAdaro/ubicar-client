@@ -181,23 +181,6 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
           <Grid xl xs />
           <Grid xl={3} xs={4}>
             <h3 className={styles.basic_info_titles}>Tipo de inmueble</h3>
-            {/*<div className={styles.typeContainer}>*/}
-            {/*  {types && (*/}
-            {/*      <RadioInput*/}
-            {/*          items={types}*/}
-            {/*          name={"propertyType"}*/}
-            {/*          onSelected={(label) => {*/}
-            {/*            if (types)*/}
-            {/*              dispatch(*/}
-            {/*                  actions.editPropertyForm.setPropertyType(label)*/}
-            {/*              );*/}
-            {/*          }}*/}
-            {/*          defaultValue={*/}
-            {/*            propertyInfo.type ? propertyInfo.type : defaults.type*/}
-            {/*          }*/}
-            {/*      />*/}
-            {/*  )}*/}
-            {/*</div>*/}
             <div>
               <TextField
                 value={propertyInfo.type ? propertyInfo.type : defaults.type}
@@ -221,94 +204,6 @@ export const BasicInfo = (propertyInfo: propertyInfo) => {
           </Grid>
           <Grid xl={2} xs={1} />
         </Grid>
-        {/*<Form.Row>*/}
-        {/*  <Col>*/}
-        {/*    <div className={styles.operationTypeContainer}>*/}
-        {/*      <Form.Row>*/}
-        {/*        <Col>*/}
-        {/*          <h3>Tipo de operacion</h3>*/}
-        {/*        </Col>*/}
-        {/*        <Col>*/}
-        {/*          <OperationTypeRadio />*/}
-        {/*        </Col>*/}
-        {/*      </Form.Row>*/}
-        {/*    </div>*/}
-        {/*  </Col>*/}
-        {/*  <Col>*/}
-        {/*    <Form.Row>*/}
-        {/*      <Col>*/}
-        {/*        <BasicInfoTextInput*/}
-        {/*          name="title"*/}
-        {/*          label="Titulo"*/}
-        {/*          placeholder={"Increible casa en la playa..."}*/}
-        {/*          defaultValue={*/}
-        {/*            propertyInfo.title ? propertyInfo.title : defaults.title*/}
-        {/*          }*/}
-        {/*        />*/}
-        {/*      </Col>*/}
-        {/*    </Form.Row>*/}
-        {/*    <Form.Row>*/}
-        {/*      <Col>*/}
-        {/*        <Form.Row>*/}
-        {/*          <Col>*/}
-        {/*            <BasicInfoTextInput*/}
-        {/*              name="price"*/}
-        {/*              label="Precio"*/}
-        {/*              defaultValue={*/}
-        {/*                propertyInfo.price*/}
-        {/*                  ? propertyInfo.price.toString()*/}
-        {/*                  : defaults.price?.toString()*/}
-        {/*              }*/}
-        {/*              frontSymbol="$"*/}
-        {/*            />*/}
-        {/*          </Col>*/}
-        {/*          <Col>*/}
-        {/*            <BasicInfoTextInput*/}
-        {/*              name="expenses"*/}
-        {/*              label="Expensas"*/}
-        {/*              defaultValue={*/}
-        {/*                propertyInfo.expenses*/}
-        {/*                  ? propertyInfo.expenses.toString()*/}
-        {/*                  : defaults.expenses?.toString()*/}
-        {/*              }*/}
-        {/*              frontSymbol="$"*/}
-        {/*            />*/}
-        {/*          </Col>*/}
-        {/*        </Form.Row>*/}
-        {/*      </Col>*/}
-        {/*    </Form.Row>*/}
-        {/*  </Col>*/}
-        {/*</Form.Row>*/}
-        {/*<Form.Row>*/}
-        {/*  <Col>*/}
-        {/*    <Form.Row>*/}
-        {/*      <Col>*/}
-        {/*        <h3>Tipo de inmueble</h3>*/}
-        {/*      </Col>*/}
-        {/*    </Form.Row>*/}
-        {/*    <Form.Row>*/}
-        {/*      <Col>*/}
-        {/*        <div className={styles.typeContainer}>*/}
-        {/*          {types && (*/}
-        {/*            <RadioInput*/}
-        {/*              items={types}*/}
-        {/*              name={"propertyType"}*/}
-        {/*              onSelected={(label) => {*/}
-        {/*                if (types)*/}
-        {/*                  dispatch(*/}
-        {/*                    actions.editPropertyForm.setPropertyType(label)*/}
-        {/*                  );*/}
-        {/*              }}*/}
-        {/*              defaultValue={*/}
-        {/*                propertyInfo.type ? propertyInfo.type : defaults.type*/}
-        {/*              }*/}
-        {/*            />*/}
-        {/*          )}*/}
-        {/*        </div>*/}
-        {/*      </Col>*/}
-        {/*    </Form.Row>*/}
-        {/*  </Col>*/}
-        {/*</Form.Row>*/}
         <Form.Row>
           <StepButtons
             type={"submit"}
@@ -358,11 +253,6 @@ const OperationTypeRadio = () => {
           xs
         >
           <span className={styles.border}>{displayName}</span>
-          {/*<div*/}
-          {/*  className={clsx(styles.highlighter, {*/}
-          {/*    [styles.active]: value === currentValue,*/}
-          {/*  })}*/}
-          {/*/>*/}
         </Grid>
       ))}
     </div>

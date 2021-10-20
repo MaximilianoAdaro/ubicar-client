@@ -84,35 +84,6 @@ export function PropertyCard(props: ListingHouseProps) {
               ${house.price.toLocaleString()}
             </p>
           </Grid>
-          {/*<Grid className={styles.editAndViewPropertyButtons}>*/}
-          {/*    <Grid xs>*/}
-          {/*        {props.state !== "notfinished" && (*/}
-          {/*            <Tooltip title={"Ver propiedad"}>*/}
-          {/*                <VisibilityIcon*/}
-          {/*                    onClick={() =>*/}
-          {/*                        history.push(urls.viewProperty.byId(house.id))*/}
-          {/*                    }*/}
-          {/*                    className={styles.propertyListIcons}*/}
-          {/*                />*/}
-          {/*            </Tooltip>*/}
-          {/*        )}*/}
-          {/*    </Grid>*/}
-          {/*    <Grid xs>*/}
-          {/*        {props.from === "properties" && (*/}
-          {/*            <Tooltip*/}
-          {/*                title={"Editar propiedad"}*/}
-          {/*                className={styles.propertyListEditPropertyTooltip}*/}
-          {/*            >*/}
-          {/*                <EditIcon*/}
-          {/*                    onClick={() =>*/}
-          {/*                        history.push(urls.editProperty.byId(house.id))*/}
-          {/*                    }*/}
-          {/*                    className={styles.propertyListIcons}*/}
-          {/*                />*/}
-          {/*            </Tooltip>*/}
-          {/*        )}*/}
-          {/*    </Grid>*/}
-          {/*</Grid>*/}
         </Grid>
       </Grid>
     </div>

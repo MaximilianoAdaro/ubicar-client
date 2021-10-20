@@ -82,16 +82,6 @@ export const Contacts = () => {
                 </Form.Control.Feedback>
               </Form.Group>
             </Col>
-            {/*<Col xs={2}>*/}
-            {/*  <Button*/}
-            {/*      onClick={onAddContact}*/}
-            {/*      type="button"*/}
-            {/*      variant={"outline-dark"}*/}
-            {/*      className={styles.button}*/}
-            {/*  >*/}
-            {/*    +*/}
-            {/*  </Button>*/}
-            {/*</Col>*/}
           </Form.Row>
           <Row>
             <Col>

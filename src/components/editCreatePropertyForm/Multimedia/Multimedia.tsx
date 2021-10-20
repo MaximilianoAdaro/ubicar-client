@@ -33,32 +33,11 @@ export const Multimedia = () => {
           <VideoInput />
         </Grid>
       </Grid>
-      {/*<Row>*/}
-      {/*  <Col>*/}
-      {/*    <div className={styles.container}>*/}
-      {/*      <Photos />*/}
-      {/*    </div>*/}
-      {/*  </Col>*/}
-      {/*</Row>*/}
-      {/*<Row>*/}
-      {/*  <Col>*/}
-      {/*    <div className={styles.container}>*/}
-      {/*      <VideoInput />*/}
-      {/*    </div>*/}
-      {/*  </Col>*/}
-      {/*</Row>*/}
       <StepButtons
         onNext={handleClick}
         onPrevious={handlePreviousButton}
         canPartialSave={canSave}
       />
-      {/*<Form.Row>*/}
-      {/*    <StepButtons*/}
-      {/*        onNext={handleClick}*/}
-      {/*        onPrevious={handlePreviousButton}*/}
-      {/*        canPartialSave={canSave}*/}
-      {/*    />*/}
-      {/*</Form.Row>*/}
     </Grid>
   );
 };
