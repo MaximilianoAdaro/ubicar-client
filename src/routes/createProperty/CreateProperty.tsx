@@ -14,6 +14,28 @@ import clsx from "clsx";
 import { Container } from "react-bootstrap";
 import { getFeatureFlag } from "../../utils/utils";
 import { AddressRevamp } from "../../components/editCreatePropertyForm/Address/AddressRevamp";
+import { LinearProgress } from "@material-ui/core";
+import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
+import { useState } from "react";
+
+const BorderLinearProgress = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      height: 5,
+      borderRadius: 5,
+      width: "86%",
+      marginLeft: "7%",
+      marginBottom: "3em",
+    },
+    colorPrimary: {
+      backgroundColor: "grey",
+    },
+    bar: {
+      borderRadius: 5,
+      backgroundColor: "#FF701F",
+    },
+  })
+)(LinearProgress);
 
 export const CreateProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
@@ -25,7 +47,7 @@ export const CreateProperty = () => {
           marginBottom: 50,
         }}
       >
-        <h1 className={styles.mainTitle}>Publica tu propiedad</h1>
+        <h1 className={styles.mainTitle}>Publicá tu propiedad</h1>
         <StepBar currentStep={currentStep} />
         <CurrentStep currentStep={currentStep} />
       </Container>
@@ -36,19 +58,19 @@ export const CreateProperty = () => {
 const steps = [
   {
     step: Step.BasicInfo,
-    displayName: "Informacion Basica",
+    displayName: "Datos Inmueble",
   },
   {
     step: Step.Address,
-    displayName: "Ubicacion",
+    displayName: "Ubicación",
   },
   {
     step: Step.Characteristics,
-    displayName: "Caracteristicas",
+    displayName: "Información",
   },
   {
     step: Step.OptionalInfo,
-    displayName: "Informacion Opcional",
+    displayName: "Servicios",
   },
   {
     step: Step.Multimedia,
@@ -60,7 +82,7 @@ const steps = [
   },
   {
     step: Step.Confirmation,
-    displayName: "Confirmacion",
+    displayName: "Confirmación",
   },
 ];
 
@@ -86,14 +108,13 @@ const StepBar = ({ currentStep }: StepBarProps) => {
             }}
           >
             <span>{displayName}</span>
-            <div
-              className={clsx(styles.highlighter, {
-                [styles.active]: step === currentStep,
-              })}
-            />
           </div>
         ))}
       </div>
+      <BorderLinearProgress
+        variant="determinate"
+        value={currentStep * (100 / 7)}
+      />
     </>
   );
 };
