@@ -20,6 +20,27 @@ import { Suspense, useEffect } from "react";
 import { selectIsInitialized } from "../../store/slices/editCreatePropertyForm/editCreatePropertyFormSlice";
 import { useGetPropertyUsingGET } from "../../api";
 import { AddressRevamp } from "../../components/editCreatePropertyForm/Address/AddressRevamp";
+import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
+import { LinearProgress } from "@material-ui/core";
+
+const BorderLinearProgress = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      height: 5,
+      borderRadius: 5,
+      width: "86%",
+      marginLeft: "7%",
+      marginBottom: "3em",
+    },
+    colorPrimary: {
+      backgroundColor: "grey",
+    },
+    bar: {
+      borderRadius: 5,
+      backgroundColor: "#FF701F",
+    },
+  })
+)(LinearProgress);
 
 export const EditProperty = () => {
   const currentStep = useAppSelector(selectCurrentStep);
@@ -89,14 +110,13 @@ const StepBar = ({ currentStep }: StepBarProps) => {
             }}
           >
             <span>{displayName}</span>
-            <div
-              className={clsx(styles.highlighter, {
-                [styles.active]: step === currentStep,
-              })}
-            />
           </div>
         ))}
       </div>
+      <BorderLinearProgress
+        variant="determinate"
+        value={currentStep * (100 / 7)}
+      />
     </>
   );
 };

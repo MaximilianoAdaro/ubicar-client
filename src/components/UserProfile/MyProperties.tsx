@@ -1,12 +1,16 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Tooltip } from "@material-ui/core";
 import { useGetMyPropertiesUsingGET } from "../../api";
 import { PropertyCardMyProperties } from "./PropertyCardMyProperties";
+import EditIcon from "@material-ui/icons/Edit";
+import { urls } from "../../constants";
+import { useHistory } from "react-router-dom";
 
 export function MyProperties() {
   const data = useGetMyPropertiesUsingGET();
   console.log(data);
+  const history = useHistory();
   return (
     <div className={styles.personalDataMainDiv}>
       <Grid>
@@ -48,12 +52,14 @@ export function MyProperties() {
                 {data?.data
                   .filter((casa) => casa.step < 7)
                   .map((casa) => (
-                    <PropertyCardMyProperties
-                      key={casa.id}
-                      house={casa}
-                      from={"properties"}
-                      state={"notfinished"}
-                    />
+                    <Grid>
+                      <PropertyCardMyProperties
+                        key={casa.id}
+                        house={casa}
+                        from={"properties"}
+                        state={"notfinished"}
+                      />
+                    </Grid>
                   ))}
               </Grid>
             </div>

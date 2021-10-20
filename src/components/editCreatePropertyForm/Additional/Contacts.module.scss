@@ -14,6 +14,7 @@
   margin-bottom: 10px;
   border-radius: 20px;
   flex-direction: row;
+  max-height: 100px;
 }
 
 .cardBody {
@@ -33,4 +34,51 @@
     color: darkred;
     cursor: pointer;
   }
+}
+
+.contacts_add_button:hover {
+  cursor: pointer;
+}
+
+.contacts_container {
+  width: 85%;
+  //padding: 0 2%;
+  //background-color: #429EA6;
+  border-radius: 1em;
+}
+
+.contacts_buttons_grid {
+  padding-top: 1.5em;
+  text-align: center;
+}
+
+.contacts_button_grid_span_tags {
+  font-size: x-large;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.contacts_form_control {
+  border-radius: 0 1em 1em;
+  background-color: #429ea6;
+  padding: 3em 2em 1em;
+}
+
+.contacts_button_subtitle_grid {
+  background-color: #429ea6;
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
+  padding: 15px;
+}
+
+.contacts_button_subtitle_add {
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
+  padding: 15px;
+}
+
+.contacts_text_inputs_span {
+  color: white;
+  margin-left: 1em;
+  padding-top: 1em;
 }

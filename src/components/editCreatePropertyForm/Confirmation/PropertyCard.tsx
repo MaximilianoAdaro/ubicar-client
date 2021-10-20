@@ -1,15 +1,13 @@
-import { PropertyPreviewDTO } from "../../api";
+import { PropertyDTO } from "../../../api";
 import { Grid, makeStyles } from "@material-ui/core";
 import { Image } from "react-bootstrap";
-import styles from "./UserProfile.module.scss";
+import styles from "./Confirmation.module.scss";
 import { useHistory } from "react-router-dom";
 import pluralize from "pluralize";
 import { Tooltip } from "@material-ui/core";
 
 interface ListingHouseProps {
-  house: PropertyPreviewDTO;
-  from: string;
-  state: string;
+  house: PropertyDTO;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function PropretyCardMyFavorites(props: ListingHouseProps) {
+export function PropertyCard(props: ListingHouseProps) {
   const classes = useStyles();
   const house = props.house;
   const history = useHistory();
@@ -39,7 +37,7 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
   return (
     <div>
       <Grid className={styles.my_favorite_card_outer_div}>
-        <Grid className={styles.container}>
+        <Grid className={styles.property_card_container}>
           <Grid>
             <Image
               className={styles.my_favorities_property_image}
@@ -78,13 +76,12 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
               <p className={styles.myPropertySpecifications}>
                 {house.rooms} hab. &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths}{" "}
                 {baths} &nbsp;&nbsp;|&nbsp;&nbsp; {house.coveredSquareFoot} m²
-                &nbsp;&nbsp;
+                &nbsp;&nbsp;|&nbsp;&nbsp; En{" "}
+                {house.condition == "SALE" ? "Venta" : "Alquiler"}{" "}
               </p>
             </Tooltip>
             <p className={styles.myPropertyPriceCondition}>
               ${house.price.toLocaleString()}
-              &nbsp;|&nbsp; En{" "}
-              {house.condition == "SALE" ? "Venta" : "Alquiler"}{" "}
             </p>
           </Grid>
         </Grid>

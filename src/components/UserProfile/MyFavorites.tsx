@@ -9,7 +9,7 @@ import { ListItem, List } from "@material-ui/core";
 import { PropretyCardMyFavorites } from "./PropertyCardMyFavorites";
 
 export function MyFavorites() {
-  const data = useGetMyPropertiesUsingGET();
+  const data = useGetFavoritePropertiesUsingGET();
   return (
     <div className={styles.personalDataMainDiv}>
       <Grid>
