@@ -28,7 +28,7 @@ const StyledButton = withStyles({
     "&:hover": {
       background: "#f2f2f2",
     },
-    color: "#ff4400",
+    color: "#FF701F",
     fontSize: "x-large",
   },
 })(Button);
@@ -45,7 +45,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
     },
     bar: {
       borderRadius: 5,
-      backgroundColor: "#ff4400",
+      backgroundColor: "#FF701F",
     },
   })
 )(LinearProgress);
@@ -88,38 +88,6 @@ export function UserProfile() {
               </Grid>
               <BorderLinearProgress variant="determinate" value={0} />
             </Grid>
-            {/*<List className={styles.optionsList}>*/}
-            {/*  <ListItem>*/}
-            {/*    <StyledButton*/}
-            {/*      variant={"outlined"}*/}
-            {/*      className={classes.button}*/}
-            {/*      onClick={() => setComponent("PersonalData")}*/}
-            {/*      fullWidth*/}
-            {/*    >*/}
-            {/*      Datos Personales*/}
-            {/*    </StyledButton>*/}
-            {/*  </ListItem>*/}
-            {/*  <ListItem>*/}
-            {/*    <StyledButton*/}
-            {/*      variant={"outlined"}*/}
-            {/*      className={classes.button}*/}
-            {/*      onClick={() => setComponent("MyProperties")}*/}
-            {/*      fullWidth*/}
-            {/*    >*/}
-            {/*      Mis Propiedades*/}
-            {/*    </StyledButton>*/}
-            {/*  </ListItem>*/}
-            {/*  <ListItem>*/}
-            {/*    <StyledButton*/}
-            {/*      variant={"outlined"}*/}
-            {/*      className={classes.button}*/}
-            {/*      onClick={() => setComponent("MyFavorites")}*/}
-            {/*      fullWidth*/}
-            {/*    >*/}
-            {/*      Mis Favoritos*/}
-            {/*    </StyledButton>*/}
-            {/*  </ListItem>*/}
-            {/*</List>*/}
           </Grid>
           <Grid xs className={styles.currentUserProfileComponent}>
             {component === "PersonalData" && <PersonalData />}

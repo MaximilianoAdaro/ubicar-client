@@ -18,37 +18,6 @@ export function MyFavorites() {
       </Grid>
       <Grid className={styles.properties}>
         <div className={styles.propertyList}>
-          {/*<Grid>*/}
-          {/*    <List style={{ display: 'inline-block', flexDirection: 'row', padding: 0 }}>*/}
-          {/*        <ListItem>*/}
-          {/*            hehe*/}
-          {/*        </ListItem>*/}
-          {/*        <ListItem>*/}
-          {/*            22222*/}
-          {/*        </ListItem>*/}
-          {/*        <ListItem>*/}
-          {/*            hehe*/}
-          {/*        </ListItem>*/}
-          {/*        <ListItem>*/}
-          {/*            hehe*/}
-          {/*        </ListItem>*/}
-          {/*        <ListItem>*/}
-          {/*            hehe*/}
-          {/*        </ListItem>*/}
-          {/*        <ListItem>*/}
-          {/*            hehe*/}
-          {/*        </ListItem>*/}
-          {/*        <ListItem>*/}
-          {/*            hehe*/}
-          {/*        </ListItem>*/}
-          {/*        <ListItem>*/}
-          {/*            hehe*/}
-          {/*        </ListItem>*/}
-          {/*        <ListItem>*/}
-          {/*            hehe*/}
-          {/*        </ListItem>*/}
-          {/*    </List>*/}
-          {/*</Grid>*/}
           {data.status === "success" && data?.data.length > 0 ? (
             <div>
               <h3>Propiedades en favoritos</h3>

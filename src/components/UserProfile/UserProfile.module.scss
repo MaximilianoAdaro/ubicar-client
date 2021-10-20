@@ -65,13 +65,11 @@
   padding-left: 5%;
   padding-top: 2em;
   background: rgba(211, 211, 211, 0.25);
+  margin-bottom: 3em;
 }
 
 .properties {
   margin-left: 2%;
-}
-
-.personalDataTitle {
 }
 
 .personalDataInformation {
@@ -85,9 +83,6 @@
 .propertyListIcons {
   cursor: pointer;
   margin-bottom: 0.7em;
-}
-
-.propertyListEditPropertyTooltip {
 }
 
 .editAndViewPropertyButtons {
@@ -109,7 +104,7 @@
 }
 
 .persona_data_subtitles {
-  color: #ff4400;
+  color: #ff701f;
   margin-bottom: 1em;
   margin-top: 1em;
 }
