@@ -8,6 +8,7 @@ import styles from "./ListingPage.module.scss";
 import { useEffect, useMemo, useState } from "react";
 import {
   PropertyPreviewDTO,
+  useGetLoggedUsingGET,
   useGetStylesUsingGET,
   useGetTypesUsingGET,
 } from "../../api";
@@ -15,6 +16,7 @@ import { Switch, useLocation } from "react-router-dom";
 import QueryString from "query-string";
 import { Loading } from "../../components/common/loading/Loading";
 import { useDispatch } from "react-redux";
+import SignUp from "../../components/PopUp/SignUp";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -22,6 +24,7 @@ const checkNotUndefined = (value: any) => {
 
 export const ListingPage = () => {
   const location = useLocation();
+  const { data: user } = useGetLoggedUsingGET();
 
   const [zoom, setZoom] = useState(useAppSelector(selectZoom));
   const [view, setView] = useState(useAppSelector(selectView));
@@ -99,12 +102,23 @@ export const ListingPage = () => {
     );
   };
 
+  const isAuthenticated = !!user;
+
   useEffect(() => {
     buildDataset();
   }, [bbox, query]);
 
+  const [isOpened, setIsOpened] = useState(false);
+
+  useEffect(() => {
+    setIsOpened(true);
+  }, [isAuthenticated]);
+
   return (
     <div>
+      {!isAuthenticated && (
+        <SignUp isOpened={isOpened} setIsOpened={setIsOpened} />
+      )}
       <ListingFilters
         houseStyles={houseStyles ? houseStyles : null}
         houseTypes={houseTypes ? houseTypes : null}
