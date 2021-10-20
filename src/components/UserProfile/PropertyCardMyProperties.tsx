@@ -6,6 +6,8 @@ import pluralize from "pluralize";
 import { useHistory } from "react-router-dom";
 import { PropertyPreviewDTO } from "../../api";
 import clsx from "clsx";
+import EditIcon from "@material-ui/icons/Edit";
+import { urls } from "../../constants";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
@@ -70,9 +72,32 @@ export function PropertyCardMyProperties(props: ListingHouseProps) {
             {houseStreetNumber}
           </p>
         </Tooltip>
-        <p className={clsx(styles.propertyTownCity, styles.marginPaddingPTag)}>
-          {houseAddress?.state ?? ""}, {houseAddress?.city ?? ""}
-        </p>
+        <Grid container>
+          <Grid xs={11}>
+            <p
+              className={clsx(
+                styles.propertyTownCity,
+                styles.marginPaddingPTag
+              )}
+            >
+              {houseAddress?.state ?? ""}, {houseAddress?.city ?? ""}
+            </p>
+          </Grid>
+          <Grid xs>
+            <Tooltip
+              title={"Editar propiedad"}
+              className={styles.propertyListEditPropertyTooltip}
+            >
+              <EditIcon
+                // size={10}
+                onClick={() =>
+                  history.push(urls.editProperty.byId(props.house.id))
+                }
+                className={styles.propertyListIcons}
+              />
+            </Tooltip>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
