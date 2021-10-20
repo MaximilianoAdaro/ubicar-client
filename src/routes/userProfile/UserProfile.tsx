@@ -11,6 +11,8 @@ import { PersonalData } from "../../components/UserProfile";
 import { MyFavorites } from "../../components/UserProfile/MyFavorites";
 import { MyProperties } from "../../components/UserProfile/MyProperties";
 import { useState } from "react";
+import { createStyles, Theme } from "@material-ui/core/styles";
+import { LinearProgress } from "@material-ui/core";
 
 const useStyles = makeStyles({
   button: {
@@ -21,12 +23,32 @@ const useStyles = makeStyles({
 const StyledButton = withStyles({
   root: {
     textTransform: "none",
+    justifyContent: "center",
     fontWeight: "bold",
     "&:hover": {
       background: "#f2f2f2",
     },
+    color: "#FF701F",
+    fontSize: "x-large",
   },
 })(Button);
+
+const BorderLinearProgress = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      height: 5,
+      borderRadius: 5,
+      width: "100%",
+    },
+    colorPrimary: {
+      backgroundColor: "grey",
+    },
+    bar: {
+      borderRadius: 5,
+      backgroundColor: "#FF701F",
+    },
+  })
+)(LinearProgress);
 
 export function UserProfile() {
   const classes = useStyles();
@@ -34,50 +56,38 @@ export function UserProfile() {
   return (
     <>
       <div>
-        <Grid container>
-          <Grid xs={2} className={styles.optionsContainer}>
-            <List className={styles.optionsList}>
-              <ListItem>
+        <Grid className={styles.userProfileContainer}>
+          <Grid className={styles.optionsContainer}>
+            <Grid container>
+              <Grid xs>
                 <StyledButton
-                  variant={"outlined"}
                   className={classes.button}
                   onClick={() => setComponent("PersonalData")}
                   fullWidth
                 >
                   Datos Personales
                 </StyledButton>
-              </ListItem>
-              <ListItem>
+              </Grid>
+              <Grid xs>
                 <StyledButton
-                  variant={"outlined"}
                   className={classes.button}
                   onClick={() => setComponent("MyProperties")}
                   fullWidth
                 >
                   Mis Propiedades
                 </StyledButton>
-              </ListItem>
-              <ListItem>
+              </Grid>
+              <Grid xs>
                 <StyledButton
-                  variant={"outlined"}
                   className={classes.button}
                   onClick={() => setComponent("MyFavorites")}
                   fullWidth
                 >
                   Mis Favoritos
                 </StyledButton>
-              </ListItem>
-              {/*<ListItem>*/}
-              {/*  <Button*/}
-              {/*    variant={"outlined"}*/}
-              {/*    className={classes.button}*/}
-              {/*    onClick={() => setComponent("Notifications")}*/}
-              {/*    fullWidth*/}
-              {/*  >*/}
-              {/*    Notificaciones*/}
-              {/*  </Button>*/}
-              {/*</ListItem>*/}
-            </List>
+              </Grid>
+              <BorderLinearProgress variant="determinate" value={0} />
+            </Grid>
           </Grid>
           <Grid xs className={styles.currentUserProfileComponent}>
             {component === "PersonalData" && <PersonalData />}

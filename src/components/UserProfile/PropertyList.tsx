@@ -1,5 +1,5 @@
 import { PropertyPreviewDTO } from "../../api";
-import { Button, Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import { Image } from "react-bootstrap";
 import styles from "./UserProfile.module.scss";
 import { useHistory } from "react-router-dom";

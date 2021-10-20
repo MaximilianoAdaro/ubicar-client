@@ -18,13 +18,14 @@
   width: 95%;
 }
 .myPropertyPriceCondition {
-  font-size: 1.2em;
+  font-size: 1em;
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 0.3em;
+  font-weight: bold;
 }
 
 .myPropertySpecifications {
-  font-size: 1.2em;
+  font-size: 1em;
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 0.3em;
   white-space: nowrap;
@@ -32,9 +33,9 @@
   text-overflow: "...";
 }
 .myPropertyStreetNumber {
-  font-size: 1.2em;
+  font-size: 0.9em;
   font-family: Arial, Helvetica, sans-serif;
-  margin-bottom: 0.3em;
+  margin-bottom: 0;
   font-weight: bold;
   text-transform: lowercase;
 }
@@ -44,38 +45,33 @@
 }
 
 .myPropertyTownCity {
-  font-size: 1.1em;
+  font-size: 0.9em;
   font-family: Arial, Helvetica, sans-serif;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.4em;
   text-transform: capitalize;
 }
 
 .myPropertyTitle {
-  font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.7em;
-  margin-bottom: 0.2em;
+  font-size: 1.3em;
+  margin-bottom: 0.3em;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: "...";
+  text-overflow: ellipsis;
 }
 
 .personalDataMainDiv {
-  margin-left: 2%;
-  margin-top: 2%;
-  width: 80%;
+  padding-right: 5%;
+  padding-left: 5%;
+  padding-top: 2em;
+  background: rgba(211, 211, 211, 0.25);
+  margin-bottom: 3em;
 }
 
 .properties {
   margin-left: 2%;
 }
 
-.personalDataTitle {
-  border-bottom: 1px solid black;
-}
-.personalDataTitle p {
-  margin-bottom: 1em;
-}
 .personalDataInformation {
   margin-top: 1em;
 }
@@ -89,19 +85,110 @@
   margin-bottom: 0.7em;
 }
 
-.propertyListEditPropertyTooltip {
-}
-
 .editAndViewPropertyButtons {
   margin-left: auto;
   margin-top: 0.3em;
 }
 
 .userProfileToolTips {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 1.5em;
   padding: 0;
 }
+
 .userProfileToolTips p {
   margin: 0;
   padding: 0;
+}
+
+.persona_data_subtitles {
+  color: #ff701f;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+.personal_data_textfield_span {
+  width: 100%;
+}
+.personal_data_textfield {
+  width: 80%;
+  background-color: white;
+  margin-bottom: 2em;
+}
+
+.personal_data_contact_textfield {
+  background-color: white;
+}
+.personal_data_contact_warning {
+  font-size: small;
+  margin-left: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 2em;
+}
+
+.propertiesImages {
+  height: 100%;
+  width: 95%;
+}
+
+.propertyInformation {
+  margin-bottom: 3%;
+  margin-top: 1.5%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background: white;
+}
+
+.marginPaddingPTag {
+  padding: 0;
+  margin: 0;
+}
+
+.propertyTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+}
+
+.propertyStreetNumber {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: "...";
+  font-weight: bold;
+  font-size: 1em;
+  text-transform: capitalize;
+}
+
+.propertyTownCity {
+  font-size: 0.9em;
+  text-transform: capitalize;
+}
+
+.propertySpecifications {
+  margin-bottom: 1%;
+}
+
+.propertyPriceCondition {
+  font-weight: bold;
+}
+.propertyRight {
+  padding-top: 0.5em;
+}
+
+.published_property_list {
+  overflow: auto;
+  max-height: 80vh;
+}
+
+.my_favorities_property_image {
+  width: 100%;
+  height: 90%;
+}
+
+.my_favorite_card_outer_div {
+  max-width: 30em;
 }
