@@ -1,5 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Container, Link as MLink, Typography } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  Link as MLink,
+  Typography,
+} from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import * as yup from "yup";
@@ -9,10 +14,12 @@ import { DividerWithText } from "../../components/common/DividerWithText";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
 import { errorMessages, urls } from "../../constants";
-import { useAppSelector } from "../../store";
+import { actions, useAppSelector } from "../../store";
 import { selectRedirectPath } from "../../store/slices/session";
 import GoogleLogin from "./GoogleLogin";
 import styles from "./LogIn.module.scss";
+import clsx from "clsx";
+import { none } from "ol/centerconstraint";
 
 const schema = yup.object({
   email: yup
@@ -45,45 +52,71 @@ export const LogIn = () => {
   return (
     <Container>
       <div className={styles.titleContainer}>
-        <Typography variant={"h3"}>Inicia sesion</Typography>
+        <Typography variant={"h3"} style={{ fontWeight: 600 }}>
+          Bienvenido a Ubicar
+        </Typography>
       </div>
-
-      <div className={styles.form}>
-        <div>
-          <form onSubmit={onSubmit}>
-            <div className={styles.input}>
+      <form onSubmit={onSubmit}>
+        <div className={styles.form}>
+          <div className={styles.leftContainer}>
+            <div className={styles.buttonOptions}>
+              <div className={styles.internalButtonOptions}>
+                <Link to={urls.logIn} style={{ textDecoration: "none" }}>
+                  <Button type={"button"} style={{ fontSize: "larger" }}>
+                    Iniciar Sesión
+                  </Button>
+                </Link>
+                <div className={styles.highlighter} />
+              </div>
+              <div className={styles.internalButtonOptions}>
+                <Link to={urls.signUp} style={{ textDecoration: "none" }}>
+                  <Button type={"button"} style={{ fontSize: "larger" }}>
+                    Registrarse
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            <div className={styles.input1}>
               <HookFormTextField
                 label={"Email"}
                 name={"email"}
                 control={control}
               />
             </div>
-            <div className={styles.input}>
+            <div className={styles.input2}>
               <HookFormPasswordInput
                 label={"Contraseña"}
                 name={"password"}
                 control={control}
               />
             </div>
-            <div className={styles.buttonContainer}>
-              <RoundedButton type={"submit"}>
-                {isLoading ? "..." : "Entrar"}
-              </RoundedButton>
-              <div className={styles.link}>
-                <Link to={urls.signUp}>
-                  <MLink variant="body2" component={"span"}>
-                    {"No tienes una cuenta? Registrate"}
-                  </MLink>
-                </Link>
+          </div>
+          <div className={styles.rightContainer}>
+            <div className={styles.insideRightContainer}>
+              <div className={styles.buttonContainer}>
+                <Button type={"submit"}>
+                  {isLoading ? "..." : "Iniciar Sesión"}
+                </Button>
+                <div className={styles.link}>
+                  <Link to={urls.signUp}>
+                    <MLink
+                      variant="body2"
+                      component={"span"}
+                      style={{ color: "grey" }}
+                    >
+                      {"Olvidaste tu contraseña?"}
+                    </MLink>
+                  </Link>
+                </div>
               </div>
+              <div style={{ marginTop: "10px" }}>
+                <DividerWithText>O</DividerWithText>
+              </div>
+              <GoogleLogin />
             </div>
-            <div>
-              <DividerWithText>O</DividerWithText>
-            </div>
-          </form>
-          <GoogleLogin />
+          </div>
         </div>
-      </div>
+      </form>
     </Container>
   );
 };

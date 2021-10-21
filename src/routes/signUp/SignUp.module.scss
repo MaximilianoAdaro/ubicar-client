@@ -1,8 +1,98 @@
 @import "src/styles/common";
 
 .titleContainer {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  margin-top: 4em;
+  width: 100%;
+  color: $theme-orange;
+}
+
+.leftContainer {
+  justify-content: left;
+  align-items: center;
+  margin-right: 50px;
+  width: 45%;
+}
+
+.rightContainer {
+  align-items: center;
+  margin-left: 50px;
+  width: 45%;
+  vertical-align: middle;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.insideRightContainer {
+  width: 100%;
+}
+
+.highlighter {
+  height: 4px;
+  width: 100%;
+  border: 1px solid $theme-orange;
+  background-color: $theme-orange;
+  border-radius: 30px;
+}
+
+.buttonContainer button {
+  width: 100%;
+  background-color: $theme-orange;
+  color: #ffffff;
+  height: 50px;
+}
+
+.buttonContainer button:hover {
+  background-color: $theme-orange;
+  color: #000000;
+  box-shadow: none;
+}
+
+.internalButtonOptions {
+  margin: 5px 25px;
+}
+
+.link {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonContainer {
+  margin-top: 1em;
+}
+
+.button button {
+  font-size: xxx-large;
+}
+
+.buttonOptions {
+  display: flex;
+  flex-direction: row;
+  background-color: #e7e6e6;
+  justify-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+}
+
+.input1 {
   margin-top: 2em;
-  margin-bottom: 2em;
+  width: 100%;
+}
+
+.input2 {
+  margin-top: 0.8em;
+  width: 100%;
 }
 
 .mainTitle {
@@ -12,17 +102,9 @@
   color: $theme-goldish;
 }
 
-.form {
-  margin-top: 2em;
-}
-
 .column {
   padding: 20px;
   width: 400px;
-}
-
-.rightColumn {
-  //margin-top: 30px;
 }
 
 .inputs {
@@ -33,15 +115,8 @@
 }
 
 .inputContainer {
-  margin-top: 1em;
-}
-
-.emailAndBirthdate {
-  margin-top: 30px;
-}
-
-.password {
-  margin-top: 95px;
+  margin-bottom: 40px;
+  margin-top: 10px;
 }
 
 .buttonSection {
@@ -52,20 +127,4 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
-}
-
-.gridButton {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1.4em;
-}
-
-.buttonContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  width: 13em;
-  //padding: 1em;
 }
