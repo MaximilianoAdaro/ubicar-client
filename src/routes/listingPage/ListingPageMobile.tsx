@@ -1,34 +1,38 @@
-import { ListingFilters } from "../../components/listingFilters/";
-import { MapComponent } from "../../components/Map/map";
-import { actions, useAppSelector } from "../../store";
-import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
-import styles from "./ListingPage.module.scss";
 import { useEffect, useMemo, useState } from "react";
+import { Switch, useLocation } from "react-router";
 import {
   PropertyPreviewDTO,
+  useGetPropertiesUsingGET,
   useGetStylesUsingGET,
   useGetTypesUsingGET,
 } from "../../api";
-import { Switch, useLocation } from "react-router-dom";
-import QueryString from "query-string";
-import { Loading } from "../../components/common/loading/Loading";
-import { useDispatch } from "react-redux";
-import { HouseCard } from "../../components/newListingHouse";
-import clsx from "clsx";
+import styles from "./ListingPageMobile.module.scss";
 import { ReactComponent as OneGridIcon } from "../../assets/listingPageGridOne.svg";
 import { ReactComponent as OneGridIconSelected } from "../../assets/listingPageGridOneSelected.svg";
 import { ReactComponent as TwoGridIcon } from "../../assets/listingPageGridTwo.svg";
 import { ReactComponent as TwoGridIconSelected } from "../../assets/listingPageGridTwoSelected.svg";
+import clsx from "clsx";
+import { HouseCardMobile } from "../../components/newListingHouse";
+import { actions, useAppSelector } from "../../store";
+import { useDispatch } from "react-redux";
+import QueryString from "query-string";
+import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
+import { MapComponent } from "../../components/Map/map";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
 };
 
-export const ListingPage = () => {
-  const location = useLocation();
-
+export const ListingPageMobile = () => {
+  const [isMapView, setIsMapView] = useState(false);
   const [isTwoColumns, setIsTwoColums] = useState(false);
   const [isLargeCards, setIsLargeCards] = useState(true);
+
+  const { data: properties } = useGetPropertiesUsingGET({
+    page: 0,
+  });
+
+  const location = useLocation();
 
   const [zoom, setZoom] = useState(useAppSelector(selectZoom));
   const [view, setView] = useState(useAppSelector(selectView));
@@ -111,36 +115,36 @@ export const ListingPage = () => {
   }, [bbox, query]);
 
   return (
-    <div>
-      <ListingFilters
-        houseStyles={houseStyles ? houseStyles : null}
-        houseTypes={houseTypes ? houseTypes : null}
-        setZoom={setter1}
-        setView={setter2}
-      />
-      <div className={styles.mapAndProperties}>
-        <div className={styles.map}>
-          <MapComponent
-            zoom={zoom}
-            view={view}
-            renderLayers={true}
-            editable={false}
-            setZoom={setter1}
-            setView={setter2}
-            setBbox={setBbox}
-            body={body}
-          />
+    <div className={styles.container}>
+      <div className={styles.map}>
+        {/* <MapComponent
+          zoom={zoom}
+          view={view}
+          renderLayers={true}
+          editable={false}
+          setZoom={setter1}
+          setView={setter2}
+          setBbox={setBbox}
+          body={body}
+        /> */}
+      </div>
+      <div
+        className={clsx(styles.listContainer, {
+          [styles.listUp]: !isMapView,
+        })}
+      >
+        <div
+          className={styles.changeViewButton}
+          onClick={() => setIsMapView((b) => !b)}
+        >
+          <div />
         </div>
-        <div className={styles.changeSizeButtonContainer}>
-          <div onClick={() => setIsTwoColums((b) => !b)}>
-            <div />
-            <div />
-          </div>
+        <div>
+          <span className={styles.title}>Propiedades</span>
         </div>
         <div className={styles.propertyList}>
           <Switch>
-            {load && <Loading />}
-            {!load && rightSideData && rightSideData.length > 0 ? (
+            {(properties?.content ?? []).length > 0 ? (
               <div className={styles.buttonsAndProps}>
                 <div className={styles.gridIcons}>
                   {isLargeCards ? (
@@ -163,7 +167,7 @@ export const ListingPage = () => {
                 </div>
 
                 <PropertyList
-                  properties={rightSideData}
+                  properties={properties?.content}
                   expanded={isTwoColumns}
                   isLargeCards={isLargeCards}
                 />
@@ -196,7 +200,11 @@ const PropertyList = ({
       })}
     >
       {properties?.map((property) => (
-        <HouseCard key={property.id} house={property} isLarge={isLargeCards} />
+        <HouseCardMobile
+          key={property.id}
+          house={property}
+          isLarge={isLargeCards}
+        />
       ))}
     </div>
   );

@@ -1,0 +1,99 @@
+$radius: 7px;
+
+.cardContainer {
+  box-shadow: 0px 0px 7px 0px grey;
+  border-radius: $radius;
+  padding: 0.7em;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  cursor: pointer;
+
+  width: 300px;
+}
+
+.imageContainer {
+  border-radius: $radius;
+  height: 100%;
+  width: 100%;
+}
+
+.infoContainer {
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.address {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+
+  display: flex;
+  flex-direction: column;
+
+  .streetNumber {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: "...";
+
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .stateCity {
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+  }
+}
+
+.details {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.price {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.large.cardContainer {
+  width: 600px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 40% auto;
+
+  .imageContainer {
+    // width: 40%;
+  }
+
+  .infoContainer {
+    padding: 10px;
+
+    .title {
+      font-weight: bold;
+    }
+
+    .price {
+      font-weight: normal;
+    }
+  }
+}

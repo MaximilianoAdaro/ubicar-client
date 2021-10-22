@@ -33,11 +33,69 @@
 .dropdownButtons {
   margin: 5px;
 }
-.map {
-  padding-right: 1em;
-  height: 85vh;
+
+.mapAndProperties {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+
+  .map {
+    height: 85vh;
+  }
+
+  .changeSizeButtonContainer {
+    display: grid;
+    place-items: center;
+
+    > div {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: auto auto;
+      align-items: center;
+      height: 1em;
+
+      cursor: pointer;
+      > div {
+        border-radius: 10px;
+        height: 20px;
+        border-left: 2px solid #c4c4c4;
+      }
+    }
+  }
 }
-.propertyList {
+
+.propList {
   overflow: auto;
   height: 85vh;
+  display: grid;
+  grid-template-columns: auto;
+  gap: 2.3em 2em;
+  padding: 0.3em;
+  transition: grid-template-columns 1s ease-out;
+
+  &.expanded {
+    grid-template-columns: auto auto;
+  }
+}
+
+.buttonsAndProps {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 1.3em;
+  margin-top: 1em;
+  padding: 1em;
+}
+
+.gridIcons {
+  display: flex;
+  gap: 0.5em;
+  justify-content: flex-end;
+
+  .gridButton {
+    cursor: pointer;
+  }
+
+  .gridButtonSelected {
+    fill: #ff4000;
+  }
 }
