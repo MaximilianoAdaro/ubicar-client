@@ -6,6 +6,7 @@ import styles from "./ListingPage.module.scss";
 import { useEffect, useMemo, useState } from "react";
 import {
   PropertyPreviewDTO,
+  useGetLoggedUsingGET,
   useGetStylesUsingGET,
   useGetTypesUsingGET,
 } from "../../api";
@@ -19,6 +20,7 @@ import { ReactComponent as OneGridIcon } from "../../assets/listingPageGridOne.s
 import { ReactComponent as OneGridIconSelected } from "../../assets/listingPageGridOneSelected.svg";
 import { ReactComponent as TwoGridIcon } from "../../assets/listingPageGridTwo.svg";
 import { ReactComponent as TwoGridIconSelected } from "../../assets/listingPageGridTwoSelected.svg";
+import SignUp from "../../components/PopUp/SignUp";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -26,6 +28,7 @@ const checkNotUndefined = (value: any) => {
 
 export const ListingPage = () => {
   const location = useLocation();
+  const { data: user } = useGetLoggedUsingGET();
 
   const [isTwoColumns, setIsTwoColums] = useState(false);
   const [isLargeCards, setIsLargeCards] = useState(true);
@@ -106,12 +109,23 @@ export const ListingPage = () => {
     );
   };
 
+  const isAuthenticated = !!user;
+
   useEffect(() => {
     buildDataset();
   }, [bbox, query]);
 
+  const [isOpened, setIsOpened] = useState(false);
+
+  useEffect(() => {
+    setIsOpened(true);
+  }, [isAuthenticated]);
+
   return (
     <div>
+      {!isAuthenticated && (
+        <SignUp isOpened={isOpened} setIsOpened={setIsOpened} />
+      )}
       <ListingFilters
         houseStyles={houseStyles ? houseStyles : null}
         houseTypes={houseTypes ? houseTypes : null}

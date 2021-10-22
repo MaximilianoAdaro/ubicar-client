@@ -26,8 +26,8 @@ class SchoolLayer extends React.PureComponent<TVectorLayerComponentProps> {
         color: "rgba(0, 100, 240, 0.8)",
       }),
       image: new Icon({
-        src: "./icons/school.png",
-        scale: 100 / 1024,
+        src: "./newIcons/school.svg",
+        scale: 768 / 1024,
         anchor: [0.5, 0.75],
       }),
       text: new Text(),

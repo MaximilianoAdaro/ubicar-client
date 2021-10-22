@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   border: {
-    borderBottom: "2px solid lightgray",
+    borderBottom: "2px solid #ff701f",
     width: "100%",
   },
   content: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     fontWeight: 500,
     fontSize: 20,
-    color: "lightgray",
+    color: "#ff701f",
   },
 }));
 

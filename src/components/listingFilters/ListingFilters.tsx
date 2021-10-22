@@ -175,6 +175,7 @@ export function ListingFilters({
           <Grid>
             <Autocomplete
               id="asyncState"
+              size={"small"}
               style={{ width: "500px" }}
               open={open}
               defaultValue={search}

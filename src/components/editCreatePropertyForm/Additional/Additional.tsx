@@ -9,6 +9,7 @@ import { Step } from "../../../store/slices/editCreatePropertyForm/editCreatePro
 import { StepButtons } from "../StepButtons/StepButtons";
 import styles from "./Additional.module.scss";
 import { OpenHouse } from "./OpenHouse";
+import { Grid } from "@material-ui/core";
 
 const schema = yup.object({
   description: yup.string(),
@@ -51,31 +52,68 @@ export const Additional = () => {
   };
 
   return (
-    <Container>
+    <Grid className={styles.additional_container}>
       <CustomForm {...customForm}>
-        <Form.Row>
-          <Col>
-            <Contacts />
-          </Col>
-          <Col>
-            <OpenHouse />
-          </Col>
-        </Form.Row>
-        <Form.Row>
-          <Col className={styles.textContainer}>
-            <h5>Contanos qué amas de esta propiedad, ¿qué la hace única...?</h5>
+        <Grid container>
+          <Grid xs={8} container>
+            <Grid xs>
+              <Contacts />
+            </Grid>
+            <Grid xs>
+              {/*<h4>Open house</h4>*/}
+              <OpenHouse />
+            </Grid>
+          </Grid>
+          <Grid xs className={styles.additional_textarea_grid}>
+            <h5>Contanos...</h5>
+            <span
+              style={{
+                fontSize: "0.9em",
+              }}
+            >
+              ¿Que cosas te hacen amar esta propiedad? ¿Que cosas la hacen
+              única?
+            </span>
             <AdditionalTextArea
               name="description"
               defaultValue={defaults.description}
             />
-          </Col>
-        </Form.Row>
+            <span
+              style={{
+                fontSize: "small",
+                color: "#A1A1A1",
+              }}
+            >
+              Descripción opcional, máximo 800 caracteres.
+              <br />
+              <br />
+            </span>
+            <span className={styles.house_description_textarea}>
+              ¿Te hace falta inspiración? Hacete estas preguntas:
+              <br />
+            </span>
+            <span
+              style={{
+                fontSize: "small",
+                color: "#A1A1A1",
+              }}
+            >
+              ¿Tiene luz natural?
+              <br />
+              ¿Los ambientes son espaciosos?
+              <br />
+              ¿Tiene espacios verdes?
+              <br />
+              ¿Es un lugar de encuentro?
+            </span>
+          </Grid>
+        </Grid>
         <StepButtons
           type={"submit"}
           onPrevious={handlePreviousButton}
           canPartialSave={canSave}
         />
       </CustomForm>
-    </Container>
+    </Grid>
   );
 };

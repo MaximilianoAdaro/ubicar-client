@@ -1,4 +1,4 @@
-import { Col, Container, Form } from "react-bootstrap";
+import { Col, Form } from "react-bootstrap";
 import * as yup from "yup";
 import { createCustomTextInput } from "../../forms/customForm/TextInput";
 import { useCustomForm } from "../../../hooks/useCustomForm";
@@ -12,6 +12,7 @@ import styles from "./Characteristics.module.scss";
 import { errorMessages } from "../../../constants";
 import { useEffect } from "react";
 import { useGetStylesUsingGET } from "../../../api";
+import { Grid } from "@material-ui/core";
 
 const schema = yup.object({
   totalSurface: yup
@@ -118,7 +119,7 @@ export const Characteristics = () => {
   };
 
   return (
-    <Container>
+    <Grid className={styles.characteristics_container}>
       <CustomForm {...customForm}>
         <Form.Row>
           <Col>
@@ -246,12 +247,14 @@ export const Characteristics = () => {
             </Form.Row>
           </Col>
         </Form.Row>
-        <StepButtons
-          type={"submit"}
-          onPrevious={handlePreviousButton}
-          canPartialSave={canSave}
-        />
+        <Form.Row>
+          <StepButtons
+            type={"submit"}
+            onPrevious={handlePreviousButton}
+            canPartialSave={canSave}
+          />
+        </Form.Row>
       </CustomForm>
-    </Container>
+    </Grid>
   );
 };
