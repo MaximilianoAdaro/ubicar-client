@@ -1,0 +1,44 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 750px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: right;
+  background-origin: content-box;
+}
+
+.texts {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.left {
+  width: 50%;
+  justify-content: left;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.right {
+  width: 65%;
+  align-items: center;
+  margin-left: 50px;
+  vertical-align: middle;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.searchOutside {
+  margin-top: 20px;
+  width: fit-content;
+  margin-left: 100px;
+  border-radius: 10px;
+  background-color: rgba(231, 227, 221, 0.67);
+  padding: 20px;
+}
