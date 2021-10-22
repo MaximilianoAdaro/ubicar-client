@@ -21,12 +21,15 @@ import { Footer } from "../components/footer/Footer";
 import { useGetLoggedUsingGET } from "../api";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import React from "react";
+import { useWindowSize } from "../hooks/useWindowSize";
+import { ListingPageMobile } from "../routes/listingPage/ListingPageMobile";
 import { Home } from "../routes/home/Home";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
   const dispatch = useAppDispatch();
+
+  const size = useWindowSize();
 
   const { data: user, isLoading } = useGetLoggedUsingGET();
 
@@ -40,6 +43,16 @@ export default function App() {
     redirectPath,
     setRedirectPath: (path) => dispatch(actions.session.setRedirectPath(path)),
   };
+
+  if ((size.width ?? 0) < 770)
+    return (
+      <>
+        <Switch>
+          <Route exact path={urls.listingPage} component={ListingPageMobile} />
+          <Route component={NotFound} />
+        </Switch>
+      </>
+    );
 
   return (
     <>
