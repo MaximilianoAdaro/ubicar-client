@@ -13,7 +13,11 @@ import { useHistory } from "react-router-dom";
 const SignUp = ({ isOpened, setIsOpened }) => {
   const history = useHistory();
   return (
-    <Dialog onClose={() => setIsOpened(false)} open={Boolean(isOpened)}>
+    <Dialog
+      onClose={() => setIsOpened(false)}
+      open={Boolean(isOpened)}
+      style={{ padding: "20px" }}
+    >
       <DialogTitle>Registrate!</DialogTitle>
       <DialogContent>
         <DialogContentText>
