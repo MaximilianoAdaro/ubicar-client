@@ -1,11 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Switch, useLocation } from "react-router";
-import {
-  PropertyPreviewDTO,
-  useGetPropertiesUsingGET,
-  useGetStylesUsingGET,
-  useGetTypesUsingGET,
-} from "../../api";
+import { PropertyPreviewDTO } from "../../api";
 import styles from "./ListingPageMobile.module.scss";
 import { ReactComponent as OneGridIcon } from "../../assets/listingPageGridOne.svg";
 import { ReactComponent as OneGridIconSelected } from "../../assets/listingPageGridOneSelected.svg";
@@ -24,13 +19,9 @@ const checkNotUndefined = (value: any) => {
 };
 
 export const ListingPageMobile = () => {
-  const [isMapView, setIsMapView] = useState(false);
+  const [isMapView, setIsMapView] = useState(true);
   const [isTwoColumns, setIsTwoColums] = useState(false);
   const [isLargeCards, setIsLargeCards] = useState(true);
-
-  const { data: properties } = useGetPropertiesUsingGET({
-    page: 0,
-  });
 
   const location = useLocation();
 
@@ -38,7 +29,7 @@ export const ListingPageMobile = () => {
   const [view, setView] = useState(useAppSelector(selectView));
   const [bbox, setBbox] = useState([0]);
   const [load, setLoad] = useState(true);
-  const [rightSideData, setRightSideData] = useState<PropertyPreviewDTO[]>();
+  const [rightSideData, setRightSideData] = useState<PropertyPreviewDTO[]>([]);
 
   const dispatch = useDispatch();
 
@@ -46,9 +37,6 @@ export const ListingPageMobile = () => {
     () => QueryString.parse(location.search) as any,
     [location.search]
   );
-
-  const { data: houseStyles } = useGetStylesUsingGET();
-  const { data: houseTypes } = useGetTypesUsingGET();
 
   const body = JSON.stringify({
     condition: checkNotUndefined(query.condition),
@@ -117,7 +105,7 @@ export const ListingPageMobile = () => {
   return (
     <div className={styles.container}>
       <div className={styles.map}>
-        {/* <MapComponent
+        <MapComponent
           zoom={zoom}
           view={view}
           renderLayers={true}
@@ -126,7 +114,7 @@ export const ListingPageMobile = () => {
           setView={setter2}
           setBbox={setBbox}
           body={body}
-        /> */}
+        />
       </div>
       <div
         className={clsx(styles.listContainer, {
@@ -144,7 +132,7 @@ export const ListingPageMobile = () => {
         </div>
         <div className={styles.propertyList}>
           <Switch>
-            {(properties?.content ?? []).length > 0 ? (
+            {rightSideData.length > 0 ? (
               <div className={styles.buttonsAndProps}>
                 <div className={styles.gridIcons}>
                   {isLargeCards ? (
@@ -167,7 +155,7 @@ export const ListingPageMobile = () => {
                 </div>
 
                 <PropertyList
-                  properties={properties?.content}
+                  properties={rightSideData}
                   expanded={isTwoColumns}
                   isLargeCards={isLargeCards}
                 />
