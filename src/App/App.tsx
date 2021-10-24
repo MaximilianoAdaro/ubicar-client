@@ -24,6 +24,7 @@ import { ToastContainer } from "react-toastify";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { ListingPageMobile } from "../routes/listingPage/ListingPageMobile";
 import { Home } from "../routes/home/Home";
+import { ViewPropertyMobile } from "../routes/viewProperty/ViewPropertyMobile";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -49,6 +50,11 @@ export default function App() {
       <>
         <Switch>
           <Route exact path={urls.listingPage} component={ListingPageMobile} />
+          <Route
+            exact
+            path={urls.viewProperty.path}
+            component={ViewPropertyMobile}
+          />
           <Route component={NotFound} />
         </Switch>
       </>
