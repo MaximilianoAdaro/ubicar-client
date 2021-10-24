@@ -1,0 +1,66 @@
+@import "src/styles/common";
+
+.contactSection {
+  padding: 1.5em 1.5em;
+
+  .contactFormTitle {
+    color: #ff701f;
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  .contactForm {
+    width: 100%;
+
+    .submitButton {
+      margin-top: 2em;
+    }
+  }
+}
+
+.contact_form_textfield_titles {
+  color: black;
+}
+
+.view_property_container {
+  margin: 1.5em 1em;
+}
+
+.view_property_title_price {
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+}
+
+.view_property_price {
+  color: #ff701f;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.view_property_expenses {
+  color: #ff701f;
+}
+
+.view_property_info {
+  color: #757575;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.photos_container {
+  margin-bottom: 1.5em;
+}
+
+.view_property_property_comment {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.view_property_address_title {
+  text-transform: capitalize;
+}
+
+.view_property_characteristics {
+  margin-right: 1.5em;
+}
