@@ -61,9 +61,7 @@
 }
 
 .personalDataMainDiv {
-  padding-right: 5%;
-  padding-left: 5%;
-  padding-top: 2em;
+  padding: 2em 5% 3em;
   background: rgba(211, 211, 211, 0.25);
   margin-bottom: 3em;
 }
@@ -191,4 +189,8 @@
 
 .my_favorite_card_outer_div {
   max-width: 30em;
+}
+
+.propertyList {
+  padding-bottom: 1.5em;
 }

@@ -5,6 +5,7 @@ import styles from "./UserProfile.module.scss";
 import { useHistory } from "react-router-dom";
 import pluralize from "pluralize";
 import { Tooltip } from "@material-ui/core";
+import { urls } from "../../constants";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
@@ -35,9 +36,9 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
     houseAddress?.number ?? ""
   }`;
   const baths = pluralize("baño", house.fullBaths);
-  const toilets = pluralize("toilet", house.toilets);
+
   return (
-    <div>
+    <div onClick={() => history.push(urls.viewProperty.byId(house.id))}>
       <Grid className={styles.my_favorite_card_outer_div}>
         <Grid className={styles.container}>
           <Grid>

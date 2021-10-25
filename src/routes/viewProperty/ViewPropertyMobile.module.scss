@@ -1,12 +1,14 @@
 @import "src/styles/common";
 
 .contactSection {
-  padding: 1.5em 1.5em;
+  padding: 1em 1em;
 
   .contactFormTitle {
     color: #ff701f;
-    font-size: 2em;
+    font-size: 1.4em;
     font-weight: bold;
+    text-align: center;
+    margin-bottom: 1em;
   }
 
   .contactForm {
@@ -53,8 +55,8 @@
 }
 
 .view_property_property_comment {
-  margin-left: 1em;
-  margin-right: 1em;
+  margin-left: 0.75em;
+  margin-right: 0.75em;
 }
 
 .view_property_address_title {
@@ -62,5 +64,42 @@
 }
 
 .view_property_characteristics {
-  margin-right: 1.5em;
+  margin-right: 0.75em;
+  font-size: 0.8em;
+}
+
+.thirdSection {
+  //margin-top: 20px;
+  .tabSection {
+    margin: 40px 15px 0;
+
+    .tabBodyItem {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-weight: 300;
+
+      .bulletPoint {
+        $size: 8px;
+        width: $size;
+        height: $size;
+        border: 1px solid #ff701f;
+        background-color: rgba(209, 167, 125, 0.14);
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.sectionTitle {
+  font-size: 1.7em;
+  font-weight: 400;
+  color: #124455;
+}
+
+.tabsBarContainerAdditional {
+  justify-content: flex-start;
+  gap: 25px;
+  margin-bottom: 1em;
 }

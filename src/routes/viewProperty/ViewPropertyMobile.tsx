@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import styles from "./ViewPropertyMobile.module.scss";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import pluralize from "pluralize";
 import ChatIcon from "@mui/icons-material/Chat";
 import {
+  AddressDTO,
   useContactPropertyOwnerUsingPOST,
   useGetLoggedUsingGET,
   useGetPropertyUsingGET,
@@ -32,6 +33,12 @@ import {
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import Fab from "@mui/material/Fab";
+import {
+  buildTabs,
+  CharacterContainerTab,
+  CharacteristicsItems,
+} from "./viewPropertyUtils";
+import { TabsBar } from "../../components/common/tabsBar/TabsBar";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -113,6 +120,11 @@ const View = ({ id }: ViewProps) => {
     houseAddress?.number ?? ""
   }`;
   // const address = `${property.address?.city ?? ""}, ${street} ${property.address?.number ?? ""}`
+  const characteristicsTabs = buildTabs(
+    property.amenities,
+    property.materials,
+    property.security
+  );
 
   return (
     <Grid className={styles.view_property_container}>
@@ -138,23 +150,6 @@ const View = ({ id }: ViewProps) => {
           </span>
         </Grid>
       </Grid>
-      {/*<Grid container className={styles.view_property_title_price}>*/}
-      {/*    <Grid xs={8}>*/}
-      {/*        <h4>*/}
-      {/*            {property.title}*/}
-      {/*        </h4>*/}
-      {/*    </Grid>*/}
-      {/*    <Grid xs={4}>*/}
-      {/*        <Grid style={{marginBottom:"1em"}}>*/}
-      {/*            <h4 style={{marginBottom:"0"}}>{property.condition === "SALE" ? "Venta" : "Alquiler"}</h4>*/}
-      {/*            U$D&nbsp;&nbsp;<span className={styles.view_property_price}>{formatPrice(property.price)}</span>*/}
-      {/*        </Grid>*/}
-      {/*        <Grid>*/}
-      {/*            <h5>Expensas</h5>*/}
-      {/*            $&nbsp;&nbsp;<span className={styles.view_property_expenses}>{formatPrice(property.expenses!)}</span>*/}
-      {/*        </Grid>*/}
-      {/*    </Grid>*/}
-      {/*</Grid>*/}
       <Grid container className={styles.view_property_info}>
         <Grid className={styles.view_property_characteristics}>
           {property.squareFoot} m² Total
@@ -180,7 +175,7 @@ const View = ({ id }: ViewProps) => {
           </ImageList>
         </div>
       </Grid>
-      <Grid className={styles.view_property_property_comment}>
+      <Grid>
         <h3
           className={styles.view_property_address_title}
           style={{ marginBottom: "0" }}
@@ -190,16 +185,15 @@ const View = ({ id }: ViewProps) => {
         <h5 className={styles.view_property_address_title}>
           {houseStreetNumber}
         </h5>
-        <span>
-          {property.comments?.length < 1
-            ? "Impecable departamento de 1 ambiente con balcon a la calle, cocina integrada, agua caliente individual, baño completo con box de ducha / Ubicado a pocas cuadras de la estación San Pedrito (Subte A), y en esquina sobre la Av. 5 años de antigüedad.\n" +
-              "Directorio con múltiples lineas de transporte <br/> / OPORTUNIDD DE INVERSOR - IDEAL RENTA! /"
-            : property.comments}
-        </span>
+        <Grid className={styles.view_property_property_comment}>
+          <span>
+            {property.comments?.length < 1
+              ? "Impecable departamento de 1 ambiente con balcon a la calle, cocina integrada, agua caliente individual, baño completo con box de ducha / Ubicado a pocas cuadras de la estación San Pedrito (Subte A), y en esquina sobre la Av. 5 años de antigüedad.\n" +
+                "Directorio con múltiples lineas de transporte <br/> / OPORTUNIDD DE INVERSOR - IDEAL RENTA! /"
+              : property.comments}
+          </span>
+        </Grid>
       </Grid>
-      {/*<Grid>*/}
-      {/*    Optional Data*/}
-      {/*</Grid>*/}
       <div>
         <Fab
           style={{
@@ -230,26 +224,101 @@ const View = ({ id }: ViewProps) => {
           </DialogContent>
         </Dialog>
       </div>
+      {/*<Grid>*/}
+      {/*  {characteristicsTabs.length > 0 && (*/}
+      {/*      <div>*/}
+      {/*        <div className={styles.divider} />*/}
+      {/*        <div className={styles.thirdSection}>*/}
+      {/*          <CharacteristicsContainer tabs={characteristicsTabs} />*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*  )}*/}
+      {/*</Grid>*/}
     </Grid>
   );
 };
 
-// const makeFact = (
-//     keyWord: string,
-//     value: string,
-//     left: boolean,
-//     icon?: ReactNode
-// ) => (
-//     <div className={styles.factContainer}>
-//         <div className={styles.factIcon}>{icon}</div>
-//         <div>
-//             {left && <span className={styles.factKeyWord}>{keyWord}</span>}
-//             {left && " "}
-//             <span className={styles.factValue}>{value}</span>{" "}
-//             {!left && <span className={styles.factKeyWord}>{keyWord}</span>}
-//         </div>
-//     </div>
-// );
+interface CharacteristicsContainerProps {
+  tabs: CharacterContainerTab[];
+}
+
+const CharacteristicsContainer = ({ tabs }: CharacteristicsContainerProps) => {
+  const [currentBarItem, setCurrentBarItem] = useState(tabs[0]);
+  return (
+    <div>
+      <h4 className={styles.sectionTitle}>Caracteristicas</h4>
+      <div className={styles.tabSection}>
+        <TabsBar
+          items={tabs}
+          current={currentBarItem.value}
+          onClick={(tabBarItem) => {
+            const tab =
+              tabs.find((tab) => tab.value === tabBarItem.value) ?? tabs[0];
+            setCurrentBarItem(tab);
+          }}
+          additionalClasses={{
+            container: styles.tabsBarContainerAdditional,
+          }}
+        />
+        <div className={styles.characteristicsItemsContainer}>
+          <CharacteristicsTab items={currentBarItem.data} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface CharacteristicsTabProps {
+  items: CharacteristicsItems;
+}
+
+const CharacteristicsTab = ({ items }: CharacteristicsTabProps) => {
+  return (
+    <>
+      {items.map(({ value, displayName }) => (
+        <div key={value} className={styles.tabBodyItem}>
+          <div className={styles.bulletPoint} />
+          <span>{displayName}</span>
+        </div>
+      ))}
+    </>
+  );
+};
+
+interface AddressSectionProps {
+  address: AddressDTO;
+}
+
+const AddressSection = ({ address }: AddressSectionProps) => {
+  return (
+    <div>
+      <h4 className={styles.sectionTitle}>Direccion</h4>
+      <div className={styles.addressItemsSection}>
+        <table>
+          <tbody>
+            {getAddressItem("Provincia", address.state!)}
+            {getAddressItem("Localidad", address.city!)}
+            {getAddressItem("Calle", address.street)}
+            {getAddressItem("Numero", address.number.toString())}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+const getAddressItem = (name: string, value: string) => {
+  return (
+    <tr>
+      <td>
+        <h5 style={{ textTransform: "capitalize" }}>{name}: </h5>
+      </td>
+      <td>
+        <span>{value}</span>
+      </td>
+    </tr>
+  );
+};
 
 const schema = yup.object({
   name: yup.string().required(errorMessages.required),
@@ -324,27 +393,22 @@ const ContactSection = ({ id }: ContactSectionProps) => {
   return (
     <div className={styles.contactSection}>
       <div>
-        <h5 className={styles.contactFormTitle}>Escribir un mensaje</h5>
+        <h3 className={styles.contactFormTitle}>Escribir un mensaje</h3>
       </div>
       <div className={styles.contactForm}>
         <form onSubmit={onSubmit}>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Nombre *
-            </span>
             <HookFormTextField
               label={"Nombre"}
               name={"name"}
               control={control}
               additionalStyles={{
                 borderRadius: "10px",
+                width: "100%",
               }}
             />
           </div>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Email *
-            </span>
             <HookFormTextField
               label={"Email"}
               name={"email"}
@@ -355,9 +419,6 @@ const ContactSection = ({ id }: ContactSectionProps) => {
             />
           </div>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Telefono *
-            </span>
             <HookFormTextField
               label={"Telefono (opcional)"}
               name={"cellphone"}
@@ -368,9 +429,6 @@ const ContactSection = ({ id }: ContactSectionProps) => {
             />
           </div>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Mensaje *
-            </span>
             <HookFormTextField
               label={"Mensaje"}
               name={"message"}
