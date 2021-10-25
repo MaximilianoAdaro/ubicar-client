@@ -61,9 +61,7 @@
 }
 
 .personalDataMainDiv {
-  padding-right: 5%;
-  padding-left: 5%;
-  padding-top: 2em;
+  padding: 2em 5% 4em;
   background: rgba(211, 211, 211, 0.25);
   margin-bottom: 3em;
 }
@@ -114,7 +112,6 @@
 .personal_data_textfield {
   width: 80%;
   background-color: white;
-  margin-bottom: 2em;
 }
 
 .personal_data_contact_textfield {
@@ -181,7 +178,7 @@
 
 .published_property_list {
   overflow: auto;
-  max-height: 80vh;
+  max-height: 70vh;
 }
 
 .my_favorities_property_image {

@@ -1,10 +1,7 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
 import { Grid } from "@material-ui/core";
-import {
-  useGetFavoritePropertiesUsingGET,
-  useGetMyPropertiesUsingGET,
-} from "../../api";
+import { useGetFavoritePropertiesUsingGET } from "../../api";
 import { ListItem, List } from "@material-ui/core";
 import { PropretyCardMyFavorites } from "./PropertyCardMyFavorites";
 
