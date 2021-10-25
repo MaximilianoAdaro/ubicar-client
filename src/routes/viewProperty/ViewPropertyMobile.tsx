@@ -32,6 +32,7 @@ import {
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import Fab from "@mui/material/Fab";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -103,7 +104,7 @@ const View = ({ id }: ViewProps) => {
   if (!property) return <h4>Error</h4>;
 
   const baths = pluralize("baño", property.fullBaths);
-  const environments = pluralize("ambiente", property.environments);
+  const environments = pluralize("amb", property.environments);
   const houseAddress = property.address;
   const stateCity =
     houseAddress?.city && houseAddress.state
@@ -112,14 +113,13 @@ const View = ({ id }: ViewProps) => {
   const houseStreetNumber = `${houseAddress?.street ?? ""} ${
     houseAddress?.number ?? ""
   }`;
-  // const address = `${property.address?.city ?? ""}, ${street} ${property.address?.number ?? ""}`
 
   return (
     <Grid className={styles.view_property_container}>
-      <h3>{property.title}</h3>
+      <h3 style={{ marginBottom: "0.5em" }}>{property.title}</h3>
       <Grid container>
         <Grid
-          style={{ marginBottom: "1em", borderRight: "2px solid #ff701f" }}
+          style={{ marginBottom: "1em", borderRight: "2px dashed #ff701f" }}
           xs={7}
         >
           <h4 style={{ marginBottom: "0" }}>
@@ -138,40 +138,23 @@ const View = ({ id }: ViewProps) => {
           </span>
         </Grid>
       </Grid>
-      {/*<Grid container className={styles.view_property_title_price}>*/}
-      {/*    <Grid xs={8}>*/}
-      {/*        <h4>*/}
-      {/*            {property.title}*/}
-      {/*        </h4>*/}
-      {/*    </Grid>*/}
-      {/*    <Grid xs={4}>*/}
-      {/*        <Grid style={{marginBottom:"1em"}}>*/}
-      {/*            <h4 style={{marginBottom:"0"}}>{property.condition === "SALE" ? "Venta" : "Alquiler"}</h4>*/}
-      {/*            U$D&nbsp;&nbsp;<span className={styles.view_property_price}>{formatPrice(property.price)}</span>*/}
-      {/*        </Grid>*/}
-      {/*        <Grid>*/}
-      {/*            <h5>Expensas</h5>*/}
-      {/*            $&nbsp;&nbsp;<span className={styles.view_property_expenses}>{formatPrice(property.expenses!)}</span>*/}
-      {/*        </Grid>*/}
-      {/*    </Grid>*/}
-      {/*</Grid>*/}
       <Grid container className={styles.view_property_info}>
-        <Grid className={styles.view_property_characteristics}>
+        <Grid className={styles.view_property_characteristics} xs>
           {property.squareFoot} m² Total
         </Grid>
-        <Grid className={styles.view_property_characteristics}>
-          {property.coveredSquareFoot} m² Cubierta
+        <Grid className={styles.view_property_characteristics} xs>
+          {property.coveredSquareFoot} m² Cub.
         </Grid>
-        <Grid className={styles.view_property_characteristics}>
-          {property.environments} {environments}
+        <Grid className={styles.view_property_characteristics} xs={3}>
+          {property.environments} {environments}.
         </Grid>
-        <Grid className={styles.view_property_characteristics}>
+        <Grid className={styles.view_property_characteristics} xs={2}>
           {property.fullBaths} {baths}
         </Grid>
       </Grid>
       <Grid className={styles.photos_container}>
         <div className={classes.root}>
-          <ImageList className={classes.imageList} cols={2.5}>
+          <ImageList className={classes.imageList} cols={2.2}>
             {photos.map((image) => (
               <ImageListItem key={1}>
                 <img src={image.src} alt={"Foto de la casa"} />
@@ -181,15 +164,21 @@ const View = ({ id }: ViewProps) => {
         </div>
       </Grid>
       <Grid className={styles.view_property_property_comment}>
-        <h3
+        <h5
           className={styles.view_property_address_title}
-          style={{ marginBottom: "0" }}
+          style={{ marginBottom: "0", fontSize: "1.4em" }}
         >
           {stateCity.toLowerCase()}
-        </h3>
-        <h5 className={styles.view_property_address_title}>
-          {houseStreetNumber}
         </h5>
+        <Grid container>
+          <h5 className={styles.view_property_address_title}>
+            {houseStreetNumber}
+          </h5>
+          <LocationOnIcon
+            style={{ fontSize: "1.4em", color: "#ff4000", marginLeft: "0.5em" }}
+          />
+        </Grid>
+
         <span>
           {property.comments?.length < 1
             ? "Impecable departamento de 1 ambiente con balcon a la calle, cocina integrada, agua caliente individual, baño completo con box de ducha / Ubicado a pocas cuadras de la estación San Pedrito (Subte A), y en esquina sobre la Av. 5 años de antigüedad.\n" +
@@ -233,23 +222,6 @@ const View = ({ id }: ViewProps) => {
     </Grid>
   );
 };
-
-// const makeFact = (
-//     keyWord: string,
-//     value: string,
-//     left: boolean,
-//     icon?: ReactNode
-// ) => (
-//     <div className={styles.factContainer}>
-//         <div className={styles.factIcon}>{icon}</div>
-//         <div>
-//             {left && <span className={styles.factKeyWord}>{keyWord}</span>}
-//             {left && " "}
-//             <span className={styles.factValue}>{value}</span>{" "}
-//             {!left && <span className={styles.factKeyWord}>{keyWord}</span>}
-//         </div>
-//     </div>
-// );
 
 const schema = yup.object({
   name: yup.string().required(errorMessages.required),
@@ -324,14 +296,11 @@ const ContactSection = ({ id }: ContactSectionProps) => {
   return (
     <div className={styles.contactSection}>
       <div>
-        <h5 className={styles.contactFormTitle}>Escribir un mensaje</h5>
+        <h3 className={styles.contactFormTitle}>Escribir un mensaje</h3>
       </div>
       <div className={styles.contactForm}>
         <form onSubmit={onSubmit}>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Nombre *
-            </span>
             <HookFormTextField
               label={"Nombre"}
               name={"name"}
@@ -342,9 +311,6 @@ const ContactSection = ({ id }: ContactSectionProps) => {
             />
           </div>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Email *
-            </span>
             <HookFormTextField
               label={"Email"}
               name={"email"}
@@ -355,9 +321,6 @@ const ContactSection = ({ id }: ContactSectionProps) => {
             />
           </div>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Telefono *
-            </span>
             <HookFormTextField
               label={"Telefono (opcional)"}
               name={"cellphone"}
@@ -368,9 +331,6 @@ const ContactSection = ({ id }: ContactSectionProps) => {
             />
           </div>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Mensaje *
-            </span>
             <HookFormTextField
               label={"Mensaje"}
               name={"message"}

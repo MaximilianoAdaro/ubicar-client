@@ -1,12 +1,14 @@
 @import "src/styles/common";
 
 .contactSection {
-  padding: 1.5em 1.5em;
+  padding: 1.5em 0.5em;
 
   .contactFormTitle {
     color: #ff701f;
-    font-size: 2em;
+    font-size: 1.5em;
+    text-align: center;
     font-weight: bold;
+    margin-bottom: 1.5em;
   }
 
   .contactForm {
@@ -62,5 +64,6 @@
 }
 
 .view_property_characteristics {
-  margin-right: 1.5em;
+  //margin-right: 0.6em;
+  font-size: 0.85em;
 }
