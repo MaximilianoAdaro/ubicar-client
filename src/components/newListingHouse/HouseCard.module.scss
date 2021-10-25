@@ -76,10 +76,12 @@ $radius: 7px;
 }
 
 .large.cardContainer {
-  width: 600px;
+  width: auto;
+  height: auto;
   padding: 0;
   display: grid;
   grid-template-columns: 40% auto;
+  grid-auto-rows: minmax(min-content, max-content);
 
   .imageContainer {
     // width: 40%;
