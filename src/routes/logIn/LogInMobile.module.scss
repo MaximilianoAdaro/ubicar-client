@@ -1,0 +1,101 @@
+@import "src/styles/common";
+
+.login_container {
+  padding: 1.5em;
+  text-align: center;
+}
+
+.titleContainer {
+  margin-top: 2em;
+  width: 100%;
+  color: $theme-orange;
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
+.leftContainer {
+  justify-content: left;
+  align-items: center;
+  margin-right: 50px;
+  width: 45%;
+}
+
+.rightContainer {
+  align-items: center;
+  margin-left: 50px;
+  width: 45%;
+  vertical-align: middle;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.insideRightContainer {
+  width: 100%;
+}
+
+.buttonOptions {
+  display: flex;
+  flex-direction: row;
+  background-color: #e7e6e6;
+  justify-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-bottom: 1.5em;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+}
+
+.input1 {
+  margin-top: 2em;
+  width: 100%;
+}
+
+.input2 {
+  margin-top: 0.8em;
+  width: 100%;
+}
+
+.buttonContainer {
+  margin-top: 1em;
+}
+
+.button button {
+  font-size: xxx-large;
+}
+
+.highlighter {
+  height: 4px;
+  width: 100%;
+  border: 1px solid $theme-orange;
+  background-color: $theme-orange;
+  border-radius: 30px;
+}
+
+.buttonContainer button {
+  width: 100%;
+  background-color: $theme-orange;
+  color: #ffffff;
+  height: 50px;
+}
+
+.buttonContainer button:hover {
+  background-color: $theme-orange;
+  color: #000000;
+  box-shadow: none;
+}
+
+.internalButtonOptions {
+  margin: 5px 25px;
+}
+
+.link {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
