@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import styles from "./ViewPropertyMobile.module.scss";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import pluralize from "pluralize";
 import ChatIcon from "@mui/icons-material/Chat";
 import {
+  AddressDTO,
   useContactPropertyOwnerUsingPOST,
   useGetLoggedUsingGET,
   useGetPropertyUsingGET,
@@ -33,6 +34,12 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import Fab from "@mui/material/Fab";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import {
+  buildTabs,
+  CharacterContainerTab,
+  CharacteristicsItems,
+} from "./viewPropertyUtils";
+import { TabsBar } from "../../components/common/tabsBar/TabsBar";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -60,6 +67,14 @@ const useStyles = makeStyles((theme) => ({
 
 export const ViewPropertyMobile = () => {
   const { id } = useParams<{ id: string }>();
+  const { data: currentUser } = useGetLoggedUsingGET();
+  const { data: property } = useGetPropertyUsingGET(id, {
+    query: {
+      suspense: true,
+    },
+  });
+
+  if (!property) return <h4>Error</h4>;
 
   return (
     <Suspense fallback={<Loading />}>
@@ -102,6 +117,12 @@ const View = ({ id }: ViewProps) => {
   // };
 
   if (!property) return <h4>Error</h4>;
+
+  const characteristicsTabs = buildTabs(
+    property.amenities,
+    property.materials,
+    property.security
+  );
 
   const baths = pluralize("baño", property.fullBaths);
   const environments = pluralize("amb", property.environments);
@@ -186,9 +207,19 @@ const View = ({ id }: ViewProps) => {
             : property.comments}
         </span>
       </Grid>
-      {/*<Grid>*/}
-      {/*    Optional Data*/}
-      {/*</Grid>*/}
+      <Grid>
+        {characteristicsTabs.length > 0 && (
+          <div>
+            {/*<div className={styles.divider} />*/}
+            <div className={styles.thirdSection}>
+              <CharacteristicsContainer tabs={characteristicsTabs} />
+            </div>
+          </div>
+        )}
+      </Grid>
+      <Grid className={styles.addressSection}>
+        <AddressSection address={property.address!} />
+      </Grid>
       <div>
         <Fab
           style={{
@@ -202,8 +233,9 @@ const View = ({ id }: ViewProps) => {
           }}
           aria-label="add"
           onClick={handleClickOpen}
+          size={"medium"}
         >
-          <ChatIcon />
+          <ChatIcon fontSize={"medium"} />
         </Fab>
         <Dialog
           open={open}
@@ -220,6 +252,93 @@ const View = ({ id }: ViewProps) => {
         </Dialog>
       </div>
     </Grid>
+  );
+};
+
+interface CharacteristicsContainerProps {
+  tabs: CharacterContainerTab[];
+}
+
+const CharacteristicsContainer = ({ tabs }: CharacteristicsContainerProps) => {
+  const [currentBarItem, setCurrentBarItem] = useState(tabs[0]);
+  return (
+    <Grid>
+      {/*<h4 className={styles.sectionTitle}>Caracteristicas</h4>*/}
+      <Grid className={styles.tabSection} xs>
+        <TabsBar
+          items={tabs}
+          current={currentBarItem.value}
+          onClick={(tabBarItem) => {
+            const tab =
+              tabs.find((tab) => tab.value === tabBarItem.value) ?? tabs[0];
+            setCurrentBarItem(tab);
+          }}
+          additionalClasses={{
+            container: styles.tabsBarContainerAdditional,
+          }}
+        />
+        <div className={styles.characteristicsItemsContainer}>
+          <CharacteristicsTab items={currentBarItem.data} />
+        </div>
+      </Grid>
+    </Grid>
+  );
+};
+
+interface CharacteristicsTabProps {
+  items: CharacteristicsItems;
+}
+
+const CharacteristicsTab = ({ items }: CharacteristicsTabProps) => {
+  return (
+    <>
+      {items.map(({ value, displayName }) => (
+        <div key={value} className={styles.tabBodyItem}>
+          <div className={styles.bulletPoint} />
+          <span>{displayName}</span>
+        </div>
+      ))}
+    </>
+  );
+};
+
+interface AddressSectionProps {
+  address: AddressDTO;
+}
+
+const AddressSection = ({ address }: AddressSectionProps) => {
+  return (
+    <div>
+      <h4 className={styles.sectionTitle}>Ubicación</h4>
+      <div className={styles.addressItemsSection}>
+        <table>
+          <tbody>
+            {getAddressItem("Provincia", address.state!)}
+            {getAddressItem("Localidad", address.city!)}
+            {getAddressItem("Calle", address.street)}
+            {getAddressItem("Numero", address.number.toString())}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+const getAddressItem = (name: string, value: string) => {
+  return (
+    <tr>
+      <td>
+        <h5 style={{ textTransform: "capitalize" }}>{name}: </h5>
+      </td>
+      <td>
+        <span
+          className={styles.address_value}
+          style={{ textTransform: "capitalize" }}
+        >
+          {value.toLowerCase()}
+        </span>
+      </td>
+    </tr>
   );
 };
 
