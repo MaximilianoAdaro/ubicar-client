@@ -51,12 +51,7 @@ export function PersonalData() {
   if (!user) return <h4>Error</h4>;
 
   return (
-    <div
-      className={styles.personalDataMainDiv}
-      style={{
-        height: "80vh",
-      }}
-    >
+    <div className={styles.personalDataMainDiv}>
       <Grid className={styles.personalDataTitle}>
         <p>
           Puedes cambiar tus datos personales o agregar algunos para que podamos
@@ -67,7 +62,7 @@ export function PersonalData() {
         <Grid xs>
           <h3 className={styles.persona_data_subtitles}>Personales</h3>
           <span>Nombre de usuario</span>
-          <Grid xs>
+          <Grid xs style={{ marginBottom: "1.5em" }}>
             <TextField
               variant="outlined"
               value={user.userName}
@@ -78,7 +73,7 @@ export function PersonalData() {
             <Editbutton onClick={openChangeUsername}>Editar</Editbutton>
           </Grid>
           <span className={styles.spantags}>Contraseña</span>
-          <Grid xs>
+          <Grid xs style={{ marginBottom: "1.5em" }}>
             <TextField
               variant="outlined"
               size={"small"}
@@ -108,20 +103,6 @@ export function PersonalData() {
               className={styles.personal_data_contact_textfield}
               size={"small"}
               placeholder={"Ej: 1153232343"}
-              fullWidth
-              disabled
-            />
-            <p className={styles.personal_data_contact_warning}>
-              Te vamos a confirmar el numero por telefono o mensaje de texto.{" "}
-              <br />
-              Sujeto a las tarifas estandar para mensaje y datos.
-            </p>
-            <span>Telefono fijo</span>
-            <TextField
-              placeholder={"Ej: 47816234"}
-              className={styles.personal_data_contact_textfield}
-              variant="outlined"
-              size={"small"}
               fullWidth
               disabled
             />
