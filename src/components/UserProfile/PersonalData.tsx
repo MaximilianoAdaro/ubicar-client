@@ -83,29 +83,20 @@ export function PersonalData() {
             />
             <Editbutton onClick={openChangePassword}>Editar</Editbutton>
           </Grid>
-          <span>Email</span>
-          <Grid>
-            <TextField
-              variant="outlined"
-              size={"small"}
-              value={user.email}
-              className={styles.personal_data_textfield}
-              disabled
-            />
-          </Grid>
         </Grid>
         <Grid xs>
           <h3 className={styles.persona_data_subtitles}>Contacto</h3>
           <Grid>
-            <span>Celular</span>
-            <TextField
-              variant="outlined"
-              className={styles.personal_data_contact_textfield}
-              size={"small"}
-              placeholder={"Ej: 1153232343"}
-              fullWidth
-              disabled
-            />
+            <span>Email</span>
+            <Grid>
+              <TextField
+                variant="outlined"
+                size={"small"}
+                value={user.email}
+                className={styles.personal_data_textfield}
+                disabled
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
