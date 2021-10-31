@@ -128,7 +128,7 @@ export const SignUpMobile = () => {
         </Typography>
       </div>
       <Grid>
-        <form>
+        <form onSubmit={onSubmit}>
           <Grid className={styles.buttonOptions}>
             <Grid className={styles.internalButtonOptions} container>
               <Grid xs>
@@ -149,6 +149,13 @@ export const SignUpMobile = () => {
             <HookFormTextField
               label={"Nombre"}
               name={"firstName"}
+              control={control}
+            />
+          </Grid>
+          <Grid>
+            <HookFormTextField
+              label={"Apellido"}
+              name={"lastName"}
               control={control}
             />
           </Grid>

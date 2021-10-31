@@ -8,12 +8,12 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import * as yup from "yup";
-import { useSignIn } from "../../api/custom/auth";
+import { useSignIn } from "../../api";
 import { DividerWithText } from "../../components/common/DividerWithText";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
 import { errorMessages, urls } from "../../constants";
-import { actions, useAppSelector } from "../../store";
+import { useAppSelector } from "../../store";
 import { selectRedirectPath } from "../../store/slices/session";
 import GoogleLogin from "./GoogleLogin";
 import styles from "./LogInMobile.module.scss";
@@ -62,7 +62,7 @@ export const LogInMobile = () => {
         </Typography>
       </div>
       <Grid>
-        <form>
+        <form onSubmit={onSubmit}>
           <Grid className={styles.buttonOptions}>
             <Grid className={styles.internalButtonOptions} container>
               <Grid xs>
