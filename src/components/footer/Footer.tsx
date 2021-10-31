@@ -9,10 +9,10 @@ export function Footer() {
     <div>
       <Grid container className={styles.footer_container}>
         <Grid xs className={styles.footer_information}>
-          <h3>Contacto</h3>
-          <p>
-            Puede contactarnos al email info@ubicar.com.ar para cualquier
-            consulta
+          <h3 className={styles.footer_navigation_title}>Contacto</h3>
+          <p style={{ margin: "0", lineHeight: "1.25em" }}>
+            Puede contactarnos al email ubicar.austral2021@gmail.com para
+            cualquier consulta
           </p>
         </Grid>
         <Grid xs={2} />
@@ -45,8 +45,8 @@ export function Footer() {
         </Grid>
         <Grid xs={2} />
         <Grid xs className={styles.footer_about_us}>
-          <Grid>Ayuda</Grid>
-          <Grid>Sobre Nosotros</Grid>
+          <Grid className={styles.about_us_element}>Ayuda</Grid>
+          <Grid className={styles.about_us_element}>Sobre Nosotros</Grid>
         </Grid>
       </Grid>
     </div>

@@ -619,6 +619,93 @@ export const useCreatePropertyWithImagesUsingPOST = <
     return createPropertyWithImagesUsingPOST<TData>(data, requestOptions);
   }, mutationOptions);
 };
+
+export const getHomePagePropertiesUsingGET = <TData = PropertyDTO[]>(
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/auth/recentlyViewed`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetHomePagePropertiesUsingGETQueryKey = () => [
+  `/auth/recentlyViewed`,
+];
+
+export const useGetHomePagePropertiesUsingGET = <
+  TQueryFnData = AsyncReturnType<
+    typeof getHomePagePropertiesUsingGET,
+    PropertyDTO[]
+  >,
+  TError = unknown,
+  TData = TQueryFnData
+>(options?: {
+  query?: UseQueryOptions<TQueryFnData, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetHomePagePropertiesUsingGETQueryKey();
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getHomePagePropertiesUsingGET<TQueryFnData>(requestOptions),
+    queryOptions
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
+export const getMostLikedPropertiesUsingGET = <TData = PropertyDTO[]>(
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/auth/mostLiked`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetMostLikedPropertiesUsingGETQueryKey = () => [
+  `/auth/mostLiked`,
+];
+
+export const useGetMostLikedPropertiesUsingGET = <
+  TQueryFnData = AsyncReturnType<
+    typeof getMostLikedPropertiesUsingGET,
+    PropertyDTO[]
+  >,
+  TError = unknown,
+  TData = TQueryFnData
+>(options?: {
+  query?: UseQueryOptions<TQueryFnData, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetMostLikedPropertiesUsingGETQueryKey();
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getMostLikedPropertiesUsingGET<TQueryFnData>(requestOptions),
+    queryOptions
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
 export const getFavoritePropertiesUsingGET = <TData = PropertyDTO[]>(
   options?: SecondParameter<typeof customInstance>
 ) => {
