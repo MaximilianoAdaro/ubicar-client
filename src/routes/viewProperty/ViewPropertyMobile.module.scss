@@ -68,164 +68,11 @@
   font-size: 0.85em;
 }
 
-@import "src/styles/common";
-
-.container {
-  margin-top: 1em;
-  margin-bottom: 5em;
-}
-
-.mediaContainer {
-  display: flex;
-  gap: 5px;
-  width: 100%;
-  height: 400px;
-  padding: 0 5px;
-
-  > * {
-    height: 400px;
-    width: fill;
-  }
-
-  > div {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: 5px;
-    align-items: stretch;
-
-    > img {
-      max-width: 100%;
-    }
-  }
-
-  img {
-    // border: 1px solid lightgrey;
-    border-right: unset;
-    border-radius: 10px;
-    border-collapse: collapse;
-    transition: transform 0.5s;
-
-    &:hover {
-      transform: scale(1.05);
-    }
-  }
-}
-
-.comingSoon {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-}
-
-.divider {
-  width: 98%;
-  height: 2px;
-  background-color: #ecb97e;
-  margin: auto auto 15px;
-}
-
-.infoContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  gap: 30px;
-  margin: 2em 2.2em 0;
-}
-
-.leftInfo {
-  width: 70%;
-
-  .firstSection {
-    .titleSection {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-
-      .mainTitle {
-        margin-top: 10px;
-        font-size: 2.6em;
-        color: #8e5b50;
-        margin-right: 20px;
-        text-transform: capitalize;
-      }
-    }
-
-    .subtitle {
-      font-weight: 200;
-      font-size: 1.5em;
-      color: #124455;
-    }
-
-    .facts {
-      margin: 20px 10px 0;
-      display: flex;
-      flex-wrap: wrap;
-
-      & > * {
-        margin-right: 70px;
-        margin-bottom: 20px;
-      }
-
-      .factContainer {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        align-items: center;
-        transition: transform 0.5s;
-
-        .factIcon {
-          > img {
-            height: 20px;
-          }
-        }
-
-        &:hover {
-          transform: scale(1.1);
-        }
-
-        .factKeyWord {
-          font-size: 1em;
-          color: #64625f;
-          font-weight: 300;
-        }
-
-        .factValue {
-          font-size: 1.3em;
-          line-height: 30px;
-          font-weight: 200;
-          color: #324c71;
-        }
-      }
-    }
-  }
-}
-
 .sectionTitle {
-  font-size: 1.5em;
+  font-size: 1.35em;
   font-weight: 400;
   margin-top: 1em;
   margin-left: 0.25em;
-}
-
-.secondSection {
-  margin-top: 10px;
-
-  .body {
-    margin-top: 20px;
-    margin-bottom: 50px;
-    font-size: 1em;
-    line-height: 30px;
-    font-weight: 300;
-
-    & > * {
-      margin-top: 10px;
-    }
-
-    .parkDescription {
-      margin-top: 1em;
-    }
-  }
 }
 
 .thirdSection {
@@ -255,18 +102,17 @@
 .addressSection {
   text-transform: capitalize;
   .addressItemsSection {
-    margin: 20px 15px 0;
+    margin: 0.4em 15px 0;
     display: flex;
     flex-direction: row;
-    gap: 100px;
     text-transform: capitalize;
 
     tr {
       height: 40px;
     }
 
-    td h5 {
-      font-weight: 400;
+    td h6 {
+      //font-weight: 400;
       margin-bottom: 0;
     }
 
@@ -277,51 +123,8 @@
 }
 
 .address_value {
-  font-size: 1.2em;
+  font-size: 1em;
   color: rgba(78, 69, 69, 0.8);
-}
-
-.rightSide {
-  width: 30%;
-}
-
-.priceInfo {
-  display: flex;
-  justify-content: center;
-}
-
-.priceSection {
-  $font-weight: 400;
-  margin: auto;
-
-  .condition {
-    font-size: 2.3em;
-    font-weight: $font-weight;
-  }
-
-  .priceColor {
-    color: #dc9e65;
-  }
-
-  .price {
-    font-size: 3em;
-    font-weight: $font-weight;
-  }
-
-  .expenses {
-    margin-top: 15px;
-    display: flex;
-    flex-direction: row;
-    font-size: 1.3em;
-
-    & > * {
-      margin-right: 20px;
-    }
-  }
-
-  .priceSymbol {
-    color: #767069;
-  }
 }
 
 .tabsBarContainerAdditional {
@@ -339,43 +142,8 @@
   align-content: flex-start;
 
   & > * {
-    //width: 100%;
-    padding: 8px 4px 8px;
-    //font-size: 1em;
+    padding: 6px 4px 4px;
     margin-right: 2em;
     color: #484141;
-    //margin-left: 10px;
   }
 }
-
-//.contactSection {
-//  margin-top: 4em;
-//  border-radius: 40px;
-//  border: 1px solid #eca1a1;
-//  display: flex;
-//  flex-direction: column;
-//  align-items: center;
-//  background-color: rgba(227, 238, 243, 0.62);
-//  padding: 2em 1.9em;
-//
-//  .contactFormTitle {
-//    margin-top: 0.3em;
-//    color: #e0a365;
-//    font-size: 2em;
-//    font-weight: 350;
-//  }
-//
-//  .contactForm {
-//    margin-top: 1.3em;
-//    margin-bottom: 2em;
-//    width: 100%;
-//
-//    .contactInputContainer {
-//      margin-top: 0.6em;
-//    }
-//
-//    .submitButton {
-//      margin-top: 2em;
-//    }
-//  }
-//}

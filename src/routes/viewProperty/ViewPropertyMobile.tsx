@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const ViewPropertyMobile = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: currentUser } = useGetLoggedUsingGET();
+  // const { data: currentUser } = useGetLoggedUsingGET();
   const { data: property } = useGetPropertyUsingGET(id, {
     query: {
       suspense: true,
@@ -210,7 +210,6 @@ const View = ({ id }: ViewProps) => {
       <Grid>
         {characteristicsTabs.length > 0 && (
           <div>
-            {/*<div className={styles.divider} />*/}
             <div className={styles.thirdSection}>
               <CharacteristicsContainer tabs={characteristicsTabs} />
             </div>
@@ -328,7 +327,7 @@ const getAddressItem = (name: string, value: string) => {
   return (
     <tr>
       <td>
-        <h5 style={{ textTransform: "capitalize" }}>{name}: </h5>
+        <h6 style={{ textTransform: "capitalize" }}>{name}: </h6>
       </td>
       <td>
         <span
