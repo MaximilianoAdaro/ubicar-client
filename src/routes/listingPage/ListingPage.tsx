@@ -132,7 +132,12 @@ export const ListingPage = () => {
         setZoom={setter1}
         setView={setter2}
       />
-      <div className={styles.mapAndProperties}>
+      <div
+        className={clsx(styles.mapAndProperties, {
+          [styles.largeCards]: isLargeCards,
+          [styles.twoColumns]: isTwoColumns,
+        })}
+      >
         <div className={styles.map}>
           <MapComponent
             zoom={zoom}
@@ -145,12 +150,14 @@ export const ListingPage = () => {
             body={body}
           />
         </div>
-        <div className={styles.changeSizeButtonContainer}>
-          <div onClick={() => setIsTwoColums((b) => !b)}>
-            <div />
-            <div />
+        {!isLargeCards && (
+          <div className={styles.changeSizeButtonContainer}>
+            <div onClick={() => setIsTwoColums((b) => !b)}>
+              <div />
+              <div />
+            </div>
           </div>
-        </div>
+        )}
         <div className={styles.propertyList}>
           <Switch>
             {load && <Loading />}

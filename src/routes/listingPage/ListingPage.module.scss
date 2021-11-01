@@ -37,10 +37,26 @@
 .mapAndProperties {
   display: grid;
   grid-template-columns: 1fr auto auto;
-  gap: 10px;
+  gap: 7px;
+  height: 80vh;
 
   .map {
-    height: 85vh;
+    width: 74vw;
+  }
+
+  &.twoColumns {
+    .map {
+      width: 51vw;
+    }
+  }
+
+  &.largeCards {
+    grid-template-columns: 1fr auto;
+
+    .map {
+      height: 85vh;
+      width: 60vw;
+    }
   }
 
   .changeSizeButtonContainer {
@@ -65,13 +81,15 @@
 }
 
 .propList {
-  overflow: auto;
-  height: 85vh;
+  overflow-y: scroll;
+  height: 78vh;
   display: grid;
   grid-template-columns: auto;
+  grid-gap: 2.3em 2em;
   gap: 2.3em 2em;
   padding: 0.3em;
   transition: grid-template-columns 1s ease-out;
+  grid-auto-rows: minmax(min-content, max-content);
 
   &.expanded {
     grid-template-columns: auto auto;
@@ -82,7 +100,7 @@
   display: grid;
   grid-template-rows: auto auto;
   gap: 1.3em;
-  margin-top: 1em;
+  // margin-top: 1em;
   padding: 1em;
 }
 
