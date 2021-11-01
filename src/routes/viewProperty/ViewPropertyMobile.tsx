@@ -294,7 +294,7 @@ const CharacteristicsTab = ({ items }: CharacteristicsTabProps) => {
       {items.map(({ value, displayName }) => (
         <div key={value} className={styles.tabBodyItem}>
           <div className={styles.bulletPoint} />
-          <span>{displayName}</span>
+          <span className={styles.characteristics_names}>{displayName}</span>
         </div>
       ))}
     </>
