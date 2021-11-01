@@ -25,6 +25,8 @@ import { useWindowSize } from "../hooks/useWindowSize";
 import { ListingPageMobile } from "../routes/listingPage/ListingPageMobile";
 import { Home } from "../routes/home/Home";
 import { ViewPropertyMobile } from "../routes/viewProperty/ViewPropertyMobile";
+import { LogInMobile } from "../routes/logIn/LogInMobile";
+import { SignUpMobile } from "../routes/signUp/SignUpMobile";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -55,6 +57,9 @@ export default function App() {
             path={urls.viewProperty.path}
             component={ViewPropertyMobile}
           />
+          <Route exact path={urls.logIn} component={LogInMobile} />
+          <Route exact path={urls.signUp} component={SignUpMobile} />
+
           <Route component={NotFound} />
         </Switch>
       </>

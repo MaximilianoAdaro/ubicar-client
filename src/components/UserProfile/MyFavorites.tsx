@@ -1,10 +1,7 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
 import { Grid } from "@material-ui/core";
-import {
-  useGetFavoritePropertiesUsingGET,
-  useGetMyPropertiesUsingGET,
-} from "../../api";
+import { useGetFavoritePropertiesUsingGET } from "../../api";
 import { ListItem, List } from "@material-ui/core";
 import { PropretyCardMyFavorites } from "./PropertyCardMyFavorites";
 
@@ -13,7 +10,6 @@ export function MyFavorites() {
   return (
     <div className={styles.personalDataMainDiv}>
       <Grid>
-        <h1>Mis Favoritos</h1>
         <p>Aqui puedes ver las propiedades que más te gustaron.</p>
       </Grid>
       <Grid className={styles.properties}>
