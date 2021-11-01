@@ -10,6 +10,8 @@ import background2 from "./img/background2.jpeg";
 import { actions, useAppDispatch } from "../../store";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { convertCoordinates } from "../../components/Map/utils";
+import { RecentlyViewed } from "../../components/homePage/RecentlyViewed";
+import { MostLiked } from "../../components/homePage/MostLiked";
 
 export const Home = () => {
   const { data: user } = useGetLoggedUsingGET();
@@ -157,9 +159,11 @@ export const Home = () => {
               />
             </div>
           </div>
-          <div className={styles.right}></div>
         </div>
       </div>
+      <div className={styles.properties} />
+
+      {user ? <RecentlyViewed /> : <MostLiked />}
     </div>
   );
 };
