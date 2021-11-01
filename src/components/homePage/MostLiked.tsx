@@ -15,9 +15,7 @@ export function MostLiked() {
     <div className={styles.personalDataMainDiv}>
       <Grid className={styles.properties}>
         <div className={styles.propertyList}>
-          <h1 style={{ margin: "0px" }}>
-            Propiedades más likeadas en la página
-          </h1>
+          <h1 style={{ margin: "0px" }}>Propiedades más likeadas</h1>
           <List
             style={{
               display: "flex",
