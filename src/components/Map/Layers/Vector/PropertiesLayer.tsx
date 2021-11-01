@@ -48,8 +48,18 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
         xhr.onload = () => {
           if (xhr.status === 200) {
             if (xhr.responseText.length > 3) {
-              let arrayMap = JSON.parse(xhr.responseText).map((data: any) => {
-                return JSON.parse(data);
+              const jsonArray = JSON.parse(xhr.responseText);
+
+              let arrayMap = jsonArray.map((data: any, index: number) => {
+                const match = [
+                  ...jsonArray[index].matchAll(/"id": "([-a-z0-9]+)",/g),
+                ];
+
+                const id = match[0][1];
+
+                const parsedJson = JSON.parse(data);
+                parsedJson.properties.id = id;
+                return parsedJson;
               });
               let newArray = arrayMap.map((feature: any) => {
                 feature.geometry.coordinates = convertCoordinates(
@@ -65,9 +75,12 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
               };
               let fet = new GeoJSON()
                 .readFeatures(geojsonObject)
-                .map((feature: any) => {
-                  feature.values_.fna =
-                    feature.values_.street + " " + feature.values_.number;
+                .map((feature: any, index) => {
+                  feature.values_.fna = {
+                    address:
+                      feature.values_.street + " " + feature.values_.number,
+                    id: feature.values_.id,
+                  };
                   return feature;
                 });
 
