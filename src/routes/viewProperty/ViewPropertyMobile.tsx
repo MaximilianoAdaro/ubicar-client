@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import styles from "./ViewPropertyMobile.module.scss";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import pluralize from "pluralize";
 import ChatIcon from "@mui/icons-material/Chat";
 import {
+  AddressDTO,
   useContactPropertyOwnerUsingPOST,
   useGetLoggedUsingGET,
   useGetPropertyUsingGET,
@@ -32,6 +33,13 @@ import {
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import Fab from "@mui/material/Fab";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import {
+  buildTabs,
+  CharacterContainerTab,
+  CharacteristicsItems,
+} from "./viewPropertyUtils";
+import { TabsBar } from "../../components/common/tabsBar/TabsBar";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -59,6 +67,14 @@ const useStyles = makeStyles((theme) => ({
 
 export const ViewPropertyMobile = () => {
   const { id } = useParams<{ id: string }>();
+  // const { data: currentUser } = useGetLoggedUsingGET();
+  const { data: property } = useGetPropertyUsingGET(id, {
+    query: {
+      suspense: true,
+    },
+  });
+
+  if (!property) return <h4>Error</h4>;
 
   return (
     <Suspense fallback={<Loading />}>
@@ -102,8 +118,14 @@ const View = ({ id }: ViewProps) => {
 
   if (!property) return <h4>Error</h4>;
 
+  const characteristicsTabs = buildTabs(
+    property.amenities,
+    property.materials,
+    property.security
+  );
+
   const baths = pluralize("baño", property.fullBaths);
-  const environments = pluralize("ambiente", property.environments);
+  const environments = pluralize("amb", property.environments);
   const houseAddress = property.address;
   const stateCity =
     houseAddress?.city && houseAddress.state
@@ -112,14 +134,13 @@ const View = ({ id }: ViewProps) => {
   const houseStreetNumber = `${houseAddress?.street ?? ""} ${
     houseAddress?.number ?? ""
   }`;
-  // const address = `${property.address?.city ?? ""}, ${street} ${property.address?.number ?? ""}`
 
   return (
     <Grid className={styles.view_property_container}>
-      <h3>{property.title}</h3>
+      <h3 style={{ marginBottom: "0.5em" }}>{property.title}</h3>
       <Grid container>
         <Grid
-          style={{ marginBottom: "1em", borderRight: "2px solid #ff701f" }}
+          style={{ marginBottom: "1em", borderRight: "2px dashed #ff701f" }}
           xs={7}
         >
           <h4 style={{ marginBottom: "0" }}>
@@ -138,40 +159,23 @@ const View = ({ id }: ViewProps) => {
           </span>
         </Grid>
       </Grid>
-      {/*<Grid container className={styles.view_property_title_price}>*/}
-      {/*    <Grid xs={8}>*/}
-      {/*        <h4>*/}
-      {/*            {property.title}*/}
-      {/*        </h4>*/}
-      {/*    </Grid>*/}
-      {/*    <Grid xs={4}>*/}
-      {/*        <Grid style={{marginBottom:"1em"}}>*/}
-      {/*            <h4 style={{marginBottom:"0"}}>{property.condition === "SALE" ? "Venta" : "Alquiler"}</h4>*/}
-      {/*            U$D&nbsp;&nbsp;<span className={styles.view_property_price}>{formatPrice(property.price)}</span>*/}
-      {/*        </Grid>*/}
-      {/*        <Grid>*/}
-      {/*            <h5>Expensas</h5>*/}
-      {/*            $&nbsp;&nbsp;<span className={styles.view_property_expenses}>{formatPrice(property.expenses!)}</span>*/}
-      {/*        </Grid>*/}
-      {/*    </Grid>*/}
-      {/*</Grid>*/}
       <Grid container className={styles.view_property_info}>
-        <Grid className={styles.view_property_characteristics}>
+        <Grid className={styles.view_property_characteristics} xs>
           {property.squareFoot} m² Total
         </Grid>
-        <Grid className={styles.view_property_characteristics}>
-          {property.coveredSquareFoot} m² Cubierta
+        <Grid className={styles.view_property_characteristics} xs>
+          {property.coveredSquareFoot} m² Cub.
         </Grid>
-        <Grid className={styles.view_property_characteristics}>
-          {property.environments} {environments}
+        <Grid className={styles.view_property_characteristics} xs={3}>
+          {property.environments} {environments}.
         </Grid>
-        <Grid className={styles.view_property_characteristics}>
+        <Grid className={styles.view_property_characteristics} xs={2}>
           {property.fullBaths} {baths}
         </Grid>
       </Grid>
       <Grid className={styles.photos_container}>
         <div className={classes.root}>
-          <ImageList className={classes.imageList} cols={2.5}>
+          <ImageList className={classes.imageList} cols={2.2}>
             {photos.map((image) => (
               <ImageListItem key={1}>
                 <img src={image.src} alt={"Foto de la casa"} />
@@ -181,15 +185,21 @@ const View = ({ id }: ViewProps) => {
         </div>
       </Grid>
       <Grid className={styles.view_property_property_comment}>
-        <h3
+        <h5
           className={styles.view_property_address_title}
-          style={{ marginBottom: "0" }}
+          style={{ marginBottom: "0", fontSize: "1.4em" }}
         >
           {stateCity.toLowerCase()}
-        </h3>
-        <h5 className={styles.view_property_address_title}>
-          {houseStreetNumber}
         </h5>
+        <Grid container>
+          <h5 className={styles.view_property_address_title}>
+            {houseStreetNumber}
+          </h5>
+          <LocationOnIcon
+            style={{ fontSize: "1.4em", color: "#ff4000", marginLeft: "0.5em" }}
+          />
+        </Grid>
+
         <span>
           {property.comments?.length < 1
             ? "Impecable departamento de 1 ambiente con balcon a la calle, cocina integrada, agua caliente individual, baño completo con box de ducha / Ubicado a pocas cuadras de la estación San Pedrito (Subte A), y en esquina sobre la Av. 5 años de antigüedad.\n" +
@@ -197,9 +207,18 @@ const View = ({ id }: ViewProps) => {
             : property.comments}
         </span>
       </Grid>
-      {/*<Grid>*/}
-      {/*    Optional Data*/}
-      {/*</Grid>*/}
+      <Grid>
+        {characteristicsTabs.length > 0 && (
+          <div>
+            <div className={styles.thirdSection}>
+              <CharacteristicsContainer tabs={characteristicsTabs} />
+            </div>
+          </div>
+        )}
+      </Grid>
+      <Grid className={styles.addressSection}>
+        <AddressSection address={property.address!} />
+      </Grid>
       <div>
         <Fab
           style={{
@@ -213,8 +232,9 @@ const View = ({ id }: ViewProps) => {
           }}
           aria-label="add"
           onClick={handleClickOpen}
+          size={"medium"}
         >
-          <ChatIcon />
+          <ChatIcon fontSize={"medium"} />
         </Fab>
         <Dialog
           open={open}
@@ -234,22 +254,92 @@ const View = ({ id }: ViewProps) => {
   );
 };
 
-// const makeFact = (
-//     keyWord: string,
-//     value: string,
-//     left: boolean,
-//     icon?: ReactNode
-// ) => (
-//     <div className={styles.factContainer}>
-//         <div className={styles.factIcon}>{icon}</div>
-//         <div>
-//             {left && <span className={styles.factKeyWord}>{keyWord}</span>}
-//             {left && " "}
-//             <span className={styles.factValue}>{value}</span>{" "}
-//             {!left && <span className={styles.factKeyWord}>{keyWord}</span>}
-//         </div>
-//     </div>
-// );
+interface CharacteristicsContainerProps {
+  tabs: CharacterContainerTab[];
+}
+
+const CharacteristicsContainer = ({ tabs }: CharacteristicsContainerProps) => {
+  const [currentBarItem, setCurrentBarItem] = useState(tabs[0]);
+  return (
+    <Grid>
+      {/*<h4 className={styles.sectionTitle}>Caracteristicas</h4>*/}
+      <Grid className={styles.tabSection} xs>
+        <TabsBar
+          items={tabs}
+          current={currentBarItem.value}
+          onClick={(tabBarItem) => {
+            const tab =
+              tabs.find((tab) => tab.value === tabBarItem.value) ?? tabs[0];
+            setCurrentBarItem(tab);
+          }}
+          additionalClasses={{
+            container: styles.tabsBarContainerAdditional,
+          }}
+        />
+        <div className={styles.characteristicsItemsContainer}>
+          <CharacteristicsTab items={currentBarItem.data} />
+        </div>
+      </Grid>
+    </Grid>
+  );
+};
+
+interface CharacteristicsTabProps {
+  items: CharacteristicsItems;
+}
+
+const CharacteristicsTab = ({ items }: CharacteristicsTabProps) => {
+  return (
+    <>
+      {items.map(({ value, displayName }) => (
+        <div key={value} className={styles.tabBodyItem}>
+          <div className={styles.bulletPoint} />
+          <span className={styles.characteristics_names}>{displayName}</span>
+        </div>
+      ))}
+    </>
+  );
+};
+
+interface AddressSectionProps {
+  address: AddressDTO;
+}
+
+const AddressSection = ({ address }: AddressSectionProps) => {
+  return (
+    <div>
+      <h4 className={styles.sectionTitle}>Ubicación</h4>
+      <div className={styles.addressItemsSection}>
+        <table>
+          <tbody>
+            {getAddressItem("Provincia", address.state!)}
+            {getAddressItem("Localidad", address.city!)}
+            {getAddressItem("Calle", address.street)}
+            {getAddressItem("Numero", address.number.toString())}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+const getAddressItem = (name: string, value: string) => {
+  return (
+    <tr>
+      <td>
+        <h6 style={{ textTransform: "capitalize" }}>{name}: </h6>
+      </td>
+      <td>
+        <span
+          className={styles.address_value}
+          style={{ textTransform: "capitalize" }}
+        >
+          {value.toLowerCase()}
+        </span>
+      </td>
+    </tr>
+  );
+};
 
 const schema = yup.object({
   name: yup.string().required(errorMessages.required),
@@ -324,14 +414,11 @@ const ContactSection = ({ id }: ContactSectionProps) => {
   return (
     <div className={styles.contactSection}>
       <div>
-        <h5 className={styles.contactFormTitle}>Escribir un mensaje</h5>
+        <h3 className={styles.contactFormTitle}>Escribir un mensaje</h3>
       </div>
       <div className={styles.contactForm}>
         <form onSubmit={onSubmit}>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Nombre *
-            </span>
             <HookFormTextField
               label={"Nombre"}
               name={"name"}
@@ -342,9 +429,6 @@ const ContactSection = ({ id }: ContactSectionProps) => {
             />
           </div>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Email *
-            </span>
             <HookFormTextField
               label={"Email"}
               name={"email"}
@@ -355,9 +439,6 @@ const ContactSection = ({ id }: ContactSectionProps) => {
             />
           </div>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Telefono *
-            </span>
             <HookFormTextField
               label={"Telefono (opcional)"}
               name={"cellphone"}
@@ -368,9 +449,6 @@ const ContactSection = ({ id }: ContactSectionProps) => {
             />
           </div>
           <div className={styles.contactInputContainer}>
-            <span className={styles.contact_form_textfield_titles}>
-              Mensaje *
-            </span>
             <HookFormTextField
               label={"Mensaje"}
               name={"message"}

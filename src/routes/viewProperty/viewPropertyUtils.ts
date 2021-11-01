@@ -3,7 +3,7 @@ import {
   MaterialDTO,
   PropertyDTOCondition,
   SecurityDTO,
-} from "../../api/generated/endpoints.schemas";
+} from "../../api";
 
 export const getYearDistance = (year: number) => {
   return new Date().getFullYear() - year;
@@ -51,7 +51,7 @@ export const buildTabs = (
     }),
     buildSingleTab({
       value: "materials",
-      displayName: "Materiales de construccion",
+      displayName: "Materiales",
       data: materials?.map(({ id, label }) => ({
         value: id,
         displayName: label,

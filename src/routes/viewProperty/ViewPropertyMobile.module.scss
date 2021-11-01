@@ -1,12 +1,14 @@
 @import "src/styles/common";
 
 .contactSection {
-  padding: 1.5em 1.5em;
+  padding: 1.5em 0.5em;
 
   .contactFormTitle {
     color: #ff701f;
-    font-size: 2em;
+    font-size: 1.5em;
+    text-align: center;
     font-weight: bold;
+    margin-bottom: 1.5em;
   }
 
   .contactForm {
@@ -62,5 +64,92 @@
 }
 
 .view_property_characteristics {
-  margin-right: 1.5em;
+  //margin-right: 0.6em;
+  font-size: 0.85em;
+}
+
+.sectionTitle {
+  font-size: 1.35em;
+  font-weight: 400;
+  margin-top: 1em;
+  margin-left: 0.25em;
+}
+
+.thirdSection {
+  //margin-top: 20px;
+  .tabSection {
+    margin: 2em 1em 0;
+
+    .tabBodyItem {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-weight: 300;
+
+      .bulletPoint {
+        $size: 8px;
+        width: $size;
+        height: $size;
+        //border: 1px solid $theme-goldish;
+        background-color: #ff701f;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.addressSection {
+  text-transform: capitalize;
+  .addressItemsSection {
+    margin: 0.4em 15px 0;
+    display: flex;
+    flex-direction: row;
+    text-transform: capitalize;
+
+    tr {
+      height: 40px;
+    }
+
+    td h6 {
+      //font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    tr > td:first-child {
+      padding-right: 3em;
+    }
+  }
+}
+
+.address_value {
+  font-size: 1em;
+  color: rgba(78, 69, 69, 0.8);
+}
+
+.tabsBarContainerAdditional {
+  justify-content: flex-start;
+  gap: 2em;
+  margin-bottom: 1em;
+}
+
+.characteristicsItemsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  max-height: 400px;
+  justify-items: start;
+  align-content: flex-start;
+  font-weight: bold;
+
+  & > * {
+    padding: 6px 4px 4px;
+    margin-right: 1.5em;
+    font-size: 0.9em;
+    color: #484141;
+  }
+}
+
+.characteristics_names {
+  font-weight: 550;
 }
