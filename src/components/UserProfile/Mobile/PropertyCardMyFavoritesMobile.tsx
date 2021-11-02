@@ -1,11 +1,11 @@
-import { PropertyPreviewDTO } from "../../api";
+import { PropertyPreviewDTO } from "../../../api";
 import { Grid, makeStyles } from "@material-ui/core";
 import { Image } from "react-bootstrap";
-import styles from "./UserProfile.module.scss";
+import styles from "./UserProfileMobile.module.scss";
 import { useHistory } from "react-router-dom";
 import pluralize from "pluralize";
 import { Tooltip } from "@material-ui/core";
-import { urls } from "../../constants";
+import { urls } from "../../../constants";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function PropretyCardMyFavorites(props: ListingHouseProps) {
+export function PropretyCardMyFavoritesMobile(props: ListingHouseProps) {
   const classes = useStyles();
   const house = props.house;
   const history = useHistory();

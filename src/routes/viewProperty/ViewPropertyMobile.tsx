@@ -67,6 +67,15 @@ const useStyles = makeStyles((theme) => ({
 
 export const ViewPropertyMobile = () => {
   const { id } = useParams<{ id: string }>();
+
+  return (
+    <Suspense fallback={<Loading />}>
+      <ViewMobile id={id} />
+    </Suspense>
+  );
+};
+
+export const ViewMobile = ({ id }: ViewProps) => {
   // const { data: currentUser } = useGetLoggedUsingGET();
   const { data: property } = useGetPropertyUsingGET(id, {
     query: {

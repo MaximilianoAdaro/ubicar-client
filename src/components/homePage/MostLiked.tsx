@@ -2,7 +2,7 @@ import styles from "./HomePage.module.scss";
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { ListItem, List } from "@material-ui/core";
-import { PropretyCardMyFavorites } from "../UserProfile/PropertyCardMyFavorites";
+import { PropretyCardMyFavorites } from "../UserProfile/Web/PropertyCardMyFavorites";
 import { useGetMostLikedPropertiesUsingGET } from "../../api";
 import { urls } from "../../constants";
 import { useHistory } from "react-router-dom";

@@ -1,0 +1,48 @@
+.user_profile_title {
+  //border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  color: #ff701f;
+  font-weight: bold;
+}
+
+.user_profile_container {
+  padding: 1em;
+}
+
+.user_profile_go_back {
+  margin-bottom: 1em;
+}
+
+.persona_data_subtitles {
+  color: #ff701f;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.my_property_properties_list {
+  background-color: #eeeeee;
+  padding: 0.5em;
+}
+
+.my_property_card {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 1em;
+  font-size: 0.7em;
+  padding: 0.7em 0.7em 0.3em;
+  background-color: white;
+}
+.my_property_card_grid {
+  margin-bottom: 3px;
+}
+.my_property_card_image {
+  width: 100%;
+  margin-top: 0.2em;
+}
+
+.my_property_card_title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 95%;
+}
