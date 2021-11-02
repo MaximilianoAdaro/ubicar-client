@@ -39,7 +39,7 @@ export function MyProperties() {
               </Grid>
             </div>
           ) : (
-            <h3>No tienes propiedades publicadas.</h3>
+            <h5 style={{ color: "gray" }}>No tienes propiedades publicadas.</h5>
           )}
         </Grid>
 

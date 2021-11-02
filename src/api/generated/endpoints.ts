@@ -749,6 +749,50 @@ export const useGetFavoritePropertiesUsingGET = <
   };
 };
 
+export const getAllRecentlyViewedPropertiesUsingGET = <TData = PropertyDTO[]>(
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/auth/all-recently-viewed`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetAllRecentlyViewedPropertiesUsingGETQueryKey = () => [
+  `/auth/all-recently-viewed`,
+];
+
+export const useGetAllRecentlyViewedPropertiesUsingGET = <
+  TQueryFnData = AsyncReturnType<
+    typeof getAllRecentlyViewedPropertiesUsingGET,
+    PropertyDTO[]
+  >,
+  TError = unknown,
+  TData = TQueryFnData
+>(options?: {
+  query?: UseQueryOptions<TQueryFnData, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetAllRecentlyViewedPropertiesUsingGETQueryKey();
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getAllRecentlyViewedPropertiesUsingGET<TQueryFnData>(requestOptions),
+    queryOptions
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
 export const getMyPropertiesUsingGET = <TData = PropertyDTO[]>(
   options?: SecondParameter<typeof customInstance>
 ) => {
