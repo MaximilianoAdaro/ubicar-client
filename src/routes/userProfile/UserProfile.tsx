@@ -13,6 +13,7 @@ import { MyProperties } from "../../components/UserProfile/MyProperties";
 import { useState } from "react";
 import { createStyles, Theme } from "@material-ui/core/styles";
 import { LinearProgress } from "@material-ui/core";
+import { MyRecentlyViewed } from "../../components/UserProfile/MyRecentlyViewed";
 
 const useStyles = makeStyles({
   button: {
@@ -86,6 +87,15 @@ export function UserProfile() {
                   Mis Favoritos
                 </StyledButton>
               </Grid>
+              <Grid xs>
+                <StyledButton
+                  className={classes.button}
+                  onClick={() => setComponent("RecentlyViewed")}
+                  fullWidth
+                >
+                  Recientemente Vistos
+                </StyledButton>
+              </Grid>
               <BorderLinearProgress variant="determinate" value={0} />
             </Grid>
           </Grid>
@@ -93,7 +103,7 @@ export function UserProfile() {
             {component === "PersonalData" && <PersonalData />}
             {component === "MyFavorites" && <MyFavorites />}
             {component === "MyProperties" && <MyProperties />}
-            {/*{component === "Notifications" && <Notifications />}*/}
+            {component === "RecentlyViewed" && <MyRecentlyViewed />}
           </Grid>
         </Grid>
       </div>

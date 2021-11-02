@@ -1,11 +1,11 @@
 .container {
-  border: 2px solid black;
   margin-bottom: 2em;
   margin-right: 200px;
   padding: 0.5em;
   background: whitesmoke;
-  box-shadow: 4px 4px 5px 0;
+  box-shadow: 3px 3px 3px 2px #888888;
   margin-top: 2em;
+  border-radius: 5px;
 }
 
 .myPropertyOuterDiv {
@@ -188,4 +188,5 @@
 
 .my_favorite_card_outer_div {
   max-width: 30em;
+  width: 30em;
 }
