@@ -41,7 +41,7 @@ export function PersonalDataMobile() {
   return (
     <Grid className={styles.user_profile_container}>
       <Grid className={styles.user_profile_title}>
-        <h3 style={{ textAlign: "center" }}>Perfil</h3>
+        <h3>Datos Personales</h3>
       </Grid>
       <Grid className={styles.user_profile_go_back}>
         <Link to={urls.userProfile.path}>
@@ -61,10 +61,10 @@ export function PersonalDataMobile() {
         </Link>
       </Grid>
       <Grid>
-        <h3 style={{ color: "#ff701f", fontWeight: "bold" }}>
-          Datos personales
-        </h3>
-        <span style={{ fontSize: "0.8em" }}>
+        {/*<h3 style={{ color: "#ff701f", fontWeight: "bold" }}>*/}
+        {/*  Datos personales*/}
+        {/*</h3>*/}
+        <span className={styles.user_profile_tab_description}>
           Aqui puedes ver o editar tus datos personales
         </span>
       </Grid>
@@ -113,56 +113,6 @@ export function PersonalDataMobile() {
         </Grid>
       </Grid>
     </Grid>
-
-    // <div className={styles.personalDataMainDiv}>
-    //   <Grid className={styles.personalDataTitle}>
-    //     <p>
-    //       Puedes cambiar tus datos personales o agregar algunos para que podamos
-    //       comunicarnos con usted.
-    //     </p>
-    //   </Grid>
-    //   <Grid container className={styles.personalDataInformation}>
-    //     <Grid xs>
-    //       <h3 className={styles.persona_data_subtitles}>Personales</h3>
-    //       <span>Nombre de usuario</span>
-    //       <Grid xs style={{ marginBottom: "1.5em" }}>
-    //         <TextField
-    //           variant="outlined"
-    //           value={user.userName}
-    //           className={styles.personal_data_textfield}
-    //           size={"small"}
-    //           disabled
-    //         />
-    //         <Editbutton onClick={openChangeUsername}>Editar</Editbutton>
-    //       </Grid>
-    //       <span className={styles.spantags}>Contraseña</span>
-    //       <Grid xs style={{ marginBottom: "1.5em" }}>
-    //         <TextField
-    //           variant="outlined"
-    //           size={"small"}
-    //           value={"********"}
-    //           className={styles.personal_data_textfield}
-    //           disabled
-    //         />
-    //         <Editbutton onClick={openChangePassword}>Editar</Editbutton>
-    //       </Grid>
-    //     </Grid>
-    //     <Grid xs>
-    //       <h3 className={styles.persona_data_subtitles}>Contacto</h3>
-    //       <Grid>
-    //         <span>Email</span>
-    //         <Grid>
-    //           <TextField
-    //             variant="outlined"
-    //             size={"small"}
-    //             value={user.email}
-    //             className={styles.personal_data_textfield}
-    //             disabled
-    //           />
-    //         </Grid>
-    //       </Grid>
-    //     </Grid>
-    //   </Grid>
     //   <Dialog
     //     open={changeUsername}
     //     onClose={closeChangeUsername}

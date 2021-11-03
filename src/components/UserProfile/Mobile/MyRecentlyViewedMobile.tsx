@@ -6,13 +6,16 @@ import { useGetAllRecentlyViewedPropertiesUsingGET } from "../../../api";
 import { Link } from "react-router-dom";
 import { urls } from "../../../constants";
 import { RiArrowLeftSLine } from "react-icons/all";
+import { List, ListItem } from "@mui/material";
+import { PropretyCardMyFavoritesMobile } from "./PropertyCardMyFavoritesMobile";
 
 export function MyRecentlyViewedMobile() {
   const data = useGetAllRecentlyViewedPropertiesUsingGET();
+  console.log(data);
   return (
     <Grid className={styles.user_profile_container}>
       <Grid className={styles.user_profile_title}>
-        <h3 style={{ textAlign: "center" }}>Perfil</h3>
+        <h3>Vistas Recientes</h3>
       </Grid>
       <Grid className={styles.user_profile_go_back}>
         <Link to={urls.userProfile.path}>
@@ -31,45 +34,45 @@ export function MyRecentlyViewedMobile() {
           </Button>
         </Link>
       </Grid>
-      <Grid>Recently Viewed</Grid>
+      <Grid>
+        <Grid>
+          <p className={styles.user_profile_tab_description}>
+            Aqui puedes ver las propiedades que hayas visto recientemente.
+          </p>
+        </Grid>
+        <Grid className={styles.properties}>
+          <div className={styles.propertyList}>
+            {data.status === "success" && data?.data.length > 0 ? (
+              <div>
+                <List>
+                  {data?.data
+                    .filter((casa) => casa.step == 7)
+                    .map((casa) => (
+                      <ListItem style={{ width: "20em" }}>
+                        <PropretyCardMyFavoritesMobile
+                          key={casa.id}
+                          house={casa}
+                          from={"properties"}
+                          state={""}
+                        />
+                      </ListItem>
+                    ))}
+                </List>
+              </div>
+            ) : (
+              <p
+                style={{
+                  color: "gray",
+                  marginTop: "1.5em",
+                  textAlign: "center",
+                }}
+              >
+                No haz visto ninguna propiedad.
+              </p>
+            )}
+          </div>
+        </Grid>
+      </Grid>
     </Grid>
-    // <div className={styles.personalDataMainDiv}>
-    //   <Grid>
-    //     <p>Aqui puedes ver las últimas 50 propiedades que viste</p>
-    //   </Grid>
-    //   <Grid className={styles.properties}>
-    //     <div className={styles.propertyList}>
-    //       {data.status === "success" && data?.data.length > 0 ? (
-    //         <div>
-    //           <h3>Propiedades recientemente vistas</h3>
-    //           <List
-    //             style={{
-    //               display: "flex",
-    //               flexDirection: "row",
-    //               padding: 0,
-    //               overflow: "auto",
-    //               margin: "0",
-    //             }}
-    //           >
-    //             {data?.data
-    //               .filter((casa) => casa.step == 7)
-    //               .map((casa) => (
-    //                 <ListItem style={{ width: "20em" }}>
-    //                   <PropretyCardMyFavorites
-    //                     key={casa.id}
-    //                     house={casa}
-    //                     from={"properties"}
-    //                     state={""}
-    //                   />
-    //                 </ListItem>
-    //               ))}
-    //           </List>
-    //         </div>
-    //       ) : (
-    //         <h5 style={{ color: "gray" }}>No viste ninguna propiedad.</h5>
-    //       )}
-    //     </div>
-    //   </Grid>
-    // </div>
   );
 }
