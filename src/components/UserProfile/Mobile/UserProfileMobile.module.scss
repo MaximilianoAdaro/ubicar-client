@@ -13,7 +13,7 @@
 }
 
 .user_profile_tab_description {
-  font-size: 0.8em;
+  font-size: 0.9em;
   text-align: justify;
   text-justify: inter-word;
 }
@@ -35,17 +35,16 @@
   border-radius: 5px;
   margin-bottom: 1em;
   font-size: 0.7em;
-  padding: 0.7em 0.7em 0.3em;
+  padding: 0.5em 0.7em 0.3em;
   background-color: white;
-  height: 110px;
+  height: 9em;
 }
 .my_property_card_grid {
   margin-bottom: 3px;
 }
 .my_property_card_image {
   width: 100%;
-  height: 92px;
-  //height: 100px;
+  height: 8em;
 }
 
 .my_property_card_title {
@@ -60,11 +59,13 @@
   box-shadow: 3px 3px 1px 1px rgba(196, 191, 191, 0.5);
   border-radius: 5px;
   padding: 0.75em;
+  height: 75%;
   //max-width: 100%;
 }
 
 .my_favorites_property_image {
   width: 100%;
+  //height: 10em;
 }
 
 .my_favorite_card_title_grid {

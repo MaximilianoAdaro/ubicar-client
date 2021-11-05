@@ -42,7 +42,7 @@ export function PropertyCardMyPropertiesMobile(props: ListingHouseProps) {
   const baths = pluralize("baño", props.house.fullBaths);
   return (
     <Grid container className={styles.my_property_card}>
-      <Grid xs style={{ maxWidth: "50%" }}>
+      <Grid xs={7}>
         <Grid
           className={clsx(
             styles.my_property_card_title,
