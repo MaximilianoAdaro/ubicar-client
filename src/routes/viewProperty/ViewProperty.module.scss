@@ -50,7 +50,7 @@
 .divider {
   width: 98%;
   height: 2px;
-  background-color: #ecb97e;
+  background-color: $theme-orange;
   margin: auto auto 15px;
 }
 
@@ -75,7 +75,8 @@
       .mainTitle {
         margin-top: 10px;
         font-size: 2.6em;
-        color: #8e5b50;
+        color: #ff701f;
+        font-weight: bold;
         margin-right: 20px;
         text-transform: capitalize;
       }
@@ -134,7 +135,7 @@
 .sectionTitle {
   font-size: 1.7em;
   font-weight: 400;
-  color: #124455;
+  color: #2d557a;
 }
 
 .secondSection {
@@ -146,6 +147,7 @@
     font-size: 1em;
     line-height: 30px;
     font-weight: 300;
+    margin-left: 1em;
 
     & > * {
       margin-top: 10px;
@@ -172,8 +174,8 @@
         $size: 8px;
         width: $size;
         height: $size;
-        border: 1px solid $theme-goldish;
-        background-color: rgba(209, 167, 125, 0.14);
+        border: 1px solid $theme-orange;
+        background-color: $theme-orange;
         border-radius: 50%;
         margin-right: 10px;
       }
@@ -196,7 +198,8 @@
 
     td h5 {
       font-weight: 400;
-      color: #936538;
+      color: #5b91c2;
+      margin-bottom: 0;
     }
 
     tr > td:first-child {
@@ -224,7 +227,7 @@
   }
 
   .priceColor {
-    color: #dc9e65;
+    color: $theme-orange;
   }
 
   .price {
@@ -275,16 +278,16 @@
 .contactSection {
   margin-top: 4em;
   border-radius: 40px;
-  border: 1px solid #eca1a1;
+  border: 1px solid $theme-orange;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(227, 238, 243, 0.62);
+  background-color: #f1f1f1;
   padding: 2em 1.9em;
 
   .contactFormTitle {
     margin-top: 0.3em;
-    color: #e0a365;
+    color: $theme-orange;
     font-size: 2em;
     font-weight: 350;
   }
