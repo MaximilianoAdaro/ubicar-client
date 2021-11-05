@@ -11,7 +11,7 @@ import {
   TextField,
   withStyles,
 } from "@material-ui/core";
-import { useGetLoggedUsingGET } from "../../api";
+import { useGetLoggedUsingGET } from "../../../api";
 
 const Editbutton = withStyles({
   root: {

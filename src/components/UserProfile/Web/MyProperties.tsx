@@ -1,10 +1,8 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
-import { Grid, Tooltip } from "@material-ui/core";
-import { useGetMyPropertiesUsingGET } from "../../api";
+import { Grid } from "@material-ui/core";
+import { useGetMyPropertiesUsingGET } from "../../../api";
 import { PropertyCardMyProperties } from "./PropertyCardMyProperties";
-import EditIcon from "@material-ui/icons/Edit";
-import { urls } from "../../constants";
 import { useHistory } from "react-router-dom";
 
 export function MyProperties() {

@@ -4,10 +4,10 @@ import Grid from "@material-ui/core/Grid";
 import { Tooltip } from "@material-ui/core";
 import pluralize from "pluralize";
 import { useHistory } from "react-router-dom";
-import { PropertyPreviewDTO } from "../../api";
+import { PropertyPreviewDTO } from "../../../api";
 import clsx from "clsx";
 import EditIcon from "@material-ui/icons/Edit";
-import { urls } from "../../constants";
+import { urls } from "../../../constants";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;

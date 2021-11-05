@@ -36,7 +36,7 @@ export function Footer() {
           </Grid>
           <Grid className={styles.footer_navigation_links}>
             <Link
-              to={urls.userProfile}
+              to={urls.userProfile.path}
               className={styles.footer_navigation_links_style}
             >
               Mi cuenta

@@ -2,18 +2,16 @@ import Grid from "@material-ui/core/Grid";
 import styles from "./UserProfile.module.scss";
 import {
   Button,
-  List,
-  ListItem,
+  LinearProgress,
   makeStyles,
   withStyles,
 } from "@material-ui/core";
 import { PersonalData } from "../../components/UserProfile";
-import { MyFavorites } from "../../components/UserProfile/MyFavorites";
-import { MyProperties } from "../../components/UserProfile/MyProperties";
+import { MyFavorites } from "../../components/UserProfile/Web/MyFavorites";
+import { MyProperties } from "../../components/UserProfile/Web/MyProperties";
 import { useState } from "react";
 import { createStyles, Theme } from "@material-ui/core/styles";
-import { LinearProgress } from "@material-ui/core";
-import { MyRecentlyViewed } from "../../components/UserProfile/MyRecentlyViewed";
+import { MyRecentlyViewed } from "../../components/UserProfile/Web/MyRecentlyViewed";
 
 const useStyles = makeStyles({
   button: {
