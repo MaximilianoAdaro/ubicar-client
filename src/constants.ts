@@ -13,7 +13,13 @@ export const urls = {
     path: "/edit-property/:id",
     byId: (id: string) => `/edit-property/${id}`,
   },
-  userProfile: "/userProfile",
+  userProfile: {
+    path: "/userProfile",
+    personalData: "/userProfile/personal-data",
+    favorites: "/userProfile/my-favorites",
+    properties: "/userProfile/my-properties",
+    recentlyViewed: "/userProfile/recently-viewed",
+  },
 };
 
 export const errorMessages = {

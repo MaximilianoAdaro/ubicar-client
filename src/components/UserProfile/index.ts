@@ -1,1 +1,1 @@
-export * from "./PersonalData";
+export * from "./Web/PersonalData";
