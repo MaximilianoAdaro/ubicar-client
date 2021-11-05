@@ -85,8 +85,8 @@
   height: 78vh;
   display: grid;
   grid-template-columns: auto;
-  grid-gap: 2.3em 2em;
-  gap: 2.3em 2em;
+  grid-gap: 1.15em 1em;
+  gap: 1.15em 1em;
   padding: 0.3em;
   transition: grid-template-columns 1s ease-out;
   grid-auto-rows: minmax(min-content, max-content);

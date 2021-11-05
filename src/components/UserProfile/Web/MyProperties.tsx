@@ -18,7 +18,7 @@ export function MyProperties() {
         </p>
       </Grid>
       <Grid container>
-        <Grid className={styles.properties} xs>
+        <Grid className={styles.properties} xs={6}>
           {data.status === "success" &&
           data?.data.filter((casa) => casa.step === 7).length > 0 ? (
             <div>
@@ -41,7 +41,7 @@ export function MyProperties() {
           )}
         </Grid>
 
-        <Grid className={styles.properties} xs>
+        <Grid className={styles.properties} xs={6}>
           {data.status === "success" &&
           data?.data.filter((casa) => casa.step < 7).length > 0 ? (
             <div>

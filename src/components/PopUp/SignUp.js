@@ -18,7 +18,7 @@ const SignUp = ({ isOpened, setIsOpened }) => {
       open={Boolean(isOpened)}
       style={{ padding: "20px" }}
     >
-      <DialogTitle>Registrate!</DialogTitle>
+      <DialogTitle>Entrá a tu cuenta!</DialogTitle>
       <DialogContent>
         <DialogContentText>
           Para poder utilizar nuestra plataforma con todo su potencial!
@@ -29,16 +29,16 @@ const SignUp = ({ isOpened, setIsOpened }) => {
         <Button
           type="submit"
           variant="contained"
-          color="primary"
-          onClick={() => history.push(urls.signUp)}
+          style={{ backgroundColor: "#2d557a", color: "white" }}
+          onClick={() => history.push(urls.logIn)}
         >
-          Registro de Usuario
+          Log in
         </Button>
 
         <Button
           type="submit"
           variant="contained"
-          color="primary"
+          style={{ backgroundColor: "#2d557a", color: "white" }}
           onClick={() => setIsOpened(false)}
         >
           Cerrar

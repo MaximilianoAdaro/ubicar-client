@@ -11,7 +11,14 @@ import {
   TextField,
   withStyles,
 } from "@material-ui/core";
-import { useGetLoggedUsingGET } from "../../../api";
+import {
+  useEditUserUsingPUT,
+  useGetLoggedUsingGET,
+  useSetTagsUsingPUT,
+} from "../../../api";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { urls } from "../../../constants";
 
 const Editbutton = withStyles({
   root: {
@@ -23,14 +30,11 @@ const Editbutton = withStyles({
 })(Button);
 
 export function PersonalData() {
-  // const [emailChangeButton, setEmailChangeButton] = useState(true);
-  // const [passwordChangeButton, setPasswordChangeButton] = useState(true);
-  // const [nameChangeButton, setNameChangeButton] = useState(true);
-  // const [cellphoneChangeButton, setCellphoneChangeButton] = useState(true);
-  // const [phoneChangeButton, setPhoneChangeButton] = useState(true);
   const { data: user } = useGetLoggedUsingGET();
   const [changeUsername, setChangeUsername] = React.useState(false);
   const [changePassword, setChangePassword] = React.useState(false);
+  const [username, setUsername] = React.useState("");
+  const history = useHistory();
 
   const openChangeUsername = () => {
     setChangeUsername(true);
@@ -44,11 +48,56 @@ export function PersonalData() {
     setChangeUsername(false);
   };
 
+  const changeUsernameFunct = async () => {
+    setChangeUsername(false);
+    try {
+      await mutateAsync({
+        id: user!.id,
+        data: { email: user!.email, userName: username, id: user!.id },
+      });
+    } catch (e) {
+      throw Error;
+    }
+    window.location.reload();
+  };
+
+  const { mutateAsync } = useEditUserUsingPUT({
+    mutation: {
+      onSuccess() {
+        toast.success(" ✅ Nombre de usuario cambiado!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+      onError() {
+        toast.error(" ❌ Error en cambio de nombre de usuario!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+    },
+  });
+
   const closeChangePassword = () => {
     setChangePassword(false);
   };
 
   if (!user) return <h4>Error</h4>;
+
+  const handleChange = (e: any) => {
+    setUsername(e.target.value);
+    console.log(username);
+  };
 
   return (
     <div className={styles.personalDataMainDiv}>
@@ -105,10 +154,10 @@ export function PersonalData() {
         onClose={closeChangeUsername}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Change Username</DialogTitle>
+        <DialogTitle id="form-dialog-title">Cambiar nombre</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Escribe el nuevo nombre de usuario.
+            Escribe tu nuevo nombre de usuario
           </DialogContentText>
           <TextField
             autoFocus
@@ -117,14 +166,22 @@ export function PersonalData() {
             label="Nombre de usuario"
             type="username"
             fullWidth
+            value={username}
+            onChange={handleChange}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeChangeUsername} color="primary">
-            Cancel
+          <Button
+            onClick={closeChangeUsername}
+            style={{ backgroundColor: "#2d557a", color: "white" }}
+          >
+            Cancelar
           </Button>
-          <Button onClick={closeChangeUsername} color="primary">
-            Subscribe
+          <Button
+            onClick={changeUsernameFunct}
+            style={{ backgroundColor: "#2d557a", color: "white" }}
+          >
+            Confirmar
           </Button>
         </DialogActions>
       </Dialog>
@@ -158,7 +215,7 @@ export function PersonalData() {
         </DialogContent>
         <DialogContent>
           <DialogContentText>
-            Escribe denuevo tu nueva contraseña
+            Escribe de nuevo tu nueva contraseña
           </DialogContentText>
           <TextField
             autoFocus
@@ -170,11 +227,17 @@ export function PersonalData() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeChangePassword} color="primary">
-            Cancel
+          <Button
+            onClick={closeChangePassword}
+            style={{ backgroundColor: "#2d557a", color: "white" }}
+          >
+            Cancelar
           </Button>
-          <Button onClick={closeChangePassword} color="primary">
-            Subscribe
+          <Button
+            onClick={closeChangePassword}
+            style={{ backgroundColor: "#2d557a", color: "white" }}
+          >
+            Confirmar
           </Button>
         </DialogActions>
       </Dialog>
