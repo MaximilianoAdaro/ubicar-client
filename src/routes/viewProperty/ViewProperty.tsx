@@ -96,6 +96,10 @@ const View = ({ id }: ViewProps) => {
     property.security
   );
 
+  const streetCity = `${property.address!.street} ${property.address!.number} ${
+    property.address!.city
+  }               `;
+
   return (
     <div className={styles.container}>
       {/*<div className={styles.mediaContainer}>*/}
@@ -161,8 +165,7 @@ const View = ({ id }: ViewProps) => {
           <div className={styles.firstSection}>
             <div className={styles.titleSection}>
               <Typography variant={"h5"} className={styles.mainTitle}>
-                {property.address!.street} {property.address!.number}{" "}
-                {property.address!.city}
+                {streetCity.toLowerCase()}
               </Typography>
               {currentUser && (
                 <FavoriteButton id={id} isLiked={property.liked} />
@@ -381,7 +384,7 @@ const getAddressItem = (name: string, value: string) => {
         <h5 style={{ textTransform: "capitalize" }}>{name}: </h5>
       </td>
       <td>
-        <span>{value}</span>
+        <span>{value.toLowerCase()}</span>
       </td>
     </tr>
   );
