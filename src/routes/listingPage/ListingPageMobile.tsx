@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Switch, useLocation } from "react-router";
-import { PropertyPreviewDTO } from "../../api";
+import { Switch, useHistory, useLocation } from "react-router";
+import {
+  PropertyPreviewDTO,
+  useGetStylesUsingGET,
+  useGetTypesUsingGET,
+} from "../../api";
 import styles from "./ListingPageMobile.module.scss";
 import { ReactComponent as OneGridIcon } from "../../assets/listingPageGridOne.svg";
 import { ReactComponent as OneGridIconSelected } from "../../assets/listingPageGridOneSelected.svg";
@@ -13,6 +17,11 @@ import { useDispatch } from "react-redux";
 import QueryString from "query-string";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
 import { MapComponent } from "../../components/Map/map";
+import { CircularProgress, TextField } from "@material-ui/core";
+import { convertCoordinates } from "../../components/Map/utils";
+import { Autocomplete } from "@material-ui/lab";
+import { selectOption } from "../../store/slices/session";
+import { ListingFiltersMobile } from "../../components/listingFilters";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -22,6 +31,9 @@ export const ListingPageMobile = () => {
   const [isMapView, setIsMapView] = useState(true);
   const [isTwoColumns, setIsTwoColums] = useState(false);
   const [isLargeCards, setIsLargeCards] = useState(true);
+
+  const { data: houseStyles } = useGetStylesUsingGET();
+  const { data: houseTypes } = useGetTypesUsingGET();
 
   const location = useLocation();
 
@@ -102,8 +114,131 @@ export const ListingPageMobile = () => {
     buildDataset();
   }, [bbox, query]);
 
+  const history = useHistory();
+
+  const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState([
+    { id: "", name: "", stateName: "", centroid: { lat: 0, long: 0 } },
+  ]);
+  const loading = open && options.length === 0;
+
+  const onChangeHandle = async (value: any) => {
+    const response = await fetch(
+      "http://localhost:3000/public/cities-and-states?name=" + value
+    );
+
+    const citiesAndStates = await response.json();
+    if (citiesAndStates && citiesAndStates.content) {
+      const options = citiesAndStates.content.map((option: any) => {
+        if (option.type === "STATE") {
+          return option.state;
+        } else {
+          return option.city;
+        }
+      });
+      setOptions(options);
+    }
+  };
+
+  const handleChangeView = (longitude: number, latitude: number) => {
+    dispatch(actions.map.setView({ longitude: longitude, latitude: latitude }));
+    dispatch(actions.map.setZoom(12));
+  };
+  const handleChangeName = (name: string) => {
+    dispatch(actions.session.setSearchBar(name));
+  };
+
+  const handleOptionLabel = (option: any) => {
+    if (option.id !== "") {
+      if (option.stateName)
+        return (
+          option.name[0].toUpperCase() +
+          option.name.substr(1).toLowerCase() +
+          ", " +
+          option.stateName
+        );
+      return option.name[0].toUpperCase() + option.name.substr(1).toLowerCase();
+    }
+    return "";
+  };
+
+  const handleOption = (value: any) => {
+    dispatch(actions.session.setOption(value));
+    history.push("/listing-page");
+  };
+
+  const search = useAppSelector(selectOption);
+
   return (
     <div className={styles.container}>
+      {isMapView && (
+        <>
+          <div className={styles.searchContainer}>
+            <Autocomplete
+              id="asyncState"
+              size={"small"}
+              style={{}}
+              open={open}
+              defaultValue={search}
+              onChange={(e, value) => {
+                if (value) {
+                  let coords = convertCoordinates(
+                    value.centroid.long,
+                    value.centroid.lat
+                  );
+                  handleChangeName(handleOptionLabel(value));
+                  handleChangeView(coords[0], coords[1]);
+                }
+              }}
+              onOpen={() => {
+                setOpen(true);
+              }}
+              onClose={() => {
+                setOpen(false);
+              }}
+              getOptionSelected={(option: any, value: any) =>
+                option.id === value.id
+              }
+              getOptionLabel={(option: any) => handleOptionLabel(option)}
+              options={options}
+              loading={loading}
+              renderInput={(params: any) => (
+                <TextField
+                  {...params}
+                  fullWidth
+                  variant="outlined"
+                  color={"secondary"}
+                  onChange={(ev: any) => {
+                    // dont fire API if the user delete or not entered anything
+                    if (ev.target.value !== "" || ev.target.value !== null) {
+                      onChangeHandle(ev.target.value);
+                    }
+                  }}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {loading ? (
+                          <CircularProgress color="inherit" size={20} />
+                        ) : null}
+                        {params.InputProps.endAdornment}
+                      </>
+                    ),
+                  }}
+                />
+              )}
+            />
+          </div>
+          <div className={styles.filtersContainer}>
+            <ListingFiltersMobile
+              houseStyles={houseStyles ? houseStyles : null}
+              houseTypes={houseTypes ? houseTypes : null}
+              setZoom={setter1}
+              setView={setter2}
+            />
+          </div>
+        </>
+      )}
       <div className={styles.map}>
         <MapComponent
           zoom={zoom}
@@ -114,6 +249,7 @@ export const ListingPageMobile = () => {
           setView={setter2}
           setBbox={setBbox}
           body={body}
+          showControls={false}
         />
       </div>
       <div
@@ -127,33 +263,32 @@ export const ListingPageMobile = () => {
         >
           <div />
         </div>
-        <div>
+        <div className={styles.titleAndButtonsContainer}>
           <span className={styles.title}>Propiedades</span>
+          <div className={styles.gridIcons}>
+            {isLargeCards ? (
+              <OneGridIconSelected />
+            ) : (
+              <OneGridIcon
+                className={styles.gridButton}
+                onClick={() => setIsLargeCards(true)}
+              />
+            )}
+
+            {isLargeCards ? (
+              <TwoGridIcon
+                className={styles.gridButton}
+                onClick={() => setIsLargeCards(false)}
+              />
+            ) : (
+              <TwoGridIconSelected />
+            )}
+          </div>
         </div>
         <div className={styles.propertyList}>
           <Switch>
             {rightSideData.length > 0 ? (
               <div className={styles.buttonsAndProps}>
-                <div className={styles.gridIcons}>
-                  {isLargeCards ? (
-                    <OneGridIconSelected />
-                  ) : (
-                    <OneGridIcon
-                      className={styles.gridButton}
-                      onClick={() => setIsLargeCards(true)}
-                    />
-                  )}
-
-                  {isLargeCards ? (
-                    <TwoGridIcon
-                      className={styles.gridButton}
-                      onClick={() => setIsLargeCards(false)}
-                    />
-                  ) : (
-                    <TwoGridIconSelected />
-                  )}
-                </div>
-
                 <PropertyList
                   properties={rightSideData}
                   expanded={isTwoColumns}

@@ -16,6 +16,7 @@ export type TMapProps = {
   setView: (arg0: MapView) => void;
   setBbox: (arg0: number[]) => void;
   body: string;
+  showControls?: boolean;
 };
 
 export type PropertyState = {

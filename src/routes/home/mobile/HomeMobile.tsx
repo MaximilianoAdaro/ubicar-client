@@ -10,8 +10,10 @@ import background2 from "../img/background2.jpeg";
 import { actions, useAppDispatch } from "../../../store";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { convertCoordinates } from "../../../components/Map/utils";
-import { RecentlyViewed } from "../../../components/homePage/RecentlyViewed";
-import { MostLiked } from "../../../components/homePage/MostLiked";
+import {
+  MostLikedMobile,
+  RecentlyViewedMobile,
+} from "../../../components/homePage";
 
 export const HomeMobile = () => {
   const { data: user } = useGetLoggedUsingGET();
@@ -72,40 +74,20 @@ export const HomeMobile = () => {
 
   return (
     <div>
-      <div
-        className={styles.app}
-        // style={{ backgroundImage: `url(${background1})` }}
-      >
+      <div className={styles.app}>
         <div className={styles.texts}>
           <div className={styles.left}>
-            <Typography
-              style={{
-                fontWeight: "bold",
-                color: "#d2d2d2",
-                fontSize: "2rem",
-                textAlign: "left",
-                width: "100%",
-                // marginLeft: "100px",
-              }}
-            >
-              Ubicar
-            </Typography>
-            <Typography
-              style={{
-                fontWeight: "bold",
-                color: "#FF701F",
-                fontSize: "1rem",
-                textAlign: "left",
-                width: "100%",
-                // marginLeft: "100px",
-              }}
-            >
-              Encontrá tu propiedad ideal
-            </Typography>
+            <div className={styles.header}>
+              <span className={styles.title}>Ubicar</span>
+              <span className={styles.subtitle}>
+                Encontrá tu propiedad ideal
+              </span>
+            </div>
             <div className={styles.searchOutside}>
               <Autocomplete
                 id="asyncState"
-                style={{ width: "500px", backgroundColor: "#ffffff" }}
+                size={"small"}
+                className={styles.searchAutocomplete}
                 open={open}
                 onChange={(e, value) => {
                   if (value) {
@@ -133,6 +115,7 @@ export const HomeMobile = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    className={styles.search}
                     fullWidth
                     label={"Introduzca una dirección!"}
                     variant="outlined"
@@ -158,12 +141,17 @@ export const HomeMobile = () => {
                 )}
               />
             </div>
+            <div className={styles.description}>
+              En Ubicar vas a poder encontrar inmuebles en venta y alquiler.
+              Además contamos con la información geoespacial de cada zona para
+              asegurarte de que siempre estes eligiendo la mejor alternativa.
+            </div>
           </div>
         </div>
       </div>
       <div className={styles.properties} />
 
-      {user ? <RecentlyViewed /> : <MostLiked />}
+      {user ? <RecentlyViewedMobile /> : <MostLikedMobile />}
     </div>
   );
 };

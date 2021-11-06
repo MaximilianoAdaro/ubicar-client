@@ -85,6 +85,7 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
     this.map = new Map({
       target: this.mapDivRef.current,
       layers: layers,
+      controls: this.props.showControls ?? true ? undefined : [],
       view: new View({
         projection: "EPSG:3857",
         center: [this.view.longitude, this.view.latitude],

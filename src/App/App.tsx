@@ -33,6 +33,8 @@ import { PersonalDataMobile } from "../components/UserProfile/Mobile/PersonalDat
 import { MyFavoritesMobile } from "../components/UserProfile/Mobile/MyFavoritesMobile";
 import { MyPropertiesMobile } from "../components/UserProfile/Mobile/MyPropertiesMobile";
 import { MyRecentlyViewedMobile } from "../components/UserProfile/Mobile/MyRecentlyViewedMobile";
+import { useRef, useState } from "react";
+import { Burger, Menu } from "../components/navbar/mobile/Menu";
 // import {UserProfileMobile} from "../routes/userProfile/UserProfileMobile";
 
 export default function App() {
@@ -44,6 +46,9 @@ export default function App() {
   const { data: user, isLoading } = useGetLoggedUsingGET();
 
   const location = useLocation();
+
+  const [open, setOpen] = useState(false);
+  const node = useRef(null);
 
   if (isLoading) return <Loading />;
 
@@ -95,6 +100,10 @@ export default function App() {
 
           <Route component={NotFound} />
         </Switch>
+        <div ref={node}>
+          <Burger open={open} setOpen={setOpen} />
+          <Menu open={open} setOpen={setOpen} isLoggedIn={!!user} />
+        </div>
       </>
     );
 
