@@ -141,8 +141,10 @@ export const ListingPageMobile = () => {
   };
 
   const handleChangeView = (longitude: number, latitude: number) => {
-    dispatch(actions.map.setView({ longitude: longitude, latitude: latitude }));
-    dispatch(actions.map.setZoom(12));
+    setter2({ longitude, latitude });
+    setter1(12);
+    // dispatch(actions.map.setView({ longitude: longitude, latitude: latitude }));
+    // dispatch(actions.map.setZoom(12));
   };
   const handleChangeName = (name: string) => {
     dispatch(actions.session.setSearchBar(name));

@@ -32,12 +32,17 @@ type ListingFiltersProp = {
 
 const StyledButton = withStyles({
   root: {
-    background: "white",
+    // width: "200px",
+    minWidth: "auto",
+    // background: "white",
     paddingLeft: "0.7em",
     paddingRight: "0.7em",
     textTransform: "none",
     marginLeft: "1.5rem",
-    border: "1px #4a636c solid",
+    border: "2px solid #E0E0E0",
+    color: "#C4C4C4",
+    background: "rgb(255,255,255,0.9)",
+
     "&:hover": {
       background: "#f2f2f2",
     },
@@ -231,7 +236,15 @@ export function ListingFilters({
           id="buttonForm"
           size="small"
           onClick={openSalePopover}
-          style={query.condition ? { background: "antiquewhite" } : {}}
+          style={
+            query.condition
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
         >
           {query.condition
             ? query.condition === "SALE"
@@ -244,7 +257,11 @@ export function ListingFilters({
           onClick={openPricePopover}
           style={
             query.minPrice || query.maxPrice
-              ? { background: "antiquewhite" }
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
               : {}
           }
         >
@@ -253,7 +270,15 @@ export function ListingFilters({
         <StyledButton
           size="small"
           onClick={openRoomsPopover}
-          style={query.minAmountRoom ? { background: "antiquewhite" } : {}}
+          style={
+            query.minAmountRoom
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
         >
           {query.minAmountRoom
             ? query.minAmountRoom + "+ Habitaciones"
@@ -262,7 +287,15 @@ export function ListingFilters({
         <StyledButton
           size="small"
           onClick={openBathsPopover}
-          style={query.minAmountBathroom ? { background: "antiquewhite" } : {}}
+          style={
+            query.minAmountBathroom
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
         >
           {query.minAmountBathroom
             ? query.minAmountBathroom + "+ Baños"
@@ -273,7 +306,11 @@ export function ListingFilters({
           onClick={openSqMtsPopover}
           style={
             query.minAmountSquareMeter || query.maxAmountSquareMeter
-              ? { background: "antiquewhite" }
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
               : {}
           }
         >
@@ -282,7 +319,15 @@ export function ListingFilters({
         <StyledButton
           size="small"
           onClick={openStylePopover}
-          style={query.style ? { background: "antiquewhite" } : {}}
+          style={
+            query.style
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
         >
           Estilo
         </StyledButton>
@@ -290,7 +335,15 @@ export function ListingFilters({
         <StyledButton
           size="small"
           onClick={openTypesPopover}
-          style={query.typeProperty ? { background: "antiquewhite" } : {}}
+          style={
+            query.typeProperty
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
         >
           Tipo
         </StyledButton>
@@ -359,7 +412,13 @@ export function ListingFilters({
                     : pushQueryParams({ style: data.id })
                 }
                 style={
-                  query.style === data.id ? { background: "antiquewhite" } : {}
+                  query.style === data.id
+                    ? {
+                        background: "rgba(255, 64, 0, 0.25)",
+                        border: "2px solid #FF4000",
+                        color: "#FF4000",
+                      }
+                    : {}
                 }
               >
                 {data.label}
@@ -393,7 +452,11 @@ export function ListingFilters({
                 }
                 style={
                   query.typeProperty === data
-                    ? { background: "antiquewhite" }
+                    ? {
+                        background: "rgba(255, 64, 0, 0.25)",
+                        border: "2px solid #FF4000",
+                        color: "#FF4000",
+                      }
                     : {}
                 }
               >
@@ -467,7 +530,11 @@ export function ListingFilters({
           <Button
             style={
               Number(query.minAmountRoom) === 1
-                ? { background: "antiquewhite" }
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
                 : {}
             }
             onClick={() =>
@@ -481,7 +548,11 @@ export function ListingFilters({
           <Button
             style={
               Number(query.minAmountRoom) === 2
-                ? { background: "antiquewhite" }
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
                 : {}
             }
             onClick={() =>
@@ -495,7 +566,11 @@ export function ListingFilters({
           <Button
             style={
               Number(query.minAmountRoom) === 3
-                ? { background: "antiquewhite" }
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
                 : {}
             }
             onClick={() =>
@@ -509,7 +584,11 @@ export function ListingFilters({
           <Button
             style={
               Number(query.minAmountRoom) === 4
-                ? { background: "antiquewhite" }
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
                 : {}
             }
             onClick={() =>
@@ -546,7 +625,11 @@ export function ListingFilters({
           <Button
             style={
               Number(query.minAmountBathroom) === 1
-                ? { background: "antiquewhite" }
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
                 : {}
             }
             onClick={() =>
@@ -560,7 +643,11 @@ export function ListingFilters({
           <Button
             style={
               Number(query.minAmountBathroom) === 2
-                ? { background: "antiquewhite" }
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
                 : {}
             }
             onClick={() =>
@@ -574,7 +661,11 @@ export function ListingFilters({
           <Button
             style={
               Number(query.minAmountBathroom) === 3
-                ? { background: "antiquewhite" }
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
                 : {}
             }
             onClick={() =>
@@ -588,7 +679,11 @@ export function ListingFilters({
           <Button
             style={
               Number(query.minAmountBathroom) === 4
-                ? { background: "antiquewhite" }
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
                 : {}
             }
             onClick={() =>

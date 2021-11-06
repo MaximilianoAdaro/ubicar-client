@@ -250,6 +250,10 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
         .getView()
         .setCenter([this.props.view.longitude, this.props.view.latitude]);
     }
+    setTimeout(() => {
+      // Update container size
+      this.map.updateSize();
+    }, 200);
   }
 
   render() {
