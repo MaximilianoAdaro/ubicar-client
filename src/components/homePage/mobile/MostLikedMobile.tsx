@@ -15,7 +15,7 @@ export function MostLikedMobile() {
     <div className={styles.personalDataMainDiv}>
       <Grid className={styles.properties}>
         <div className={styles.propertyList}>
-          <h1 className={styles.title}>Propiedades más likeadas</h1>
+          <h5 className={styles.title}>Propiedades más likeadas</h5>
           <div className={styles.propertyCard}>
             {properties?.map((casa) => (
               <div

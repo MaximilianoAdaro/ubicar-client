@@ -245,7 +245,7 @@ export const ListingPageMobile = () => {
         <MapComponent
           zoom={zoom}
           view={view}
-          renderLayers={true}
+          renderLayers={false}
           editable={false}
           setZoom={setter1}
           setView={setter2}

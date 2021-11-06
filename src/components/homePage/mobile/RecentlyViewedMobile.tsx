@@ -7,6 +7,7 @@ import { useGetHomePagePropertiesUsingGET } from "../../../api";
 import { urls } from "../../../constants";
 import { useHistory } from "react-router-dom";
 import { MostLikedMobile } from "./MostLikedMobile";
+import { PropertyCardMobile } from "./PropertyCardMobile";
 
 export function RecentlyViewedMobile() {
   const { data: properties, isLoading } = useGetHomePagePropertiesUsingGET();
@@ -18,36 +19,23 @@ export function RecentlyViewedMobile() {
         <div className={styles.personalDataMainDiv}>
           <Grid className={styles.properties}>
             <div className={styles.propertyList}>
-              <div>
-                <h1 style={{ margin: "0px" }}>
-                  Propiedades recientemente vistas
-                </h1>
-              </div>
-              <List
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  padding: 0,
-                  overflow: "auto",
-                  margin: "0",
-                }}
-              >
+              <h5 className={styles.title}>Propiedades vistas recientemente</h5>
+              <div className={styles.propertyCard}>
                 {properties?.map((casa) => (
-                  <ListItem
-                    style={{ width: "20em" }}
+                  <div
                     onClick={() =>
                       history.push(urls.viewProperty.byId(casa.id))
                     }
                   >
-                    <PropretyCardMyFavorites
+                    <PropertyCardMobile
                       key={casa.id}
                       house={casa}
                       from={"properties"}
                       state={""}
                     />
-                  </ListItem>
+                  </div>
                 ))}
-              </List>
+              </div>
             </div>
           </Grid>
         </div>

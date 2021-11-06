@@ -6,7 +6,7 @@ import { useGetLoggedUsingGET } from "../../../api";
 import React from "react";
 import background from "../img/background.png";
 import background1 from "../img/my_background.jpg";
-import background2 from "../img/background2.jpeg";
+import backgroundMobile from "../img/backgroundMobile.png";
 import { actions, useAppDispatch } from "../../../store";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { convertCoordinates } from "../../../components/Map/utils";
