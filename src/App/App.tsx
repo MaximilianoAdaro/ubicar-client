@@ -28,6 +28,12 @@ import { ViewPropertyMobile } from "../routes/viewProperty/ViewPropertyMobile";
 import { LogInMobile } from "../routes/logIn/LogInMobile";
 import { SignUpMobile } from "../routes/signUp/SignUpMobile";
 import { HomeMobile } from "../routes/home/mobile/HomeMobile";
+import { UserProfileMobile } from "../routes/userProfile/UserProfileMobile";
+import { PersonalDataMobile } from "../components/UserProfile/Mobile/PersonalDataMobile";
+import { MyFavoritesMobile } from "../components/UserProfile/Mobile/MyFavoritesMobile";
+import { MyPropertiesMobile } from "../components/UserProfile/Mobile/MyPropertiesMobile";
+import { MyRecentlyViewedMobile } from "../components/UserProfile/Mobile/MyRecentlyViewedMobile";
+// import {UserProfileMobile} from "../routes/userProfile/UserProfileMobile";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -61,6 +67,31 @@ export default function App() {
           />
           <Route exact path={urls.logIn} component={LogInMobile} />
           <Route exact path={urls.signUp} component={SignUpMobile} />
+          <Route
+            exact
+            path={urls.userProfile.path}
+            component={UserProfileMobile}
+          />
+          <Route
+            exact
+            path={urls.userProfile.personalData}
+            component={PersonalDataMobile}
+          />
+          <Route
+            exact
+            path={urls.userProfile.favorites}
+            component={MyFavoritesMobile}
+          />
+          <Route
+            exact
+            path={urls.userProfile.properties}
+            component={MyPropertiesMobile}
+          />
+          <Route
+            exact
+            path={urls.userProfile.recentlyViewed}
+            component={MyRecentlyViewedMobile}
+          />
 
           <Route component={NotFound} />
         </Switch>
@@ -100,7 +131,7 @@ export default function App() {
           <Route exact path={urls.logIn} component={LogIn} />
           <Route exact path={urls.editProperty.path} component={EditProperty} />
           <Route exact path={"/loading"} component={Loading} />
-          <Route exact path={urls.userProfile} component={UserProfile} />
+          <Route exact path={urls.userProfile.path} component={UserProfile} />
           <Route component={NotFound} />
         </Switch>
       </div>

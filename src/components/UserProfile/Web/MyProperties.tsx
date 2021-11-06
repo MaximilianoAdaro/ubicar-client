@@ -1,10 +1,8 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
-import { Grid, Tooltip } from "@material-ui/core";
-import { useGetMyPropertiesUsingGET } from "../../api";
+import { Grid } from "@material-ui/core";
+import { useGetMyPropertiesUsingGET } from "../../../api";
 import { PropertyCardMyProperties } from "./PropertyCardMyProperties";
-import EditIcon from "@material-ui/icons/Edit";
-import { urls } from "../../constants";
 import { useHistory } from "react-router-dom";
 
 export function MyProperties() {
@@ -20,7 +18,7 @@ export function MyProperties() {
         </p>
       </Grid>
       <Grid container>
-        <Grid className={styles.properties} xs>
+        <Grid className={styles.properties} xs={6}>
           {data.status === "success" &&
           data?.data.filter((casa) => casa.step === 7).length > 0 ? (
             <div>
@@ -43,7 +41,7 @@ export function MyProperties() {
           )}
         </Grid>
 
-        <Grid className={styles.properties} xs>
+        <Grid className={styles.properties} xs={6}>
           {data.status === "success" &&
           data?.data.filter((casa) => casa.step < 7).length > 0 ? (
             <div>

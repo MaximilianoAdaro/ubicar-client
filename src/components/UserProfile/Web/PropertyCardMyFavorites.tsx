@@ -1,11 +1,11 @@
-import { PropertyPreviewDTO } from "../../api";
+import { PropertyPreviewDTO } from "../../../api";
 import { Grid, makeStyles } from "@material-ui/core";
 import { Image } from "react-bootstrap";
 import styles from "./UserProfile.module.scss";
 import { useHistory } from "react-router-dom";
 import pluralize from "pluralize";
 import { Tooltip } from "@material-ui/core";
-import { urls } from "../../constants";
+import { urls } from "../../../constants";
 
 interface ListingHouseProps {
   house: PropertyPreviewDTO;
@@ -36,6 +36,24 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
     houseAddress?.number ?? ""
   }`;
   const baths = pluralize("baño", house.fullBaths);
+
+  const photos = [
+    "https://images.adsttc.com/media/images/5ecd/d4ac/b357/65c6/7300/009d/large_jpg/02C.jpg?1590547607",
+    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aG91c2UlMjBleHRlcmlvcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
+    "https://media.istockphoto.com/photos/modern-custom-suburban-home-exterior-picture-id1255835529?b=1&k=20&m=1255835529&s=170667a&w=0&h=Z-RskiXf6fx_c0s64LAuCWhmS-cJ5Nli4p7lZtqa7R4=",
+    "https://assets.themortgagereports.com/wp-content/uploads/2020/12/Buy-A-Home-With-Low-No-Down-Payment-First-Time-Home-Buyer.jpg",
+  ];
+
+  function getRandomIntInclusive(min: any, max: any) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+  }
+
+  const selectPhotos = () => {
+    return photos[getRandomIntInclusive(0, photos.length - 1)];
+  };
+
   return (
     <div>
       <Grid
@@ -46,7 +64,7 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
           <Grid>
             <Image
               className={styles.my_favorities_property_image}
-              src="https://q4g9y5a8.rocketcdn.me/wp-content/uploads/2020/02/home-banner-2020-02-min.jpg"
+              src={selectPhotos()}
               rounded
             />
           </Grid>
@@ -64,7 +82,8 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
             </Tooltip>
             <p className={styles.myPropertyStreetNumber}>{houseStreetNumber}</p>
             <p className={styles.myPropertyTownCity}>
-              {houseAddress?.state ?? ""}, {houseAddress?.city ?? ""}
+              {houseAddress?.state?.toLowerCase() ?? ""},{" "}
+              {houseAddress?.city?.toLowerCase() ?? ""}
             </p>
             <Tooltip
               title={
@@ -85,7 +104,7 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
               </p>
             </Tooltip>
             <p className={styles.myPropertyPriceCondition}>
-              ${house.price.toLocaleString()}
+              U$D {house.price.toLocaleString()}
               &nbsp;|&nbsp; En{" "}
               {house.condition == "SALE" ? "Venta" : "Alquiler"}{" "}
             </p>

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import styles from "./ViewProperty.module.scss";
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { TabsBar } from "../../components/common/tabsBar/TabsBar";
 import { ReactNode, Suspense, useState } from "react";
 import pluralize from "pluralize";
@@ -11,7 +11,7 @@ import {
   getYearDistance,
   translateCondition,
 } from "./viewPropertyUtils";
-import { AddressDTO, UserDTO } from "../../api";
+import { AddressDTO, useGetSelectedTagsUsingGET, UserDTO } from "../../api";
 import { formatPrice } from "../../utils/utils";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -38,6 +38,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import { photos } from "./photos";
+import MultipleSelectChip from "../../components/UserProfile/Tags";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,6 +80,11 @@ const View = ({ id }: ViewProps) => {
       suspense: true,
     },
   });
+  const { data: selected } = useGetSelectedTagsUsingGET(id, {
+    query: {
+      suspense: true,
+    },
+  });
 
   // const openPhotos = () => {
   //   setViewerIsOpen(true);
@@ -95,6 +101,10 @@ const View = ({ id }: ViewProps) => {
     property.materials,
     property.security
   );
+
+  const streetCity = `${property.address!.street} ${property.address!.number} ${
+    property.address!.city
+  }               `;
 
   return (
     <div className={styles.container}>
@@ -161,8 +171,7 @@ const View = ({ id }: ViewProps) => {
           <div className={styles.firstSection}>
             <div className={styles.titleSection}>
               <Typography variant={"h5"} className={styles.mainTitle}>
-                {property.address!.street} {property.address!.number}{" "}
-                {property.address!.city}
+                {streetCity.toLowerCase()}
               </Typography>
               {currentUser && (
                 <FavoriteButton id={id} isLiked={property.liked} />
@@ -178,6 +187,11 @@ const View = ({ id }: ViewProps) => {
               {/*    Editar Propiedad*/}
               {/*  </Button>*/}
               {/*</Link>*/}
+            </div>
+            <div style={{ marginBottom: "0.5em" }}>
+              {currentUser && property.liked && (
+                <MultipleSelectChip id={id} selected={selected} />
+              )}
             </div>
             <span className={styles.subtitle}>{property.type}</span>
             <div className={styles.facts}>
@@ -381,7 +395,7 @@ const getAddressItem = (name: string, value: string) => {
         <h5 style={{ textTransform: "capitalize" }}>{name}: </h5>
       </td>
       <td>
-        <span>{value}</span>
+        <span>{value.toLowerCase()}</span>
       </td>
     </tr>
   );

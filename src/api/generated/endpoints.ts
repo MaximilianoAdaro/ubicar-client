@@ -706,6 +706,88 @@ export const useGetMostLikedPropertiesUsingGET = <
   };
 };
 
+export const getSelectedTagsUsingGET = <TData = string[]>(
+  id: string,
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/public/selected-tags/${id}`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetSelectedTagsUsingGETQueryKey = (id: string) => [
+  `/public/selected-tags/${id}`,
+];
+
+export const useGetSelectedTagsUsingGET = <
+  TQueryFnData = AsyncReturnType<typeof getSelectedTagsUsingGET, string[]>,
+  TError = unknown,
+  TData = TQueryFnData
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<TQueryFnData, TError, TData>;
+    request?: SecondParameter<typeof customInstance>;
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetSelectedTagsUsingGETQueryKey(id);
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getSelectedTagsUsingGET<TQueryFnData>(id, requestOptions),
+    queryOptions
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
+export const setTagsUsingPUT = <TData = string[]>(
+  id: string,
+  value: string[],
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/set-tags/${id}`, method: "put", data: value },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const useSetTagsUsingPUT = <
+  TData = AsyncReturnType<typeof setTagsUsingPUT, string[]>,
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    TData,
+    TError,
+    { id: string; data: string[] },
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { mutation: mutationOptions, request: requestOptions } = options || {};
+
+  return useMutation<TData, TError, { id: string; data: string[] }, TContext>(
+    (props) => {
+      const { id, data } = props || {};
+
+      return setTagsUsingPUT<TData>(id, data, requestOptions);
+    },
+    mutationOptions
+  );
+};
+
 export const getFavoritePropertiesUsingGET = <TData = PropertyDTO[]>(
   options?: SecondParameter<typeof customInstance>
 ) => {
