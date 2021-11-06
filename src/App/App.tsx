@@ -27,6 +27,7 @@ import { Home } from "../routes/home/Home";
 import { ViewPropertyMobile } from "../routes/viewProperty/ViewPropertyMobile";
 import { LogInMobile } from "../routes/logIn/LogInMobile";
 import { SignUpMobile } from "../routes/signUp/SignUpMobile";
+import { HomeMobile } from "../routes/home/mobile/HomeMobile";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
@@ -51,6 +52,7 @@ export default function App() {
     return (
       <>
         <Switch>
+          <Route exact path={urls.home} component={HomeMobile} />
           <Route exact path={urls.listingPage} component={ListingPageMobile} />
           <Route
             exact
