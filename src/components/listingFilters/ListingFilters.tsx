@@ -39,8 +39,8 @@ const StyledButton = withStyles({
     paddingRight: "0.7em",
     textTransform: "none",
     marginLeft: "1.5rem",
-    border: "2px solid #E0E0E0",
-    color: "#C4C4C4",
+    border: "2px solid rgba(0,0,0,0.7)",
+    color: "rgba(0,0,0,0.7)",
     background: "rgb(255,255,255,0.9)",
 
     "&:hover": {

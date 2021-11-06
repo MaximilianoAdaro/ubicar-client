@@ -40,7 +40,7 @@ const StyledButton = withStyles({
     textTransform: "none",
     // marginLeft: "1.5rem",
     border: "2px solid #E0E0E0",
-    color: "#C4C4C4",
+    color: "rgba(0,0,0,0.70)",
     background: "rgb(255,255,255,0.9)",
 
     "&:hover": {
@@ -258,7 +258,7 @@ export function ListingFiltersMobile({
               : {}
           }
         >
-          Metros Cuadrados
+          Metros cuadrados
         </StyledButton>
         <StyledButton
           size="small"
