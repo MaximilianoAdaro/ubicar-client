@@ -13,6 +13,7 @@ interface ListingHouseProps {
   house: PropertyPreviewDTO;
   from: string;
   state: string;
+  clickable: boolean;
 }
 
 export function PropertyCardMyProperties(props: ListingHouseProps) {
@@ -44,9 +45,9 @@ export function PropertyCardMyProperties(props: ListingHouseProps) {
     <Grid
       container
       className={styles.propertyInformation}
-      // onClick={() =>
-      //    clickable && history.push(urls.viewProperty.byId(props.house.id))
-      // }
+      onClick={() =>
+        props.clickable && history.push(urls.viewProperty.byId(props.house.id))
+      }
     >
       <Grid xs={6}>
         <Image
@@ -57,7 +58,10 @@ export function PropertyCardMyProperties(props: ListingHouseProps) {
       </Grid>
       <Grid xs={6} className={styles.propertyRight}>
         <Tooltip title={props.house.title}>
-          <p className={clsx(styles.propertyTitle, styles.marginPaddingPTag)}>
+          <p
+            className={clsx(styles.propertyTitle, styles.marginPaddingPTag)}
+            style={{ marginBottom: "0.5em" }}
+          >
             {props.house.title}
           </p>
         </Tooltip>
@@ -66,6 +70,7 @@ export function PropertyCardMyProperties(props: ListingHouseProps) {
             styles.propertyPriceCondition,
             styles.marginPaddingPTag
           )}
+          style={{ marginBottom: "0.5em" }}
         >
           ${props.house.price.toLocaleString()} &nbsp;|&nbsp; En{" "}
           {props.house.condition === "SALE" ? "Venta" : "Alquiler"}
@@ -75,6 +80,7 @@ export function PropertyCardMyProperties(props: ListingHouseProps) {
             styles.propertySpecifications,
             styles.marginPaddingPTag
           )}
+          style={{ marginBottom: "0.5em" }}
         >
           {props.house.squareFoot} m² &nbsp;&nbsp;|&nbsp;&nbsp;{" "}
           {props.house.rooms} hab. &nbsp;&nbsp;|&nbsp;&nbsp;{" "}
@@ -91,17 +97,18 @@ export function PropertyCardMyProperties(props: ListingHouseProps) {
           </p>
         </Tooltip>
         <Grid container>
-          <Grid xs={11}>
+          <Grid xs={10}>
             <p
               className={clsx(
                 styles.propertyTownCity,
                 styles.marginPaddingPTag
               )}
             >
-              {houseAddress?.state ?? ""}, {houseAddress?.city ?? ""}
+              {houseAddress?.state?.toLowerCase() ?? ""},{" "}
+              {houseAddress?.city?.toLowerCase() ?? ""}
             </p>
           </Grid>
-          <Grid xs>
+          <Grid xs={2}>
             <Tooltip
               title={"Editar propiedad"}
               className={styles.propertyListEditPropertyTooltip}

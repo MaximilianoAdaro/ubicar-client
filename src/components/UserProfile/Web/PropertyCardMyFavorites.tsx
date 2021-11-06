@@ -60,7 +60,7 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
         className={styles.my_favorite_card_outer_div}
         onClick={() => history.push(urls.viewProperty.byId(house.id))}
       >
-        <Grid className={styles.container}>
+        <Grid className={styles.my_favorites_card_container}>
           <Grid>
             <Image
               className={styles.my_favorities_property_image}
@@ -80,14 +80,22 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
             >
               <p className={styles.myPropertyTitle}>{house.title}</p>
             </Tooltip>
-            <p className={styles.myPropertyStreetNumber}>{houseStreetNumber}</p>
-            <p className={styles.myPropertyTownCity}>
+            <p className={styles.myPropertyStreetNumber}>
+              {houseStreetNumber.toLowerCase()}
+            </p>
+            <p
+              className={styles.myPropertyTownCity}
+              style={{ marginBottom: "0.6em" }}
+            >
               {houseAddress?.state?.toLowerCase() ?? ""},{" "}
               {houseAddress?.city?.toLowerCase() ?? ""}
             </p>
             <Tooltip
               title={
-                <Grid className={styles.userProfileToolTips}>
+                <Grid
+                  className={styles.userProfileToolTips}
+                  style={{ marginBottom: "0.6em" }}
+                >
                   {house.rooms} habitaciones <br />
                   {house.fullBaths} {baths} <br />
                   {house.coveredSquareFoot} m²

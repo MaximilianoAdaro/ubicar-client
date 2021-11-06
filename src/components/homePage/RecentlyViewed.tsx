@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import { MostLiked } from "./MostLiked";
 
 export function RecentlyViewed() {
-  const { data: properties, isLoading } = useGetHomePagePropertiesUsingGET();
+  const { data: properties } = useGetHomePagePropertiesUsingGET();
   const history = useHistory();
 
   return (
@@ -34,7 +34,7 @@ export function RecentlyViewed() {
               >
                 {properties?.map((casa) => (
                   <ListItem
-                    style={{ width: "20em" }}
+                    style={{ width: "20em", marginRight: "4em" }}
                     onClick={() =>
                       history.push(urls.viewProperty.byId(casa.id))
                     }

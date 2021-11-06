@@ -8,7 +8,7 @@ import { urls } from "../../constants";
 import { useHistory } from "react-router-dom";
 
 export function MostLiked() {
-  const { data: properties, isLoading } = useGetMostLikedPropertiesUsingGET();
+  const { data: properties } = useGetMostLikedPropertiesUsingGET();
   const history = useHistory();
 
   return (
@@ -27,7 +27,7 @@ export function MostLiked() {
           >
             {properties?.map((casa) => (
               <ListItem
-                style={{ width: "20em" }}
+                style={{ width: "20em", marginRight: "2em" }}
                 onClick={() => history.push(urls.viewProperty.byId(casa.id))}
               >
                 <PropretyCardMyFavorites

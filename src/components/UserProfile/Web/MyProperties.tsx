@@ -3,12 +3,9 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import { useGetMyPropertiesUsingGET } from "../../../api";
 import { PropertyCardMyProperties } from "./PropertyCardMyProperties";
-import { useHistory } from "react-router-dom";
 
 export function MyProperties() {
   const data = useGetMyPropertiesUsingGET();
-  console.log(data);
-  const history = useHistory();
   return (
     <div className={styles.personalDataMainDiv}>
       <Grid>
@@ -28,6 +25,7 @@ export function MyProperties() {
                   .filter((casa) => casa.step === 7)
                   .map((casa) => (
                     <PropertyCardMyProperties
+                      clickable={true}
                       key={casa.id}
                       house={casa}
                       from={"properties"}
@@ -52,6 +50,7 @@ export function MyProperties() {
                   .map((casa) => (
                     <Grid>
                       <PropertyCardMyProperties
+                        clickable={false}
                         key={casa.id}
                         house={casa}
                         from={"properties"}
@@ -62,7 +61,7 @@ export function MyProperties() {
               </Grid>
             </div>
           ) : (
-            <div></div>
+            <div />
           )}
           <br />
           <br />
