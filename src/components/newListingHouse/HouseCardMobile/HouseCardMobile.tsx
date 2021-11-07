@@ -21,12 +21,12 @@ export function HouseCardMobile({
 }: HouseCardProps) {
   const history = useHistory();
   const houseAddress = house.address;
-  const houseStreetNumber = `${houseAddress?.street ?? ""} ${
-    houseAddress?.number ?? ""
-  }`;
+  const houseStreetNumber = `${
+    houseAddress?.street.toLocaleLowerCase() ?? ""
+  } ${houseAddress?.number ?? ""}`;
   const stateCity =
     houseAddress?.city && houseAddress.state
-      ? `${houseAddress?.city}, ${houseAddress.state}`
+      ? `${houseAddress?.city.toLowerCase()}, ${houseAddress.state.toLowerCase()}`
       : "";
   const baths = pluralize("baño", house.fullBaths);
 
