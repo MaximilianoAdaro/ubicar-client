@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import MultipleSelectChips from "../../routes/viewProperty/MultipleSelectChips";
 import { Button, withStyles } from "@material-ui/core";
 import { useSetTagsUsingPUT } from "../../api";
 import { toast } from "react-toastify";

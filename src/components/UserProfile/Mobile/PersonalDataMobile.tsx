@@ -139,7 +139,7 @@ export function PersonalDataMobile() {
             className={styles.personal_data_textfield}
             size={"small"}
             disabled
-            style={{ width: "75%" }}
+            style={{ width: "80%" }}
           />
           <Editbutton onClick={openChangeUsername}>Editar</Editbutton>
         </Grid>
@@ -150,7 +150,7 @@ export function PersonalDataMobile() {
             size={"small"}
             value={"********"}
             className={styles.personal_data_textfield}
-            style={{ width: "75%" }}
+            style={{ width: "80%" }}
             disabled
           />
           <Editbutton onClick={openChangePassword}>Editar</Editbutton>

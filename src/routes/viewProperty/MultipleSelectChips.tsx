@@ -11,6 +11,8 @@ import {
 } from "@material-ui/core";
 
 import InfoIcon from "@material-ui/icons/Info";
+import { useSetTagsUsingPUT } from "../../api";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -49,10 +51,38 @@ const MultipleSelectChips: React.FC<InferredProps> = ({
   icon,
   helperText,
   disabled,
+  id,
 }) => {
   const classes = useStyles();
 
-  const handleClick = (clickedValue: string | number) => {
+  const { mutateAsync } = useSetTagsUsingPUT({
+    mutation: {
+      onSuccess() {
+        toast.success(" ✅ Tags guardadas!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+      onError() {
+        toast.error(" ❌ Error en el guardado de tags!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+    },
+  });
+
+  const handleClick = async (clickedValue: string | number) => {
     if (setError) {
       setError("");
     }
@@ -61,8 +91,29 @@ const MultipleSelectChips: React.FC<InferredProps> = ({
       let arr = [...value];
       arr.splice(index, 1);
       setValue(arr);
+      try {
+        console.log(arr);
+        await mutateAsync({
+          // @ts-ignore
+          id,
+          data: arr,
+        });
+      } catch (e) {
+        throw Error;
+      }
     } else {
       setValue([...value, clickedValue]);
+      try {
+        const data1 = value;
+        data1.push(clickedValue);
+        await mutateAsync({
+          // @ts-ignore
+          id,
+          data: data1,
+        });
+      } catch (e) {
+        throw Error;
+      }
     }
   };
 
@@ -124,6 +175,7 @@ const myTypes = {
   icon: PropTypes.element,
   helperText: PropTypes.string,
   disabled: PropTypes.bool,
+  id: PropTypes.string,
 };
 
 type InferredProps = InferProps<typeof myTypes>;
