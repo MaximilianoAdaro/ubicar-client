@@ -132,7 +132,7 @@ const View = ({ id }: ViewProps) => {
     property.materials,
     property.security
   );
-
+  console.log(property.comments.length);
   const baths = pluralize("baño", property.fullBaths);
   const environments = pluralize("amb", property.environments);
   const houseAddress = property.address;
@@ -210,9 +210,9 @@ const View = ({ id }: ViewProps) => {
         </Grid>
 
         <span>
-          {property.comments?.length < 1
+          {property.comments?.length < 2
             ? "Impecable departamento de 1 ambiente con balcon a la calle, cocina integrada, agua caliente individual, baño completo con box de ducha / Ubicado a pocas cuadras de la estación San Pedrito (Subte A), y en esquina sobre la Av. 5 años de antigüedad.\n" +
-              "Directorio con múltiples lineas de transporte <br/> / OPORTUNIDD DE INVERSOR - IDEAL RENTA! /"
+              "Directorio con múltiples lineas de transporte / OPORTUNIDD DE INVERSOR - IDEAL RENTA! /"
             : property.comments}
         </span>
       </Grid>

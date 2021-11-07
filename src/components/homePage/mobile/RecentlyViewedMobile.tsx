@@ -1,8 +1,6 @@
 import styles from "./HomePageMobile.module.scss";
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { ListItem, List } from "@material-ui/core";
-import { PropretyCardMyFavorites } from "../../UserProfile/Web/PropertyCardMyFavorites";
 import { useGetHomePagePropertiesUsingGET } from "../../../api";
 import { urls } from "../../../constants";
 import { useHistory } from "react-router-dom";
@@ -10,7 +8,7 @@ import { MostLikedMobile } from "./MostLikedMobile";
 import { PropertyCardMobile } from "./PropertyCardMobile";
 
 export function RecentlyViewedMobile() {
-  const { data: properties, isLoading } = useGetHomePagePropertiesUsingGET();
+  const { data: properties } = useGetHomePagePropertiesUsingGET();
   const history = useHistory();
 
   return (
@@ -19,7 +17,7 @@ export function RecentlyViewedMobile() {
         <div className={styles.personalDataMainDiv}>
           <Grid className={styles.properties}>
             <div className={styles.propertyList}>
-              <h5 className={styles.title}>Propiedades vistas recientemente</h5>
+              <h4 className={styles.title}>Propiedades vistas recientemente</h4>
               <div className={styles.propertyCard}>
                 {properties?.map((casa) => (
                   <div

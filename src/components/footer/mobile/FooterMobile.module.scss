@@ -3,30 +3,14 @@
 .container {
   display: grid;
   grid-template-columns: auto auto;
-  margin: 1em 1em 0;
+  //margin: 1em 1em 0;
+  padding: 1em 1em 0;
   color: #666666;
-  gap: 3em;
+  gap: 2em;
+  background-color: rgba(102, 102, 102, 0.07);
+  margin-top: auto;
 }
 
-//.footer_container {
-//  color: #666666;
-//  //background: #297278;
-//  padding: 2em 15%;
-//  margin-top: 0.75em;
-//}
-//
-//.footer_information {
-//}
-//
-//.footer_navigation_title {
-//  margin-bottom: 0.5em;
-//}
-//
-//.footer_navigation_links {
-//  margin-bottom: 0.5em;
-//  color: white;
-//}
-//
 .footer_navigation_links_style {
   display: flex;
   color: #666666;
@@ -36,11 +20,3 @@
     color: rgba(255, 255, 255, 0.68);
   }
 }
-//
-//.footer_about_us {
-//  margin-top: 3em;
-//}
-//
-//.about_us_element {
-//  margin-bottom: 10px;
-//}

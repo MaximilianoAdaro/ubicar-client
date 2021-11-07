@@ -1,5 +1,5 @@
 import { PropertyPreviewDTO } from "../../../api";
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { Image } from "react-bootstrap";
 import styles from "./UserProfileMobile.module.scss";
 import { useHistory } from "react-router-dom";
@@ -12,20 +12,6 @@ interface ListingHouseProps {
   from: string;
   state: string;
 }
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  customWidth: {
-    maxWidth: 500,
-    fontSize: "0.75em",
-  },
-  noMaxWidth: {
-    maxWidth: "none",
-    fontSize: "1em",
-  },
-}));
 
 export function PropretyCardMyFavoritesMobile(props: ListingHouseProps) {
   const house = props.house;

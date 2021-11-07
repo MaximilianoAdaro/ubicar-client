@@ -8,14 +8,14 @@ import { useHistory } from "react-router-dom";
 import { PropertyCardMobile } from "./PropertyCardMobile";
 
 export function MostLikedMobile() {
-  const { data: properties, isLoading } = useGetMostLikedPropertiesUsingGET();
+  const { data: properties } = useGetMostLikedPropertiesUsingGET();
   const history = useHistory();
 
   return (
     <div className={styles.personalDataMainDiv}>
       <Grid className={styles.properties}>
         <div className={styles.propertyList}>
-          <h5 className={styles.title}>Propiedades más likeadas</h5>
+          <h4 className={styles.title}>Propiedades más likeadas</h4>
           <div className={styles.propertyCard}>
             {properties?.map((casa) => (
               <div
