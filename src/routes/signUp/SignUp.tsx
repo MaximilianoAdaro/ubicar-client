@@ -113,7 +113,7 @@ export const SignUp = () => {
   };
 
   return (
-    <Container>
+    <Container className={styles.hola}>
       <div className={styles.titleContainer}>
         <Typography variant={"h3"} style={{ fontWeight: 600 }}>
           Bienvenido a Ubicar

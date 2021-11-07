@@ -8,8 +8,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import * as yup from "yup";
-import { useSignIn } from "../../api/custom/auth";
-import { RoundedButton } from "../../components/common/buttons/RoundedButton";
+import { useSignIn } from "../../api";
 import { DividerWithText } from "../../components/common/DividerWithText";
 import { HookFormPasswordInput } from "../../components/common/forms/HookFormPasswordInput";
 import { HookFormTextField } from "../../components/common/forms/HookFormTextField";
@@ -18,8 +17,6 @@ import { actions, useAppSelector } from "../../store";
 import { selectRedirectPath } from "../../store/slices/session";
 import GoogleLogin from "./GoogleLogin";
 import styles from "./LogIn.module.scss";
-import clsx from "clsx";
-import { none } from "ol/centerconstraint";
 
 const schema = yup.object({
   email: yup
@@ -52,7 +49,10 @@ export const LogIn = () => {
   return (
     <Container>
       <div className={styles.titleContainer}>
-        <Typography variant={"h3"} style={{ fontWeight: 600 }}>
+        <Typography
+          variant={"h3"}
+          style={{ fontWeight: 600, marginTop: "2em" }}
+        >
           Bienvenido a Ubicar
         </Typography>
       </div>

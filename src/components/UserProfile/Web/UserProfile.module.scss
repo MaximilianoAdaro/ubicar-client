@@ -1,7 +1,7 @@
 .container {
   margin-bottom: 2em;
   margin-right: 200px;
-  padding: 0.5em;
+  padding: 1.5em;
   background: whitesmoke;
   box-shadow: 3px 3px 3px 2px #888888;
   margin-top: 2em;
@@ -33,14 +33,10 @@
   text-overflow: "...";
 }
 .myPropertyStreetNumber {
-  font-size: 0.9em;
+  font-size: 1em;
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 0;
   font-weight: bold;
-  text-transform: lowercase;
-}
-
-.myPropertyStreetNumber::first-line {
   text-transform: capitalize;
 }
 
@@ -61,7 +57,7 @@
 }
 
 .personalDataMainDiv {
-  padding: 2em 5% 4em;
+  padding: 2em 5% 3em;
   background: rgba(211, 211, 211, 0.25);
   margin-bottom: 3em;
 }
@@ -92,7 +88,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 1.5em;
+  font-size: 1.2em;
   padding: 0;
 }
 
@@ -125,7 +121,7 @@
 }
 
 .propertiesImages {
-  height: 100%;
+  height: 11em;
   width: 95%;
 }
 
@@ -135,6 +131,7 @@
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   background: white;
+  height: 11em;
 }
 
 .marginPaddingPTag {
@@ -147,6 +144,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: bold;
+  font-size: 1.2em;
   padding: 0;
   margin: 0;
 }
@@ -178,7 +176,9 @@
 
 .published_property_list {
   overflow: auto;
+  height: 100%;
   max-height: 70vh;
+  padding-top: 0.25em;
 }
 
 .my_favorities_property_image {
@@ -186,7 +186,20 @@
   height: 175px;
 }
 
+.my_favorites_card_container {
+  margin-bottom: 2em;
+  padding: 0.75em;
+  background: whitesmoke;
+  box-shadow: 3px 3px 3px 2px #888888;
+  margin-top: 2em;
+  border-radius: 5px;
+}
+
 .my_favorite_card_outer_div {
-  max-width: 30em;
-  width: 30em;
+  width: 20em;
+}
+
+.user_profile_favorites_recently_list {
+  margin-right: 5em;
+  width: 20em;
 }

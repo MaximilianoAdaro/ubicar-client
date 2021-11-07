@@ -27,11 +27,15 @@ import { Home } from "../routes/home/Home";
 import { ViewPropertyMobile } from "../routes/viewProperty/ViewPropertyMobile";
 import { LogInMobile } from "../routes/logIn/LogInMobile";
 import { SignUpMobile } from "../routes/signUp/SignUpMobile";
+import { HomeMobile } from "../routes/home/mobile/HomeMobile";
 import { UserProfileMobile } from "../routes/userProfile/UserProfileMobile";
 import { PersonalDataMobile } from "../components/UserProfile/Mobile/PersonalDataMobile";
 import { MyFavoritesMobile } from "../components/UserProfile/Mobile/MyFavoritesMobile";
 import { MyPropertiesMobile } from "../components/UserProfile/Mobile/MyPropertiesMobile";
 import { MyRecentlyViewedMobile } from "../components/UserProfile/Mobile/MyRecentlyViewedMobile";
+import { useRef, useState } from "react";
+import { Burger, Menu } from "../components/navbar/mobile/Menu";
+import { FooterMobile } from "../components/footer/mobile/FooterMobile";
 // import {UserProfileMobile} from "../routes/userProfile/UserProfileMobile";
 
 export default function App() {
@@ -43,6 +47,9 @@ export default function App() {
   const { data: user, isLoading } = useGetLoggedUsingGET();
 
   const location = useLocation();
+
+  const [open, setOpen] = useState(false);
+  const node = useRef(null);
 
   if (isLoading) return <Loading />;
 
@@ -57,6 +64,7 @@ export default function App() {
     return (
       <>
         <Switch>
+          <Route exact path={urls.home} component={HomeMobile} />
           <Route exact path={urls.listingPage} component={ListingPageMobile} />
           <Route
             exact
@@ -65,27 +73,32 @@ export default function App() {
           />
           <Route exact path={urls.logIn} component={LogInMobile} />
           <Route exact path={urls.signUp} component={SignUpMobile} />
-          <Route
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
             exact
             path={urls.userProfile.path}
             component={UserProfileMobile}
           />
-          <Route
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
             exact
             path={urls.userProfile.personalData}
             component={PersonalDataMobile}
           />
-          <Route
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
             exact
             path={urls.userProfile.favorites}
             component={MyFavoritesMobile}
           />
-          <Route
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
             exact
             path={urls.userProfile.properties}
             component={MyPropertiesMobile}
           />
-          <Route
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
             exact
             path={urls.userProfile.recentlyViewed}
             component={MyRecentlyViewedMobile}
@@ -93,6 +106,11 @@ export default function App() {
 
           <Route component={NotFound} />
         </Switch>
+        <div ref={node}>
+          <Burger open={open} setOpen={setOpen} />
+          <Menu open={open} setOpen={setOpen} isLoggedIn={!!user} />
+        </div>
+        {location.pathname !== "/listing-page" && <FooterMobile />}
       </>
     );
 
@@ -129,7 +147,12 @@ export default function App() {
           <Route exact path={urls.logIn} component={LogIn} />
           <Route exact path={urls.editProperty.path} component={EditProperty} />
           <Route exact path={"/loading"} component={Loading} />
-          <Route exact path={urls.userProfile.path} component={UserProfile} />
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact
+            path={urls.userProfile.path}
+            component={UserProfile}
+          />
           <Route component={NotFound} />
         </Switch>
       </div>

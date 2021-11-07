@@ -1,11 +1,27 @@
+.title {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  //font-weight: 500;
+  font-size: 1em;
+  font-weight: bold;
+  // line-height: 19px;
+  // display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #ff701f;
+
+  margin-bottom: 1em;
+}
+
 .container {
   border: 2px solid black;
-  margin-bottom: 2em;
-  margin-right: 200px;
+  // margin-bottom: 2em;
+  // margin-right: 200px;
   padding: 0.5em;
   background: whitesmoke;
-  box-shadow: 4px 4px 5px 0;
-  margin-top: 2em;
+  // box-shadow: 4px 4px 5px 0;
+  // margin-top: 2em;
 }
 
 .myPropertyOuterDiv {
@@ -18,7 +34,7 @@
   width: 95%;
 }
 .myPropertyPriceCondition {
-  font-size: 1em;
+  // font-size: 1em;
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 0.3em;
   font-weight: bold;
@@ -61,13 +77,15 @@
 }
 
 .personalDataMainDiv {
-  padding: 2em 5% 3em;
-  background: rgba(211, 211, 211, 0.25);
-  //margin-bottom: 3em;
+  padding-right: 5%;
+  padding-left: 5%;
+  padding-top: 2em;
+  // background: rgba(211, 211, 211, 0.25);
+  margin-bottom: 3em;
 }
 
 .properties {
-  margin-left: 2%;
+  // margin-left: 2%;
 }
 
 .personalDataInformation {
@@ -189,4 +207,11 @@
 
 .my_favorite_card_outer_div {
   max-width: 30em;
+}
+
+.propertyCard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1em;
+  justify-items: stretch;
 }

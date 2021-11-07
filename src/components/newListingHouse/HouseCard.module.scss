@@ -28,7 +28,7 @@ $radius: 7px;
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 1.3em;
   line-height: 21px;
   white-space: nowrap;
   overflow: hidden;
@@ -48,13 +48,14 @@ $radius: 7px;
     text-overflow: "...";
     text-transform: capitalize;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 1em;
     line-height: 16px;
+    margin-bottom: 0.2em;
   }
 
   .stateCity {
     font-weight: normal;
-    font-size: 12px;
+    font-size: 1em;
     line-height: 14px;
     text-transform: capitalize;
   }
@@ -64,7 +65,7 @@ $radius: 7px;
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 1.1em;
   line-height: 16px;
 }
 

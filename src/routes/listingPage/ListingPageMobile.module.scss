@@ -2,6 +2,25 @@
   position: relative;
 }
 
+.searchContainer {
+  position: absolute;
+  width: 80%;
+  top: 1em;
+  right: 1em;
+  z-index: 5;
+  background-color: white;
+}
+
+.filtersContainer {
+  padding: 0 0.7em;
+  position: absolute;
+  width: 100%;
+  // height: 2em;
+  top: 4em;
+  // right: 1em;
+  z-index: 5;
+}
+
 .map {
   // background-color: grey;
   height: 72vh;
@@ -23,6 +42,10 @@
     top: 0;
     height: 100vh;
     border-radius: unset;
+
+    .titleAndButtonsContainer {
+      margin-top: 2em;
+    }
   }
 
   .changeViewButton {
@@ -33,6 +56,12 @@
       border: 2px solid #dadada;
       border-radius: 0.3em;
     }
+  }
+
+  .titleAndButtonsContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
   }
 
   .title {
@@ -55,13 +84,13 @@
     display: grid;
     grid-template-rows: auto auto;
     gap: 1em;
-
-    .gridIcons {
-      display: flex;
-      gap: 0.4em;
-      justify-content: flex-end;
-    }
   }
+}
+
+.gridIcons {
+  display: flex;
+  gap: 0.4em;
+  justify-content: flex-end;
 }
 
 .propList {
