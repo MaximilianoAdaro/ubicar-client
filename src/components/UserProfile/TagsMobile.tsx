@@ -25,7 +25,7 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-export default function MultipleSelectChip({
+export default function MultipleSelectChipMobile({
   id,
   selected,
 }: MultipleSelectedProps) {
@@ -91,7 +91,7 @@ export default function MultipleSelectChip({
           Guardar
         </StyledButton>
       </div>
-      <MultipleSelectChips
+      <MultipleSelectChipsMobile
         label=""
         value={value}
         setValue={setValue}

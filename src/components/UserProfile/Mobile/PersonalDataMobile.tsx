@@ -1,10 +1,23 @@
 import styles from "./UserProfileMobile.module.scss";
 import React from "react";
 import { Button, Grid, TextField, withStyles } from "@material-ui/core";
-import { useGetLoggedUsingGET } from "../../../api";
+import {
+  getGetLoggedUsingGETQueryKey,
+  useEditUserUsingPUT,
+  useGetLoggedUsingGET,
+} from "../../../api";
 import { Link } from "react-router-dom";
 import { urls } from "../../../constants";
 import { RiArrowLeftSLine } from "react-icons/all";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import { toast } from "react-toastify";
+import { useQueryClient } from "react-query";
 
 const Editbutton = withStyles({
   root: {
@@ -19,6 +32,7 @@ export function PersonalDataMobile() {
   const { data: user } = useGetLoggedUsingGET();
   const [changeUsername, setChangeUsername] = React.useState(false);
   const [changePassword, setChangePassword] = React.useState(false);
+  const [username, setUsername] = React.useState("");
 
   const openChangeUsername = () => {
     setChangeUsername(true);
@@ -26,6 +40,53 @@ export function PersonalDataMobile() {
 
   const openChangePassword = () => {
     setChangePassword(true);
+  };
+
+  const changeUsernameFunct = async () => {
+    setChangeUsername(false);
+    try {
+      await mutateAsync({
+        id: user!.id,
+        data: { email: user!.email, userName: username, id: user!.id },
+      });
+    } catch (e) {
+      throw Error;
+    }
+  };
+
+  const queryClient = useQueryClient();
+
+  const { mutateAsync } = useEditUserUsingPUT({
+    mutation: {
+      onSuccess() {
+        queryClient.invalidateQueries(getGetLoggedUsingGETQueryKey());
+        toast.success(" ✅ Nombre de usuario cambiado!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+      onError() {
+        toast.error(" ❌ Error en cambio de nombre de usuario!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+    },
+  });
+
+  const handleChange = (e: any) => {
+    setUsername(e.target.value);
+    console.log(username);
   };
 
   const closeChangeUsername = () => {
@@ -112,35 +173,71 @@ export function PersonalDataMobile() {
           </Grid>
         </Grid>
       </Grid>
+      <Dialog
+        open={changeUsername}
+        onClose={closeChangeUsername}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Cambiar nombre</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Escribe el nuevo nombre de usuario.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Nombre de usuario"
+            type="username"
+            value={username}
+            onChange={handleChange}
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={closeChangeUsername}
+            style={{ backgroundColor: "#5B91C2", color: "white" }}
+          >
+            Cancelar
+          </Button>
+          <Button
+            onClick={changeUsernameFunct}
+            style={{ backgroundColor: "#5B91C2", color: "white" }}
+          >
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
-    //   <Dialog
-    //     open={changeUsername}
-    //     onClose={closeChangeUsername}
-    //     aria-labelledby="form-dialog-title"
-    //   >
-    //     <DialogTitle id="form-dialog-title">Change Username</DialogTitle>
-    //     <DialogContent>
-    //       <DialogContentText>
-    //         Escribe el nuevo nombre de usuario.
-    //       </DialogContentText>
-    //       <TextField
-    //         autoFocus
-    //         margin="dense"
-    //         id="name"
-    //         label="Nombre de usuario"
-    //         type="username"
-    //         fullWidth
-    //       />
-    //     </DialogContent>
-    //     <DialogActions>
-    //       <Button onClick={closeChangeUsername} color="primary">
-    //         Cancel
-    //       </Button>
-    //       <Button onClick={closeChangeUsername} color="primary">
-    //         Subscribe
-    //       </Button>
-    //     </DialogActions>
-    //   </Dialog>
+    // <Dialog
+    //   open={changeUsername}
+    //   onClose={closeChangeUsername}
+    //   aria-labelledby="form-dialog-title"
+    // >
+    //   <DialogTitle id="form-dialog-title">Change Username</DialogTitle>
+    //   <DialogContent>
+    //     <DialogContentText>
+    //       Escribe el nuevo nombre de usuario.
+    //     </DialogContentText>
+    //     <TextField
+    //       autoFocus
+    //       margin="dense"
+    //       id="name"
+    //       label="Nombre de usuario"
+    //       type="username"
+    //       fullWidth
+    //     />
+    //   </DialogContent>
+    //   <DialogActions>
+    //     <Button onClick={closeChangeUsername} color="primary">
+    //       Cancel
+    //     </Button>
+    //     <Button onClick={closeChangeUsername} color="primary">
+    //       Subscribe
+    //     </Button>
+    //   </DialogActions>
+    // </Dialog>
     //   <Dialog
     //     open={changePassword}
     //     onClose={closeChangePassword}

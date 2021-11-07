@@ -12,6 +12,7 @@ import {
   withStyles,
 } from "@material-ui/core";
 import {
+  getGetLoggedUsingGETQueryKey,
   useEditUserUsingPUT,
   useGetLoggedUsingGET,
   useSetTagsUsingPUT,
@@ -19,6 +20,7 @@ import {
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../../constants";
+import { useQueryClient } from "react-query";
 
 const Editbutton = withStyles({
   root: {
@@ -58,12 +60,13 @@ export function PersonalData() {
     } catch (e) {
       throw Error;
     }
-    window.location.reload();
+    setUsername("");
   };
-
+  const queryClient = useQueryClient();
   const { mutateAsync } = useEditUserUsingPUT({
     mutation: {
       onSuccess() {
+        queryClient.invalidateQueries(getGetLoggedUsingGETQueryKey());
         toast.success(" ✅ Nombre de usuario cambiado!", {
           position: "bottom-center",
           autoClose: 5000,
@@ -173,13 +176,13 @@ export function PersonalData() {
         <DialogActions>
           <Button
             onClick={closeChangeUsername}
-            style={{ backgroundColor: "#2d557a", color: "white" }}
+            style={{ backgroundColor: "#5B91C2", color: "white" }}
           >
             Cancelar
           </Button>
           <Button
             onClick={changeUsernameFunct}
-            style={{ backgroundColor: "#2d557a", color: "white" }}
+            style={{ backgroundColor: "#5B91C2", color: "white" }}
           >
             Confirmar
           </Button>
