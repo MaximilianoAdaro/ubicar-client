@@ -29,7 +29,9 @@ export function MyFavorites() {
                 {data?.data
                   .filter((casa) => casa.step == 7)
                   .map((casa) => (
-                    <ListItem style={{ width: "20em", marginRight: "5em" }}>
+                    <ListItem
+                      className={styles.user_profile_favorites_recently_list}
+                    >
                       <PropretyCardMyFavorites
                         key={casa.id}
                         house={casa}
