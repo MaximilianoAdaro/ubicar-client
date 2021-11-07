@@ -1,4 +1,4 @@
-import styles from "./ListingFilters.module.scss";
+import styles from "./ListingFiltersMobile.module.scss";
 import React, { useMemo, useCallback, useState } from "react";
 import {
   Button,
@@ -12,14 +12,14 @@ import {
 } from "@material-ui/core";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import { Dropdown } from "react-bootstrap";
-import { StyleDTO, GetTypesUsingGET200Item } from "../../api";
+import { StyleDTO, GetTypesUsingGET200Item } from "../../../api";
 import { useHistory, useLocation } from "react-router-dom";
 import QueryString from "query-string";
-import { actions, useAppDispatch, useAppSelector } from "../../store";
-import { selectOption } from "../../store/slices/session";
-import { convertCoordinates } from "../Map/utils";
+import { actions, useAppDispatch, useAppSelector } from "../../../store";
+import { selectOption } from "../../../store/slices/session";
+import { convertCoordinates } from "../../Map/utils";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { MapView } from "../../store/slices/map/mapSlice";
+import { MapView } from "../../../store/slices/map/mapSlice";
 
 const parseIntOrUndefined = (n: string) => (n !== "" ? parseInt(n) : undefined);
 
@@ -32,15 +32,15 @@ type ListingFiltersProp = {
 
 const StyledButton = withStyles({
   root: {
-    // width: "200px",
+    width: "200px",
     minWidth: "auto",
     // background: "white",
     paddingLeft: "0.7em",
     paddingRight: "0.7em",
     textTransform: "none",
-    marginLeft: "1.5rem",
-    border: "2px solid rgba(0,0,0,0.7)",
-    color: "rgba(0,0,0,0.7)",
+    // marginLeft: "1.5rem",
+    border: "2px solid #E0E0E0",
+    color: "rgba(0,0,0,0.70)",
     background: "rgb(255,255,255,0.9)",
 
     "&:hover": {
@@ -49,7 +49,7 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-export function ListingFilters({
+export function ListingFiltersMobile({
   houseStyles,
   houseTypes,
   setZoom,
@@ -175,63 +175,7 @@ export function ListingFilters({
 
   return (
     <div>
-      <Grid container className={styles.OptionsFilters}>
-        <Grid className={styles.searchBar}>
-          <Grid>
-            <Autocomplete
-              id="asyncState"
-              size={"small"}
-              style={{ width: "500px" }}
-              open={open}
-              defaultValue={search}
-              onChange={(e, value) => {
-                if (value) {
-                  let coords = convertCoordinates(
-                    value.centroid.long,
-                    value.centroid.lat
-                  );
-                  handleChangeName(handleOptionLabel(value));
-                  handleChangeView(coords[0], coords[1]);
-                }
-              }}
-              onOpen={() => {
-                setOpen(true);
-              }}
-              onClose={() => {
-                setOpen(false);
-              }}
-              getOptionSelected={(option, value) => option.id === value.id}
-              getOptionLabel={(option) => handleOptionLabel(option)}
-              options={options}
-              loading={loading}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  fullWidth
-                  variant="outlined"
-                  color={"secondary"}
-                  onChange={(ev) => {
-                    // dont fire API if the user delete or not entered anything
-                    if (ev.target.value !== "" || ev.target.value !== null) {
-                      onChangeHandle(ev.target.value);
-                    }
-                  }}
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <React.Fragment>
-                        {loading ? (
-                          <CircularProgress color="inherit" size={20} />
-                        ) : null}
-                        {params.InputProps.endAdornment}
-                      </React.Fragment>
-                    ),
-                  }}
-                />
-              )}
-            />
-          </Grid>
-        </Grid>
+      <div className={styles.OptionsFilters}>
         <StyledButton
           id="buttonForm"
           size="small"
@@ -314,7 +258,7 @@ export function ListingFilters({
               : {}
           }
         >
-          Metros Cuadrados
+          Metros cuadrados
         </StyledButton>
         <StyledButton
           size="small"
@@ -351,7 +295,7 @@ export function ListingFilters({
         <StyledButton size="small" onClick={clearFilters}>
           Limpiar Filtros
         </StyledButton>
-      </Grid>
+      </div>
       <Popover
         open={Boolean(anchorSale)}
         anchorEl={anchorSale}

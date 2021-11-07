@@ -1,16 +1,25 @@
 .OptionsFilters {
-  background: rgba(66, 158, 166, 0.2);
+  display: flex;
+  overflow-x: scroll;
+  gap: 1em;
+  // background: #cddde5;
   padding: 0.5%;
-  align-items: center;
-}
+  align-items: stretch;
+  white-space: nowrap;
 
-.searchBar {
-  background: white;
-  border-radius: 5px;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .filtersButton {
-  background: white;
+  // background: white;
   margin-left: 1.5rem;
   border: 1px #4a636c solid;
   padding-left: 0.7em;
@@ -19,7 +28,7 @@
 }
 
 .selectSale {
-  background: white;
+  // background: white;
   margin-left: 1.5rem;
   border: 1px #4a636c solid;
   padding-left: 0.7em;
