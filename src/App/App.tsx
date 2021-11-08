@@ -45,7 +45,7 @@ export default function App() {
 
   const size = useWindowSize();
 
-  const { data: user, isLoading } = useProfileUserUsingGET();
+  const { data: user, isLoading } = useGetLoggedUsingGET();
 
   const location = useLocation();
 
