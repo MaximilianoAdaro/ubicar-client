@@ -35,7 +35,11 @@ export function MyProperties() {
               </Grid>
             </div>
           ) : (
-            <h5 style={{ color: "gray" }}>No tienes propiedades publicadas.</h5>
+            <h3
+              style={{ color: "gray", textAlign: "center", marginTop: "2em" }}
+            >
+              No tienes propiedades publicadas.
+            </h3>
           )}
         </Grid>
 

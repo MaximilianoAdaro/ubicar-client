@@ -125,7 +125,7 @@ const View = ({ id }: ViewProps) => {
           <div>
             <img src="https://media.architecturaldigest.com/photos/58f7cf1a8bfbf566da78acc2/master/pass/IShvzncvwa127j0000000000.jpg" />
             <img src="https://shawhomes.com/wp-content/uploads/Exterior-Twilight-2-Shaw-Homes-12801-S.-Date-Street-Jenks-OK-Yorktown.jpg" />
-            {/*<img src="https://www.maids.com/cleaning-hacks/wp-content/uploads/2018/01/Entire2-house-featured.jpg" />*/}
+            <img src="https://cdn.archilovers.com/projects/57d7daff-e586-4a1b-83b3-8d5bf0f8e070.jpg" />
             <img src="https://media.architecturaldigest.com/photos/59382d7a3176b35c589a6af3/master/pass/adelman-house-frank-lloyd-wright-03.jpg" />
             <img src="https://cdn.architecturendesign.net/wp-content/uploads/2014/07/House-in-Gorki-08.jpg" />
             <img src="http://www.passivehousecanada.com/wp-content/uploads/2016/05/Alta-Lake-Passive-House-1024x637.jpg" />
@@ -279,7 +279,7 @@ const View = ({ id }: ViewProps) => {
                 {translateCondition(property.condition)}
               </h2>
               <h3 className={styles.price}>
-                <span className={styles.priceSymbol}>$</span>{" "}
+                <span className={styles.priceSymbol}>U$D</span>{" "}
                 <span className={styles.priceColor}>
                   {formatPrice(property.price)}
                 </span>
