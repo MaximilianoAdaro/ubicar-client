@@ -12,6 +12,13 @@ import { MyProperties } from "../../components/UserProfile/Web/MyProperties";
 import { useState } from "react";
 import { createStyles, Theme } from "@material-ui/core/styles";
 import { MyRecentlyViewed } from "../../components/UserProfile/Web/MyRecentlyViewed";
+import { MyOpportunities } from "../../components/UserProfile/Web/MyOpportunities";
+import {
+  getGetLoggedUsingGETQueryKey,
+  useGetLoggedUsingGET,
+  useProfileUserUsingGET,
+} from "../../api";
+import { useQueryClient } from "react-query";
 
 const useStyles = makeStyles({
   button: {
@@ -52,6 +59,9 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 export function UserProfile() {
   const classes = useStyles();
   const [component, setComponent] = useState("PersonalData");
+  const { data: user } = useProfileUserUsingGET();
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries(useProfileUserUsingGET());
   return (
     <>
       <div>
@@ -94,6 +104,17 @@ export function UserProfile() {
                   Recientemente Vistos
                 </StyledButton>
               </Grid>
+              {user && user.investor && (
+                <Grid xs>
+                  <StyledButton
+                    className={classes.button}
+                    onClick={() => setComponent("Opportunities")}
+                    fullWidth
+                  >
+                    Oportunidades
+                  </StyledButton>
+                </Grid>
+              )}
               <BorderLinearProgress variant="determinate" value={0} />
             </Grid>
           </Grid>
@@ -102,6 +123,7 @@ export function UserProfile() {
             {component === "MyFavorites" && <MyFavorites />}
             {component === "MyProperties" && <MyProperties />}
             {component === "RecentlyViewed" && <MyRecentlyViewed />}
+            {component === "Opportunities" && <MyOpportunities />}
           </Grid>
         </Grid>
       </div>

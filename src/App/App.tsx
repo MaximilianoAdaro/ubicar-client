@@ -18,7 +18,7 @@ import { selectRedirectPath } from "../store/slices/session";
 import { Loading } from "../components/common/loading/Loading";
 import { EditProperty } from "../routes/editProperty";
 import { Footer } from "../components/footer/Footer";
-import { useGetLoggedUsingGET } from "../api";
+import { useGetLoggedUsingGET, useProfileUserUsingGET } from "../api";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useWindowSize } from "../hooks/useWindowSize";
@@ -36,6 +36,7 @@ import { MyRecentlyViewedMobile } from "../components/UserProfile/Mobile/MyRecen
 import { useEffect, useRef, useState } from "react";
 import { Burger, Menu } from "../components/navbar/mobile/Menu";
 import { FooterMobile } from "../components/footer/mobile/FooterMobile";
+import { MyOpportunitiesMobile } from "../components/UserProfile/Mobile/MyOpportunitiesMobile";
 // import {UserProfileMobile} from "../routes/userProfile/UserProfileMobile";
 
 export default function App() {
@@ -44,7 +45,7 @@ export default function App() {
 
   const size = useWindowSize();
 
-  const { data: user, isLoading } = useGetLoggedUsingGET();
+  const { data: user, isLoading } = useProfileUserUsingGET();
 
   const location = useLocation();
 
@@ -109,6 +110,14 @@ export default function App() {
             path={urls.userProfile.recentlyViewed}
             component={MyRecentlyViewedMobile}
           />
+          {user && user.investor && (
+            <ProtectedRoute
+              {...defaultProtectedRouteProps}
+              exact
+              path={urls.userProfile.opportunities}
+              component={MyOpportunitiesMobile}
+            />
+          )}
 
           <Route component={NotFound} />
         </Switch>
