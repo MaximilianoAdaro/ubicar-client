@@ -59,9 +59,9 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 export function UserProfile() {
   const classes = useStyles();
   const [component, setComponent] = useState("PersonalData");
-  const { data: user } = useProfileUserUsingGET();
+  const { data: user } = useGetLoggedUsingGET();
   const queryClient = useQueryClient();
-  queryClient.invalidateQueries(useProfileUserUsingGET());
+  queryClient.invalidateQueries(useGetLoggedUsingGET());
   return (
     <>
       <div>
