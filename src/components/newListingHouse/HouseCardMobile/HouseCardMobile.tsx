@@ -53,7 +53,7 @@ export function HouseCardMobile({
           <div className={styles.details}>
             {house.squareFoot} m² &nbsp;&nbsp;|&nbsp;&nbsp; {house.rooms} hab.
             &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths} {baths}
-            &nbsp;&nbsp;|&nbsp;&nbsp; En{" "}
+            &nbsp;&nbsp;|&nbsp;&nbsp;
             {house.condition === "SALE" ? "Venta" : "Alquiler"}
           </div>
           <div className={styles.address}>

@@ -56,7 +56,7 @@ export function PropertyCardMyProperties(props: ListingHouseProps) {
           )}
           style={{ marginBottom: "0.5em" }}
         >
-          ${props.house.price.toLocaleString()} &nbsp;|&nbsp; En{" "}
+          ${props.house.price.toLocaleString()} &nbsp;|&nbsp;
           {props.house.condition === "SALE" ? "Venta" : "Alquiler"}
         </p>
         <p

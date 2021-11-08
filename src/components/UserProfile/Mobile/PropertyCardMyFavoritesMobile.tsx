@@ -65,7 +65,7 @@ export function PropretyCardMyFavoritesMobile(props: ListingHouseProps) {
             <Grid className={styles.my_favorite_card_price_condition_grid}>
               <span className={styles.myPropertyPriceCondition}>
                 ${house.price.toLocaleString()}
-                &nbsp;|&nbsp; En{" "}
+                &nbsp;|&nbsp;
                 {house.condition == "SALE" ? "Venta" : "Alquiler"}{" "}
               </span>
             </Grid>

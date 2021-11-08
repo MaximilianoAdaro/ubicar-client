@@ -64,7 +64,7 @@ export function PropertyCardMyPropertiesMobile(props: ListingHouseProps) {
         </Grid>
         <Grid>
           <span style={{ fontWeight: "bold" }}>
-            ${props.house.price.toLocaleString()} &nbsp;|&nbsp; En{" "}
+            ${props.house.price.toLocaleString()} &nbsp;|&nbsp;
             {props.house.condition === "SALE" ? "Venta" : "Alquiler"}
           </span>
         </Grid>
