@@ -5,7 +5,7 @@ import { useGetHomePagePropertiesUsingGET } from "../../../api";
 import { urls } from "../../../constants";
 import { useHistory } from "react-router-dom";
 import { MostLikedMobile } from "./MostLikedMobile";
-import { PropertyCardMobile } from "./PropertyCardMobile";
+import { HouseCardMobile } from "../../newListingHouse";
 
 export function RecentlyViewedMobile() {
   const { data: properties } = useGetHomePagePropertiesUsingGET();
@@ -25,11 +25,12 @@ export function RecentlyViewedMobile() {
                       history.push(urls.viewProperty.byId(casa.id))
                     }
                   >
-                    <PropertyCardMobile
+                    <HouseCardMobile
                       key={casa.id}
                       house={casa}
-                      from={"properties"}
-                      state={""}
+                      isLarge={true}
+                      // from={"properties"}
+                      // state={""}
                     />
                   </div>
                 ))}

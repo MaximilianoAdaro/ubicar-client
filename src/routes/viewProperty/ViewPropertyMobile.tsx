@@ -231,10 +231,7 @@ const View = ({ id }: ViewProps) => {
             </Grid>
           </Grid>
           <Grid style={{ alignItems: "center" }} xs={2}>
-            {currentUser && (
-              <FavoriteButton id={id} isLiked={property.liked} />
-              // <Button>Añadir a favoritos</Button>
-            )}
+            {currentUser && <FavoriteButton id={id} isLiked={property.liked} />}
           </Grid>
         </Grid>
         <span>

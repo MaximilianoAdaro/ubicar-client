@@ -4,8 +4,7 @@ import { Grid } from "@material-ui/core";
 import { useGetMostLikedPropertiesUsingGET } from "../../../api";
 import { urls } from "../../../constants";
 import { useHistory } from "react-router-dom";
-
-import { PropertyCardMobile } from "./PropertyCardMobile";
+import { HouseCardMobile } from "../../newListingHouse";
 
 export function MostLikedMobile() {
   const { data: properties } = useGetMostLikedPropertiesUsingGET();
@@ -21,11 +20,12 @@ export function MostLikedMobile() {
               <div
                 onClick={() => history.push(urls.viewProperty.byId(casa.id))}
               >
-                <PropertyCardMobile
+                <HouseCardMobile
                   key={casa.id}
                   house={casa}
-                  from={"properties"}
-                  state={""}
+                  isLarge={true}
+                  // from={"properties"}
+                  // state={""}
                 />
               </div>
             ))}
