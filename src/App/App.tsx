@@ -33,7 +33,7 @@ import { PersonalDataMobile } from "../components/UserProfile/Mobile/PersonalDat
 import { MyFavoritesMobile } from "../components/UserProfile/Mobile/MyFavoritesMobile";
 import { MyPropertiesMobile } from "../components/UserProfile/Mobile/MyPropertiesMobile";
 import { MyRecentlyViewedMobile } from "../components/UserProfile/Mobile/MyRecentlyViewedMobile";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Burger, Menu } from "../components/navbar/mobile/Menu";
 import { FooterMobile } from "../components/footer/mobile/FooterMobile";
 // import {UserProfileMobile} from "../routes/userProfile/UserProfileMobile";
@@ -50,6 +50,12 @@ export default function App() {
 
   const [open, setOpen] = useState(false);
   const node = useRef(null);
+
+  useEffect(() => {
+    if (location.pathname == redirectPath) {
+      dispatch(actions.session.setRedirectPath(""));
+    }
+  }, [location.pathname, redirectPath, dispatch]);
 
   if (isLoading) return <Loading />;
 

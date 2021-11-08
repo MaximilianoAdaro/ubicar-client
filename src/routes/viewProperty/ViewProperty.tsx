@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import styles from "./ViewProperty.module.scss";
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { TabsBar } from "../../components/common/tabsBar/TabsBar";
-import { ReactNode, Suspense, useState } from "react";
+import React, { ReactNode, Suspense, useState } from "react";
 import pluralize from "pluralize";
 import {
   buildTabs,
@@ -11,7 +11,14 @@ import {
   getYearDistance,
   translateCondition,
 } from "./viewPropertyUtils";
-import { AddressDTO, useGetSelectedTagsUsingGET, UserDTO } from "../../api";
+import {
+  AddressDTO,
+  useContactPropertyOwnerUsingPOST,
+  useGetLoggedUsingGET,
+  useGetPropertyUsingGET,
+  useGetSelectedTagsUsingGET,
+  UserDTO,
+} from "../../api";
 import { formatPrice } from "../../utils/utils";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -26,18 +33,11 @@ import surfaceIcon from "../../assets/surfaceIcon.png";
 import bathroomIcon from "../../assets/bathroomIcon.svg";
 import toiletIcon from "../../assets/toiletIcon.svg";
 import roomIcon from "../../assets/roomIcon.svg";
-import {
-  useGetLoggedUsingGET,
-  useGetPropertyUsingGET,
-  useContactPropertyOwnerUsingPOST,
-} from "../../api";
 import { toast } from "react-toastify";
-import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
-import { photos } from "./photos";
 import MultipleSelectChip from "../../components/UserProfile/Tags";
 
 const useStyles = makeStyles((theme) => ({
@@ -125,7 +125,7 @@ const View = ({ id }: ViewProps) => {
           <div>
             <img src="https://media.architecturaldigest.com/photos/58f7cf1a8bfbf566da78acc2/master/pass/IShvzncvwa127j0000000000.jpg" />
             <img src="https://shawhomes.com/wp-content/uploads/Exterior-Twilight-2-Shaw-Homes-12801-S.-Date-Street-Jenks-OK-Yorktown.jpg" />
-            <img src="https://www.maids.com/cleaning-hacks/wp-content/uploads/2018/01/Entire2-house-featured.jpg" />
+            {/*<img src="https://www.maids.com/cleaning-hacks/wp-content/uploads/2018/01/Entire2-house-featured.jpg" />*/}
             <img src="https://media.architecturaldigest.com/photos/59382d7a3176b35c589a6af3/master/pass/adelman-house-frank-lloyd-wright-03.jpg" />
             <img src="https://cdn.architecturendesign.net/wp-content/uploads/2014/07/House-in-Gorki-08.jpg" />
             <img src="http://www.passivehousecanada.com/wp-content/uploads/2016/05/Alta-Lake-Passive-House-1024x637.jpg" />
