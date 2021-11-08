@@ -49,7 +49,7 @@ export function HouseCardMobile({
           <Tooltip title={house.title}>
             <span className={styles.title}>{house.title}</span>
           </Tooltip>
-          <div className={styles.price}>${house.price.toLocaleString()}</div>
+          <div className={styles.price}>U$D {house.price.toLocaleString()}</div>
           <div className={styles.details}>
             {house.squareFoot} m² &nbsp;&nbsp;|&nbsp;&nbsp; {house.rooms} hab.
             &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths} {baths}
