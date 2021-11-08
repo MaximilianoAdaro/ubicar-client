@@ -1,7 +1,11 @@
 import Grid from "@material-ui/core/Grid";
 import styles from "./UserProfileMobile.module.scss";
 import { Button, makeStyles, withStyles } from "@material-ui/core";
-import { useGetLoggedUsingGET, useLogOut } from "../../api";
+import {
+  useGetLoggedUsingGET,
+  useLogOut,
+  useProfileUserUsingGET,
+} from "../../api";
 import { Link, useHistory } from "react-router-dom";
 import { urls } from "../../constants";
 import {
@@ -13,6 +17,7 @@ import {
 } from "react-icons/all";
 import firebase from "firebase";
 import HelpIcon from "@mui/icons-material/Help";
+import { useQueryClient } from "react-query";
 
 const useStyles = makeStyles({
   button: {
@@ -48,6 +53,8 @@ const LogOutButton = withStyles({
 export function UserProfileMobile() {
   const { data: user } = useGetLoggedUsingGET();
   const { mutateAsync: logOut } = useLogOut();
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries(useGetLoggedUsingGET());
 
   const history = useHistory();
   const handleLogout = async (e: any) => {
@@ -123,6 +130,21 @@ export function UserProfileMobile() {
             <RiArrowRightSLine />
           </Grid>
         </Grid>
+        {user && user.investor && (
+          <Grid className={styles.user_profile_buttons} container>
+            <Grid xs>
+              <Link to={urls.userProfile.opportunities}>
+                <StyledButton>
+                  <AiFillEye className={styles.user_profile_icons} />
+                  Oportunidades
+                </StyledButton>
+              </Link>
+            </Grid>
+            <Grid xs={1} className={styles.user_profile_arrow}>
+              <RiArrowRightSLine />
+            </Grid>
+          </Grid>
+        )}
       </Grid>
       <Grid className={styles.user_profile_help_grid}>
         <Grid>

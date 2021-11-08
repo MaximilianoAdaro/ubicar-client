@@ -30,11 +30,12 @@ export function RecentlyViewed() {
                   padding: 0,
                   overflow: "auto",
                   margin: "0",
+                  width: "50%",
                 }}
               >
                 {properties?.map((casa) => (
                   <ListItem
-                    style={{ width: "20em", marginRight: "4em" }}
+                    style={{ width: "20em", marginRight: "2em" }}
                     onClick={() =>
                       history.push(urls.viewProperty.byId(casa.id))
                     }

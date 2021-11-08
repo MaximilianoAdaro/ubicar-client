@@ -19,6 +19,7 @@ export const urls = {
     favorites: "/userProfile/my-favorites",
     properties: "/userProfile/my-properties",
     recentlyViewed: "/userProfile/recently-viewed",
+    opportunities: "/userProfile/opportunities",
   },
 };
 

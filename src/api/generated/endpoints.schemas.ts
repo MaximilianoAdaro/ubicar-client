@@ -746,6 +746,7 @@ export interface UserDTO {
   email: string;
   id: string;
   userName: string;
+  investor?: boolean;
 }
 
 export interface UserDTOReq {

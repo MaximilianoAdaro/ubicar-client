@@ -1,22 +1,28 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { useGetFavoritePropertiesUsingGET } from "../../../api";
+import {
+  useGetAllRecentlyViewedPropertiesUsingGET,
+  useGetOpportunitiesUsingGET,
+} from "../../../api";
 import { ListItem, List } from "@material-ui/core";
 import { PropretyCardMyFavorites } from "./PropertyCardMyFavorites";
 
-export function MyFavorites() {
-  const data = useGetFavoritePropertiesUsingGET();
+export function MyOpportunities() {
+  const data = useGetOpportunitiesUsingGET();
   return (
     <div className={styles.personalDataMainDiv}>
       <Grid>
-        <p>Aqui puedes ver las propiedades que más te gustaron.</p>
+        <p>
+          Aqui puedes ver las oportunidades de inversión que se encuentran en la
+          página
+        </p>
       </Grid>
-      <Grid>
-        <Grid>
+      <Grid className={styles.properties}>
+        <div className={styles.propertyList}>
           {data.status === "success" && data?.data.length > 0 ? (
             <div>
-              <h3>Propiedades en favoritos</h3>
+              <h3>Oportunidades de Inversión</h3>
               <List
                 style={{
                   display: "flex",
@@ -44,10 +50,10 @@ export function MyFavorites() {
             </div>
           ) : (
             <h5 style={{ color: "gray" }}>
-              No tienes propiedades en favoritos.
+              No hay oportunidades publicadas en el momento
             </h5>
           )}
-        </Grid>
+        </div>
       </Grid>
     </div>
   );
