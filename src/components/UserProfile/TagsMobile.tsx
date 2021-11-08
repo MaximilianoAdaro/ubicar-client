@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import MultipleSelectChips from "../../routes/viewProperty/MultipleSelectChips";
-import { Button, withStyles } from "@material-ui/core";
-import { useSetTagsUsingPUT } from "../../api";
-import { toast } from "react-toastify";
 import MultipleSelectChipsMobile from "../../routes/viewProperty/MultipleSelectChipsMobile";
 
 type MultipleSelectedProps = {
@@ -10,7 +6,7 @@ type MultipleSelectedProps = {
   selected: string[] | undefined;
 };
 
-export default function MultipleSelectChip({
+export default function MultipleSelectChipMobile({
   id,
   selected,
 }: MultipleSelectedProps) {
@@ -31,11 +27,11 @@ export default function MultipleSelectChip({
       <div
         style={{ display: "flex", marginBottom: "1em", alignItems: "center" }}
       >
-        <h6 style={{ margin: "0", paddingTop: "5px" }}>
+        <h5 style={{ margin: "0", paddingTop: "5px" }}>
           ¿Qué es lo que más te gusta de esta propiedad?
-        </h6>
+        </h5>
       </div>
-      <MultipleSelectChips
+      <MultipleSelectChipsMobile
         label=""
         value={value}
         setValue={setValue}

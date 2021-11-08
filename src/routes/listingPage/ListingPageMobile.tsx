@@ -252,6 +252,7 @@ export const ListingPageMobile = () => {
           setBbox={setBbox}
           body={body}
           showControls={false}
+          showProperties={true}
         />
       </div>
       <div

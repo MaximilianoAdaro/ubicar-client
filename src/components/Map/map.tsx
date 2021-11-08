@@ -266,6 +266,9 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
         {this.state.mapContext && (
           <MapContext.Provider value={this.state.mapContext}>
             <PopUpLayer />
+            {this.props.showProperties && (
+              <PropertiesLayerWithContext body={this.props.body} />
+            )}
             {this.props.renderLayers && (
               <>
                 <UniversityLayer />

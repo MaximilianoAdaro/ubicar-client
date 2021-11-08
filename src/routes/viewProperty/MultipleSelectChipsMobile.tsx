@@ -13,6 +13,7 @@ import {
 import InfoIcon from "@material-ui/icons/Info";
 import { useSetTagsUsingPUT } from "../../api";
 import { toast } from "react-toastify";
+import { createTheme } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -21,12 +22,25 @@ const useStyles = makeStyles((theme) => ({
   },
   chipsDiv: {
     marginTop: ".3rem 0 1 0",
+    overflowX: "scroll",
+    display: "flex",
+
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+
+    "-ms-overflow-style": "none",
+    "scrollbar-width": "none",
+  },
+  root: {
+    backgroundColor: "red",
   },
 
   chip: {
     marginRight: "10px",
-    padding: "0.5rem",
+    marginBottom: "0.1em",
   },
+
   formHelperText: {
     textAlign: "left",
   },

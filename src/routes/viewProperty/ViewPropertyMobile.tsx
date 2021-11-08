@@ -8,6 +8,7 @@ import {
   useContactPropertyOwnerUsingPOST,
   useGetLoggedUsingGET,
   useGetPropertyUsingGET,
+  useGetSelectedTagsUsingGET,
   UserDTO,
 } from "../../api";
 import { formatPrice } from "../../utils/utils";
@@ -40,6 +41,8 @@ import {
   CharacteristicsItems,
 } from "./viewPropertyUtils";
 import { TabsBar } from "../../components/common/tabsBar/TabsBar";
+import { FavoriteButton } from "../../components/addFavorite/FavoriteButton";
+import MultipleSelectChipMobile from "../../components/UserProfile/TagsMobile";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -99,6 +102,7 @@ type ViewProps = {
 const View = ({ id }: ViewProps) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const { data: currentUser } = useGetLoggedUsingGET();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -112,6 +116,12 @@ const View = ({ id }: ViewProps) => {
   // const[images,setImages] = useState([])
   // const { data: currentUser } = useGetLoggedUsingGET();
   const { data: property } = useGetPropertyUsingGET(id, {
+    query: {
+      suspense: true,
+    },
+  });
+
+  const { data: selected } = useGetSelectedTagsUsingGET(id, {
     query: {
       suspense: true,
     },
@@ -132,7 +142,7 @@ const View = ({ id }: ViewProps) => {
     property.materials,
     property.security
   );
-  console.log(property.comments.length);
+
   const baths = pluralize("baño", property.fullBaths);
   const environments = pluralize("amb", property.environments);
   const houseAddress = property.address;
@@ -146,8 +156,12 @@ const View = ({ id }: ViewProps) => {
 
   return (
     <Grid className={styles.view_property_container}>
-      <h3 style={{ marginBottom: "0.5em" }}>{property.title}</h3>
       <Grid container>
+        <Grid xs={11}>
+          <h4 style={{ fontSize: "1.6em" }}>{property.title}</h4>
+        </Grid>
+      </Grid>
+      <Grid container style={{ marginTop: "0.5em" }}>
         <Grid
           style={{ marginBottom: "1em", borderRight: "2px dashed #ff701f" }}
           xs={7}
@@ -193,22 +207,33 @@ const View = ({ id }: ViewProps) => {
           </ImageList>
         </div>
       </Grid>
-      <Grid className={styles.view_property_property_comment}>
-        <h5
-          className={styles.view_property_address_title}
-          style={{ marginBottom: "0", fontSize: "1.4em" }}
-        >
-          {stateCity.toLowerCase()}
-        </h5>
-        <Grid container>
-          <h5 className={styles.view_property_address_title}>
-            {houseStreetNumber}
-          </h5>
-          <LocationOnIcon
-            style={{ fontSize: "1.4em", color: "#ff4000", marginLeft: "0.5em" }}
-          />
-        </Grid>
 
+      <Grid className={styles.view_property_property_comment}>
+        <Grid container>
+          <Grid xs={10}>
+            <h5
+              className={styles.view_property_address_title}
+              style={{ marginBottom: "0", fontSize: "1.4em" }}
+            >
+              {stateCity.toLowerCase()}
+            </h5>
+            <Grid container>
+              <h5 className={styles.view_property_address_title}>
+                {houseStreetNumber}
+              </h5>
+              <LocationOnIcon
+                style={{
+                  fontSize: "1.4em",
+                  color: "#ff4000",
+                  marginLeft: "0.5em",
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid style={{ alignItems: "center" }} xs={2}>
+            {currentUser && <FavoriteButton id={id} isLiked={property.liked} />}
+          </Grid>
+        </Grid>
         <span>
           {property.comments?.length < 2
             ? "Impecable departamento de 1 ambiente con balcon a la calle, cocina integrada, agua caliente individual, baño completo con box de ducha / Ubicado a pocas cuadras de la estación San Pedrito (Subte A), y en esquina sobre la Av. 5 años de antigüedad.\n" +
@@ -216,6 +241,11 @@ const View = ({ id }: ViewProps) => {
             : property.comments}
         </span>
       </Grid>
+      <div style={{ marginBottom: "0.5em" }}>
+        {currentUser && property.liked && (
+          <MultipleSelectChipMobile id={id} selected={selected} />
+        )}
+      </div>
       <Grid>
         {characteristicsTabs.length > 0 && (
           <div>

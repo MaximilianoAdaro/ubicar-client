@@ -7,7 +7,7 @@ export function FooterMobile() {
   return (
     <div className={styles.container}>
       <div>
-        <h3 className={styles.footer_navigation_title}>Ubicar</h3>
+        <h5 className={styles.footer_navigation_title}>Ubicar</h5>
         <Link
           to={urls.listingPage}
           className={styles.footer_navigation_links_style}
@@ -22,8 +22,8 @@ export function FooterMobile() {
         </Link>
       </div>
       <div>
-        <h3 className={styles.footer_navigation_title}>Contacto</h3>
-        <p>
+        <h5 className={styles.footer_navigation_title}>Contacto</h5>
+        <p className={styles.footer_navigation_subtitle}>
           Puede contactarnos al email ubicar.austral2021@gmail.com para
           cualquier consulta
         </p>

@@ -97,7 +97,7 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
             </Tooltip>
             <p className={styles.myPropertyPriceCondition}>
               U$D {house.price.toLocaleString()}
-              &nbsp;|&nbsp; En{" "}
+              &nbsp;|&nbsp;
               {house.condition == "SALE" ? "Venta" : "Alquiler"}{" "}
             </p>
           </Grid>

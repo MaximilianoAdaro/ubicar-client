@@ -38,15 +38,15 @@
   display: grid;
   grid-template-columns: 1fr auto auto;
   gap: 7px;
-  height: 80vh;
+  height: 100%;
 
   .map {
-    width: 74vw;
+    //width: 74vw;
   }
 
   &.twoColumns {
     .map {
-      width: 51vw;
+      //width: 51vw;
     }
   }
 
@@ -54,8 +54,9 @@
     grid-template-columns: 1fr auto;
 
     .map {
-      height: 85vh;
-      width: 60vw;
+      height: calc(100vh - 125px);
+      //height: 85vh;
+      //width: 60vw;
     }
   }
 
@@ -81,8 +82,9 @@
 }
 
 .propList {
+  height: calc(100vh - 187px);
   overflow-y: scroll;
-  height: 78vh;
+  //height: 78vh;
   display: grid;
   grid-template-columns: auto;
   grid-gap: 1.15em 1em;

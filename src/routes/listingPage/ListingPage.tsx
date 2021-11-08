@@ -21,6 +21,7 @@ import { ReactComponent as OneGridIconSelected } from "../../assets/listingPageG
 import { ReactComponent as TwoGridIcon } from "../../assets/listingPageGridTwo.svg";
 import { ReactComponent as TwoGridIconSelected } from "../../assets/listingPageGridTwoSelected.svg";
 import SignUp from "../../components/PopUp/SignUp";
+import { Grid } from "@mui/material";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -132,13 +133,14 @@ export const ListingPage = () => {
         setZoom={setter1}
         setView={setter2}
       />
-      <div
+      <Grid
         className={clsx(styles.mapAndProperties, {
           [styles.largeCards]: isLargeCards,
           [styles.twoColumns]: isTwoColumns,
         })}
+        container
       >
-        <div className={styles.map}>
+        <Grid className={styles.map} xs={isLargeCards || isTwoColumns ? 8 : 10}>
           <MapComponent
             zoom={zoom}
             view={view}
@@ -149,7 +151,7 @@ export const ListingPage = () => {
             setBbox={setBbox}
             body={body}
           />
-        </div>
+        </Grid>
         {!isLargeCards && (
           <div className={styles.changeSizeButtonContainer}>
             <div onClick={() => setIsTwoColums((b) => !b)}>
@@ -158,7 +160,7 @@ export const ListingPage = () => {
             </div>
           </div>
         )}
-        <div className={styles.propertyList}>
+        <Grid className={styles.propertyList} xs>
           <Switch>
             {load && <Loading />}
             {!load && rightSideData && rightSideData.length > 0 ? (
@@ -193,8 +195,8 @@ export const ListingPage = () => {
               <h2>No hay publicaciones disponibles</h2>
             )}
           </Switch>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };
