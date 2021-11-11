@@ -23,6 +23,11 @@ export function PropertyCardMyProperties(props: ListingHouseProps) {
   const houseStreetNumber = `${houseAddress?.street ?? ""} ${
     houseAddress?.number ?? ""
   }`;
+
+  const houseTownCity = `${houseAddress?.state?.toLowerCase() ?? ""} ${
+    houseAddress?.city?.toLowerCase() ?? ""
+  }`;
+
   const baths = pluralize("baño", props.house.fullBaths);
 
   return (
@@ -82,17 +87,19 @@ export function PropertyCardMyProperties(props: ListingHouseProps) {
         </Tooltip>
         <Grid container>
           <Grid xs={10}>
-            <p
-              className={clsx(
-                styles.propertyTownCity,
-                styles.marginPaddingPTag
-              )}
-            >
-              {houseAddress?.state?.toLowerCase() ?? ""},{" "}
-              {houseAddress?.city?.toLowerCase() ?? ""}
-            </p>
+            <Tooltip title={houseTownCity}>
+              <p
+                className={clsx(
+                  styles.propertyTownCity,
+                  styles.marginPaddingPTag
+                )}
+              >
+                {houseAddress?.state?.toLowerCase() ?? ""},{" "}
+                {houseAddress?.city?.toLowerCase() ?? ""}
+              </p>
+            </Tooltip>
           </Grid>
-          <Grid xs={2}>
+          <Grid xs={2} style={{ marginBottom: "0.2em" }}>
             <Tooltip
               title={"Editar propiedad"}
               className={styles.propertyListEditPropertyTooltip}

@@ -58,8 +58,19 @@ export const ListingPage = () => {
     style: checkNotUndefined(query.style),
     minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
     minAmountRoom: checkNotUndefined(query.minAmountRoom),
+    maxAmountRoom: checkNotUndefined(query.maxAmountRoom),
     minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
     maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
+    minDistanceSchools: checkNotUndefined(query.minDistanceSchools),
+    maxDistanceSchool: checkNotUndefined(query.maxDistanceSchool),
+    minDistanceUniversity: checkNotUndefined(query.minDistanceUniversity),
+    maxDistanceUniversity: checkNotUndefined(query.maxDistanceUniversity),
+    minDistanceHospital: checkNotUndefined(query.minDistanceHospital),
+    maxDistanceHospital: checkNotUndefined(query.maxDistanceHospital),
+    minDistanceFireStation: checkNotUndefined(query.minDistanceFireStation),
+    maxDistanceFireStation: checkNotUndefined(query.maxDistanceFireStation),
+    minDistancePenitentiary: checkNotUndefined(query.minDistancePenitentiary),
+    maxDistanceCommissary: checkNotUndefined(query.maxDistanceCommissary),
   });
 
   const buildDataset = async () => {
@@ -133,14 +144,13 @@ export const ListingPage = () => {
         setZoom={setter1}
         setView={setter2}
       />
-      <Grid
+      <div
         className={clsx(styles.mapAndProperties, {
           [styles.largeCards]: isLargeCards,
           [styles.twoColumns]: isTwoColumns,
         })}
-        container
       >
-        <Grid className={styles.map} xs={isLargeCards || isTwoColumns ? 8 : 10}>
+        <div className={styles.map}>
           <MapComponent
             zoom={zoom}
             view={view}
@@ -151,7 +161,7 @@ export const ListingPage = () => {
             setBbox={setBbox}
             body={body}
           />
-        </Grid>
+        </div>
         {!isLargeCards && (
           <div className={styles.changeSizeButtonContainer}>
             <div onClick={() => setIsTwoColums((b) => !b)}>
@@ -160,7 +170,7 @@ export const ListingPage = () => {
             </div>
           </div>
         )}
-        <Grid className={styles.propertyList} xs>
+        <div className={styles.propertyList}>
           <Switch>
             {load && <Loading />}
             {!load && rightSideData && rightSideData.length > 0 ? (
@@ -195,8 +205,8 @@ export const ListingPage = () => {
               <h2>No hay publicaciones disponibles</h2>
             )}
           </Switch>
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </div>
   );
 };
