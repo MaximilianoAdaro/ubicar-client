@@ -590,6 +590,16 @@ export interface PropertyFilterDto {
   minPrice?: number;
   style?: string;
   typeProperty?: PropertyFilterDtoTypeProperty;
+  minDistanceSchool?: number;
+  maxDistanceSchool?: number;
+  minDistanceUniversity?: number;
+  maxDistanceUniversity?: number;
+  minDistanceHospital?: number;
+  maxDistanceHospital?: number;
+  minDistanceFireStation?: number;
+  maxDistanceFireStation?: number;
+  minDistancePenitentiary?: number;
+  maxDistanceCommissary?: number;
 }
 
 export type PropertyPreviewDTOCondition = "RENT" | "SALE";

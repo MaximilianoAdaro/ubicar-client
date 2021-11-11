@@ -53,8 +53,6 @@ const LogOutButton = withStyles({
 export function UserProfileMobile() {
   const { data: user } = useGetLoggedUsingGET();
   const { mutateAsync: logOut } = useLogOut();
-  const queryClient = useQueryClient();
-  queryClient.invalidateQueries(useGetLoggedUsingGET());
 
   const history = useHistory();
   const handleLogout = async (e: any) => {
