@@ -58,8 +58,19 @@ export const ListingPage = () => {
     style: checkNotUndefined(query.style),
     minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
     minAmountRoom: checkNotUndefined(query.minAmountRoom),
+    maxAmountRoom: checkNotUndefined(query.maxAmountRoom),
     minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
     maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
+    minDistanceSchools: checkNotUndefined(query.minDistanceSchools),
+    maxDistanceSchool: checkNotUndefined(query.maxDistanceSchool),
+    minDistanceUniversity: checkNotUndefined(query.minDistanceUniversity),
+    maxDistanceUniversity: checkNotUndefined(query.maxDistanceUniversity),
+    minDistanceHospital: checkNotUndefined(query.minDistanceHospital),
+    maxDistanceHospital: checkNotUndefined(query.maxDistanceHospital),
+    minDistanceFireStation: checkNotUndefined(query.minDistanceFireStation),
+    maxDistanceFireStation: checkNotUndefined(query.maxDistanceFireStation),
+    minDistancePenitentiary: checkNotUndefined(query.minDistancePenitentiary),
+    maxDistanceCommissary: checkNotUndefined(query.maxDistanceCommissary),
   });
 
   const buildDataset = async () => {

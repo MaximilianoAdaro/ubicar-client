@@ -408,115 +408,123 @@ export function ListingFilters({
           Tipo
         </StyledButton>
 
-        <StyledButton
-          size="small"
-          onClick={openDistanceSchoolsPopover}
-          style={
-            query.minDistanceSchool || query.maxDistanceSchool
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          Distancia Escuelas
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openDistanceUniversitiesPopover}
-          style={
-            query.minDistanceUniversity || query.maxDistanceUniversity
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          Distancia Universidades
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openDistanceHospitalsPopover}
-          style={
-            query.minDistanceHospital || query.maxDistanceHospital
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          Distancia Hospitales
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openDistanceFireStationPopover}
-          style={
-            query.minDistanceFireStation || query.maxDistanceFireStation
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          Distancia Bomberos
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openDistancePenitentiaryPopover}
-          style={
-            query.minDistancePenitentiary
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          Distancia Penitenciaria
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openDistanceCommissaryPopover}
-          style={
-            query.maxDistanceCommissary
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          Distancia Comisaria
-        </StyledButton>
+        {!additionalFilters && (
+          <StyledButton size="small" onClick={showAdditional}>
+            + Filtros Geoespaciales
+          </StyledButton>
+        )}
 
-        {/*{!additionalFilters &&*/}
-        {/*<StyledButton size="small" onClick={showAdditional}>*/}
-        {/*    + Filtros Geoespaciales*/}
-        {/*</StyledButton>}*/}
-
-        {/*{additionalFilters &&*/}
-        {/*<StyledButton size="small" onClick={hideAdditional}>*/}
-        {/*    - Filtros Geoespaciales*/}
-        {/*</StyledButton>}*/}
+        {additionalFilters && (
+          <StyledButton size="small" onClick={hideAdditional}>
+            - Filtros Geoespaciales
+          </StyledButton>
+        )}
 
         <StyledButton size="small" onClick={clearFilters}>
           Limpiar Filtros
         </StyledButton>
       </Grid>
-      {/*{additionalFilters &&*/}
-      {/*<Grid style={{ paddingBottom: "12px", backgroundColor: "rgba(66, 158, 166, 0.2)", textAlign: "right", paddingRight: "40px" }}>*/}
-
-      {/*</Grid>}*/}
+      {additionalFilters && (
+        <Grid
+          style={{
+            paddingBottom: "12px",
+            backgroundColor: "rgba(66, 158, 166, 0.2)",
+            textAlign: "right",
+            paddingRight: "40px",
+          }}
+        >
+          <StyledButton
+            size="small"
+            onClick={openDistanceSchoolsPopover}
+            style={
+              query.minDistanceSchool || query.maxDistanceSchool
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Distancia Escuelas
+          </StyledButton>
+          <StyledButton
+            size="small"
+            onClick={openDistanceUniversitiesPopover}
+            style={
+              query.minDistanceUniversity || query.maxDistanceUniversity
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Distancia Universidades
+          </StyledButton>
+          <StyledButton
+            size="small"
+            onClick={openDistanceHospitalsPopover}
+            style={
+              query.minDistanceHospital || query.maxDistanceHospital
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Distancia Hospitales
+          </StyledButton>
+          <StyledButton
+            size="small"
+            onClick={openDistanceFireStationPopover}
+            style={
+              query.minDistanceFireStation || query.maxDistanceFireStation
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Distancia Bomberos
+          </StyledButton>
+          <StyledButton
+            size="small"
+            onClick={openDistancePenitentiaryPopover}
+            style={
+              query.minDistancePenitentiary
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Distancia Penitenciaria
+          </StyledButton>
+          <StyledButton
+            size="small"
+            onClick={openDistanceCommissaryPopover}
+            style={
+              query.maxDistanceCommissary
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Distancia Comisaria
+          </StyledButton>
+        </Grid>
+      )}
       <Popover
         open={Boolean(anchorSale)}
         anchorEl={anchorSale}
@@ -874,11 +882,11 @@ export function ListingFilters({
             type="number"
             value={query.minDistanceSchool}
             size="small"
-            onChange={(e) => {
-              return pushQueryParams({
+            onChange={(e) =>
+              pushQueryParams({
                 minDistanceSchool: parseIntOrUndefined(e.target.value),
-              });
-            }}
+              })
+            }
           />
           <TextField
             placeholder="Max"
@@ -917,11 +925,11 @@ export function ListingFilters({
             type="number"
             value={query.minDistanceUniversity}
             size="small"
-            onChange={(e) => {
-              return pushQueryParams({
+            onChange={(e) =>
+              pushQueryParams({
                 minDistanceUniversity: parseIntOrUndefined(e.target.value),
-              });
-            }}
+              })
+            }
           />
           <TextField
             placeholder="Max"
@@ -960,11 +968,11 @@ export function ListingFilters({
             type="number"
             value={query.minDistanceHospital}
             size="small"
-            onChange={(e) => {
-              return pushQueryParams({
+            onChange={(e) =>
+              pushQueryParams({
                 minDistanceHospital: parseIntOrUndefined(e.target.value),
-              });
-            }}
+              })
+            }
           />
           <TextField
             placeholder="Max"
@@ -1003,11 +1011,11 @@ export function ListingFilters({
             type="number"
             value={query.minDistanceFireStation}
             size="small"
-            onChange={(e) => {
-              return pushQueryParams({
+            onChange={(e) =>
+              pushQueryParams({
                 minDistanceFireStation: parseIntOrUndefined(e.target.value),
-              });
-            }}
+              })
+            }
           />
           <TextField
             placeholder="Max"
@@ -1046,11 +1054,11 @@ export function ListingFilters({
             type="number"
             value={query.minDistancePenitentiary}
             size="small"
-            onChange={(e) => {
-              return pushQueryParams({
+            onChange={(e) =>
+              pushQueryParams({
                 minDistancePenitentiary: parseIntOrUndefined(e.target.value),
-              });
-            }}
+              })
+            }
           />
         </Grid>
       </Popover>
@@ -1076,11 +1084,11 @@ export function ListingFilters({
             type="number"
             value={query.maxDistanceCommissary}
             size="small"
-            onChange={(e) => {
-              return pushQueryParams({
+            onChange={(e) =>
+              pushQueryParams({
                 maxDistanceCommissary: parseIntOrUndefined(e.target.value),
-              });
-            }}
+              })
+            }
           />
         </Grid>
       </Popover>
