@@ -93,5 +93,10 @@
 
 .conditionHover:hover {
   cursor: pointer;
-  color: grey;
+  background: rgba(102, 104, 106, 0.15);
+}
+
+.dropdown_menu {
+  height: 2.25em;
+  vertical-align: center;
 }

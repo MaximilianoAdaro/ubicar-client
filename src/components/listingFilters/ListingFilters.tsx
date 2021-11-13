@@ -20,6 +20,7 @@ import { selectOption } from "../../store/slices/session";
 import { convertCoordinates } from "../Map/utils";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { MapView } from "../../store/slices/map/mapSlice";
+import Divider from "@mui/material/Divider";
 
 const parseIntOrUndefined = (n: string) => (n !== "" ? parseInt(n) : undefined);
 
@@ -560,6 +561,7 @@ export function ListingFilters({
           >
             En Venta
           </ListItem>
+          <Divider variant={"middle"} />
           <ListItem
             onClick={() =>
               query.condition === "RENT"
@@ -589,6 +591,7 @@ export function ListingFilters({
           {houseStyles?.map((data) => {
             return (
               <DropdownItem
+                className={styles.dropdown_menu}
                 key={data.id}
                 onClick={() =>
                   query.style === data.id
@@ -629,6 +632,7 @@ export function ListingFilters({
             return (
               <DropdownItem
                 key={data}
+                className={styles.dropdown_menu}
                 onClick={() =>
                   query.typeProperty === data
                     ? pushQueryParams({ typeProperty: undefined })
@@ -760,6 +764,7 @@ export function ListingFilters({
           horizontal: "center",
         }}
         onClose={() => setAnchorBaths(null)}
+        style={{ backgroundColor: "transparent" }}
       >
         <Grid className={styles.popover_outer_div}>
           <Grid className={styles.popoversTitles}>Baños</Grid>
