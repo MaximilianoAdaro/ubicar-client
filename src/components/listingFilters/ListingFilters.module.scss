@@ -61,28 +61,34 @@
 }
 
 .priceMinInp {
-  margin-right: 3%;
-  width: 46%;
+  //margin-right: 3%;
+  //width: 46%;
+  width: 100%;
 }
 
 .priceMaxInp {
-  margin-left: 3%;
-  width: 46%;
-  height: 20%;
+  //margin-left: 3%;
+  //width: 46%;
+  //height: 20%;
+  width: 100%;
 }
 
-.roomsBathsButtons button {
-  border: 1px solid black;
-  max-width: 1em;
-}
-.roomsBathsButtons {
+.popover_outer_div {
   padding: 4%;
-  width: 17.7em;
+  width: 25em;
+}
+
+.popover_content_div {
+  gap: 1em;
+}
+
+.roomsBathsButtons {
+  gap: 1em;
 }
 .popoversTitles {
-  padding-left: 4%;
-  padding-top: 2%;
-  font-size: 0.8em;
+  padding-bottom: 1em;
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
 .conditionHover:hover {

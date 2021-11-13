@@ -32,9 +32,7 @@ type ListingFiltersProp = {
 
 const StyledButton = withStyles({
   root: {
-    // width: "200px",
-    minWidth: "auto",
-    // background: "white",
+    width: "auto",
     paddingLeft: "0.7em",
     paddingRight: "0.7em",
     textTransform: "none",
@@ -43,6 +41,19 @@ const StyledButton = withStyles({
     color: "rgba(0,0,0,0.7)",
     background: "rgb(255,255,255,0.9)",
 
+    "&:hover": {
+      background: "#f2f2f2",
+    },
+  },
+})(Button);
+
+const SelectButton = withStyles({
+  root: {
+    width: "100%",
+    textTransform: "none",
+    border: "2px solid rgba(0,0,0,0.7)",
+    color: "rgba(0,0,0,0.7)",
+    background: "rgb(255,255,255,0.9)",
     "&:hover": {
       background: "#f2f2f2",
     },
@@ -652,31 +663,40 @@ export function ListingFilters({
         }}
         onClose={() => setAnchorPrice(null)}
       >
-        <Grid className={styles.popoversTitles}>Precio</Grid>
-        <Grid container className={styles.price}>
-          <TextField
-            placeholder="Min"
-            className={styles.priceMinInp}
-            variant="outlined"
-            type="number"
-            value={query.minPrice}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({ minPrice: parseIntOrUndefined(e.target.value) })
-            }
-          />
-
-          <TextField
-            placeholder="Max"
-            className={styles.priceMaxInp}
-            variant="outlined"
-            type="number"
-            value={query.maxPrice}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({ maxPrice: parseIntOrUndefined(e.target.value) })
-            }
-          />
+        <Grid className={styles.popover_outer_div}>
+          <Grid className={styles.popoversTitles}>Precio</Grid>
+          <Grid container className={styles.popover_content_div}>
+            <Grid xs>
+              <TextField
+                placeholder="Min"
+                className={styles.priceMinInp}
+                variant="outlined"
+                type="number"
+                value={query.minPrice}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    minPrice: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+            <Grid xs>
+              <TextField
+                placeholder="Max"
+                className={styles.priceMaxInp}
+                variant="outlined"
+                type="number"
+                value={query.maxPrice}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    maxPrice: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Popover>
       <Popover
@@ -692,34 +712,40 @@ export function ListingFilters({
         }}
         onClose={() => setAnchorRooms(null)}
       >
-        <Grid className={styles.popoversTitles}>Habitaciones</Grid>
-        <Grid container className={styles.price}>
-          <TextField
-            placeholder="Min"
-            className={styles.priceMinInp}
-            variant="outlined"
-            type="number"
-            value={query.minAmountRoom}
-            size="small"
-            onChange={(e) => {
-              return pushQueryParams({
-                minAmountRoom: parseIntOrUndefined(e.target.value),
-              });
-            }}
-          />
-          <TextField
-            placeholder="Max"
-            className={styles.priceMaxInp}
-            variant="outlined"
-            type="number"
-            value={query.maxAmountRoom}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                maxAmountRoom: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
+        <Grid className={styles.popover_outer_div}>
+          <Grid className={styles.popoversTitles}>Habitaciones</Grid>
+          <Grid container className={styles.popover_content_div}>
+            <Grid xs>
+              <TextField
+                placeholder="Min"
+                className={styles.priceMinInp}
+                variant="outlined"
+                type="number"
+                value={query.minAmountRoom}
+                size="small"
+                onChange={(e) => {
+                  return pushQueryParams({
+                    minAmountRoom: parseIntOrUndefined(e.target.value),
+                  });
+                }}
+              />
+            </Grid>
+            <Grid xs>
+              <TextField
+                placeholder="Max"
+                className={styles.priceMaxInp}
+                variant="outlined"
+                type="number"
+                value={query.maxAmountRoom}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    maxAmountRoom: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Popover>
       <Popover
@@ -735,86 +761,88 @@ export function ListingFilters({
         }}
         onClose={() => setAnchorBaths(null)}
       >
-        <Grid className={styles.popoversTitles}>Baños</Grid>
-        <Grid
-          className={styles.roomsBathsButtons}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Button
-            style={
-              Number(query.minAmountBathroom) === 1
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-            onClick={() =>
-              Number(query.minAmountBathroom) === 1
-                ? pushQueryParams({ minAmountBathroom: undefined })
-                : pushQueryParams({ minAmountBathroom: 1 })
-            }
+        <Grid className={styles.popover_outer_div}>
+          <Grid className={styles.popoversTitles}>Baños</Grid>
+          <Grid
+            className={styles.roomsBathsButtons}
+            style={{
+              display: "flex",
+              // justifyContent: "space-between",
+            }}
           >
-            1+
-          </Button>
-          <Button
-            style={
-              Number(query.minAmountBathroom) === 2
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-            onClick={() =>
-              Number(query.minAmountBathroom) === 2
-                ? pushQueryParams({ minAmountBathroom: undefined })
-                : pushQueryParams({ minAmountBathroom: 2 })
-            }
-          >
-            2+
-          </Button>
-          <Button
-            style={
-              Number(query.minAmountBathroom) === 3
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-            onClick={() =>
-              Number(query.minAmountBathroom) === 3
-                ? pushQueryParams({ minAmountBathroom: undefined })
-                : pushQueryParams({ minAmountBathroom: 3 })
-            }
-          >
-            3+
-          </Button>
-          <Button
-            style={
-              Number(query.minAmountBathroom) === 4
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-            onClick={() =>
-              Number(query.minAmountBathroom) === 4
-                ? pushQueryParams({ minAmountBathroom: undefined })
-                : pushQueryParams({ minAmountBathroom: 4 })
-            }
-          >
-            4+
-          </Button>
+            <SelectButton
+              style={
+                Number(query.minAmountBathroom) === 1
+                  ? {
+                      background: "rgba(255, 64, 0, 0.25)",
+                      border: "2px solid #FF4000",
+                      color: "#FF4000",
+                    }
+                  : {}
+              }
+              onClick={() =>
+                Number(query.minAmountBathroom) === 1
+                  ? pushQueryParams({ minAmountBathroom: undefined })
+                  : pushQueryParams({ minAmountBathroom: 1 })
+              }
+            >
+              1+
+            </SelectButton>
+            <SelectButton
+              style={
+                Number(query.minAmountBathroom) === 2
+                  ? {
+                      background: "rgba(255, 64, 0, 0.25)",
+                      border: "2px solid #FF4000",
+                      color: "#FF4000",
+                    }
+                  : {}
+              }
+              onClick={() =>
+                Number(query.minAmountBathroom) === 2
+                  ? pushQueryParams({ minAmountBathroom: undefined })
+                  : pushQueryParams({ minAmountBathroom: 2 })
+              }
+            >
+              2+
+            </SelectButton>
+            <SelectButton
+              style={
+                Number(query.minAmountBathroom) === 3
+                  ? {
+                      background: "rgba(255, 64, 0, 0.25)",
+                      border: "2px solid #FF4000",
+                      color: "#FF4000",
+                    }
+                  : {}
+              }
+              onClick={() =>
+                Number(query.minAmountBathroom) === 3
+                  ? pushQueryParams({ minAmountBathroom: undefined })
+                  : pushQueryParams({ minAmountBathroom: 3 })
+              }
+            >
+              3+
+            </SelectButton>
+            <SelectButton
+              style={
+                Number(query.minAmountBathroom) === 4
+                  ? {
+                      background: "rgba(255, 64, 0, 0.25)",
+                      border: "2px solid #FF4000",
+                      color: "#FF4000",
+                    }
+                  : {}
+              }
+              onClick={() =>
+                Number(query.minAmountBathroom) === 4
+                  ? pushQueryParams({ minAmountBathroom: undefined })
+                  : pushQueryParams({ minAmountBathroom: 4 })
+              }
+            >
+              4+
+            </SelectButton>
+          </Grid>
         </Grid>
       </Popover>
       <Popover
@@ -830,34 +858,40 @@ export function ListingFilters({
         }}
         onClose={() => setAnchorSqMts(null)}
       >
-        <Grid className={styles.popoversTitles}>Metros Cuadrados</Grid>
-        <Grid container className={styles.price}>
-          <TextField
-            placeholder="Min"
-            className={styles.priceMinInp}
-            variant="outlined"
-            type="number"
-            value={query.minAmountSquareMeter}
-            size="small"
-            onChange={(e) => {
-              return pushQueryParams({
-                minAmountSquareMeter: parseIntOrUndefined(e.target.value),
-              });
-            }}
-          />
-          <TextField
-            placeholder="Max"
-            className={styles.priceMaxInp}
-            variant="outlined"
-            type="number"
-            value={query.maxAmountSquareMeter}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                maxAmountSquareMeter: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
+        <Grid className={styles.popover_outer_div}>
+          <Grid className={styles.popoversTitles}>Metros Cuadrados</Grid>
+          <Grid container className={styles.popover_content_div}>
+            <Grid xs>
+              <TextField
+                placeholder="Min"
+                className={styles.priceMinInp}
+                variant="outlined"
+                type="number"
+                value={query.minAmountSquareMeter}
+                size="small"
+                onChange={(e) => {
+                  return pushQueryParams({
+                    minAmountSquareMeter: parseIntOrUndefined(e.target.value),
+                  });
+                }}
+              />
+            </Grid>
+            <Grid xs>
+              <TextField
+                placeholder="Max"
+                className={styles.priceMaxInp}
+                variant="outlined"
+                type="number"
+                value={query.maxAmountSquareMeter}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    maxAmountSquareMeter: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Popover>
       <Popover
