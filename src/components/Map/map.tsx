@@ -167,7 +167,7 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
         }),
         style: new Style({
           image: new Icon({
-            src: "https://static.thenounproject.com/png/1661278-200.png",
+            src: "https://st2.depositphotos.com/3823719/7359/v/950/depositphotos_73592891-stock-illustration-map-pointer-with-a-home.jpg",
             scale: 200 / 1024,
             anchor: [0.5, 0.75],
           }),
@@ -219,7 +219,7 @@ export class MapComponent extends React.Component<TMapProps, TMapState> {
           }),
           style: new Style({
             image: new Icon({
-              src: "https://static.thenounproject.com/png/1661278-200.png",
+              src: "https://st2.depositphotos.com/3823719/7359/v/950/depositphotos_73592891-stock-illustration-map-pointer-with-a-home.jpg",
               scale: 200 / 1024,
               anchor: [0.5, 0.75],
             }),

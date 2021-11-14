@@ -2,7 +2,14 @@
   background: rgba(66, 158, 166, 0.2);
   padding: 0.5%;
   align-items: center;
-  overflow-x: scroll;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.option_filter {
+  display: flex;
+  white-space: nowrap;
 }
 
 .searchBar {
@@ -76,6 +83,17 @@
 .popover_outer_div {
   padding: 4%;
   width: 25em;
+  border-radius: 5%;
+}
+
+.buttons_popover_outer_div {
+  padding: 4%;
+  width: 21em;
+}
+
+.smaller_popover_outer_div {
+  padding: 4%;
+  width: 15em;
 }
 
 .popover_content_div {
@@ -84,6 +102,7 @@
 
 .roomsBathsButtons {
   gap: 1em;
+  display: flex;
 }
 .popoversTitles {
   padding-bottom: 1em;

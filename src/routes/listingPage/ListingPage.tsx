@@ -21,7 +21,6 @@ import { ReactComponent as OneGridIconSelected } from "../../assets/listingPageG
 import { ReactComponent as TwoGridIcon } from "../../assets/listingPageGridTwo.svg";
 import { ReactComponent as TwoGridIconSelected } from "../../assets/listingPageGridTwoSelected.svg";
 import SignUp from "../../components/PopUp/SignUp";
-import { Grid } from "@mui/material";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -134,7 +133,7 @@ export const ListingPage = () => {
   }, [isAuthenticated]);
 
   return (
-    <div>
+    <div style={{ overflow: "hidden" }}>
       {!isAuthenticated && (
         <SignUp isOpened={isOpened} setIsOpened={setIsOpened} />
       )}

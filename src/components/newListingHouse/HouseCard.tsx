@@ -1,6 +1,6 @@
 import styles from "./HouseCard.module.scss";
 import { Image } from "react-bootstrap";
-import { Tooltip } from "@material-ui/core";
+import { makeStyles, Tooltip } from "@material-ui/core";
 import pluralize from "pluralize";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../constants";
@@ -14,11 +14,27 @@ export interface HouseCardProps {
   isLarge?: boolean;
 }
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  customWidth: {
+    maxWidth: 500,
+    fontSize: "0.75em",
+  },
+  noMaxWidth: {
+    maxWidth: "none",
+    fontSize: "1em",
+    textTransform: "capitalize",
+  },
+}));
+
 export function HouseCard({
   house,
   clickable = true,
   isLarge = false,
 }: HouseCardProps) {
+  const classes = useStyles();
   const history = useHistory();
   const houseAddress = house.address;
   const houseStreetNumber = `${houseAddress?.street ?? ""} ${
@@ -29,6 +45,14 @@ export function HouseCard({
       ? `${houseAddress?.city}, ${houseAddress.state}`
       : "";
   const baths = pluralize("baño", house.fullBaths);
+
+  const toTitleCase = (phrase: string) => {
+    return phrase
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   if (isLarge)
     return (
@@ -46,7 +70,10 @@ export function HouseCard({
           />
         </div>
         <div className={styles.infoContainer}>
-          <Tooltip title={house.title}>
+          <Tooltip
+            title={house.title}
+            classes={{ tooltip: classes.noMaxWidth }}
+          >
             <span className={styles.title}>{house.title}</span>
           </Tooltip>
           <div className={styles.price}>U$D {house.price.toLocaleString()}</div>
@@ -58,7 +85,15 @@ export function HouseCard({
           </div>
           <div className={styles.address}>
             <span className={styles.streetNumber}>{houseStreetNumber}</span>
-            <span className={styles.stateCity}> {stateCity.toLowerCase()}</span>
+            <Tooltip
+              title={toTitleCase(stateCity)}
+              classes={{ tooltip: classes.noMaxWidth }}
+            >
+              <span className={styles.stateCity}>
+                {" "}
+                {stateCity.toLowerCase()}
+              </span>
+            </Tooltip>
           </div>
         </div>
       </div>
@@ -75,7 +110,7 @@ export function HouseCard({
         <Image className={styles.imageContainer} src={selectPhotos()} rounded />
       </div>
       <div className={styles.infoContainer}>
-        <Tooltip title={house.title}>
+        <Tooltip title={house.title} classes={{ tooltip: classes.noMaxWidth }}>
           <span className={styles.title}>{house.title}</span>
         </Tooltip>
         <div className={styles.address}>

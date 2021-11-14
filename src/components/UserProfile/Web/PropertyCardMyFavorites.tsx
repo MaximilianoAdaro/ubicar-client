@@ -36,6 +36,9 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
   const houseStreetNumber = `${houseAddress?.street ?? ""} ${
     houseAddress?.number ?? ""
   }`;
+  const houseStateCity = `${houseAddress?.state?.toLowerCase() ?? ""}, ${
+    houseAddress?.city?.toLowerCase() ?? ""
+  }`;
   const baths = pluralize("baño", house.fullBaths);
 
   return (
@@ -69,32 +72,15 @@ export function PropretyCardMyFavorites(props: ListingHouseProps) {
             </p>
             <p
               className={styles.myPropertyTownCity}
-              style={{ marginBottom: "0.6em" }}
+              // style={{ marginBottom: "0.6em" }}
             >
-              {houseAddress?.state?.toLowerCase() ?? ""},{" "}
-              {houseAddress?.city?.toLowerCase() ?? ""}
+              {houseStateCity}
             </p>
-            <Tooltip
-              title={
-                <Grid
-                  className={styles.userProfileToolTips}
-                  style={{ marginBottom: "0.6em" }}
-                >
-                  {house.rooms} habitaciones <br />
-                  {house.fullBaths} {baths} <br />
-                  {house.coveredSquareFoot} m²
-                  <br />
-                </Grid>
-              }
-              classes={{ tooltip: classes.customWidth }}
-              placement="bottom-start"
-            >
-              <p className={styles.myPropertySpecifications}>
-                {house.rooms} hab. &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths}{" "}
-                {baths} &nbsp;&nbsp;|&nbsp;&nbsp; {house.coveredSquareFoot} m²
-                &nbsp;&nbsp;
-              </p>
-            </Tooltip>
+            <p className={styles.myPropertySpecifications}>
+              {house.rooms} hab. &nbsp;&nbsp;|&nbsp;&nbsp; {house.fullBaths}{" "}
+              {baths} &nbsp;&nbsp;|&nbsp;&nbsp; {house.coveredSquareFoot} m²
+              &nbsp;&nbsp;
+            </p>
             <p className={styles.myPropertyPriceCondition}>
               U$D {house.price.toLocaleString()}
               &nbsp;|&nbsp;

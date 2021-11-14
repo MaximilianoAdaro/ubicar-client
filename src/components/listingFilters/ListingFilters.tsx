@@ -50,7 +50,6 @@ const StyledButton = withStyles({
 
 const SelectButton = withStyles({
   root: {
-    width: "100%",
     textTransform: "none",
     border: "2px solid rgba(0,0,0,0.7)",
     color: "rgba(0,0,0,0.7)",
@@ -248,7 +247,7 @@ export function ListingFilters({
 
   return (
     <div>
-      <Grid container className={styles.OptionsFilters}>
+      <Grid className={styles.OptionsFilters}>
         <Grid className={styles.searchBar}>
           <Grid>
             <Autocomplete
@@ -305,238 +304,350 @@ export function ListingFilters({
             />
           </Grid>
         </Grid>
-        <StyledButton
-          id="buttonForm"
-          size="small"
-          onClick={openSalePopover}
-          style={
-            query.condition
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          {query.condition
-            ? query.condition === "SALE"
-              ? "En Venta"
-              : "En Alquiler"
-            : "En Venta"}
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openPricePopover}
-          style={
-            query.minPrice || query.maxPrice
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          Precio
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openRoomsPopover}
-          style={
-            query.minAmountRoom
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          {query.minAmountRoom && query.maxAmountRoom
-            ? query.minAmountRoom + "-" + query.maxAmountRoom + " Habitaciones"
-            : "Habitaciones"}
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openBathsPopover}
-          style={
-            query.minAmountBathroom
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          {query.minAmountBathroom
-            ? query.minAmountBathroom + "+ Baños"
-            : "Baños"}
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openSqMtsPopover}
-          style={
-            query.minAmountSquareMeter || query.maxAmountSquareMeter
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          Metros Cuadrados
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openStylePopover}
-          style={
-            query.style
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          Estilo
-        </StyledButton>
-        <StyledButton
-          size="small"
-          onClick={openTypesPopover}
-          style={
-            query.typeProperty
-              ? {
-                  background: "rgba(255, 64, 0, 0.25)",
-                  border: "2px solid #FF4000",
-                  color: "#FF4000",
-                }
-              : {}
-          }
-        >
-          Tipo
-        </StyledButton>
-
-        {!additionalFilters && (
-          <StyledButton size="small" onClick={showAdditional}>
-            + Filtros Geoespaciales
+        <div className={styles.option_filter}>
+          <StyledButton
+            id="buttonForm"
+            size="small"
+            onClick={openSalePopover}
+            style={
+              query.condition
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            {query.condition
+              ? query.condition === "SALE"
+                ? "En Venta"
+                : "En Alquiler"
+              : "En Venta"}
           </StyledButton>
-        )}
-
-        {additionalFilters && (
-          <StyledButton size="small" onClick={hideAdditional}>
-            - Filtros Geoespaciales
+          <StyledButton
+            size="small"
+            onClick={openPricePopover}
+            style={
+              query.minPrice || query.maxPrice
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Precio
           </StyledButton>
-        )}
+          <StyledButton
+            size="small"
+            onClick={openRoomsPopover}
+            style={
+              query.minAmountRoom
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            {query.minAmountRoom && query.maxAmountRoom
+              ? query.minAmountRoom +
+                "-" +
+                query.maxAmountRoom +
+                " Habitaciones"
+              : "Habitaciones"}
+          </StyledButton>
+          <StyledButton
+            size="small"
+            onClick={openBathsPopover}
+            style={
+              query.minAmountBathroom
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            {query.minAmountBathroom
+              ? query.minAmountBathroom + "+ Baños"
+              : "Baños"}
+          </StyledButton>
+          <StyledButton
+            size="small"
+            onClick={openSqMtsPopover}
+            style={
+              query.minAmountSquareMeter || query.maxAmountSquareMeter
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Metros Cuadrados
+          </StyledButton>
+          <StyledButton
+            size="small"
+            onClick={openStylePopover}
+            style={
+              query.style
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Estilo
+          </StyledButton>
+          <StyledButton
+            size="small"
+            onClick={openTypesPopover}
+            style={
+              query.typeProperty
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Tipo
+          </StyledButton>
 
-        <StyledButton size="small" onClick={clearFilters}>
-          Limpiar Filtros
-        </StyledButton>
+          {!additionalFilters && (
+            <StyledButton size="small" onClick={showAdditional}>
+              + Filtros Geoespaciales
+            </StyledButton>
+          )}
+
+          {additionalFilters && (
+            <StyledButton
+              size="small"
+              onClick={hideAdditional}
+              style={
+                additionalFilters
+                  ? {
+                      background: "rgba(255, 64, 0, 0.25)",
+                      border: "2px solid #FF4000",
+                      color: "#FF4000",
+                    }
+                  : {}
+              }
+            >
+              - Filtros Geoespaciales
+            </StyledButton>
+          )}
+
+          {additionalFilters && (
+            <div>
+              <StyledButton
+                size="small"
+                onClick={openDistanceSchoolsPopover}
+                style={
+                  query.minDistanceSchool || query.maxDistanceSchool
+                    ? {
+                        background: "rgba(255, 64, 0, 0.25)",
+                        border: "2px solid #FF4000",
+                        color: "#FF4000",
+                      }
+                    : {}
+                }
+              >
+                Distancia Escuelas
+              </StyledButton>
+              <StyledButton
+                size="small"
+                onClick={openDistanceUniversitiesPopover}
+                style={
+                  query.minDistanceUniversity || query.maxDistanceUniversity
+                    ? {
+                        background: "rgba(255, 64, 0, 0.25)",
+                        border: "2px solid #FF4000",
+                        color: "#FF4000",
+                      }
+                    : {}
+                }
+              >
+                Distancia Universidades
+              </StyledButton>
+              <StyledButton
+                size="small"
+                onClick={openDistanceHospitalsPopover}
+                style={
+                  query.minDistanceHospital || query.maxDistanceHospital
+                    ? {
+                        background: "rgba(255, 64, 0, 0.25)",
+                        border: "2px solid #FF4000",
+                        color: "#FF4000",
+                      }
+                    : {}
+                }
+              >
+                Distancia Hospitales
+              </StyledButton>
+              <StyledButton
+                size="small"
+                onClick={openDistanceFireStationPopover}
+                style={
+                  query.minDistanceFireStation || query.maxDistanceFireStation
+                    ? {
+                        background: "rgba(255, 64, 0, 0.25)",
+                        border: "2px solid #FF4000",
+                        color: "#FF4000",
+                      }
+                    : {}
+                }
+              >
+                Distancia Bomberos
+              </StyledButton>
+              <StyledButton
+                size="small"
+                onClick={openDistancePenitentiaryPopover}
+                style={
+                  query.minDistancePenitentiary
+                    ? {
+                        background: "rgba(255, 64, 0, 0.25)",
+                        border: "2px solid #FF4000",
+                        color: "#FF4000",
+                      }
+                    : {}
+                }
+              >
+                Distancia Penitenciaria
+              </StyledButton>
+              <StyledButton
+                size="small"
+                onClick={openDistanceCommissaryPopover}
+                style={
+                  query.maxDistanceCommissary
+                    ? {
+                        background: "rgba(255, 64, 0, 0.25)",
+                        border: "2px solid #FF4000",
+                        color: "#FF4000",
+                      }
+                    : {}
+                }
+              >
+                Distancia Comisaria
+              </StyledButton>
+            </div>
+          )}
+
+          <StyledButton size="small" onClick={clearFilters}>
+            Limpiar Filtros
+          </StyledButton>
+        </div>
       </Grid>
-      {additionalFilters && (
-        <Grid
-          style={{
-            paddingBottom: "12px",
-            backgroundColor: "rgba(66, 158, 166, 0.2)",
-            textAlign: "right",
-            paddingRight: "40px",
-          }}
-        >
-          <StyledButton
-            size="small"
-            onClick={openDistanceSchoolsPopover}
-            style={
-              query.minDistanceSchool || query.maxDistanceSchool
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-          >
-            Distancia Escuelas
-          </StyledButton>
-          <StyledButton
-            size="small"
-            onClick={openDistanceUniversitiesPopover}
-            style={
-              query.minDistanceUniversity || query.maxDistanceUniversity
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-          >
-            Distancia Universidades
-          </StyledButton>
-          <StyledButton
-            size="small"
-            onClick={openDistanceHospitalsPopover}
-            style={
-              query.minDistanceHospital || query.maxDistanceHospital
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-          >
-            Distancia Hospitales
-          </StyledButton>
-          <StyledButton
-            size="small"
-            onClick={openDistanceFireStationPopover}
-            style={
-              query.minDistanceFireStation || query.maxDistanceFireStation
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-          >
-            Distancia Bomberos
-          </StyledButton>
-          <StyledButton
-            size="small"
-            onClick={openDistancePenitentiaryPopover}
-            style={
-              query.minDistancePenitentiary
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-          >
-            Distancia Penitenciaria
-          </StyledButton>
-          <StyledButton
-            size="small"
-            onClick={openDistanceCommissaryPopover}
-            style={
-              query.maxDistanceCommissary
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-          >
-            Distancia Comisaria
-          </StyledButton>
-        </Grid>
-      )}
+      {/*{additionalFilters && (*/}
+      {/*  <Grid*/}
+      {/*    style={{*/}
+      {/*      paddingBottom: "12px",*/}
+      {/*      backgroundColor: "rgba(66, 158, 166, 0.2)",*/}
+      {/*      textAlign: "right",*/}
+      {/*      paddingRight: "40px",*/}
+      {/*    }}*/}
+      {/*  >*/}
+      {/*    <StyledButton*/}
+      {/*      size="small"*/}
+      {/*      onClick={openDistanceSchoolsPopover}*/}
+      {/*      style={*/}
+      {/*        query.minDistanceSchool || query.maxDistanceSchool*/}
+      {/*          ? {*/}
+      {/*              background: "rgba(255, 64, 0, 0.25)",*/}
+      {/*              border: "2px solid #FF4000",*/}
+      {/*              color: "#FF4000",*/}
+      {/*            }*/}
+      {/*          : {}*/}
+      {/*      }*/}
+      {/*    >*/}
+      {/*      Distancia Escuelas*/}
+      {/*    </StyledButton>*/}
+      {/*    <StyledButton*/}
+      {/*      size="small"*/}
+      {/*      onClick={openDistanceUniversitiesPopover}*/}
+      {/*      style={*/}
+      {/*        query.minDistanceUniversity || query.maxDistanceUniversity*/}
+      {/*          ? {*/}
+      {/*              background: "rgba(255, 64, 0, 0.25)",*/}
+      {/*              border: "2px solid #FF4000",*/}
+      {/*              color: "#FF4000",*/}
+      {/*            }*/}
+      {/*          : {}*/}
+      {/*      }*/}
+      {/*    >*/}
+      {/*      Distancia Universidades*/}
+      {/*    </StyledButton>*/}
+      {/*    <StyledButton*/}
+      {/*      size="small"*/}
+      {/*      onClick={openDistanceHospitalsPopover}*/}
+      {/*      style={*/}
+      {/*        query.minDistanceHospital || query.maxDistanceHospital*/}
+      {/*          ? {*/}
+      {/*              background: "rgba(255, 64, 0, 0.25)",*/}
+      {/*              border: "2px solid #FF4000",*/}
+      {/*              color: "#FF4000",*/}
+      {/*            }*/}
+      {/*          : {}*/}
+      {/*      }*/}
+      {/*    >*/}
+      {/*      Distancia Hospitales*/}
+      {/*    </StyledButton>*/}
+      {/*    <StyledButton*/}
+      {/*      size="small"*/}
+      {/*      onClick={openDistanceFireStationPopover}*/}
+      {/*      style={*/}
+      {/*        query.minDistanceFireStation || query.maxDistanceFireStation*/}
+      {/*          ? {*/}
+      {/*              background: "rgba(255, 64, 0, 0.25)",*/}
+      {/*              border: "2px solid #FF4000",*/}
+      {/*              color: "#FF4000",*/}
+      {/*            }*/}
+      {/*          : {}*/}
+      {/*      }*/}
+      {/*    >*/}
+      {/*      Distancia Bomberos*/}
+      {/*    </StyledButton>*/}
+      {/*    <StyledButton*/}
+      {/*      size="small"*/}
+      {/*      onClick={openDistancePenitentiaryPopover}*/}
+      {/*      style={*/}
+      {/*        query.minDistancePenitentiary*/}
+      {/*          ? {*/}
+      {/*              background: "rgba(255, 64, 0, 0.25)",*/}
+      {/*              border: "2px solid #FF4000",*/}
+      {/*              color: "#FF4000",*/}
+      {/*            }*/}
+      {/*          : {}*/}
+      {/*      }*/}
+      {/*    >*/}
+      {/*      Distancia Penitenciaria*/}
+      {/*    </StyledButton>*/}
+      {/*    <StyledButton*/}
+      {/*      size="small"*/}
+      {/*      onClick={openDistanceCommissaryPopover}*/}
+      {/*      style={*/}
+      {/*        query.maxDistanceCommissary*/}
+      {/*          ? {*/}
+      {/*              background: "rgba(255, 64, 0, 0.25)",*/}
+      {/*              border: "2px solid #FF4000",*/}
+      {/*              color: "#FF4000",*/}
+      {/*            }*/}
+      {/*          : {}*/}
+      {/*      }*/}
+      {/*    >*/}
+      {/*      Distancia Comisaria*/}
+      {/*    </StyledButton>*/}
+      {/*  </Grid>*/}
+      {/*)}*/}
       <Popover
         open={Boolean(anchorSale)}
         anchorEl={anchorSale}
@@ -766,15 +877,9 @@ export function ListingFilters({
         onClose={() => setAnchorBaths(null)}
         style={{ backgroundColor: "transparent" }}
       >
-        <Grid className={styles.popover_outer_div}>
+        <Grid className={styles.buttons_popover_outer_div}>
           <Grid className={styles.popoversTitles}>Baños</Grid>
-          <Grid
-            className={styles.roomsBathsButtons}
-            style={{
-              display: "flex",
-              // justifyContent: "space-between",
-            }}
-          >
+          <Grid className={styles.roomsBathsButtons}>
             <SelectButton
               style={
                 Number(query.minAmountBathroom) === 1
@@ -912,34 +1017,40 @@ export function ListingFilters({
         }}
         onClose={() => setDistanceSchool(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Escuelas</Grid>
-        <Grid container className={styles.price}>
-          <TextField
-            placeholder="Min"
-            className={styles.priceMinInp}
-            variant="outlined"
-            type="number"
-            value={query.minDistanceSchool}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                minDistanceSchool: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
-          <TextField
-            placeholder="Max"
-            className={styles.priceMaxInp}
-            variant="outlined"
-            type="number"
-            value={query.maxDistanceSchool}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                maxDistanceSchool: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
+        <Grid className={styles.popover_outer_div}>
+          <Grid className={styles.popoversTitles}>Distancia Escuelas</Grid>
+          <Grid container className={styles.popover_content_div}>
+            <Grid xs>
+              <TextField
+                placeholder="Min"
+                className={styles.priceMinInp}
+                variant="outlined"
+                type="number"
+                value={query.minDistanceSchool}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    minDistanceSchool: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+            <Grid xs>
+              <TextField
+                placeholder="Max"
+                className={styles.priceMaxInp}
+                variant="outlined"
+                type="number"
+                value={query.maxDistanceSchool}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    maxDistanceSchool: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Popover>
       <Popover
@@ -955,34 +1066,40 @@ export function ListingFilters({
         }}
         onClose={() => setDistanceUniversities(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Universidades</Grid>
-        <Grid container className={styles.price}>
-          <TextField
-            placeholder="Min"
-            className={styles.priceMinInp}
-            variant="outlined"
-            type="number"
-            value={query.minDistanceUniversity}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                minDistanceUniversity: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
-          <TextField
-            placeholder="Max"
-            className={styles.priceMaxInp}
-            variant="outlined"
-            type="number"
-            value={query.maxDistanceUniversity}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                maxDistanceUniversity: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
+        <Grid className={styles.popover_outer_div}>
+          <Grid className={styles.popoversTitles}>Distancia Universidades</Grid>
+          <Grid container className={styles.popover_content_div}>
+            <Grid xs>
+              <TextField
+                placeholder="Min"
+                className={styles.priceMinInp}
+                variant="outlined"
+                type="number"
+                value={query.minDistanceUniversity}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    minDistanceUniversity: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+            <Grid xs>
+              <TextField
+                placeholder="Max"
+                className={styles.priceMaxInp}
+                variant="outlined"
+                type="number"
+                value={query.maxDistanceUniversity}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    maxDistanceUniversity: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Popover>
       <Popover
@@ -998,34 +1115,40 @@ export function ListingFilters({
         }}
         onClose={() => setDistanceHospitals(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Hospitales</Grid>
-        <Grid container className={styles.price}>
-          <TextField
-            placeholder="Min"
-            className={styles.priceMinInp}
-            variant="outlined"
-            type="number"
-            value={query.minDistanceHospital}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                minDistanceHospital: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
-          <TextField
-            placeholder="Max"
-            className={styles.priceMaxInp}
-            variant="outlined"
-            type="number"
-            value={query.maxDistanceHospital}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                maxDistanceHospital: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
+        <Grid className={styles.popover_outer_div}>
+          <Grid className={styles.popoversTitles}>Distancia Hospitales</Grid>
+          <Grid container className={styles.popover_content_div}>
+            <Grid xs>
+              <TextField
+                placeholder="Min"
+                className={styles.priceMinInp}
+                variant="outlined"
+                type="number"
+                value={query.minDistanceHospital}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    minDistanceHospital: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+            <Grid xs>
+              <TextField
+                placeholder="Max"
+                className={styles.priceMaxInp}
+                variant="outlined"
+                type="number"
+                value={query.maxDistanceHospital}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    maxDistanceHospital: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Popover>
       <Popover
@@ -1041,34 +1164,40 @@ export function ListingFilters({
         }}
         onClose={() => setDistanceFireStation(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Bomberos</Grid>
-        <Grid container className={styles.price}>
-          <TextField
-            placeholder="Min"
-            className={styles.priceMinInp}
-            variant="outlined"
-            type="number"
-            value={query.minDistanceFireStation}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                minDistanceFireStation: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
-          <TextField
-            placeholder="Max"
-            className={styles.priceMaxInp}
-            variant="outlined"
-            type="number"
-            value={query.maxDistanceFireStation}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                maxDistanceFireStation: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
+        <Grid className={styles.popover_outer_div}>
+          <Grid className={styles.popoversTitles}>Distancia Bomberos</Grid>
+          <Grid container className={styles.popover_content_div}>
+            <Grid xs>
+              <TextField
+                placeholder="Min"
+                className={styles.priceMinInp}
+                variant="outlined"
+                type="number"
+                value={query.minDistanceFireStation}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    minDistanceFireStation: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+            <Grid xs>
+              <TextField
+                placeholder="Max"
+                className={styles.priceMaxInp}
+                variant="outlined"
+                type="number"
+                value={query.maxDistanceFireStation}
+                size="small"
+                onChange={(e) =>
+                  pushQueryParams({
+                    maxDistanceFireStation: parseIntOrUndefined(e.target.value),
+                  })
+                }
+              />
+            </Grid>
+          </Grid>
         </Grid>
       </Popover>
       <Popover
@@ -1084,21 +1213,23 @@ export function ListingFilters({
         }}
         onClose={() => setDistancePenitentiary(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Penitenciaria</Grid>
-        <Grid container className={styles.oneValue}>
-          <TextField
-            placeholder="Min"
-            className={styles.oneValueInp}
-            variant="outlined"
-            type="number"
-            value={query.minDistancePenitentiary}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                minDistancePenitentiary: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
+        <Grid className={styles.smaller_popover_outer_div}>
+          <Grid className={styles.popoversTitles}>Distancia Penitenciaria</Grid>
+          <Grid container className={styles.oneValue}>
+            <TextField
+              placeholder="Min"
+              className={styles.oneValueInp}
+              variant="outlined"
+              type="number"
+              value={query.minDistancePenitentiary}
+              size="small"
+              onChange={(e) =>
+                pushQueryParams({
+                  minDistancePenitentiary: parseIntOrUndefined(e.target.value),
+                })
+              }
+            />
+          </Grid>
         </Grid>
       </Popover>
       <Popover
@@ -1114,21 +1245,23 @@ export function ListingFilters({
         }}
         onClose={() => setDistanceCommissary(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Comisaria</Grid>
-        <Grid container className={styles.oneValue}>
-          <TextField
-            placeholder="Max"
-            className={styles.oneValueInp}
-            variant="outlined"
-            type="number"
-            value={query.maxDistanceCommissary}
-            size="small"
-            onChange={(e) =>
-              pushQueryParams({
-                maxDistanceCommissary: parseIntOrUndefined(e.target.value),
-              })
-            }
-          />
+        <Grid className={styles.smaller_popover_outer_div}>
+          <Grid className={styles.popoversTitles}>Distancia Comisaria</Grid>
+          <Grid container className={styles.oneValue}>
+            <TextField
+              placeholder="Max"
+              className={styles.oneValueInp}
+              variant="outlined"
+              type="number"
+              value={query.maxDistanceCommissary}
+              size="small"
+              onChange={(e) =>
+                pushQueryParams({
+                  maxDistanceCommissary: parseIntOrUndefined(e.target.value),
+                })
+              }
+            />
+          </Grid>
         </Grid>
       </Popover>
     </div>

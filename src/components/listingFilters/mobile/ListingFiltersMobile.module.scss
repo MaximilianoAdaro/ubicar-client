@@ -1,11 +1,11 @@
 .OptionsFilters {
   display: flex;
   overflow-x: scroll;
+  white-space: nowrap;
   gap: 1em;
   // background: #cddde5;
   padding: 0.5%;
   align-items: stretch;
-  white-space: nowrap;
 
   /* Hide scrollbar for Chrome, Safari and Opera */
   &::-webkit-scrollbar {
