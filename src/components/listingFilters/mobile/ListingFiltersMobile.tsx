@@ -2,7 +2,6 @@ import styles from "./ListingFiltersMobile.module.scss";
 import React, { useMemo, useCallback, useState } from "react";
 import {
   Button,
-  CircularProgress,
   Grid,
   List,
   ListItem,
@@ -71,6 +70,22 @@ export function ListingFiltersMobile({
   const [anchorTypes, setAnchorTypes] =
     React.useState<HTMLButtonElement | null>(null);
 
+  // Distances
+  const [distanceSchool, setDistanceSchool] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [distanceUniversities, setDistanceUniversities] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [distanceHospitals, setDistanceHospitals] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [distanceFireStation, setDistanceFireStation] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [distancePenitentiary, setDistancePenitentiary] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [distanceCommissary, setDistanceCommissary] =
+    React.useState<HTMLButtonElement | null>(null);
+  const [distanceSubway, setDistanceSubway] =
+    React.useState<HTMLButtonElement | null>(null);
+
   const openSalePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorSale(event.currentTarget);
   };
@@ -97,6 +112,49 @@ export function ListingFiltersMobile({
 
   const openTypesPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorTypes(event.currentTarget);
+  };
+
+  // Distances
+  const openDistanceSchoolsPopover = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setDistanceSchool(event.currentTarget);
+  };
+
+  const openDistanceUniversitiesPopover = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setDistanceUniversities(event.currentTarget);
+  };
+
+  const openDistanceHospitalsPopover = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setDistanceHospitals(event.currentTarget);
+  };
+
+  const openDistanceFireStationPopover = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setDistanceFireStation(event.currentTarget);
+  };
+
+  const openDistancePenitentiaryPopover = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setDistancePenitentiary(event.currentTarget);
+  };
+
+  const openDistanceCommissaryPopover = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setDistanceCommissary(event.currentTarget);
+  };
+
+  const openDistanceSubwayPopover = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setDistanceSubway(event.currentTarget);
   };
 
   const location = useLocation();
@@ -215,7 +273,7 @@ export function ListingFiltersMobile({
           size="small"
           onClick={openRoomsPopover}
           style={
-            query.minAmountRoom
+            query.minAmountRoom || query.maxAmountRoom
               ? {
                   background: "rgba(255, 64, 0, 0.25)",
                   border: "2px solid #FF4000",
@@ -224,8 +282,8 @@ export function ListingFiltersMobile({
               : {}
           }
         >
-          {query.minAmountRoom
-            ? query.minAmountRoom + "+ Habitaciones"
+          {query.minAmountRoom && query.maxAmountRoom
+            ? query.minAmountRoom + "-" + query.maxAmountRoom + " Habitaciones"
             : "Habitaciones"}
         </StyledButton>
         <StyledButton
@@ -290,6 +348,112 @@ export function ListingFiltersMobile({
           }
         >
           Tipo
+        </StyledButton>
+
+        <StyledButton
+          size="small"
+          onClick={openDistanceSchoolsPopover}
+          style={
+            query.minDistanceSchool || query.maxDistanceSchool
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
+        >
+          Distancia Escuelas
+        </StyledButton>
+        <StyledButton
+          size="small"
+          onClick={openDistanceUniversitiesPopover}
+          style={
+            query.minDistanceUniversity || query.maxDistanceUniversity
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
+        >
+          Distancia Universidades
+        </StyledButton>
+        <StyledButton
+          size="small"
+          onClick={openDistanceHospitalsPopover}
+          style={
+            query.minDistanceHospital || query.maxDistanceHospital
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
+        >
+          Distancia Hospitales
+        </StyledButton>
+        <StyledButton
+          size="small"
+          onClick={openDistanceFireStationPopover}
+          style={
+            query.minDistanceFireStation || query.maxDistanceFireStation
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
+        >
+          Distancia Bomberos
+        </StyledButton>
+        <StyledButton
+          size="small"
+          onClick={openDistancePenitentiaryPopover}
+          style={
+            query.minDistancePenitentiary
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
+        >
+          Distancia Penitenciaria
+        </StyledButton>
+        <StyledButton
+          size="small"
+          onClick={openDistanceCommissaryPopover}
+          style={
+            query.maxDistanceCommissary
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
+        >
+          Distancia Comisaria
+        </StyledButton>
+        <StyledButton
+          size="small"
+          onClick={openDistanceSubwayPopover}
+          style={
+            query.minDistanceSubway || query.maxDistanceSubway
+              ? {
+                  background: "rgba(255, 64, 0, 0.25)",
+                  border: "2px solid #FF4000",
+                  color: "#FF4000",
+                }
+              : {}
+          }
+        >
+          Distancia Subte
         </StyledButton>
 
         <StyledButton size="small" onClick={clearFilters}>
@@ -464,85 +628,33 @@ export function ListingFiltersMobile({
         onClose={() => setAnchorRooms(null)}
       >
         <Grid className={styles.popoversTitles}>Habitaciones</Grid>
-        <Grid
-          className={styles.roomsBathsButtons}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Button
-            style={
-              Number(query.minAmountRoom) === 1
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
+        <Grid container className={styles.price}>
+          <TextField
+            placeholder="Min"
+            className={styles.priceMinInp}
+            variant="outlined"
+            type="number"
+            value={query.minAmountRoom}
+            size="small"
+            onChange={(e) => {
+              return pushQueryParams({
+                minAmountRoom: parseIntOrUndefined(e.target.value),
+              });
+            }}
+          />
+          <TextField
+            placeholder="Max"
+            className={styles.priceMaxInp}
+            variant="outlined"
+            type="number"
+            value={query.maxAmountRoom}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                maxAmountRoom: parseIntOrUndefined(e.target.value),
+              })
             }
-            onClick={() =>
-              Number(query.minAmountRoom) === 1
-                ? pushQueryParams({ minAmountRoom: undefined })
-                : pushQueryParams({ minAmountRoom: 1 })
-            }
-          >
-            1+
-          </Button>
-          <Button
-            style={
-              Number(query.minAmountRoom) === 2
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-            onClick={() =>
-              Number(query.minAmountRoom) === 2
-                ? pushQueryParams({ minAmountRoom: undefined })
-                : pushQueryParams({ minAmountRoom: 2 })
-            }
-          >
-            2+
-          </Button>
-          <Button
-            style={
-              Number(query.minAmountRoom) === 3
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-            onClick={() =>
-              Number(query.minAmountRoom) === 3
-                ? pushQueryParams({ minAmountRoom: undefined })
-                : pushQueryParams({ minAmountRoom: 3 })
-            }
-          >
-            3+
-          </Button>
-          <Button
-            style={
-              Number(query.minAmountRoom) === 4
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-            onClick={() =>
-              Number(query.minAmountRoom) === 4
-                ? pushQueryParams({ minAmountRoom: undefined })
-                : pushQueryParams({ minAmountRoom: 4 })
-            }
-          >
-            4+
-          </Button>
+          />
         </Grid>
       </Popover>
       <Popover
@@ -683,7 +795,293 @@ export function ListingFiltersMobile({
           />
         </Grid>
       </Popover>
-      {/*<Popover open={}>Otros</Popover>*/}
+      <Popover
+        open={Boolean(distanceSchool)}
+        anchorEl={distanceSchool}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setDistanceSchool(null)}
+      >
+        <Grid className={styles.popoversTitles}>
+          Distancia Escuelas (metros)
+        </Grid>
+        <Grid container className={styles.price}>
+          <TextField
+            placeholder="Min"
+            className={styles.priceMinInp}
+            variant="outlined"
+            type="number"
+            value={query.minDistanceSchool}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                minDistanceSchool: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+          <TextField
+            placeholder="Max"
+            className={styles.priceMaxInp}
+            variant="outlined"
+            type="number"
+            value={query.maxDistanceSchool}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                maxDistanceSchool: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+        </Grid>
+      </Popover>
+      <Popover
+        open={Boolean(distanceUniversities)}
+        anchorEl={distanceUniversities}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setDistanceUniversities(null)}
+      >
+        <Grid className={styles.popoversTitles}>
+          Distancia Universidades (metros)
+        </Grid>
+        <Grid container className={styles.price}>
+          <TextField
+            placeholder="Min"
+            className={styles.priceMinInp}
+            variant="outlined"
+            type="number"
+            value={query.minDistanceUniversity}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                minDistanceUniversity: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+          <TextField
+            placeholder="Max"
+            className={styles.priceMaxInp}
+            variant="outlined"
+            type="number"
+            value={query.maxDistanceUniversity}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                maxDistanceUniversity: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+        </Grid>
+      </Popover>
+      <Popover
+        open={Boolean(distanceHospitals)}
+        anchorEl={distanceHospitals}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setDistanceHospitals(null)}
+      >
+        <Grid className={styles.popoversTitles}>
+          Distancia Hospitales (metros)
+        </Grid>
+        <Grid container className={styles.price}>
+          <TextField
+            placeholder="Min"
+            className={styles.priceMinInp}
+            variant="outlined"
+            type="number"
+            value={query.minDistanceHospital}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                minDistanceHospital: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+          <TextField
+            placeholder="Max"
+            className={styles.priceMaxInp}
+            variant="outlined"
+            type="number"
+            value={query.maxDistanceHospital}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                maxDistanceHospital: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+        </Grid>
+      </Popover>
+      <Popover
+        open={Boolean(distanceFireStation)}
+        anchorEl={distanceFireStation}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setDistanceFireStation(null)}
+      >
+        <Grid className={styles.popoversTitles}>
+          Distancia Bomberos (metros)
+        </Grid>
+        <Grid container className={styles.price}>
+          <TextField
+            placeholder="Min"
+            className={styles.priceMinInp}
+            variant="outlined"
+            type="number"
+            value={query.minDistanceFireStation}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                minDistanceFireStation: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+          <TextField
+            placeholder="Max"
+            className={styles.priceMaxInp}
+            variant="outlined"
+            type="number"
+            value={query.maxDistanceFireStation}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                maxDistanceFireStation: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+        </Grid>
+      </Popover>
+      <Popover
+        open={Boolean(distancePenitentiary)}
+        anchorEl={distancePenitentiary}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setDistancePenitentiary(null)}
+      >
+        <Grid className={styles.popoversTitles}>
+          Distancia Penitenciaria (metros)
+        </Grid>
+        <Grid container className={styles.oneValue}>
+          <TextField
+            placeholder="Min"
+            className={styles.oneValueInp}
+            variant="outlined"
+            type="number"
+            value={query.minDistancePenitentiary}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                minDistancePenitentiary: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+        </Grid>
+      </Popover>
+      <Popover
+        open={Boolean(distanceCommissary)}
+        anchorEl={distanceCommissary}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setDistanceCommissary(null)}
+      >
+        <Grid className={styles.popoversTitles}>
+          Distancia Comisaria (metros)
+        </Grid>
+        <Grid container className={styles.oneValue}>
+          <TextField
+            placeholder="Max"
+            className={styles.oneValueInp}
+            variant="outlined"
+            type="number"
+            value={query.maxDistanceCommissary}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                maxDistanceCommissary: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+        </Grid>
+      </Popover>
+      <Popover
+        open={Boolean(distanceSubway)}
+        anchorEl={distanceSubway}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setDistanceSubway(null)}
+      >
+        <Grid className={styles.popoversTitles}>Distancia Subtes (metros)</Grid>
+        <Grid container className={styles.price}>
+          <TextField
+            placeholder="Min"
+            className={styles.priceMinInp}
+            variant="outlined"
+            type="number"
+            value={query.minDistanceSubway}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                minDistanceSubway: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+          <TextField
+            placeholder="Max"
+            className={styles.priceMaxInp}
+            variant="outlined"
+            type="number"
+            value={query.maxDistanceSubway}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                maxDistanceSubway: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+        </Grid>
+      </Popover>
     </div>
   );
 }

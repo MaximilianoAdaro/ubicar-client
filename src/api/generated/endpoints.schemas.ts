@@ -600,6 +600,8 @@ export interface PropertyFilterDto {
   maxDistanceFireStation?: number;
   minDistancePenitentiary?: number;
   maxDistanceCommissary?: number;
+  minDistanceSubway?: number;
+  maxDistanceSubway?: number;
 }
 
 export type PropertyPreviewDTOCondition = "RENT" | "SALE";
