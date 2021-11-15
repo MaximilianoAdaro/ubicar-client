@@ -1,6 +1,6 @@
 import styles from "./HouseCard.module.scss";
 import { Image } from "react-bootstrap";
-import { Tooltip } from "@material-ui/core";
+import { makeStyles, Tooltip } from "@material-ui/core";
 import pluralize from "pluralize";
 import { useHistory } from "react-router-dom";
 import { urls } from "../../constants";

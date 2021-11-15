@@ -176,7 +176,7 @@ const View = ({ id }: ViewProps) => {
         </Grid>
         <Grid xs style={{ marginLeft: "1.5em" }}>
           <h5>Expensas</h5>
-          $&nbsp;&nbsp;
+          U$D&nbsp;&nbsp;
           <span className={styles.view_property_expenses}>
             {formatPrice(property.expenses!)}
           </span>
