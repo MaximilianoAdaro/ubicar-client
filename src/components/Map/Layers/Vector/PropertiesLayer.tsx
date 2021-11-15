@@ -97,7 +97,7 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
 
     const style = new Style({
       image: new Icon({
-        src: "./newIcons/location_pin.svg",
+        src: "./newIcons/location_pin-svg.svg",
         scale: 1800 / 1024,
         anchor: [0.5, 0.75],
       }),

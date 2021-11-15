@@ -26,7 +26,7 @@ class UniversitiesLayer extends React.PureComponent<TVectorLayerComponentProps> 
         color: "rgba(0, 100, 240, 0.8)",
       }),
       image: new Icon({
-        src: "./newIcons/university.svg",
+        src: "./newIcons/university-svg.svg",
         scale: 900 / 1024,
         anchor: [0.5, 0.75],
       }),

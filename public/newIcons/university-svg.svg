@@ -1,0 +1,8 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+	<title>university-svg</title>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #ff4000;stroke: #000000;paint-order:stroke fill markers;stroke-opacity:0.5;stroke-width: 2 } 
+	</style>
+	<path id="Layer" class="shp0" d="M12 17L19 13.18L19 17.18L12 21L5 17.18L5 13.18L12 17ZM23 9L23 17L21 17L21 10.09L12 15L1 9L12 3L23 9Z" />
+</svg>
