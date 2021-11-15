@@ -71,6 +71,8 @@ export const ListingPage = () => {
     maxDistanceFireStation: checkNotUndefined(query.maxDistanceFireStation),
     minDistancePenitentiary: checkNotUndefined(query.minDistancePenitentiary),
     maxDistanceCommissary: checkNotUndefined(query.maxDistanceCommissary),
+    minDistanceSubway: checkNotUndefined(query.minDistanceSubway),
+    maxDistanceSubway: checkNotUndefined(query.maxDistanceSubway),
   });
 
   const buildDataset = async () => {

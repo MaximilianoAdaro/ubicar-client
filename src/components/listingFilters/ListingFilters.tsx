@@ -1,5 +1,6 @@
 import styles from "./ListingFilters.module.scss";
 import React, { useMemo, useCallback, useState } from "react";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {
   Button,
   CircularProgress,
@@ -84,6 +85,8 @@ export function ListingFilters({
     React.useState<HTMLButtonElement | null>(null);
   const [distanceCommissary, setDistanceCommissary] =
     React.useState<HTMLButtonElement | null>(null);
+  const [distanceSubway, setDistanceSubway] =
+    React.useState<HTMLButtonElement | null>(null);
 
   const openSalePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorSale(event.currentTarget);
@@ -148,6 +151,12 @@ export function ListingFilters({
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     setDistanceCommissary(event.currentTarget);
+  };
+
+  const openDistanceSubwayPopover = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setDistanceSubway(event.currentTarget);
   };
 
   const location = useLocation();
@@ -405,7 +414,7 @@ export function ListingFilters({
               : {}
           }
         >
-          Tipo
+          Tipo de propiedad
         </StyledButton>
 
         {!additionalFilters && (
@@ -420,9 +429,10 @@ export function ListingFilters({
           </StyledButton>
         )}
 
-        <StyledButton size="small" onClick={clearFilters}>
-          Limpiar Filtros
-        </StyledButton>
+        <DeleteOutlineIcon
+          onClick={clearFilters}
+          style={{ marginLeft: "15px" }}
+        />
       </Grid>
       {additionalFilters && (
         <Grid
@@ -523,9 +533,25 @@ export function ListingFilters({
           >
             Distancia Comisaria
           </StyledButton>
+          <StyledButton
+            size="small"
+            onClick={openDistanceSubwayPopover}
+            style={
+              query.minDistanceSubway || query.maxDistanceSubway
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+          >
+            Distancia Subte
+          </StyledButton>
         </Grid>
       )}
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(anchorSale)}
         anchorEl={anchorSale}
         anchorOrigin={{
@@ -562,6 +588,7 @@ export function ListingFilters({
         </List>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(anchorStyles)}
         anchorEl={anchorStyles}
         anchorOrigin={{
@@ -601,6 +628,7 @@ export function ListingFilters({
         </Dropdown>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(anchorTypes)}
         anchorEl={anchorTypes}
         anchorOrigin={{
@@ -640,6 +668,7 @@ export function ListingFilters({
         </Dropdown>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(anchorPrice)}
         anchorEl={anchorPrice}
         anchorOrigin={{
@@ -652,7 +681,7 @@ export function ListingFilters({
         }}
         onClose={() => setAnchorPrice(null)}
       >
-        <Grid className={styles.popoversTitles}>Precio</Grid>
+        <Grid className={styles.popoversTitles}>Precio (U$D)</Grid>
         <Grid container className={styles.price}>
           <TextField
             placeholder="Min"
@@ -680,6 +709,7 @@ export function ListingFilters({
         </Grid>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(anchorRooms)}
         anchorEl={anchorRooms}
         anchorOrigin={{
@@ -723,6 +753,7 @@ export function ListingFilters({
         </Grid>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(anchorBaths)}
         anchorEl={anchorBaths}
         anchorOrigin={{
@@ -818,6 +849,7 @@ export function ListingFilters({
         </Grid>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(anchorSqMts)}
         anchorEl={anchorSqMts}
         anchorOrigin={{
@@ -861,6 +893,7 @@ export function ListingFilters({
         </Grid>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(distanceSchool)}
         anchorEl={distanceSchool}
         anchorOrigin={{
@@ -873,7 +906,9 @@ export function ListingFilters({
         }}
         onClose={() => setDistanceSchool(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Escuelas</Grid>
+        <Grid className={styles.popoversTitles}>
+          Distancia Escuelas (metros)
+        </Grid>
         <Grid container className={styles.price}>
           <TextField
             placeholder="Min"
@@ -904,6 +939,7 @@ export function ListingFilters({
         </Grid>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(distanceUniversities)}
         anchorEl={distanceUniversities}
         anchorOrigin={{
@@ -916,7 +952,9 @@ export function ListingFilters({
         }}
         onClose={() => setDistanceUniversities(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Universidades</Grid>
+        <Grid className={styles.popoversTitles}>
+          Distancia Universidades (metros)
+        </Grid>
         <Grid container className={styles.price}>
           <TextField
             placeholder="Min"
@@ -947,6 +985,7 @@ export function ListingFilters({
         </Grid>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(distanceHospitals)}
         anchorEl={distanceHospitals}
         anchorOrigin={{
@@ -959,7 +998,9 @@ export function ListingFilters({
         }}
         onClose={() => setDistanceHospitals(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Hospitales</Grid>
+        <Grid className={styles.popoversTitles}>
+          Distancia Hospitales (metros)
+        </Grid>
         <Grid container className={styles.price}>
           <TextField
             placeholder="Min"
@@ -990,6 +1031,7 @@ export function ListingFilters({
         </Grid>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(distanceFireStation)}
         anchorEl={distanceFireStation}
         anchorOrigin={{
@@ -1002,7 +1044,9 @@ export function ListingFilters({
         }}
         onClose={() => setDistanceFireStation(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Bomberos</Grid>
+        <Grid className={styles.popoversTitles}>
+          Distancia Bomberos (metros)
+        </Grid>
         <Grid container className={styles.price}>
           <TextField
             placeholder="Min"
@@ -1033,6 +1077,7 @@ export function ListingFilters({
         </Grid>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(distancePenitentiary)}
         anchorEl={distancePenitentiary}
         anchorOrigin={{
@@ -1045,7 +1090,9 @@ export function ListingFilters({
         }}
         onClose={() => setDistancePenitentiary(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Penitenciaria</Grid>
+        <Grid className={styles.popoversTitles}>
+          Distancia Penitenciaria (metros)
+        </Grid>
         <Grid container className={styles.oneValue}>
           <TextField
             placeholder="Min"
@@ -1063,6 +1110,7 @@ export function ListingFilters({
         </Grid>
       </Popover>
       <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
         open={Boolean(distanceCommissary)}
         anchorEl={distanceCommissary}
         anchorOrigin={{
@@ -1075,7 +1123,9 @@ export function ListingFilters({
         }}
         onClose={() => setDistanceCommissary(null)}
       >
-        <Grid className={styles.popoversTitles}>Distancia Comisaria</Grid>
+        <Grid className={styles.popoversTitles}>
+          Distancia Comisaria (metros)
+        </Grid>
         <Grid container className={styles.oneValue}>
           <TextField
             placeholder="Max"
@@ -1087,6 +1137,50 @@ export function ListingFilters({
             onChange={(e) =>
               pushQueryParams({
                 maxDistanceCommissary: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+        </Grid>
+      </Popover>
+      <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
+        open={Boolean(distanceSubway)}
+        anchorEl={distanceSubway}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setDistanceSubway(null)}
+      >
+        <Grid className={styles.popoversTitles}>Distancia Subtes (metros)</Grid>
+        <Grid container className={styles.price}>
+          <TextField
+            placeholder="Min"
+            className={styles.priceMinInp}
+            variant="outlined"
+            type="number"
+            value={query.minDistanceSubway}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                minDistanceSubway: parseIntOrUndefined(e.target.value),
+              })
+            }
+          />
+          <TextField
+            placeholder="Max"
+            className={styles.priceMaxInp}
+            variant="outlined"
+            type="number"
+            value={query.maxDistanceSubway}
+            size="small"
+            onChange={(e) =>
+              pushQueryParams({
+                maxDistanceSubway: parseIntOrUndefined(e.target.value),
               })
             }
           />
