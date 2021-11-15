@@ -252,7 +252,7 @@ export function ListingFiltersMobile({
             ? query.condition === "SALE"
               ? "En Venta"
               : "En Alquiler"
-            : "En Venta"}
+            : "Tipo de Operación"}
         </StyledButton>
         <StyledButton
           size="small"
