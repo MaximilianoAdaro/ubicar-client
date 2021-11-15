@@ -45,7 +45,7 @@ $radius: 7px;
   .streetNumber {
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: "...";
+    text-overflow: ellipsis;
     text-transform: capitalize;
     font-weight: bold;
     font-size: 1em;
@@ -58,6 +58,9 @@ $radius: 7px;
     font-size: 1em;
     line-height: 21px;
     text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -67,6 +70,18 @@ $radius: 7px;
   font-weight: normal;
   font-size: 1.1em;
   line-height: 25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tooltip {
+  font-size: 1.1em;
+}
+
+.tooltip_text {
+  font-size: 1.7em;
+  margin: 0.5em;
 }
 
 .price {

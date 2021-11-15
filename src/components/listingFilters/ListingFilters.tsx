@@ -306,6 +306,7 @@ export function ListingFilters({
           id="buttonForm"
           size="small"
           onClick={openSalePopover}
+          // placeholder={"Operación"}
           style={
             query.condition
               ? {
@@ -320,7 +321,7 @@ export function ListingFilters({
             ? query.condition === "SALE"
               ? "En Venta"
               : "En Alquiler"
-            : "En Venta"}
+            : "Tipo de Operación"}
         </StyledButton>
         <StyledButton
           size="small"

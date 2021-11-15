@@ -287,7 +287,7 @@ const View = ({ id }: ViewProps) => {
               <div className={styles.expenses}>
                 <span>Expensas </span>{" "}
                 <div>
-                  <span className={styles.priceSymbol}>$</span>
+                  <span className={styles.priceSymbol}>U$D</span>
                   <span className={styles.priceColor}>
                     {formatPrice(property.expenses!)}
                   </span>

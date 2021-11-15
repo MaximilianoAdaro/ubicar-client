@@ -2,7 +2,7 @@ import React from "react";
 import { PropertyProps } from "./vector-types";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import { Icon, Style } from "ol/style";
+import { Fill, Stroke, Style } from "ol/style";
 import { MapContext } from "../../map";
 import { IMapContext, PropertyState } from "../../maptypes";
 import { Vector } from "ol/source";
@@ -10,6 +10,7 @@ import Feature from "ol/Feature";
 import { convertCoordinates, getBounds } from "../../utils";
 import { bbox } from "ol/loadingstrategy";
 import GeoJSON from "ol/format/GeoJSON";
+import CircleStyle from "ol/style/Circle";
 
 class PropertiesLayer extends React.PureComponent<PropertyProps> {
   layer: VectorLayer;
@@ -96,10 +97,13 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
     });
 
     const style = new Style({
-      image: new Icon({
-        src: "https://static.thenounproject.com/png/1661278-200.png",
-        scale: 200 / 1024,
-        anchor: [0.5, 0.75],
+      image: new CircleStyle({
+        radius: 8,
+        fill: new Fill({ color: "black" }),
+        stroke: new Stroke({
+          color: "white",
+          width: 2,
+        }),
       }),
     });
 
