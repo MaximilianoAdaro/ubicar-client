@@ -12,6 +12,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { convertCoordinates } from "../../components/Map/utils";
 import { RecentlyViewed } from "../../components/homePage/RecentlyViewed";
 import { MostLiked } from "../../components/homePage/MostLiked";
+import { Grid } from "@mui/material";
 
 export const Home = () => {
   const { data: user } = useGetLoggedUsingGET();
@@ -164,6 +165,9 @@ export const Home = () => {
       <div className={styles.properties} />
 
       {user ? <RecentlyViewed /> : <MostLiked />}
+      {user && <RecentlyViewed />}
+      {user && <RecentlyViewed />}
+      {user && <RecentlyViewed />}
     </div>
   );
 };

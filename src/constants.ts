@@ -20,6 +20,7 @@ export const urls = {
     properties: "/userProfile/my-properties",
     recentlyViewed: "/userProfile/recently-viewed",
     opportunities: "/userProfile/opportunities",
+    recommendations: "/userProfile/recommendations",
   },
 };
 

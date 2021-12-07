@@ -14,6 +14,7 @@ import {
   AiFillHome,
   CgProfile,
   RiArrowRightSLine,
+  AiFillLike,
 } from "react-icons/all";
 import firebase from "firebase";
 import HelpIcon from "@mui/icons-material/Help";
@@ -121,6 +122,19 @@ export function UserProfileMobile() {
               <StyledButton>
                 <AiFillEye className={styles.user_profile_icons} />
                 Recientemente Vistos
+              </StyledButton>
+            </Link>
+          </Grid>
+          <Grid xs={1} className={styles.user_profile_arrow}>
+            <RiArrowRightSLine />
+          </Grid>
+        </Grid>
+        <Grid className={styles.user_profile_buttons} container>
+          <Grid xs>
+            <Link to={urls.userProfile.recommendations}>
+              <StyledButton>
+                <AiFillLike className={styles.user_profile_icons} />
+                Recomendaciones
               </StyledButton>
             </Link>
           </Grid>

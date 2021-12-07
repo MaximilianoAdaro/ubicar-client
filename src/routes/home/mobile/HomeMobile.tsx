@@ -1,6 +1,12 @@
 import { useHistory, useParams } from "react-router-dom";
 import styles from "./HomeMobile.module.scss";
-import { CircularProgress, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+  withStyles,
+} from "@material-ui/core";
 import { useState } from "react";
 import { useGetLoggedUsingGET } from "../../../api";
 import React from "react";
