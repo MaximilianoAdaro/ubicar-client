@@ -1,7 +1,7 @@
 import styles from "./UserProfileMobile.module.scss";
 import React from "react";
 import { Button, Grid } from "@material-ui/core";
-import { useGetFavoritePropertiesUsingGET } from "../../../api";
+import { useGetAllRecentlyViewedPropertiesUsingGET } from "../../../api";
 import { Link } from "react-router-dom";
 import { urls } from "../../../constants";
 import { RiArrowLeftSLine } from "react-icons/all";
@@ -9,7 +9,8 @@ import { List, ListItem } from "@mui/material";
 import { PropretyCardMyFavoritesMobile } from "./PropertyCardMyFavoritesMobile";
 
 export function MyRecommendationsMobile() {
-  const data = useGetFavoritePropertiesUsingGET();
+  const data = useGetAllRecentlyViewedPropertiesUsingGET();
+
   return (
     <Grid className={styles.user_profile_container}>
       <Grid className={styles.user_profile_title}>
@@ -45,6 +46,7 @@ export function MyRecommendationsMobile() {
               <div>
                 <List>
                   {data?.data
+                    .slice(0, 5)
                     .filter((casa) => casa.step == 7)
                     .map((casa) => (
                       <ListItem style={{ width: "20em" }}>

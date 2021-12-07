@@ -1,12 +1,11 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
-import { Grid } from "@material-ui/core";
-import { useGetFavoritePropertiesUsingGET } from "../../../api";
-import { ListItem, List } from "@material-ui/core";
+import { Grid, List, ListItem } from "@material-ui/core";
+import { useGetAllRecentlyViewedPropertiesUsingGET } from "../../../api";
 import { PropretyCardMyFavorites } from "./PropertyCardMyFavorites";
 
 export function MyRecommendations() {
-  const data = useGetFavoritePropertiesUsingGET();
+  const data = useGetAllRecentlyViewedPropertiesUsingGET();
   return (
     <div className={styles.personalDataMainDiv}>
       <Grid>
@@ -30,6 +29,7 @@ export function MyRecommendations() {
                 }}
               >
                 {data?.data
+                  .slice(0, 5)
                   .filter((casa) => casa.step == 7)
                   .map((casa) => (
                     <ListItem
@@ -47,7 +47,7 @@ export function MyRecommendations() {
             </div>
           ) : (
             <h5 style={{ color: "gray" }}>
-              Empieza likeando propiedades para poder recomendarte propiedades.
+              No tenemos recomendaciones para usted.
             </h5>
           )}
         </Grid>

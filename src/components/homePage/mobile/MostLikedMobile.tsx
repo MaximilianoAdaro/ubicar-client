@@ -1,19 +1,10 @@
 import styles from "./HomePageMobile.module.scss";
 import React from "react";
-import { Grid, withStyles } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useGetMostLikedPropertiesUsingGET } from "../../../api";
 import { urls } from "../../../constants";
 import { useHistory } from "react-router-dom";
 import { HouseCardMobile } from "../../newListingHouse";
-import { Button } from "@mui/material";
-
-const StyledButton = withStyles({
-  root: {
-    justifyContent: "left",
-    textTransform: "none",
-    marginBottom: "0.5em",
-  },
-})(Button);
 
 export function MostLikedMobile() {
   const { data: properties } = useGetMostLikedPropertiesUsingGET();
