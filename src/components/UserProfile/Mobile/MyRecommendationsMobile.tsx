@@ -1,15 +1,19 @@
 import styles from "./UserProfileMobile.module.scss";
-import React from "react";
+import React, { useState } from "react";
 import { Button, Grid } from "@material-ui/core";
 import { useGetAllRecentlyViewedPropertiesUsingGET } from "../../../api";
 import { Link } from "react-router-dom";
 import { urls } from "../../../constants";
 import { RiArrowLeftSLine } from "react-icons/all";
-import { List, ListItem } from "@mui/material";
-import { PropretyCardMyFavoritesMobile } from "./PropertyCardMyFavoritesMobile";
+import { RecommendationList } from "./RecommendationList";
 
 export function MyRecommendationsMobile() {
   const data = useGetAllRecentlyViewedPropertiesUsingGET();
+  const [component, setComponent] = useState(1);
+
+  function changeTo(componentNumber: number) {
+    setComponent(componentNumber);
+  }
 
   return (
     <Grid className={styles.user_profile_container}>
@@ -41,32 +45,60 @@ export function MyRecommendationsMobile() {
           </span>
         </Grid>
         <Grid className={styles.properties}>
-          <div className={styles.propertyList}>
-            {data.status === "success" && data?.data.length > 0 ? (
-              <div>
-                <List>
-                  {data?.data
-                    .slice(0, 5)
-                    .filter((casa) => casa.step == 7)
-                    .map((casa) => (
-                      <ListItem style={{ width: "20em" }}>
-                        <PropretyCardMyFavoritesMobile
-                          key={casa.id}
-                          house={casa}
-                          from={"properties"}
-                          state={""}
-                        />
-                      </ListItem>
-                    ))}
-                </List>
-              </div>
-            ) : (
-              <h5 style={{ color: "gray" }}>
-                Empieza likeando propiedades para poder recomendarte
-                propiedades.
-              </h5>
+          <Grid container>
+            <Grid xs>
+              <Button onClick={() => changeTo(1)} fullWidth>
+                1
+              </Button>
+            </Grid>
+            <Grid xs>
+              <Button onClick={() => changeTo(2)} fullWidth>
+                2
+              </Button>
+            </Grid>
+            <Grid xs>
+              <Button onClick={() => changeTo(3)} fullWidth>
+                3
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid>
+            {component === 1 && (
+              <RecommendationList data={data} listNumber={1} />
             )}
-          </div>
+            {component === 2 && (
+              <RecommendationList data={data} listNumber={2} />
+            )}
+            {component === 3 && (
+              <RecommendationList data={data} listNumber={3} />
+            )}
+          </Grid>
+          {/*<div className={styles.propertyList}>*/}
+          {/*  {data.status === "success" && data?.data.length > 0 ? (*/}
+          {/*    <div>*/}
+          {/*      <List>*/}
+          {/*        {data?.data*/}
+          {/*          .slice(0, 5)*/}
+          {/*          .filter((casa) => casa.step == 7)*/}
+          {/*          .map((casa) => (*/}
+          {/*            <ListItem style={{ width: "20em" }}>*/}
+          {/*              <PropretyCardMyFavoritesMobile*/}
+          {/*                key={casa.id}*/}
+          {/*                house={casa}*/}
+          {/*                from={"properties"}*/}
+          {/*                state={""}*/}
+          {/*              />*/}
+          {/*            </ListItem>*/}
+          {/*          ))}*/}
+          {/*      </List>*/}
+          {/*    </div>*/}
+          {/*  ) : (*/}
+          {/*    <h5 style={{ color: "gray" }}>*/}
+          {/*      Empieza likeando propiedades para poder recomendarte*/}
+          {/*      propiedades.*/}
+          {/*    </h5>*/}
+          {/*  )}*/}
+          {/*</div>*/}
         </Grid>
       </Grid>
     </Grid>

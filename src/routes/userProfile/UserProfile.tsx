@@ -98,15 +98,17 @@ export function UserProfile() {
                   Recientemente Vistos
                 </StyledButton>
               </Grid>
-              <Grid xs>
-                <StyledButton
-                  className={classes.button}
-                  onClick={() => setComponent("Recommendation")}
-                  fullWidth
-                >
-                  Recomendaciones
-                </StyledButton>
-              </Grid>
+              {user && !user.investor && (
+                <Grid xs>
+                  <StyledButton
+                    className={classes.button}
+                    onClick={() => setComponent("Recommendation")}
+                    fullWidth
+                  >
+                    Recomendaciones
+                  </StyledButton>
+                </Grid>
+              )}
               {user && user.investor && (
                 <Grid xs>
                   <StyledButton
