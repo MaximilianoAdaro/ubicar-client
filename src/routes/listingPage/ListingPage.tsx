@@ -21,7 +21,8 @@ import { ReactComponent as OneGridIconSelected } from "../../assets/listingPageG
 import { ReactComponent as TwoGridIcon } from "../../assets/listingPageGridTwo.svg";
 import { ReactComponent as TwoGridIconSelected } from "../../assets/listingPageGridTwoSelected.svg";
 import SignUp from "../../components/PopUp/SignUp";
-import { Grid } from "@mui/material";
+import { useInfiniteQuery, useQuery } from "react-query";
+import InfiniteScroll from "react-infinite-scroller";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -37,8 +38,8 @@ export const ListingPage = () => {
   const [zoom, setZoom] = useState(useAppSelector(selectZoom));
   const [view, setView] = useState(useAppSelector(selectView));
   const [bbox, setBbox] = useState([0]);
-  const [load, setLoad] = useState(true);
-  const [rightSideData, setRightSideData] = useState<PropertyPreviewDTO[]>();
+  // const [load, setLoad] = useState(true);
+  // const [rightSideData, setRightSideData] = useState<PropertyPreviewDTO[]>();
 
   const dispatch = useDispatch();
 
@@ -46,9 +47,6 @@ export const ListingPage = () => {
     () => QueryString.parse(location.search) as any,
     [location.search]
   );
-
-  const { data: houseStyles } = useGetStylesUsingGET();
-  const { data: houseTypes } = useGetTypesUsingGET();
 
   const body = JSON.stringify({
     condition: checkNotUndefined(query.condition),
@@ -75,38 +73,88 @@ export const ListingPage = () => {
     maxDistanceSubway: checkNotUndefined(query.maxDistanceSubway),
   });
 
-  const buildDataset = async () => {
-    setLoad(true);
+  const {
+    data,
+    isLoading: load,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(
+    ["by-filter", body, bbox],
+    async ({ pageParam = 0 }) => {
+      const mapData = await fetch(
+        "http://localhost:3000/public/property/preview/by-filter?b1=" +
+          bbox[0] +
+          "&b2=" +
+          bbox[1] +
+          "&b3=" +
+          bbox[2] +
+          "&b4=" +
+          bbox[3] +
+          "&page=" +
+          pageParam,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body,
+        }
+      );
 
-    const mapData = await fetch(
-      "http://localhost:3000/public/property/preview/by-filter?b1=" +
-        bbox[0] +
-        "&b2=" +
-        bbox[1] +
-        "&b3=" +
-        bbox[2] +
-        "&b4=" +
-        bbox[3],
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body,
-      }
-    );
+      // if (mapData.status !== 200) {
+      //   return null;
+      // }
 
-    const response2 = await mapData.json();
-    if (response2) {
-      if (response2.content?.length > 0) {
-        setRightSideData(response2.content);
-      } else {
-        setRightSideData([]);
-      }
-      setLoad(false);
+      const response2 = await mapData.json();
+      return response2;
+    },
+    {
+      getNextPageParam: (page) => {
+        if (!page) return 0;
+        return page.last ? undefined : page.number + 1;
+      },
     }
-  };
+  );
+
+  // const rightSideData = data?.content;
+  console.log(data);
+
+  const { data: houseStyles } = useGetStylesUsingGET();
+  const { data: houseTypes } = useGetTypesUsingGET();
+
+  // const buildDataset = async () => {
+  //   setLoad(true);
+
+  //   const mapData = await fetch(
+  //     "http://localhost:3000/public/property/preview/by-filter?b1=" +
+  //       bbox[0] +
+  //       "&b2=" +
+  //       bbox[1] +
+  //       "&b3=" +
+  //       bbox[2] +
+  //       "&b4=" +
+  //       bbox[3],
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       },
+  //       body,
+  //     }
+  //   );
+
+  //   const response2 = await mapData.json();
+  //   if (response2) {
+  //     if (response2.content?.length > 0) {
+  //       setRightSideData(response2.content);
+  //     } else {
+  //       setRightSideData([]);
+  //     }
+  //     setLoad(false);
+  //   }
+  // };
 
   const setter1 = (number: number) => {
     setZoom(number);
@@ -125,9 +173,9 @@ export const ListingPage = () => {
 
   const isAuthenticated = !!user;
 
-  useEffect(() => {
-    buildDataset();
-  }, [bbox, query]);
+  // useEffect(() => {
+  //   buildDataset();
+  // }, [bbox, query]);
 
   const [isOpened, setIsOpened] = useState(false);
 
@@ -175,7 +223,7 @@ export const ListingPage = () => {
         <div className={styles.propertyList}>
           <Switch>
             {load && <Loading />}
-            {!load && rightSideData && rightSideData.length > 0 ? (
+            {!load && data && data.pages.length > 0 ? (
               <div className={styles.buttonsAndProps}>
                 <div className={styles.gridIcons}>
                   {isLargeCards ? (
@@ -198,9 +246,11 @@ export const ListingPage = () => {
                 </div>
 
                 <PropertyList
-                  properties={rightSideData}
+                  pages={data.pages}
                   expanded={isTwoColumns}
                   isLargeCards={isLargeCards}
+                  fetchNextPage={fetchNextPage}
+                  hasNextPage={hasNextPage}
                 />
               </div>
             ) : (
@@ -214,25 +264,53 @@ export const ListingPage = () => {
 };
 
 type PropertyListProps = {
-  properties?: PropertyPreviewDTO[] | null;
+  pages?: any;
   expanded?: boolean;
   isLargeCards?: boolean;
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
 };
 
 const PropertyList = ({
-  properties,
+  pages,
   expanded = false,
   isLargeCards = false,
+  hasNextPage = false,
+  fetchNextPage = () => {},
 }: PropertyListProps) => {
+  console.log({ pages });
   return (
-    <div
-      className={clsx(styles.propList, {
-        [styles.expanded]: !isLargeCards && expanded,
-      })}
+    <InfiniteScroll
+      hasMore={hasNextPage}
+      loadMore={() => {
+        console.log("fetching next page");
+        fetchNextPage();
+      }}
+      style={{
+        border: "1px solid red",
+      }}
     >
-      {properties?.map((property) => (
+      <div
+        className={clsx(styles.propList, {
+          [styles.expanded]: !isLargeCards && expanded,
+        })}
+      >
+        {pages?.flatMap((page: any) => {
+          if (!page.content) {
+            return null;
+          }
+          return page.content.map((property: any) => (
+            <HouseCard
+              key={property.id}
+              house={property}
+              isLarge={isLargeCards}
+            />
+          ));
+        })}
+        {/* {properties?.map((property) => (
         <HouseCard key={property.id} house={property} isLarge={isLargeCards} />
-      ))}
-    </div>
+      ))} */}
+      </div>
+    </InfiniteScroll>
   );
 };

@@ -22,6 +22,8 @@ import { convertCoordinates } from "../../components/Map/utils";
 import { Autocomplete } from "@material-ui/lab";
 import { selectOption } from "../../store/slices/session";
 import { ListingFiltersMobile } from "../../components/listingFilters";
+import { useInfiniteQuery } from "react-query";
+import InfiniteScroll from "react-infinite-scroller";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -40,8 +42,8 @@ export const ListingPageMobile = () => {
   const [zoom, setZoom] = useState(useAppSelector(selectZoom));
   const [view, setView] = useState(useAppSelector(selectView));
   const [bbox, setBbox] = useState([0]);
-  const [load, setLoad] = useState(true);
-  const [rightSideData, setRightSideData] = useState<PropertyPreviewDTO[]>([]);
+  // const [load, setLoad] = useState(true);
+  // const [rightSideData, setRightSideData] = useState<PropertyPreviewDTO[]>([]);
 
   const dispatch = useDispatch();
 
@@ -49,7 +51,6 @@ export const ListingPageMobile = () => {
     () => QueryString.parse(location.search) as any,
     [location.search]
   );
-
   const body = JSON.stringify({
     condition: checkNotUndefined(query.condition),
     typeProperty: checkNotUndefined(query.typeProperty),
@@ -75,38 +76,49 @@ export const ListingPageMobile = () => {
     maxDistanceSubway: checkNotUndefined(query.maxDistanceSubway),
   });
 
-  const buildDataset = async () => {
-    setLoad(true);
+  const {
+    data,
+    // isLoading: load,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(
+    ["by-filter", body, bbox],
+    async ({ pageParam = 0 }) => {
+      const mapData = await fetch(
+        "http://localhost:3000/public/property/preview/by-filter?b1=" +
+          bbox[0] +
+          "&b2=" +
+          bbox[1] +
+          "&b3=" +
+          bbox[2] +
+          "&b4=" +
+          bbox[3] +
+          "&page=" +
+          pageParam,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body,
+        }
+      );
 
-    const mapData = await fetch(
-      "http://localhost:3000/public/property/preview/by-filter?b1=" +
-        bbox[0] +
-        "&b2=" +
-        bbox[1] +
-        "&b3=" +
-        bbox[2] +
-        "&b4=" +
-        bbox[3],
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body,
-      }
-    );
+      // if (mapData.status !== 200) {
+      //   return null;
+      // }
 
-    const response2 = await mapData.json();
-    if (response2) {
-      if (response2.content?.length > 0) {
-        setRightSideData(response2.content);
-      } else {
-        setRightSideData([]);
-      }
-      setLoad(false);
+      const response2 = await mapData.json();
+      return response2;
+    },
+    {
+      getNextPageParam: (page) => {
+        if (!page) return 0;
+        return page.last ? undefined : page.number + 1;
+      },
     }
-  };
+  );
 
   const setter1 = (number: number) => {
     setZoom(number);
@@ -123,9 +135,9 @@ export const ListingPageMobile = () => {
     );
   };
 
-  useEffect(() => {
-    buildDataset();
-  }, [bbox, query]);
+  // useEffect(() => {
+  //   buildDataset();
+  // }, [bbox, query]);
 
   const history = useHistory();
 
@@ -303,12 +315,14 @@ export const ListingPageMobile = () => {
         </div>
         <div className={styles.propertyList}>
           <Switch>
-            {rightSideData.length > 0 ? (
+            {data && data?.pages.length > 0 ? (
               <div className={styles.buttonsAndProps}>
                 <PropertyList
-                  properties={rightSideData}
+                  pages={data.pages}
                   expanded={isTwoColumns}
                   isLargeCards={isLargeCards}
+                  fetchNextPage={fetchNextPage}
+                  hasNextPage={hasNextPage}
                 />
               </div>
             ) : (
@@ -322,29 +336,53 @@ export const ListingPageMobile = () => {
 };
 
 type PropertyListProps = {
-  properties?: PropertyPreviewDTO[] | null;
+  pages?: any;
   expanded?: boolean;
   isLargeCards?: boolean;
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
 };
 
 const PropertyList = ({
-  properties,
+  pages,
   expanded = false,
   isLargeCards = false,
+  hasNextPage = false,
+  fetchNextPage = () => {},
 }: PropertyListProps) => {
+  console.log({ pages });
   return (
-    <div
-      className={clsx(styles.propList, {
-        [styles.expanded]: !isLargeCards && expanded,
-      })}
+    <InfiniteScroll
+      hasMore={hasNextPage}
+      loadMore={() => {
+        console.log("fetching next page");
+        fetchNextPage();
+      }}
+      style={{
+        border: "1px solid red",
+      }}
     >
-      {properties?.map((property) => (
-        <HouseCardMobile
-          key={property.id}
-          house={property}
-          isLarge={isLargeCards}
-        />
-      ))}
-    </div>
+      <div
+        className={clsx(styles.propList, {
+          [styles.expanded]: !isLargeCards && expanded,
+        })}
+      >
+        {pages?.flatMap((page: any) => {
+          if (!page.content) {
+            return null;
+          }
+          return page.content.map((property: any) => (
+            <HouseCardMobile
+              key={property.id}
+              house={property}
+              isLarge={isLargeCards}
+            />
+          ));
+        })}
+        {/* {properties?.map((property) => (
+        <HouseCard key={property.id} house={property} isLarge={isLargeCards} />
+      ))} */}
+      </div>
+    </InfiniteScroll>
   );
 };
