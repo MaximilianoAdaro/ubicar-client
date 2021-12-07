@@ -17,7 +17,7 @@ import { StyleDTO, GetTypesUsingGET200Item } from "../../api";
 import { useHistory, useLocation } from "react-router-dom";
 import QueryString from "query-string";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
-import { selectOption } from "../../store/slices/session";
+import { selectOption, selectSearchBar } from "../../store/slices/session";
 import { convertCoordinates } from "../Map/utils";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { MapView } from "../../store/slices/map/mapSlice";
@@ -432,7 +432,7 @@ export function ListingFilters({
 
         <DeleteOutlineIcon
           onClick={clearFilters}
-          style={{ marginLeft: "15px" }}
+          style={{ marginLeft: "15px", cursor: "pointer" }}
         />
       </Grid>
       {additionalFilters && (
