@@ -8,6 +8,7 @@ import { actions, useAppDispatch } from "../../store";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { convertCoordinates } from "../../components/Map/utils";
 import { MostLiked, RecentlyViewed } from "../../components/homePage";
+import { Recommendations } from "../../components/homePage/Recommendations";
 
 export const Home = () => {
   const { data: user } = useGetLoggedUsingGET();
@@ -167,12 +168,9 @@ export const Home = () => {
       ) : (
         <MostLiked />
       )}
-      {user && (
-        <RecentlyViewed
-          title={"Por que te gusto x te recomendamos:"}
-          numberOfHouses={5}
-        />
-      )}
+      {user && <Recommendations recommendationNumber={0} />}
+      {user && <Recommendations recommendationNumber={1} />}
+      {user && <Recommendations recommendationNumber={2} />}
       {/*{user && <RecentlyViewed title={"Por que te gusto x te recomendamos:"} numberOfHouses={5} />}*/}
       {/*{user && <RecentlyViewed title={"Por que te gusto x te recomendamos:"} numberOfHouses={5} />}*/}
     </div>
