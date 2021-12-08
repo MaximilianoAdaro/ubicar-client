@@ -49,7 +49,7 @@ const StyledButton = withStyles({
     paddingLeft: "0.7em",
     paddingRight: "0.7em",
     textTransform: "none",
-    marginLeft: "1.4rem",
+    marginLeft: "1rem",
     border: "2px solid rgba(0,0,0,0.7)",
     color: "rgba(0,0,0,0.7)",
     background: "rgb(255,255,255,0.9)",
@@ -99,6 +99,8 @@ export function ListingFilters({
     React.useState<HTMLButtonElement | null>(null);
   const [distanceSubway, setDistanceSubway] =
     React.useState<HTMLButtonElement | null>(null);
+
+  const [unsavedFilters, setUnsavedFilters] = React.useState<boolean>(false);
 
   const openSalePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorSale(event.currentTarget);
@@ -200,6 +202,7 @@ export function ListingFilters({
         pathname: location.pathname,
         search: QueryString.stringify(query),
       });
+      setUnsavedFilters(true);
     },
     [history, location.pathname, location.search]
   );
@@ -259,8 +262,9 @@ export function ListingFilters({
     try {
       await mutateAsync({
         // @ts-ignore
-        data: { query },
+        data: query,
       });
+      setUnsavedFilters(false);
     } catch (e) {
       throw Error;
     }
@@ -302,7 +306,7 @@ export function ListingFilters({
             <Autocomplete
               id="asyncState"
               size={"small"}
-              style={{ width: "350px" }}
+              style={{ width: "360px" }}
               open={open}
               defaultValue={search}
               onChange={(e, value) => {
@@ -483,7 +487,16 @@ export function ListingFilters({
         {location.search.length > 0 && user && (
           <StyledButton
             size="small"
-            style={{ paddingLeft: "0.3em" }}
+            style={
+              !unsavedFilters
+                ? {
+                    paddingLeft: "0.3em",
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : { paddingLeft: "0.3em" }
+            }
             onClick={saveFilters}
           >
             <BookmarkBorderIcon /> Guardar Filtros
@@ -501,7 +514,7 @@ export function ListingFilters({
             paddingBottom: "12px",
             backgroundColor: "rgba(66, 158, 166, 0.2)",
             textAlign: "right",
-            paddingRight: "58px",
+            paddingRight: "85px",
           }}
         >
           <StyledButton
