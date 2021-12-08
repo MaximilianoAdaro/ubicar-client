@@ -12,7 +12,7 @@ export function MyRecommendations() {
   if (!data) return <h1>Loading...</h1>;
 
   function filterCreation(filter: any) {
-    return `Por que guardaste
+    return `Estas buscando
          ${
            filter.typeProperty
              ? `${

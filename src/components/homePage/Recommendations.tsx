@@ -13,6 +13,82 @@ type RecommendationsProps = {
   recommendationNumber: number;
 };
 
+function filterCreation(filter: any) {
+  return `Estas buscando
+         ${
+           filter.typeProperty
+             ? `${
+                 filter.typeProperty === "Casa" ? "una" : "un"
+               } ${filter.typeProperty.toLowerCase()}`
+             : "una propiedad"
+         }
+         ${
+           filter.condition
+             ? `en ${filter.condition === "SALE" ? "venta" : "alquiler"}`
+             : ""
+         }
+         ${
+           filter.minPrice
+             ? `${
+                 filter.maxPrice
+                   ? `con precios entre U$D${filter.minPrice}`
+                   : `con precio desde U$D${filter.minPrice},`
+               }`
+             : ""
+         }
+         ${
+           filter.maxPrice
+             ? `${
+                 filter.minPrice
+                   ? `y U$D${filter.maxPrice},`
+                   : `con precio hasta U$D${filter.maxPrice},`
+               }`
+             : ""
+         }
+         ${
+           filter.minAmountBathroom
+             ? ` con más de ${filter.minAmountBathroom} baños, `
+             : ""
+         }
+         ${
+           filter.minAmountRoom
+             ? `${
+                 filter.maxAmountRoom
+                   ? `con ${filter.minAmountRoom}`
+                   : `con ${filter.minAmountRoom} ambientes,`
+               }`
+             : ""
+         }
+         ${
+           filter.maxAmountRoom
+             ? `${
+                 filter.minAmountRoom
+                   ? `- ${filter.maxAmountRoom} ambientes,`
+                   : ` con hasta ${filter.maxAmountRoom} ambientes,`
+               }`
+             : ""
+         }
+         ${
+           filter.minAmountSquareMeter
+             ? `${
+                 filter.maxAmountSquareMeter
+                   ? `con ${filter.minAmountSquareMeter}`
+                   : `con ${filter.minAmountSquareMeter} metros cuadrados,`
+               }`
+             : ""
+         }
+         ${
+           filter.maxAmountSquareMeter
+             ? `${
+                 filter.minAmountSquareMeter
+                   ? `-${filter.maxAmountSquareMeter} metros cuadrados,`
+                   : `con hasta ${filter.maxAmountSquareMeter} metros cuadrados,`
+               }`
+             : ""
+         }
+         ${filter.style ? `con estilo ${filter.style}` : ""}`;
+}
+
 export function Recommendations({
   recommendationNumber,
 }: RecommendationsProps) {
@@ -69,7 +145,6 @@ export function Recommendations({
     );
   };
 
-  console.log(Object.keys(properties[recommendationNumber].filter).length);
   return (
     <div>
       {properties[recommendationNumber] &&
@@ -79,11 +154,8 @@ export function Recommendations({
             <div className={styles.propertyList}>
               <div>
                 <h2 style={{ margin: "0px" }}>
-                  Como guardaste{" "}
-                  <a onClick={handleOpen} className={styles.filter_hover}>
-                    estos filtros
-                  </a>{" "}
-                  y te gustó{" "}
+                  {filterCreation(properties[recommendationNumber].filter)}y te
+                  gustó{" "}
                   <a
                     href={urls.viewProperty.byId(
                       properties[recommendationNumber].liked.id
