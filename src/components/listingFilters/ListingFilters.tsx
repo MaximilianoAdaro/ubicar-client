@@ -1,6 +1,7 @@
 import styles from "./ListingFilters.module.scss";
 import React, { useMemo, useCallback, useState } from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import {
   Button,
   CircularProgress,
@@ -13,7 +14,14 @@ import {
 } from "@material-ui/core";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import { Dropdown } from "react-bootstrap";
-import { StyleDTO, GetTypesUsingGET200Item } from "../../api";
+import {
+  StyleDTO,
+  GetTypesUsingGET200Item,
+  useEditUserUsingPUT,
+  getGetLoggedUsingGETQueryKey,
+  useSaveFiltersUsingPOST,
+  useGetLoggedUsingGET,
+} from "../../api";
 import { useHistory, useLocation } from "react-router-dom";
 import QueryString from "query-string";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
@@ -21,6 +29,8 @@ import { selectOption, selectSearchBar } from "../../store/slices/session";
 import { convertCoordinates } from "../Map/utils";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { MapView } from "../../store/slices/map/mapSlice";
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 
 const parseIntOrUndefined = (n: string) => (n !== "" ? parseInt(n) : undefined);
 
@@ -39,7 +49,7 @@ const StyledButton = withStyles({
     paddingLeft: "0.7em",
     paddingRight: "0.7em",
     textTransform: "none",
-    marginLeft: "1.5rem",
+    marginLeft: "1.4rem",
     border: "2px solid rgba(0,0,0,0.7)",
     color: "rgba(0,0,0,0.7)",
     background: "rgb(255,255,255,0.9)",
@@ -56,6 +66,8 @@ export function ListingFilters({
   setZoom,
   setView,
 }: ListingFiltersProp) {
+  const { data: user } = useGetLoggedUsingGET();
+
   const [anchorSale, setAnchorSale] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -243,10 +255,44 @@ export function ListingFilters({
     return "";
   };
 
-  function saveFilters() {
-    //save filters logic
-    console.log(query);
-  }
+  const saveFilters = async () => {
+    try {
+      await mutateAsync({
+        // @ts-ignore
+        data: { query },
+      });
+    } catch (e) {
+      throw Error;
+    }
+  };
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useSaveFiltersUsingPOST({
+    mutation: {
+      onSuccess() {
+        queryClient.invalidateQueries(getGetLoggedUsingGETQueryKey());
+        toast.success(" ✅ Filtros guardados!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+      onError() {
+        toast.error(" ❌ Error en el guardado de filtros!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+    },
+  });
 
   return (
     <div>
@@ -256,7 +302,7 @@ export function ListingFilters({
             <Autocomplete
               id="asyncState"
               size={"small"}
-              style={{ width: "300px" }}
+              style={{ width: "350px" }}
               open={open}
               defaultValue={search}
               onChange={(e, value) => {
@@ -434,9 +480,13 @@ export function ListingFilters({
             - Filtros Geoespaciales
           </StyledButton>
         )}
-        {location.search.length > 0 && (
-          <StyledButton size="small" onClick={saveFilters}>
-            Guardar Filtros
+        {location.search.length > 0 && user && (
+          <StyledButton
+            size="small"
+            style={{ paddingLeft: "0.3em" }}
+            onClick={saveFilters}
+          >
+            <BookmarkBorderIcon /> Guardar Filtros
           </StyledButton>
         )}
 
@@ -451,7 +501,7 @@ export function ListingFilters({
             paddingBottom: "12px",
             backgroundColor: "rgba(66, 158, 166, 0.2)",
             textAlign: "right",
-            paddingRight: "40px",
+            paddingRight: "58px",
           }}
         >
           <StyledButton
