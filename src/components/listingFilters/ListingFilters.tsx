@@ -17,7 +17,6 @@ import { Dropdown } from "react-bootstrap";
 import {
   StyleDTO,
   GetTypesUsingGET200Item,
-  useEditUserUsingPUT,
   getGetLoggedUsingGETQueryKey,
   useSaveFiltersUsingPOST,
   useGetLoggedUsingGET,
@@ -25,7 +24,7 @@ import {
 import { useHistory, useLocation } from "react-router-dom";
 import QueryString from "query-string";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
-import { selectOption, selectSearchBar } from "../../store/slices/session";
+import { selectOption } from "../../store/slices/session";
 import { convertCoordinates } from "../Map/utils";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { MapView } from "../../store/slices/map/mapSlice";
@@ -100,7 +99,7 @@ export function ListingFilters({
   const [distanceSubway, setDistanceSubway] =
     React.useState<HTMLButtonElement | null>(null);
 
-  const [unsavedFilters, setUnsavedFilters] = React.useState<boolean>(false);
+  const [unsavedFilters, setUnsavedFilters] = React.useState<boolean>(true);
 
   const openSalePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorSale(event.currentTarget);
@@ -397,7 +396,7 @@ export function ListingFilters({
           size="small"
           onClick={openRoomsPopover}
           style={
-            query.minAmountRoom
+            query.minAmountRoom || query.maxAmountRoom
               ? {
                   background: "rgba(255, 64, 0, 0.25)",
                   border: "2px solid #FF4000",

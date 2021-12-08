@@ -4,7 +4,6 @@ import { Grid, List, ListItem, Popover, Typography } from "@material-ui/core";
 import { useGetRecommendations } from "../../../api";
 import { PropretyCardMyFavorites } from "./PropertyCardMyFavorites";
 import { urls } from "../../../constants";
-import { Button } from "@mui/material";
 
 export function MyRecommendations() {
   const { data } = useGetRecommendations();
@@ -12,11 +11,83 @@ export function MyRecommendations() {
     React.useState<HTMLButtonElement | null>(null);
   if (!data) return <h1>Loading...</h1>;
 
-  const openFilterPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorFilter(event.currentTarget);
-  };
+  function filterCreation(filter: any) {
+    return `Por que guardaste
+         ${
+           filter.typeProperty
+             ? `${
+                 filter.typeProperty === "Casa" ? "una" : "un"
+               } ${filter.typeProperty.toLowerCase()}`
+             : "una propiedad"
+         }
+         ${
+           filter.condition
+             ? `en ${filter.condition === "SALE" ? "venta" : "alquiler"}`
+             : ""
+         }
+         ${
+           filter.minPrice
+             ? `${
+                 filter.maxPrice
+                   ? `con precios entre U$D${filter.minPrice}`
+                   : `con precio desde U$D${filter.minPrice},`
+               }`
+             : ""
+         }
+         ${
+           filter.maxPrice
+             ? `${
+                 filter.minPrice
+                   ? `y U$D${filter.maxPrice},`
+                   : `con precio hasta U$D${filter.maxPrice},`
+               }`
+             : ""
+         }
+         ${
+           filter.minAmountBathroom
+             ? ` con más de ${filter.minAmountBathroom} baños, `
+             : ""
+         }
+         ${
+           filter.minAmountRoom
+             ? `${
+                 filter.maxAmountRoom
+                   ? `con ${filter.minAmountRoom}`
+                   : `con ${filter.minAmountRoom} ambientes,`
+               }`
+             : ""
+         }
+         ${
+           filter.maxAmountRoom
+             ? `${
+                 filter.minAmountRoom
+                   ? `- ${filter.maxAmountRoom} ambientes,`
+                   : ` con hasta ${filter.maxAmountRoom} ambientes,`
+               }`
+             : ""
+         }
+         ${
+           filter.minAmountSquareMeter
+             ? `${
+                 filter.maxAmountSquareMeter
+                   ? `con ${filter.minAmountSquareMeter}`
+                   : `con ${filter.minAmountSquareMeter} metros cuadrados,`
+               }`
+             : ""
+         }
+         ${
+           filter.maxAmountSquareMeter
+             ? `${
+                 filter.minAmountSquareMeter
+                   ? `-${filter.maxAmountSquareMeter} metros cuadrados,`
+                   : `con hasta ${filter.maxAmountSquareMeter} metros cuadrados,`
+               }`
+             : ""
+         }
+         ${filter.style ? `con estilo ${filter.style}` : ""}`;
+  }
 
-  console.log(Object.entries(data[0].filter));
+  console.log(data);
   return (
     <div className={styles.recommendation_div}>
       <Grid>
@@ -30,23 +101,30 @@ export function MyRecommendations() {
           {data[0].properties.length > 0 ? (
             <div>
               <h3>
-                Como guardaste
-                <Button
-                  onClick={openFilterPopover}
-                  style={{
-                    textTransform: "none",
-                    paddingBottom: "0",
-                    color: "#007bff",
-                  }}
-                >
-                  <h3>estos filtros</h3>
-                </Button>{" "}
-                y te gusto{" "}
-                <a href={urls.viewProperty.byId(data[0].liked.id)}>
+                {filterCreation(data[0].filter)}y te gusto{" "}
+                <a href={urls.viewProperty.byId(data[1].liked.id)}>
                   {" "}
                   esta propiedad
                 </a>{" "}
                 te recomendamos:
+                {/*Como guardaste*/}
+                {/*<Button*/}
+                {/*  onClick={openFilterPopover}*/}
+                {/*  style={{*/}
+                {/*    textTransform: "none",*/}
+                {/*    paddingBottom: "0",*/}
+                {/*    color: "#007bff",*/}
+                {/*    fontWeight:"bold"*/}
+                {/*  }}*/}
+                {/*>*/}
+                {/*  <h3>estos filtros</h3>*/}
+                {/*</Button>{" "}*/}
+                {/*y te gusto{" "}*/}
+                {/*<a href={urls.viewProperty.byId(data[0].liked.id)}>*/}
+                {/*  {" "}*/}
+                {/*  esta propiedad*/}
+                {/*</a>{" "}*/}
+                {/*te recomendamos:*/}
               </h3>
               <List
                 style={{
@@ -83,7 +161,7 @@ export function MyRecommendations() {
           {data[1].properties.length > 0 ? (
             <div>
               <h3>
-                Como te gusto{" "}
+                {filterCreation(data[1].filter)}y te gusto{" "}
                 <a href={urls.viewProperty.byId(data[1].liked.id)}>
                   {" "}
                   esta propiedad
@@ -125,12 +203,18 @@ export function MyRecommendations() {
           {data[2].properties.length > 0 ? (
             <div>
               <h3>
-                Como te gusto{" "}
-                <a href={urls.viewProperty.byId(data[2].liked.id)}>
+                {filterCreation(data[2].filter)}y te gusto{" "}
+                <a href={urls.viewProperty.byId(data[1].liked.id)}>
                   {" "}
                   esta propiedad
                 </a>{" "}
                 te recomendamos:
+                {/*Como te gusto{" "}*/}
+                {/*<a href={urls.viewProperty.byId(data[2].liked.id)}>*/}
+                {/*  {" "}*/}
+                {/*  esta propiedad*/}
+                {/*</a>{" "}*/}
+                {/*te recomendamos:*/}
               </h3>
               <List
                 style={{
