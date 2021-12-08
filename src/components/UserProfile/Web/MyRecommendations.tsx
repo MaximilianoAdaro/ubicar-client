@@ -1,13 +1,19 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
 import { Grid, List, ListItem } from "@material-ui/core";
-import { useGetAllRecentlyViewedPropertiesUsingGET } from "../../../api";
+import {
+  useGetAllRecentlyViewedPropertiesUsingGET,
+  useGetRecommendations,
+} from "../../../api";
 import { PropretyCardMyFavorites } from "./PropertyCardMyFavorites";
 
 export function MyRecommendations() {
-  const data = useGetAllRecentlyViewedPropertiesUsingGET();
+  const { data } = useGetRecommendations();
+  console.log(data);
+  if (!data) return <h1>Loading...</h1>;
+
   return (
-    <div className={styles.personalDataMainDiv}>
+    <div className={styles.recommendation_div}>
       <Grid>
         <p>
           Aqui puedes ver propiedades recomendadas en base a tus últimas
@@ -15,8 +21,8 @@ export function MyRecommendations() {
         </p>
       </Grid>
       <Grid>
-        <Grid>
-          {data.status === "success" && data?.data.length > 0 ? (
+        <Grid className={styles.recommendation_first_list}>
+          {data[0].properties.length > 0 ? (
             <div>
               <h3>Propiedades recomendadas</h3>
               <List
@@ -28,10 +34,79 @@ export function MyRecommendations() {
                   margin: "0",
                 }}
               >
-                {data?.data
-                  .slice(0, 5)
-                  .filter((casa) => casa.step == 7)
-                  .map((casa) => (
+                {data[0]?.properties
+                  .filter((casa: any) => casa.step == 7)
+                  .map((casa: any) => (
+                    <ListItem
+                      className={styles.user_profile_favorites_recently_list}
+                    >
+                      <PropretyCardMyFavorites
+                        key={casa.id}
+                        house={casa}
+                        from={"properties"}
+                        state={""}
+                      />
+                    </ListItem>
+                  ))}
+              </List>
+            </div>
+          ) : (
+            <h5 style={{ color: "gray" }}>
+              No tenemos recomendaciones para usted.
+            </h5>
+          )}
+        </Grid>
+        <Grid className={styles.recommendation_second_list}>
+          {data[0].properties.length > 0 ? (
+            <div>
+              <h3>Propiedades recomendadas</h3>
+              <List
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  padding: 0,
+                  overflow: "auto",
+                  margin: "0",
+                }}
+              >
+                {data[0]?.properties
+                  .filter((casa: any) => casa.step == 7)
+                  .map((casa: any) => (
+                    <ListItem
+                      className={styles.user_profile_favorites_recently_list}
+                    >
+                      <PropretyCardMyFavorites
+                        key={casa.id}
+                        house={casa}
+                        from={"properties"}
+                        state={""}
+                      />
+                    </ListItem>
+                  ))}
+              </List>
+            </div>
+          ) : (
+            <h5 style={{ color: "gray" }}>
+              No tenemos recomendaciones para usted.
+            </h5>
+          )}
+        </Grid>
+        <Grid className={styles.recommendation_first_list}>
+          {data[0].properties.length > 0 ? (
+            <div>
+              <h3>Propiedades recomendadas</h3>
+              <List
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  padding: 0,
+                  overflow: "auto",
+                  margin: "0",
+                }}
+              >
+                {data[0]?.properties
+                  .filter((casa: any) => casa.step == 7)
+                  .map((casa: any) => (
                     <ListItem
                       className={styles.user_profile_favorites_recently_list}
                     >

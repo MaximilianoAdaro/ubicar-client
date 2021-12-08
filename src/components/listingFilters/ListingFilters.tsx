@@ -243,6 +243,11 @@ export function ListingFilters({
     return "";
   };
 
+  function saveFilters() {
+    //save filters logic
+    console.log(query);
+  }
+
   return (
     <div>
       <Grid container className={styles.OptionsFilters}>
@@ -251,7 +256,7 @@ export function ListingFilters({
             <Autocomplete
               id="asyncState"
               size={"small"}
-              style={{ width: "500px" }}
+              style={{ width: "300px" }}
               open={open}
               defaultValue={search}
               onChange={(e, value) => {
@@ -427,6 +432,11 @@ export function ListingFilters({
         {additionalFilters && (
           <StyledButton size="small" onClick={hideAdditional}>
             - Filtros Geoespaciales
+          </StyledButton>
+        )}
+        {location.search.length > 0 && (
+          <StyledButton size="small" onClick={saveFilters}>
+            Guardar Filtros
           </StyledButton>
         )}
 
