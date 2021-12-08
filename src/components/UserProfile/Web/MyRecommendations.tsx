@@ -1,15 +1,22 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
-import { Grid, List, ListItem } from "@material-ui/core";
+import { Grid, List, ListItem, Popover, Typography } from "@material-ui/core";
 import { useGetRecommendations } from "../../../api";
 import { PropretyCardMyFavorites } from "./PropertyCardMyFavorites";
 import { urls } from "../../../constants";
+import { Button } from "@mui/material";
 
 export function MyRecommendations() {
   const { data } = useGetRecommendations();
-  console.log(data);
+  const [anchorFilter, setAnchorFilter] =
+    React.useState<HTMLButtonElement | null>(null);
   if (!data) return <h1>Loading...</h1>;
 
+  const openFilterPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorFilter(event.currentTarget);
+  };
+
+  console.log(Object.entries(data[0].filter));
   return (
     <div className={styles.recommendation_div}>
       <Grid>
@@ -23,7 +30,18 @@ export function MyRecommendations() {
           {data[0].properties.length > 0 ? (
             <div>
               <h3>
-                Como te gusto{" "}
+                Como guardaste
+                <Button
+                  onClick={openFilterPopover}
+                  style={{
+                    textTransform: "none",
+                    paddingBottom: "0",
+                    color: "#007bff",
+                  }}
+                >
+                  <h3>estos filtros</h3>
+                </Button>{" "}
+                y te gusto{" "}
                 <a href={urls.viewProperty.byId(data[0].liked.id)}>
                   {" "}
                   esta propiedad
@@ -146,6 +164,26 @@ export function MyRecommendations() {
           )}
         </Grid>
       </Grid>
+      <Popover
+        style={{ marginTop: "5px", borderRadius: "5px" }}
+        open={Boolean(anchorFilter)}
+        anchorEl={anchorFilter}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        onClose={() => setAnchorFilter(null)}
+      >
+        <List style={{ padding: "1em" }}>
+          {Object.entries(data[0].filter).map(([key, value]) => (
+            <Typography>{value !== null && `${key} : ${value}`}</Typography>
+          ))}
+        </List>
+      </Popover>
     </div>
   );
 }
