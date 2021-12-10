@@ -24,7 +24,7 @@ import {
 import { useHistory, useLocation } from "react-router-dom";
 import QueryString from "query-string";
 import { actions, useAppDispatch, useAppSelector } from "../../store";
-import { selectOption } from "../../store/slices/session";
+import { selectOption, selectSearchBar } from "../../store/slices/session";
 import { convertCoordinates } from "../Map/utils";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { MapView } from "../../store/slices/map/mapSlice";
@@ -257,17 +257,50 @@ export function ListingFilters({
     return "";
   };
 
+  const checkNotUndefined = (value: any) => {
+    return value ? value : null;
+  };
+
+  const bar = useAppSelector(selectSearchBar);
+
+  const body = {
+    condition: checkNotUndefined(query.condition),
+    typeProperty: checkNotUndefined(query.typeProperty),
+    minPrice: parseFloat(checkNotUndefined(query.minPrice)),
+    maxPrice: parseFloat(checkNotUndefined(query.maxPrice)),
+    style: checkNotUndefined(query.style),
+    minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
+    minAmountRoom: checkNotUndefined(query.minAmountRoom),
+    maxAmountRoom: checkNotUndefined(query.maxAmountRoom),
+    minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
+    maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
+    minDistanceSchools: checkNotUndefined(query.minDistanceSchools),
+    maxDistanceSchool: checkNotUndefined(query.maxDistanceSchool),
+    minDistanceUniversity: checkNotUndefined(query.minDistanceUniversity),
+    maxDistanceUniversity: checkNotUndefined(query.maxDistanceUniversity),
+    minDistanceHospital: checkNotUndefined(query.minDistanceHospital),
+    maxDistanceHospital: checkNotUndefined(query.maxDistanceHospital),
+    minDistanceFireStation: checkNotUndefined(query.minDistanceFireStation),
+    maxDistanceFireStation: checkNotUndefined(query.maxDistanceFireStation),
+    minDistancePenitentiary: checkNotUndefined(query.minDistancePenitentiary),
+    maxDistanceCommissary: checkNotUndefined(query.maxDistanceCommissary),
+    minDistanceSubway: checkNotUndefined(query.minDistanceSubway),
+    maxDistanceSubway: checkNotUndefined(query.maxDistanceSubway),
+    location: checkNotUndefined(bar),
+  };
+
   const saveFilters = async () => {
     try {
       await mutateAsync({
         // @ts-ignore
-        data: query,
+        data: body,
       });
       setUnsavedFilters(false);
     } catch (e) {
       throw Error;
     }
   };
+
   const queryClient = useQueryClient();
   const { mutateAsync } = useSaveFiltersUsingPOST({
     mutation: {
