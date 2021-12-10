@@ -13,6 +13,9 @@ type RecommendationsProps = {
   recommendationNumber: number;
 };
 
+export const formatPrice = (price: number) =>
+  new Intl.NumberFormat(undefined).format(price);
+
 function filterCreation(filter: any) {
   return `Estas buscando
          ${
@@ -31,8 +34,8 @@ function filterCreation(filter: any) {
            filter.minPrice
              ? `${
                  filter.maxPrice
-                   ? `con precios entre U$D${filter.minPrice}`
-                   : `con precio desde U$D${filter.minPrice},`
+                   ? `con precios entre U$D${formatPrice(filter.minPrice)}`
+                   : `con precio desde U$D${formatPrice(filter.minPrice)},`
                }`
              : ""
          }
@@ -40,8 +43,8 @@ function filterCreation(filter: any) {
            filter.maxPrice
              ? `${
                  filter.minPrice
-                   ? `y U$D${filter.maxPrice},`
-                   : `con precio hasta U$D${filter.maxPrice},`
+                   ? `y U$D${formatPrice(filter.maxPrice)},`
+                   : `con precio hasta U$D${formatPrice(filter.maxPrice)},`
                }`
              : ""
          }
@@ -83,7 +86,7 @@ function filterCreation(filter: any) {
            filter.maxAmountSquareMeter
              ? `${
                  filter.minAmountSquareMeter
-                   ? `-${filter.maxAmountSquareMeter} metros cuadrados,`
+                   ? `- ${filter.maxAmountSquareMeter} metros cuadrados,`
                    : `con hasta ${filter.maxAmountSquareMeter} metros cuadrados,`
                }`
              : ""

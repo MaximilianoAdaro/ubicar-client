@@ -20,6 +20,9 @@ type RecommendationListProps = {
   listNumber: number;
 };
 
+export const formatPrice = (price: number) =>
+  new Intl.NumberFormat(undefined).format(price);
+
 export function RecommendationList({ listNumber }: RecommendationListProps) {
   // console.log(data[listNumber])
   const { data } = useGetRecommendations();
@@ -49,6 +52,93 @@ export function RecommendationList({ listNumber }: RecommendationListProps) {
     onClose: () => void;
   }
 
+  function printThis(key: string) {
+    return filterCreation(key, data[listNumber].filter);
+  }
+
+  function filterCreation(key: any, filter: any) {
+    switch (key) {
+      case "condition":
+        return `${
+          filter.condition
+            ? `Tipo de operacion : ${
+                filter.condition === "Sale" ? "Venta" : "Alquiler"
+              }`
+            : ""
+        }`;
+      case "minAmountBathroom":
+        return `${
+          filter.minAmountBathroom
+            ? `Cantidad de baños: ${filter.minAmountBathroom} o más`
+            : ""
+        }`;
+      case "minAmountRoom":
+        return `${
+          filter.minAmountRoom
+            ? `${
+                filter.maxAmountRoom
+                  ? `Cantidad de habitaciones: ${filter.minAmountRoom}`
+                  : `Cantidad de habitaciones: desde ${filter.minAmountRoom}`
+              }`
+            : ""
+        } ${
+          filter.maxAmountRoom
+            ? `${
+                filter.minAmountRoom
+                  ? ` a ${filter.maxAmountRoom}`
+                  : `Cantidad de habitaciones: hasta ${filter.maxAmountRoom}`
+              }`
+            : ""
+        }`;
+      case "minPrice":
+        return ` ${
+          filter.minPrice
+            ? `${
+                filter.maxPrice
+                  ? `Precio: U$D${formatPrice(filter.minPrice)}`
+                  : `Precio: desde U$D${formatPrice(filter.minPrice)}`
+              }`
+            : ""
+        } ${
+          filter.maxPrice
+            ? `${
+                filter.minPrice
+                  ? ` a U$D${formatPrice(filter.maxPrice)}`
+                  : `Precio: hasta U$D${formatPrice(filter.maxPrice)}`
+              }`
+            : ""
+        }`;
+      case "minAmountSquareMeter":
+        return `${
+          filter.minAmountSquareMeter
+            ? `${
+                filter.maxAmountSquareMeter
+                  ? `Metros cuadrados: ${filter.minAmountSquareMeter}m²`
+                  : `Metros cuadrados: desde ${filter.minAmountSquareMeter}m²`
+              }`
+            : ""
+        } ${
+          filter.maxAmountSquareMeter
+            ? `${
+                filter.minAmountSquareMeter
+                  ? ` a ${filter.maxAmountSquareMeter}m²`
+                  : `Metros cuadrados: hasta ${filter.maxAmountSquareMeter}m²`
+              }`
+            : ""
+        }`;
+    }
+
+    // return `${filter.condition ? `Tipo de operacion : ${filter.condition === 'Sale' ? "En Venta" : "En Alquiler"}`: ""}`
+    // +`${filter.condition ? `Tipo de operacion : ${filter.condition === 'Sale' ? "En Venta" : "En Alquiler"}`: ""}`
+    // return `
+    // ${filter.condition ? `Tipo de operacion : ${filter.condition === 'Sale' ? "En Venta" : "En Alquiler"}`: ""}
+    // ${filter.minAmountBathroom ? `Cantidad de baños: ${filter.minAmountBathroom}` : ""}
+    // ${filter.minAmountRoom ? `${filter.maxAmountRoom ? `Cantidad de habitaciones: ${filter.minAmountRoom}` : `Cantidad de habitaciones: desde ${filter.minAmountRoom}`}` : ""} ${filter.maxAmountRoom ? `${filter.minAmountRoom ? ` a ${filter.maxAmountRoom}` : `Cantidad de habitaciones: hasta ${filter.maxAmountRoom}`}` : ""}
+    // ${filter.minPrice ? `${filter.maxPrice ? `Precio: U$D${filter.minPrice}` : `Precio: desde U$D${filter.minPrice}`}` : ""} ${filter.maxPrice ? `${filter.minPrice ? ` a U$D${filter.maxPrice}` : `Precio: hasta U$D${filter.maxPrice}`}` : ""}
+    // ${filter.minAmountSquareMeter ? `${filter.maxAmountSquareMeter ? `Metros cuadrados: ${filter.minAmountSquareMeter}m²` : `Metros cuadrados: desde ${filter.minAmountSquareMeter}m²`}` : ""} ${filter.maxAmountSquareMeter ? `${filter.minAmountSquareMeter ? ` a ${filter.maxAmountSquareMeter}m²` : `Metros cuadrados: hasta ${filter.maxAmountSquareMeter}m²`}` : ""}
+    // `;
+  }
+
   const BootstrapDialogTitle = (props: DialogTitleProps) => {
     const { children, onClose, ...other } = props;
 
@@ -73,11 +163,17 @@ export function RecommendationList({ listNumber }: RecommendationListProps) {
     );
   };
 
+  console.log(data[listNumber].filter);
+
   return (
     <Grid>
       <div className={styles.propertyList}>
         <h5 style={{ padding: "0 1em 0", fontSize: "1.1em" }}>
-          Por que guardaste <a onClick={handleOpen}>estos filtros</a>y te gusto{" "}
+          Por que guardaste{" "}
+          <a onClick={handleOpen} style={{ color: "#007bff" }}>
+            estos filtros
+          </a>{" "}
+          y te gusto{" "}
           <a href={urls.viewProperty.byId(data[listNumber].liked.id)}>
             esta propidead
           </a>{" "}
@@ -126,9 +222,11 @@ export function RecommendationList({ listNumber }: RecommendationListProps) {
           >
             Filtros
           </BootstrapDialogTitle>
-          <DialogContent dividers>
-            {data[listNumber].filer.map((filter: any) => (
-              <Typography>{filter}</Typography>
+          <DialogContent dividers style={{ padding: "1em" }}>
+            {Object.entries(data[listNumber].filter).map(([key, value]) => (
+              <Typography style={{ marginBottom: "0.75em" }}>
+                {printThis(key)}
+              </Typography>
             ))}
           </DialogContent>
         </BootstrapDialog>
