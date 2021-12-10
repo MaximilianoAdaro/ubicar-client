@@ -11,14 +11,22 @@ import {
 } from "@material-ui/core";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import { Dropdown } from "react-bootstrap";
-import { StyleDTO, GetTypesUsingGET200Item } from "../../../api";
+import {
+  StyleDTO,
+  GetTypesUsingGET200Item,
+  useGetLoggedUsingGET,
+  useSaveFiltersUsingPOST,
+  getGetLoggedUsingGETQueryKey,
+} from "../../../api";
 import { useHistory, useLocation } from "react-router-dom";
 import QueryString from "query-string";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { selectOption } from "../../../store/slices/session";
+import { selectOption, selectSearchBar } from "../../../store/slices/session";
 import { convertCoordinates } from "../../Map/utils";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { MapView } from "../../../store/slices/map/mapSlice";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { useQueryClient } from "react-query";
 
 const parseIntOrUndefined = (n: string) => (n !== "" ? parseInt(n) : undefined);
 
@@ -157,6 +165,8 @@ export function ListingFiltersMobile({
     setDistanceSubway(event.currentTarget);
   };
 
+  const { data: user } = useGetLoggedUsingGET();
+
   const location = useLocation();
   const history = useHistory();
   const search = useAppSelector(selectOption);
@@ -184,6 +194,79 @@ export function ListingFiltersMobile({
     () => QueryString.parse(location.search) as any,
     [location.search]
   );
+
+  const checkNotUndefined = (value: any) => {
+    return value ? value : null;
+  };
+
+  const bar = useAppSelector(selectSearchBar);
+
+  const [unsavedFilters, setUnsavedFilters] = React.useState<boolean>(true);
+
+  const body = {
+    condition: checkNotUndefined(query.condition),
+    typeProperty: checkNotUndefined(query.typeProperty),
+    minPrice: parseFloat(checkNotUndefined(query.minPrice)),
+    maxPrice: parseFloat(checkNotUndefined(query.maxPrice)),
+    style: checkNotUndefined(query.style),
+    minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
+    minAmountRoom: checkNotUndefined(query.minAmountRoom),
+    maxAmountRoom: checkNotUndefined(query.maxAmountRoom),
+    minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
+    maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
+    minDistanceSchools: checkNotUndefined(query.minDistanceSchools),
+    maxDistanceSchool: checkNotUndefined(query.maxDistanceSchool),
+    minDistanceUniversity: checkNotUndefined(query.minDistanceUniversity),
+    maxDistanceUniversity: checkNotUndefined(query.maxDistanceUniversity),
+    minDistanceHospital: checkNotUndefined(query.minDistanceHospital),
+    maxDistanceHospital: checkNotUndefined(query.maxDistanceHospital),
+    minDistanceFireStation: checkNotUndefined(query.minDistanceFireStation),
+    maxDistanceFireStation: checkNotUndefined(query.maxDistanceFireStation),
+    minDistancePenitentiary: checkNotUndefined(query.minDistancePenitentiary),
+    maxDistanceCommissary: checkNotUndefined(query.maxDistanceCommissary),
+    minDistanceSubway: checkNotUndefined(query.minDistanceSubway),
+    maxDistanceSubway: checkNotUndefined(query.maxDistanceSubway),
+    location: checkNotUndefined(bar),
+  };
+
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useSaveFiltersUsingPOST({
+    mutation: {
+      onSuccess() {
+        queryClient.invalidateQueries(getGetLoggedUsingGETQueryKey());
+        // toast.success(" ✅ Filtros guardados!", {
+        //   position: "bottom-center",
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: false,
+        //   draggable: true,
+        //   progress: undefined,
+        // });
+      },
+      onError() {
+        // toast.error(" ❌ Error en el guardado de filtros!", {
+        //   position: "bottom-center",
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: false,
+        //   draggable: true,
+        //   progress: undefined,
+        // });
+      },
+    },
+  });
+  const saveFilters = async () => {
+    try {
+      await mutateAsync({
+        data: body,
+      });
+      setUnsavedFilters(false);
+    } catch (e) {
+      throw Error;
+    }
+  };
 
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([
@@ -234,6 +317,23 @@ export function ListingFiltersMobile({
   return (
     <div>
       <div className={styles.OptionsFilters}>
+        {location.search.length > 0 && user && (
+          <StyledButton
+            size="small"
+            style={
+              !unsavedFilters
+                ? {
+                    background: "rgba(255, 64, 0, 0.25)",
+                    border: "2px solid #FF4000",
+                    color: "#FF4000",
+                  }
+                : {}
+            }
+            onClick={saveFilters}
+          >
+            <BookmarkBorderIcon />
+          </StyledButton>
+        )}
         <StyledButton
           id="buttonForm"
           size="small"
