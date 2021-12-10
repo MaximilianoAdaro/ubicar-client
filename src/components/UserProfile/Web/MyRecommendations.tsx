@@ -46,8 +46,8 @@ export function MyRecommendations() {
            filter.minPrice
              ? `${
                  filter.maxPrice
-                   ? `con precios entre U$D${formatPrice(filter.minPrice)}`
-                   : `con precio desde U$D${formatPrice(filter.minPrice)},`
+                   ? `con precios entre U$D ${formatPrice(filter.minPrice)}`
+                   : `con precio desde U$D ${formatPrice(filter.minPrice)},`
                }`
              : ""
          }
@@ -55,8 +55,8 @@ export function MyRecommendations() {
            filter.maxPrice
              ? `${
                  filter.minPrice
-                   ? `y U$D${formatPrice(filter.maxPrice)},`
-                   : `con precio hasta U$D${formatPrice(filter.maxPrice)},`
+                   ? `y U$D ${formatPrice(filter.maxPrice)},`
+                   : `con precio hasta U$D ${formatPrice(filter.maxPrice)},`
                }`
              : ""
          }
