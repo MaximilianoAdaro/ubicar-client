@@ -1,20 +1,23 @@
 import styles from "./UserProfileMobile.module.scss";
 import React, { useState } from "react";
 import { Button, Grid } from "@material-ui/core";
-import { useGetAllRecentlyViewedPropertiesUsingGET } from "../../../api";
+import {
+  useGetAllRecentlyViewedPropertiesUsingGET,
+  useGetRecommendations,
+} from "../../../api";
 import { Link } from "react-router-dom";
 import { urls } from "../../../constants";
 import { RiArrowLeftSLine } from "react-icons/all";
 import { RecommendationList } from "./RecommendationList";
 
 export function MyRecommendationsMobile() {
-  const data = useGetAllRecentlyViewedPropertiesUsingGET();
+  const { data: properties } = useGetRecommendations();
   const [component, setComponent] = useState(1);
 
   function changeTo(componentNumber: number) {
     setComponent(componentNumber);
   }
-
+  if (!properties) return <h1>Loading...</h1>;
   return (
     <Grid className={styles.user_profile_container}>
       <Grid className={styles.user_profile_title}>
@@ -46,59 +49,44 @@ export function MyRecommendationsMobile() {
         </Grid>
         <Grid className={styles.properties}>
           <Grid container>
-            <Grid xs>
-              <Button onClick={() => changeTo(1)} fullWidth>
-                1
-              </Button>
-            </Grid>
-            <Grid xs>
-              <Button onClick={() => changeTo(2)} fullWidth>
-                2
-              </Button>
-            </Grid>
-            <Grid xs>
-              <Button onClick={() => changeTo(3)} fullWidth>
-                3
-              </Button>
-            </Grid>
+            {properties[0] && (
+              <Grid xs>
+                <Button onClick={() => changeTo(1)} fullWidth>
+                  1
+                </Button>
+              </Grid>
+            )}
+            {properties[1] && (
+              <Grid xs>
+                <Button onClick={() => changeTo(2)} fullWidth>
+                  2
+                </Button>
+              </Grid>
+            )}
+            {properties[2] && (
+              <Grid xs>
+                <Button onClick={() => changeTo(3)} fullWidth>
+                  3
+                </Button>
+              </Grid>
+            )}
           </Grid>
           <Grid>
-            {component === 1 && (
-              <RecommendationList data={data} listNumber={1} />
+            {component === 1 && properties[0] && (
+              <RecommendationList listNumber={0} />
             )}
-            {component === 2 && (
-              <RecommendationList data={data} listNumber={2} />
+            {component === 2 && properties[1] && (
+              <RecommendationList listNumber={1} />
             )}
-            {component === 3 && (
-              <RecommendationList data={data} listNumber={3} />
+            {component === 3 && properties[2] && (
+              <RecommendationList listNumber={2} />
+            )}
+            {properties.length === 0 && (
+              <h5 style={{ marginTop: "1em" }}>
+                No tenemos recomendaciones para vos
+              </h5>
             )}
           </Grid>
-          {/*<div className={styles.propertyList}>*/}
-          {/*  {data.status === "success" && data?.data.length > 0 ? (*/}
-          {/*    <div>*/}
-          {/*      <List>*/}
-          {/*        {data?.data*/}
-          {/*          .slice(0, 5)*/}
-          {/*          .filter((casa) => casa.step == 7)*/}
-          {/*          .map((casa) => (*/}
-          {/*            <ListItem style={{ width: "20em" }}>*/}
-          {/*              <PropretyCardMyFavoritesMobile*/}
-          {/*                key={casa.id}*/}
-          {/*                house={casa}*/}
-          {/*                from={"properties"}*/}
-          {/*                state={""}*/}
-          {/*              />*/}
-          {/*            </ListItem>*/}
-          {/*          ))}*/}
-          {/*      </List>*/}
-          {/*    </div>*/}
-          {/*  ) : (*/}
-          {/*    <h5 style={{ color: "gray" }}>*/}
-          {/*      Empieza likeando propiedades para poder recomendarte*/}
-          {/*      propiedades.*/}
-          {/*    </h5>*/}
-          {/*  )}*/}
-          {/*</div>*/}
         </Grid>
       </Grid>
     </Grid>

@@ -20,6 +20,7 @@ import {
   MostLikedMobile,
   RecentlyViewedMobile,
 } from "../../../components/homePage";
+import { RecommendationsMobile } from "../../../components/homePage/mobile/RecommendationsMobile";
 
 export const HomeMobile = () => {
   const { data: user } = useGetLoggedUsingGET();
@@ -158,6 +159,7 @@ export const HomeMobile = () => {
       <div className={styles.properties} />
 
       {user ? <RecentlyViewedMobile /> : <MostLikedMobile />}
+      {user && <RecommendationsMobile recommendationNumber={0} />}
     </div>
   );
 };

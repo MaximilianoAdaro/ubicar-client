@@ -4,6 +4,7 @@ import { Grid, List, ListItem, Popover, Typography } from "@material-ui/core";
 import { useGetRecommendations } from "../../../api";
 import { PropretyCardMyFavorites } from "./PropertyCardMyFavorites";
 import { urls } from "../../../constants";
+import { Recommendations } from "../../homePage/Recommendations";
 
 export function MyRecommendations() {
   const { data } = useGetRecommendations();
@@ -45,7 +46,9 @@ export function MyRecommendations() {
          }
          ${
            filter.minAmountBathroom
-             ? ` con más de ${filter.minAmountBathroom} baños, `
+             ? ` con más de ${filter.minAmountBathroom} ${
+                 filter.minAmountBathroom === 1 ? "baño" : "baños"
+               }, `
              : ""
          }
          ${
@@ -97,177 +100,155 @@ export function MyRecommendations() {
         </p>
       </Grid>
       <Grid>
-        <Grid className={styles.recommendation_first_list}>
-          {data[0].properties.length > 0 ? (
-            <div>
-              <h3>
-                {filterCreation(data[0].filter)}y te gusto{" "}
-                <a href={urls.viewProperty.byId(data[1].liked.id)}>
-                  {" "}
-                  esta propiedad
-                </a>{" "}
-                te recomendamos:
-                {/*Como guardaste*/}
-                {/*<Button*/}
-                {/*  onClick={openFilterPopover}*/}
-                {/*  style={{*/}
-                {/*    textTransform: "none",*/}
-                {/*    paddingBottom: "0",*/}
-                {/*    color: "#007bff",*/}
-                {/*    fontWeight:"bold"*/}
-                {/*  }}*/}
-                {/*>*/}
-                {/*  <h3>estos filtros</h3>*/}
-                {/*</Button>{" "}*/}
-                {/*y te gusto{" "}*/}
-                {/*<a href={urls.viewProperty.byId(data[0].liked.id)}>*/}
-                {/*  {" "}*/}
-                {/*  esta propiedad*/}
-                {/*</a>{" "}*/}
-                {/*te recomendamos:*/}
-              </h3>
-              <List
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  padding: 0,
-                  overflow: "auto",
-                  margin: "0",
-                }}
-              >
-                {data[0]?.properties
-                  .filter((casa: any) => casa.step == 7)
-                  .map((casa: any) => (
-                    <ListItem
-                      className={styles.user_profile_favorites_recently_list}
-                    >
-                      <PropretyCardMyFavorites
-                        key={casa.id}
-                        house={casa}
-                        from={"properties"}
-                        state={""}
-                      />
-                    </ListItem>
-                  ))}
-              </List>
-            </div>
-          ) : (
+        {data.length > 0 ? (
+          <Grid>
+            <Recommendations recommendationNumber={0} />
+            <Recommendations recommendationNumber={1} />
+            <Recommendations recommendationNumber={2} />
+          </Grid>
+        ) : (
+          <Grid>
             <h5 style={{ color: "gray" }}>
-              No tenemos recomendaciones para usted.
+              No tenemos propiedades recomendadas para ti.
             </h5>
-          )}
-        </Grid>
-        <Grid className={styles.recommendation_second_list}>
-          {data[1].properties.length > 0 ? (
-            <div>
-              <h3>
-                {filterCreation(data[1].filter)}y te gusto{" "}
-                <a href={urls.viewProperty.byId(data[1].liked.id)}>
-                  {" "}
-                  esta propiedad
-                </a>{" "}
-                te recomendamos:
-              </h3>
-              <List
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  padding: 0,
-                  overflow: "auto",
-                  margin: "0",
-                }}
-              >
-                {data[1]?.properties
-                  .filter((casa: any) => casa.step == 7)
-                  .map((casa: any) => (
-                    <ListItem
-                      className={styles.user_profile_favorites_recently_list}
-                    >
-                      <PropretyCardMyFavorites
-                        key={casa.id}
-                        house={casa}
-                        from={"properties"}
-                        state={""}
-                      />
-                    </ListItem>
-                  ))}
-              </List>
-            </div>
-          ) : (
-            <h5 style={{ color: "gray" }}>
-              No tenemos recomendaciones para usted.
-            </h5>
-          )}
-        </Grid>
-        <Grid className={styles.recommendation_first_list}>
-          {data[2].properties.length > 0 ? (
-            <div>
-              <h3>
-                {filterCreation(data[2].filter)}y te gusto{" "}
-                <a href={urls.viewProperty.byId(data[1].liked.id)}>
-                  {" "}
-                  esta propiedad
-                </a>{" "}
-                te recomendamos:
-                {/*Como te gusto{" "}*/}
-                {/*<a href={urls.viewProperty.byId(data[2].liked.id)}>*/}
-                {/*  {" "}*/}
-                {/*  esta propiedad*/}
-                {/*</a>{" "}*/}
-                {/*te recomendamos:*/}
-              </h3>
-              <List
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  padding: 0,
-                  overflow: "auto",
-                  margin: "0",
-                }}
-              >
-                {data[2]?.properties
-                  .filter((casa: any) => casa.step == 7)
-                  .map((casa: any) => (
-                    <ListItem
-                      className={styles.user_profile_favorites_recently_list}
-                    >
-                      <PropretyCardMyFavorites
-                        key={casa.id}
-                        house={casa}
-                        from={"properties"}
-                        state={""}
-                      />
-                    </ListItem>
-                  ))}
-              </List>
-            </div>
-          ) : (
-            <h5 style={{ color: "gray" }}>
-              No tenemos recomendaciones para usted.
-            </h5>
-          )}
-        </Grid>
+          </Grid>
+        )}
+        {/*<Recommendations recommendationNumber={0} />*/}
+        {/*<Recommendations recommendationNumber={1} />*/}
+        {/*<Recommendations recommendationNumber={2} />*/}
+        {/*<Grid className={styles.recommendation_first_list}>*/}
+        {/*  {data[0].properties.length > 0 ? (*/}
+        {/*    <div>*/}
+        {/*      <h3>*/}
+        {/*        {filterCreation(data[0].filter)}y te gusto{" "}*/}
+        {/*        <a href={urls.viewProperty.byId(data[1].liked.id)}>*/}
+        {/*          {" "}*/}
+        {/*          esta propiedad*/}
+        {/*        </a>{" "}*/}
+        {/*        te recomendamos:*/}
+        {/*      </h3>*/}
+        {/*      <List*/}
+        {/*        style={{*/}
+        {/*          display: "flex",*/}
+        {/*          flexDirection: "row",*/}
+        {/*          padding: 0,*/}
+        {/*          overflow: "auto",*/}
+        {/*          margin: "0",*/}
+        {/*        }}*/}
+        {/*      >*/}
+        {/*        {data[0]?.properties*/}
+        {/*          .filter((casa: any) => casa.step == 7)*/}
+        {/*          .map((casa: any) => (*/}
+        {/*            <ListItem*/}
+        {/*              className={styles.user_profile_favorites_recently_list}*/}
+        {/*            >*/}
+        {/*              <PropretyCardMyFavorites*/}
+        {/*                key={casa.id}*/}
+        {/*                house={casa}*/}
+        {/*                from={"properties"}*/}
+        {/*                state={""}*/}
+        {/*              />*/}
+        {/*            </ListItem>*/}
+        {/*          ))}*/}
+        {/*      </List>*/}
+        {/*    </div>*/}
+        {/*  ) : (*/}
+        {/*    <h5 style={{ color: "gray" }}>*/}
+        {/*      No tenemos recomendaciones para usted.*/}
+        {/*    </h5>*/}
+        {/*  )}*/}
+        {/*</Grid>*/}
+        {/*<Grid className={styles.recommendation_second_list}>*/}
+        {/*  {data[1].properties.length > 0 ? (*/}
+        {/*    <div>*/}
+        {/*      <h3>*/}
+        {/*        {filterCreation(data[1].filter)}y te gusto{" "}*/}
+        {/*        <a href={urls.viewProperty.byId(data[1].liked.id)}>*/}
+        {/*          {" "}*/}
+        {/*          esta propiedad*/}
+        {/*        </a>{" "}*/}
+        {/*        te recomendamos:*/}
+        {/*      </h3>*/}
+        {/*      <List*/}
+        {/*        style={{*/}
+        {/*          display: "flex",*/}
+        {/*          flexDirection: "row",*/}
+        {/*          padding: 0,*/}
+        {/*          overflow: "auto",*/}
+        {/*          margin: "0",*/}
+        {/*        }}*/}
+        {/*      >*/}
+        {/*        {data[1]?.properties*/}
+        {/*          .filter((casa: any) => casa.step == 7)*/}
+        {/*          .map((casa: any) => (*/}
+        {/*            <ListItem*/}
+        {/*              className={styles.user_profile_favorites_recently_list}*/}
+        {/*            >*/}
+        {/*              <PropretyCardMyFavorites*/}
+        {/*                key={casa.id}*/}
+        {/*                house={casa}*/}
+        {/*                from={"properties"}*/}
+        {/*                state={""}*/}
+        {/*              />*/}
+        {/*            </ListItem>*/}
+        {/*          ))}*/}
+        {/*      </List>*/}
+        {/*    </div>*/}
+        {/*  ) : (*/}
+        {/*    <h5 style={{ color: "gray" }}>*/}
+        {/*      No tenemos recomendaciones para usted.*/}
+        {/*    </h5>*/}
+        {/*  )}*/}
+        {/*</Grid>*/}
+        {/*<Grid className={styles.recommendation_first_list}>*/}
+        {/*  {data[2].properties.length > 0 ? (*/}
+        {/*    <div>*/}
+        {/*      <h3>*/}
+        {/*        {filterCreation(data[2].filter)}y te gusto{" "}*/}
+        {/*        <a href={urls.viewProperty.byId(data[1].liked.id)}>*/}
+        {/*          {" "}*/}
+        {/*          esta propiedad*/}
+        {/*        </a>{" "}*/}
+        {/*        te recomendamos:*/}
+        {/*        /!*Como te gusto{" "}*!/*/}
+        {/*        /!*<a href={urls.viewProperty.byId(data[2].liked.id)}>*!/*/}
+        {/*        /!*  {" "}*!/*/}
+        {/*        /!*  esta propiedad*!/*/}
+        {/*        /!*</a>{" "}*!/*/}
+        {/*        /!*te recomendamos:*!/*/}
+        {/*      </h3>*/}
+        {/*      <List*/}
+        {/*        style={{*/}
+        {/*          display: "flex",*/}
+        {/*          flexDirection: "row",*/}
+        {/*          padding: 0,*/}
+        {/*          overflow: "auto",*/}
+        {/*          margin: "0",*/}
+        {/*        }}*/}
+        {/*      >*/}
+        {/*        {data[2]?.properties*/}
+        {/*          .filter((casa: any) => casa.step == 7)*/}
+        {/*          .map((casa: any) => (*/}
+        {/*            <ListItem*/}
+        {/*              className={styles.user_profile_favorites_recently_list}*/}
+        {/*            >*/}
+        {/*              <PropretyCardMyFavorites*/}
+        {/*                key={casa.id}*/}
+        {/*                house={casa}*/}
+        {/*                from={"properties"}*/}
+        {/*                state={""}*/}
+        {/*              />*/}
+        {/*            </ListItem>*/}
+        {/*          ))}*/}
+        {/*      </List>*/}
+        {/*    </div>*/}
+        {/*  ) : (*/}
+        {/*    <h5 style={{ color: "gray" }}>*/}
+        {/*      No tenemos recomendaciones para usted.*/}
+        {/*    </h5>*/}
+        {/*  )}*/}
+        {/*</Grid>*/}
       </Grid>
-      <Popover
-        style={{ marginTop: "5px", borderRadius: "5px" }}
-        open={Boolean(anchorFilter)}
-        anchorEl={anchorFilter}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-        onClose={() => setAnchorFilter(null)}
-      >
-        <List style={{ padding: "1em" }}>
-          {Object.entries(data[0].filter).map(([key, value]) => (
-            <Typography>{value !== null && `${key} : ${value}`}</Typography>
-          ))}
-        </List>
-      </Popover>
     </div>
   );
 }

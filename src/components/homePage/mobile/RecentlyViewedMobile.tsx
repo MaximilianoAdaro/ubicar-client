@@ -64,44 +64,6 @@ export function RecentlyViewedMobile() {
                 )}
               </div>
             </div>
-            <div className={styles.propertyList}>
-              <h4 className={styles.title}>Propiedades recomendadas</h4>
-              <div className={styles.propertyCard}>
-                {properties?.slice(0, 4).map((casa) => (
-                  <div
-                    onClick={() =>
-                      history.push(urls.viewProperty.byId(casa.id))
-                    }
-                  >
-                    <HouseCardMobile
-                      key={casa.id}
-                      house={casa}
-                      isLarge={true}
-                      // from={"properties"}
-                      // state={""}
-                    />
-                  </div>
-                ))}
-                {properties && (
-                  <Grid>
-                    <Button
-                      style={{
-                        justifyContent: "left",
-                        textTransform: "none",
-                        marginBottom: "0.5em",
-                        paddingTop: "0",
-                      }}
-                      onClick={() =>
-                        history.push(urls.userProfile.recommendations)
-                      }
-                    >
-                      Ver más
-                      <RiArrowRightSLine style={{ marginTop: "0.2em" }} />
-                    </Button>
-                  </Grid>
-                )}
-              </div>
-            </div>
           </Grid>
         </div>
       ) : (
