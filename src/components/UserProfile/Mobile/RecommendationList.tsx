@@ -52,6 +52,21 @@ export function RecommendationList({ listNumber }: RecommendationListProps) {
     onClose: () => void;
   }
 
+  function getLocation(location: string) {
+    const array = location.split(", ");
+    const arrayInter = array[0].split(" ");
+    if (arrayInter.length > 1) {
+      return (
+        arrayInter[0][0].toUpperCase() +
+        arrayInter[0].substr(1, arrayInter[0].length) +
+        " " +
+        arrayInter[1][0].toUpperCase() +
+        arrayInter[1].substr(1, arrayInter[1].length)
+      );
+    } else
+      return array[0][0].toUpperCase() + array[0].substr(1, array[0].length);
+  }
+
   function printThis(key: string) {
     return filterCreation(key, data[listNumber].filter);
   }
@@ -126,17 +141,13 @@ export function RecommendationList({ listNumber }: RecommendationListProps) {
               }`
             : ""
         }`;
+      case "location":
+        return `${
+          filter.location ? `Ciudad: ${getLocation(filter.location)} ` : ""
+        }`;
+      case "style":
+        return `${filter.style ? `Estilo: ${filter.style},` : ""}`;
     }
-
-    // return `${filter.condition ? `Tipo de operacion : ${filter.condition === 'Sale' ? "En Venta" : "En Alquiler"}`: ""}`
-    // +`${filter.condition ? `Tipo de operacion : ${filter.condition === 'Sale' ? "En Venta" : "En Alquiler"}`: ""}`
-    // return `
-    // ${filter.condition ? `Tipo de operacion : ${filter.condition === 'Sale' ? "En Venta" : "En Alquiler"}`: ""}
-    // ${filter.minAmountBathroom ? `Cantidad de baños: ${filter.minAmountBathroom}` : ""}
-    // ${filter.minAmountRoom ? `${filter.maxAmountRoom ? `Cantidad de habitaciones: ${filter.minAmountRoom}` : `Cantidad de habitaciones: desde ${filter.minAmountRoom}`}` : ""} ${filter.maxAmountRoom ? `${filter.minAmountRoom ? ` a ${filter.maxAmountRoom}` : `Cantidad de habitaciones: hasta ${filter.maxAmountRoom}`}` : ""}
-    // ${filter.minPrice ? `${filter.maxPrice ? `Precio: U$D${filter.minPrice}` : `Precio: desde U$D${filter.minPrice}`}` : ""} ${filter.maxPrice ? `${filter.minPrice ? ` a U$D${filter.maxPrice}` : `Precio: hasta U$D${filter.maxPrice}`}` : ""}
-    // ${filter.minAmountSquareMeter ? `${filter.maxAmountSquareMeter ? `Metros cuadrados: ${filter.minAmountSquareMeter}m²` : `Metros cuadrados: desde ${filter.minAmountSquareMeter}m²`}` : ""} ${filter.maxAmountSquareMeter ? `${filter.minAmountSquareMeter ? ` a ${filter.maxAmountSquareMeter}m²` : `Metros cuadrados: hasta ${filter.maxAmountSquareMeter}m²`}` : ""}
-    // `;
   }
 
   const BootstrapDialogTitle = (props: DialogTitleProps) => {
