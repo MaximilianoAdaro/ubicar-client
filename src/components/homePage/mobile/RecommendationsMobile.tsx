@@ -164,7 +164,7 @@ export function RecommendationsMobile({
         <div className={styles.personalDataMainDiv}>
           <Grid className={styles.properties}>
             <div className={styles.propertyList}>
-              <h4 className={styles.title}>Propiedades vistas recientemente</h4>
+              <h4 className={styles.title}>Propiedades recomendadas</h4>
               <div className={styles.propertyCard}>
                 {properties[recommendationNumber]?.properties
                   .slice(0, 4)

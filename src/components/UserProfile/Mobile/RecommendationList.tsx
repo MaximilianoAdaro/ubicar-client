@@ -186,7 +186,7 @@ export function RecommendationList({ listNumber }: RecommendationListProps) {
           </a>{" "}
           y te gusto{" "}
           <a href={urls.viewProperty.byId(data[listNumber].liked.id)}>
-            esta propidead
+            esta propiedad
           </a>{" "}
           te recomendamos:
         </h5>
