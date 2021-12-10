@@ -13,8 +13,22 @@ type RecommendationsProps = {
   recommendationNumber: number;
 };
 
+function getLocation(location: string) {
+  const array = location.split(", ");
+  const arrayInter = array[0].split(" ");
+  if (arrayInter.length > 1) {
+    return (
+      arrayInter[0][0].toUpperCase() +
+      arrayInter[0].substr(1, arrayInter[0].length) +
+      " " +
+      arrayInter[1][0].toUpperCase() +
+      arrayInter[1].substr(1, arrayInter[1].length)
+    );
+  } else return array[0][0].toUpperCase() + array[0].substr(1, array[0].length);
+}
+
 function filterCreation(filter: any) {
-  return `Estas buscando
+  return `Como estas buscando
          ${
            filter.typeProperty
              ? `${
@@ -83,12 +97,13 @@ function filterCreation(filter: any) {
            filter.maxAmountSquareMeter
              ? `${
                  filter.minAmountSquareMeter
-                   ? `-${filter.maxAmountSquareMeter} metros cuadrados,`
+                   ? `- ${filter.maxAmountSquareMeter} metros cuadrados,`
                    : `con hasta ${filter.maxAmountSquareMeter} metros cuadrados,`
                }`
              : ""
          }
-         ${filter.style ? `con estilo ${filter.style}` : ""}`;
+         ${filter.style ? `con estilo ${filter.style},` : ""}
+         ${filter.location ? `en ${getLocation(filter.location)} ` : ""}`;
 }
 
 export function Recommendations({

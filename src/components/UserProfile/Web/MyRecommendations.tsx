@@ -1,9 +1,7 @@
 import styles from "./UserProfile.module.scss";
 import React from "react";
-import { Grid, List, ListItem, Popover, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useGetRecommendations } from "../../../api";
-import { PropretyCardMyFavorites } from "./PropertyCardMyFavorites";
-import { urls } from "../../../constants";
 import { Recommendations } from "../../homePage/Recommendations";
 
 export function MyRecommendations() {
@@ -12,8 +10,23 @@ export function MyRecommendations() {
     React.useState<HTMLButtonElement | null>(null);
   if (!data) return <h1>Loading...</h1>;
 
+  function getLocation(location: string) {
+    const array = location.split(", ");
+    const arrayInter = array[0].split(" ");
+    if (arrayInter.length > 1) {
+      return (
+        arrayInter[0][0].toUpperCase() +
+        arrayInter[0].substr(1, arrayInter[0].length) +
+        " " +
+        arrayInter[1][0].toUpperCase() +
+        arrayInter[1].substr(1, arrayInter[1].length)
+      );
+    } else
+      return array[0][0].toUpperCase() + array[0].substr(1, array[0].length);
+  }
+
   function filterCreation(filter: any) {
-    return `Estas buscando
+    return `Como estas buscando
          ${
            filter.typeProperty
              ? `${
@@ -82,12 +95,13 @@ export function MyRecommendations() {
            filter.maxAmountSquareMeter
              ? `${
                  filter.minAmountSquareMeter
-                   ? `-${filter.maxAmountSquareMeter} metros cuadrados,`
+                   ? `- ${filter.maxAmountSquareMeter} metros cuadrados,`
                    : `con hasta ${filter.maxAmountSquareMeter} metros cuadrados,`
                }`
              : ""
          }
-         ${filter.style ? `con estilo ${filter.style}` : ""}`;
+         ${filter.style ? `con estilo ${filter.style},` : ""}
+         ${filter.location ? `en ${getLocation(filter.location)} ` : ""}`;
   }
 
   console.log(data);
