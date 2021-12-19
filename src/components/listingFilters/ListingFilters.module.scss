@@ -1,7 +1,8 @@
 .OptionsFilters {
-  background: #cddde5;
+  background: rgba(66, 158, 166, 0.2);
   padding: 0.5%;
   align-items: center;
+  overflow-x: hidden;
 }
 
 .searchBar {
@@ -43,6 +44,20 @@
 .price input {
   width: 46%;
   border-radius: 0.1em;
+}
+
+.oneValue {
+  padding: 4%;
+}
+
+.oneValue input {
+  width: 100%;
+  border-radius: 0.1em;
+}
+
+.oneValueInp {
+  margin-right: 3%;
+  width: 100%;
 }
 
 .priceMinInp {

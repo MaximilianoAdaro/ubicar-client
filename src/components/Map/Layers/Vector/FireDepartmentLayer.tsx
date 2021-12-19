@@ -26,8 +26,8 @@ class FireDepartmentLayer extends React.PureComponent<TVectorLayerComponentProps
         color: "rgba(0, 100, 240, 0.8)",
       }),
       image: new Icon({
-        src: "./icons/fire.png",
-        scale: 10 / 1024,
+        src: "./newIcons/bomberos.svg",
+        scale: 1024 / 1024,
         anchor: [0.5, 0.75],
       }),
       text: new Text(),

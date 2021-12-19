@@ -26,8 +26,8 @@ class AirportLayer extends React.PureComponent<TVectorLayerComponentProps> {
         color: "rgba(0, 100, 240, 0.8)",
       }),
       image: new Icon({
-        src: "./icons/airport.png",
-        scale: 50 / 1024,
+        src: "./newIcons/Airport.svg",
+        scale: 1280 / 1024,
         anchor: [0.5, 0.75],
       }),
       text: new Text(),

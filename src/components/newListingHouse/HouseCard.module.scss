@@ -1,0 +1,118 @@
+$radius: 7px;
+
+.cardContainer {
+  box-shadow: 0 0 7px 0 grey;
+  border-radius: $radius;
+  padding: 0.7em;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  width: 280px;
+}
+
+.imageContainer {
+  border-radius: $radius;
+  height: 175px;
+  width: 100%;
+}
+
+.infoContainer {
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.3em;
+  line-height: 21px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.address {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+
+  display: flex;
+  flex-direction: column;
+
+  .streetNumber {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 1em;
+    line-height: 21px;
+    margin-bottom: 0.2em;
+  }
+
+  .stateCity {
+    font-weight: normal;
+    font-size: 1em;
+    line-height: 21px;
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.details {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.1em;
+  line-height: 25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tooltip_text {
+  font-size: 1.7em;
+  margin: 0.5em;
+}
+
+.price {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 19px;
+  line-height: 21px;
+}
+
+.large.cardContainer {
+  width: auto;
+  height: 10em;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 40% auto;
+  grid-auto-rows: minmax(min-content, max-content);
+
+  .imageContainer {
+    // width: 40%;
+    height: 10em;
+  }
+
+  .infoContainer {
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: "...";
+
+    .title {
+      font-weight: bold;
+    }
+
+    .price {
+      font-weight: normal;
+    }
+  }
+}

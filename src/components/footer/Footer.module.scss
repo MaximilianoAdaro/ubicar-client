@@ -1,51 +1,40 @@
 @import "src/styles/common";
 
-.footerContainer {
-  padding: 1em 5%;
-  border-top: 3px solid $theme-goldish;
+.footer_container {
+  color: white;
+  background: #297278;
+  padding: 2.75em 15% 2em;
+  margin-top: 4.4em;
 }
 
-.footerContainer h4 {
-  font-weight: bold;
+.footer_information {
+  font-size: 1.1em;
 }
 
-.footerUbicar {
-  padding-right: 5em;
-}
-
-.footerUbicar p {
-  font-size: 1.2em;
-}
-
-.footerContact p {
-  font-size: 1.2em;
-  margin-bottom: 1.5em;
-}
-
-.footerOptionsATag {
+.footer_navigation_title {
   margin-bottom: 0.5em;
-  color: black;
+}
+
+.footer_navigation_links {
+  margin-bottom: 0.5em;
+  font-size: 1.1em;
+  color: white;
+}
+
+.footer_navigation_links_style {
+  color: white;
   text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.68);
+  }
 }
 
-.footerOptionsATag:hover {
-  text-decoration: none;
-  color: $theme-goldish;
+.footer_about_us {
+  margin-top: 3em;
+  font-size: 1.1em;
 }
 
-.footerOptions {
-  margin-left: 2em;
-}
-
-.footerOptionsGrid {
-  margin-bottom: 0.5em;
-}
-
-.socialMediaLinks img {
-  height: 2em;
-  width: 2em;
-}
-
-.socialMediaText {
-  margin-bottom: 0.5em;
+.about_us_element {
+  margin-bottom: 10px;
 }

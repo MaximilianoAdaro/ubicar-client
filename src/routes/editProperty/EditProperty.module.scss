@@ -4,15 +4,17 @@
   margin-top: 1em;
   margin-bottom: 1em;
   margin-left: 0.5em;
-  color: $theme-goldish;
+  color: #ff701f;
 }
 
 .stepBarContainer {
   display: flex;
   width: auto;
   flex-wrap: nowrap;
-  justify-content: space-evenly;
-  margin-bottom: 5em;
+  justify-content: space-around;
+  //margin-bottom: 5em;
+  margin-left: 7%;
+  margin-right: 7%;
 }
 
 .stepBarItem {
@@ -25,13 +27,14 @@
 
 .highlighter {
   height: 4px;
-  width: 80%;
+  width: 100%;
   border: 1px solid $theme-light-blue;
   border-radius: 30px;
 }
 
 .active {
-  border-color: $theme-darker-blue;
+  border-color: #ff701f;
+  background: #ff701f;
 }
 
 .cursorPointer {
@@ -39,5 +42,8 @@
 }
 
 .editPropertyContainer {
-  margin-bottom: 5vh;
+  margin-left: 7%;
+  width: 86%;
+  background-color: #ff701f;
+  //color:white;
 }

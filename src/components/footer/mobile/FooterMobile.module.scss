@@ -1,0 +1,28 @@
+@import "src/styles/common";
+
+.container {
+  display: grid;
+  grid-template-columns: auto auto;
+  //margin: 1em 1em 0;
+  padding: 1em 1em 0;
+  color: #666666;
+  gap: 2em;
+  background-color: rgba(102, 102, 102, 0.03);
+  margin-top: auto;
+}
+
+.footer_navigation_links_style {
+  display: flex;
+  color: #666666;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.68);
+  }
+}
+
+.footer_navigation_subtitle {
+  font-size: 0.9em;
+}

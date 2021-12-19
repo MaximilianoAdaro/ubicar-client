@@ -2,7 +2,7 @@ import React from "react";
 import { PropertyProps } from "./vector-types";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import { Icon, Style } from "ol/style";
+import { Fill, Stroke, Style } from "ol/style";
 import { MapContext } from "../../map";
 import { IMapContext, PropertyState } from "../../maptypes";
 import { Vector } from "ol/source";
@@ -10,6 +10,7 @@ import Feature from "ol/Feature";
 import { convertCoordinates, getBounds } from "../../utils";
 import { bbox } from "ol/loadingstrategy";
 import GeoJSON from "ol/format/GeoJSON";
+import CircleStyle from "ol/style/Circle";
 
 class PropertiesLayer extends React.PureComponent<PropertyProps> {
   layer: VectorLayer;
@@ -48,8 +49,18 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
         xhr.onload = () => {
           if (xhr.status === 200) {
             if (xhr.responseText.length > 3) {
-              let arrayMap = JSON.parse(xhr.responseText).map((data: any) => {
-                return JSON.parse(data);
+              const jsonArray = JSON.parse(xhr.responseText);
+
+              let arrayMap = jsonArray.map((data: any, index: number) => {
+                const match = [
+                  ...jsonArray[index].matchAll(/"id": "([-a-z0-9]+)",/g),
+                ];
+
+                const id = match[0][1];
+
+                const parsedJson = JSON.parse(data);
+                parsedJson.properties.id = id;
+                return parsedJson;
               });
               let newArray = arrayMap.map((feature: any) => {
                 feature.geometry.coordinates = convertCoordinates(
@@ -65,9 +76,12 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
               };
               let fet = new GeoJSON()
                 .readFeatures(geojsonObject)
-                .map((feature: any) => {
-                  feature.values_.fna =
-                    feature.values_.street + " " + feature.values_.number;
+                .map((feature: any, index) => {
+                  feature.values_.fna = {
+                    address:
+                      feature.values_.street + " " + feature.values_.number,
+                    id: feature.values_.id,
+                  };
                   return feature;
                 });
 
@@ -83,10 +97,13 @@ class PropertiesLayer extends React.PureComponent<PropertyProps> {
     });
 
     const style = new Style({
-      image: new Icon({
-        src: "https://static.thenounproject.com/png/1661278-200.png",
-        scale: 200 / 1024,
-        anchor: [0.5, 0.75],
+      image: new CircleStyle({
+        radius: 8,
+        fill: new Fill({ color: "black" }),
+        stroke: new Stroke({
+          color: "white",
+          width: 2,
+        }),
       }),
     });
 

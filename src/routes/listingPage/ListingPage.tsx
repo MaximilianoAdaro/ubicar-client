@@ -1,6 +1,4 @@
-import Grid from "@material-ui/core/Grid";
 import { ListingFilters } from "../../components/listingFilters/";
-import { ListingHouse } from "../../components/listingHouse/";
 import { MapComponent } from "../../components/Map/map";
 import { actions, useAppSelector } from "../../store";
 import { selectView, selectZoom } from "../../store/slices/map/mapSlice";
@@ -8,6 +6,7 @@ import styles from "./ListingPage.module.scss";
 import { useEffect, useMemo, useState } from "react";
 import {
   PropertyPreviewDTO,
+  useGetLoggedUsingGET,
   useGetStylesUsingGET,
   useGetTypesUsingGET,
 } from "../../api";
@@ -15,6 +14,14 @@ import { Switch, useLocation } from "react-router-dom";
 import QueryString from "query-string";
 import { Loading } from "../../components/common/loading/Loading";
 import { useDispatch } from "react-redux";
+import { HouseCard } from "../../components/newListingHouse";
+import clsx from "clsx";
+import { ReactComponent as OneGridIcon } from "../../assets/listingPageGridOne.svg";
+import { ReactComponent as OneGridIconSelected } from "../../assets/listingPageGridOneSelected.svg";
+import { ReactComponent as TwoGridIcon } from "../../assets/listingPageGridTwo.svg";
+import { ReactComponent as TwoGridIconSelected } from "../../assets/listingPageGridTwoSelected.svg";
+import SignUp from "../../components/PopUp/SignUp";
+import { Grid } from "@mui/material";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -22,6 +29,10 @@ const checkNotUndefined = (value: any) => {
 
 export const ListingPage = () => {
   const location = useLocation();
+  const { data: user } = useGetLoggedUsingGET();
+
+  const [isTwoColumns, setIsTwoColums] = useState(false);
+  const [isLargeCards, setIsLargeCards] = useState(true);
 
   const [zoom, setZoom] = useState(useAppSelector(selectZoom));
   const [view, setView] = useState(useAppSelector(selectView));
@@ -47,8 +58,21 @@ export const ListingPage = () => {
     style: checkNotUndefined(query.style),
     minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
     minAmountRoom: checkNotUndefined(query.minAmountRoom),
+    maxAmountRoom: checkNotUndefined(query.maxAmountRoom),
     minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
     maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
+    minDistanceSchools: checkNotUndefined(query.minDistanceSchools),
+    maxDistanceSchool: checkNotUndefined(query.maxDistanceSchool),
+    minDistanceUniversity: checkNotUndefined(query.minDistanceUniversity),
+    maxDistanceUniversity: checkNotUndefined(query.maxDistanceUniversity),
+    minDistanceHospital: checkNotUndefined(query.minDistanceHospital),
+    maxDistanceHospital: checkNotUndefined(query.maxDistanceHospital),
+    minDistanceFireStation: checkNotUndefined(query.minDistanceFireStation),
+    maxDistanceFireStation: checkNotUndefined(query.maxDistanceFireStation),
+    minDistancePenitentiary: checkNotUndefined(query.minDistancePenitentiary),
+    maxDistanceCommissary: checkNotUndefined(query.maxDistanceCommissary),
+    minDistanceSubway: checkNotUndefined(query.minDistanceSubway),
+    maxDistanceSubway: checkNotUndefined(query.maxDistanceSubway),
   });
 
   const buildDataset = async () => {
@@ -69,7 +93,7 @@ export const ListingPage = () => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: body,
+        body,
       }
     );
 
@@ -99,20 +123,36 @@ export const ListingPage = () => {
     );
   };
 
+  const isAuthenticated = !!user;
+
   useEffect(() => {
     buildDataset();
   }, [bbox, query]);
 
+  const [isOpened, setIsOpened] = useState(false);
+
+  useEffect(() => {
+    setIsOpened(true);
+  }, [isAuthenticated]);
+
   return (
     <div>
+      {!isAuthenticated && (
+        <SignUp isOpened={isOpened} setIsOpened={setIsOpened} />
+      )}
       <ListingFilters
         houseStyles={houseStyles ? houseStyles : null}
         houseTypes={houseTypes ? houseTypes : null}
         setZoom={setter1}
         setView={setter2}
       />
-      <Grid container className={styles.mapAndProperties}>
-        <Grid item xl={9} sm={8} className={styles.map}>
+      <div
+        className={clsx(styles.mapAndProperties, {
+          [styles.largeCards]: isLargeCards,
+          [styles.twoColumns]: isTwoColumns,
+        })}
+      >
+        <div className={styles.map}>
           <MapComponent
             zoom={zoom}
             view={view}
@@ -123,32 +163,76 @@ export const ListingPage = () => {
             setBbox={setBbox}
             body={body}
           />
-        </Grid>
-        <Grid item xl={3} sm={4} className={styles.propertyList}>
+        </div>
+        {!isLargeCards && (
+          <div className={styles.changeSizeButtonContainer}>
+            <div onClick={() => setIsTwoColums((b) => !b)}>
+              <div />
+              <div />
+            </div>
+          </div>
+        )}
+        <div className={styles.propertyList}>
           <Switch>
             {load && <Loading />}
             {!load && rightSideData && rightSideData.length > 0 ? (
-              <PropertyList properties={rightSideData} />
+              <div className={styles.buttonsAndProps}>
+                <div className={styles.gridIcons}>
+                  {isLargeCards ? (
+                    <OneGridIconSelected />
+                  ) : (
+                    <OneGridIcon
+                      className={styles.gridButton}
+                      onClick={() => setIsLargeCards(true)}
+                    />
+                  )}
+
+                  {isLargeCards ? (
+                    <TwoGridIcon
+                      className={styles.gridButton}
+                      onClick={() => setIsLargeCards(false)}
+                    />
+                  ) : (
+                    <TwoGridIconSelected />
+                  )}
+                </div>
+
+                <PropertyList
+                  properties={rightSideData}
+                  expanded={isTwoColumns}
+                  isLargeCards={isLargeCards}
+                />
+              </div>
             ) : (
               <h2>No hay publicaciones disponibles</h2>
             )}
           </Switch>
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </div>
   );
 };
 
 type PropertyListProps = {
   properties?: PropertyPreviewDTO[] | null;
+  expanded?: boolean;
+  isLargeCards?: boolean;
 };
 
-const PropertyList = ({ properties }: PropertyListProps) => {
+const PropertyList = ({
+  properties,
+  expanded = false,
+  isLargeCards = false,
+}: PropertyListProps) => {
   return (
-    <>
+    <div
+      className={clsx(styles.propList, {
+        [styles.expanded]: !isLargeCards && expanded,
+      })}
+    >
       {properties?.map((property) => (
-        <ListingHouse key={property.id} house={property} />
+        <HouseCard key={property.id} house={property} isLarge={isLargeCards} />
       ))}
-    </>
+    </div>
   );
 };

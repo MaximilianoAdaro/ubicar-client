@@ -26,8 +26,8 @@ class IndustrialAreasLayer extends React.PureComponent<TVectorLayerComponentProp
         color: "rgba(0, 100, 240, 0.8)",
       }),
       image: new Icon({
-        src: "./icons/industrial.png",
-        scale: 50 / 1024,
+        src: "./newIcons/industrial.svg",
+        scale: 900 / 1024,
         anchor: [0.5, 0.75],
       }),
       text: new Text(),

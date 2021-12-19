@@ -8,8 +8,14 @@ import { MapBrowserEvent, Overlay } from "ol";
 
 import "./LayerStyles.scss";
 import { Circle, Fill, Stroke, Style, Text } from "ol/style";
+import { useHistory } from "react-router";
+import { urls } from "../../../../constants";
 
-class PopUpLayer extends React.PureComponent<TVectorLayerComponentProps> {
+class PopUpLayer extends React.PureComponent<
+  TVectorLayerComponentProps & {
+    history: any;
+  }
+> {
   layer: VectorLayer;
   source: VectorSource;
   popUpRef: HTMLElement;
@@ -80,8 +86,19 @@ class PopUpLayer extends React.PureComponent<TVectorLayerComponentProps> {
         return feature;
       }
     );
+
     if (feature) {
-      this.popUpContentRef.innerHTML = "<p>" + feature.get("fna") + "</p>";
+      if (typeof feature.get("fna") === "string") {
+        this.popUpContentRef.innerHTML = "<p>" + feature.get("fna") + "</p>";
+      } else {
+        this.popUpContentRef.innerHTML =
+          "<p>" + feature.get("fna").address + "</p>";
+        this.popUpRef.onclick = () => {
+          this.props.history.push(
+            urls.viewProperty.byId(feature.get("fna").id)
+          );
+        };
+      }
 
       this.popup.setPosition(evt.coordinate);
       this.props.map.addOverlay(this.popup);
@@ -113,11 +130,14 @@ class PopUpLayer extends React.PureComponent<TVectorLayerComponentProps> {
 }
 
 export const PopUpLayerWithContext = (props: TVectorLayerProps) => {
+  const history = useHistory();
   return (
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          return <PopUpLayer {...props} map={mapContext.map} />;
+          return (
+            <PopUpLayer {...props} map={mapContext.map} history={history} />
+          );
         }
       }}
     </MapContext.Consumer>

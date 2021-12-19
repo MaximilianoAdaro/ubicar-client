@@ -3,15 +3,49 @@
 }
 
 .input {
-  padding-right: 5vw;
+  //padding-right: 5vw;
+  padding: 0 3vw;
   margin-bottom: 2vh;
 }
 
 .filtersButton {
-  background: white;
-  margin-left: 1.5rem;
   border: 1px #4a636c solid;
   padding-left: 0.7em;
   padding-right: 0.7em;
   text-transform: none;
+}
+
+.address_container {
+  padding-right: 5%;
+  padding-left: 5%;
+  padding-top: 2em;
+  margin: 0 7%;
+  background: rgba(211, 211, 211, 0.25);
+}
+
+.address_inputs {
+  background: #429ea6;
+  border-radius: 20px;
+  //padding: 2em 0;
+  padding-bottom: 1.5em;
+  padding-top: 3em;
+}
+.autocomplete {
+  background: white;
+  border: none;
+  //border-radius: 1em;
+}
+
+.address_input_titles {
+  color: white;
+  font-size: small;
+  margin-left: 0.4em;
+}
+
+.address_title {
+  margin-bottom: 1.5em;
+}
+
+.address_map {
+  margin-top: 2.5em;
 }

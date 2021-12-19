@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import styles from "./ViewProperty.module.scss";
 import { Typography } from "@material-ui/core";
 import { TabsBar } from "../../components/common/tabsBar/TabsBar";
-import { ReactNode, Suspense, useState } from "react";
+import React, { ReactNode, Suspense, useState } from "react";
 import pluralize from "pluralize";
 import {
   buildTabs,
@@ -11,7 +11,14 @@ import {
   getYearDistance,
   translateCondition,
 } from "./viewPropertyUtils";
-import { AddressDTO, UserDTO } from "../../api";
+import {
+  AddressDTO,
+  useContactPropertyOwnerUsingPOST,
+  useGetLoggedUsingGET,
+  useGetPropertyUsingGET,
+  useGetSelectedTagsUsingGET,
+  UserDTO,
+} from "../../api";
 import { formatPrice } from "../../utils/utils";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -26,17 +33,12 @@ import surfaceIcon from "../../assets/surfaceIcon.png";
 import bathroomIcon from "../../assets/bathroomIcon.svg";
 import toiletIcon from "../../assets/toiletIcon.svg";
 import roomIcon from "../../assets/roomIcon.svg";
-import {
-  useGetLoggedUsingGET,
-  useGetPropertyUsingGET,
-  useContactPropertyOwnerUsingPOST,
-} from "../../api";
 import { toast } from "react-toastify";
-import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
+import MultipleSelectChip from "../../components/UserProfile/Tags";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,6 +80,11 @@ const View = ({ id }: ViewProps) => {
       suspense: true,
     },
   });
+  const { data: selected } = useGetSelectedTagsUsingGET(id, {
+    query: {
+      suspense: true,
+    },
+  });
 
   // const openPhotos = () => {
   //   setViewerIsOpen(true);
@@ -94,6 +101,10 @@ const View = ({ id }: ViewProps) => {
     property.materials,
     property.security
   );
+
+  const streetCity = `${property.address!.street} ${property.address!.number} ${
+    property.address!.city
+  }               `;
 
   return (
     <div className={styles.container}>
@@ -114,7 +125,7 @@ const View = ({ id }: ViewProps) => {
           <div>
             <img src="https://media.architecturaldigest.com/photos/58f7cf1a8bfbf566da78acc2/master/pass/IShvzncvwa127j0000000000.jpg" />
             <img src="https://shawhomes.com/wp-content/uploads/Exterior-Twilight-2-Shaw-Homes-12801-S.-Date-Street-Jenks-OK-Yorktown.jpg" />
-            <img src="https://www.maids.com/cleaning-hacks/wp-content/uploads/2018/01/Entire2-house-featured.jpg" />
+            <img src="https://cdn.archilovers.com/projects/57d7daff-e586-4a1b-83b3-8d5bf0f8e070.jpg" />
             <img src="https://media.architecturaldigest.com/photos/59382d7a3176b35c589a6af3/master/pass/adelman-house-frank-lloyd-wright-03.jpg" />
             <img src="https://cdn.architecturendesign.net/wp-content/uploads/2014/07/House-in-Gorki-08.jpg" />
             <img src="http://www.passivehousecanada.com/wp-content/uploads/2016/05/Alta-Lake-Passive-House-1024x637.jpg" />
@@ -160,8 +171,7 @@ const View = ({ id }: ViewProps) => {
           <div className={styles.firstSection}>
             <div className={styles.titleSection}>
               <Typography variant={"h5"} className={styles.mainTitle}>
-                {property.address!.street} {property.address!.number}{" "}
-                {property.address!.city}
+                {streetCity.toLowerCase()}
               </Typography>
               {currentUser && (
                 <FavoriteButton id={id} isLiked={property.liked} />
@@ -177,6 +187,11 @@ const View = ({ id }: ViewProps) => {
               {/*    Editar Propiedad*/}
               {/*  </Button>*/}
               {/*</Link>*/}
+            </div>
+            <div style={{ marginBottom: "0.5em" }}>
+              {currentUser && property.liked && (
+                <MultipleSelectChip id={id} selected={selected} />
+              )}
             </div>
             <span className={styles.subtitle}>{property.type}</span>
             <div className={styles.facts}>
@@ -264,7 +279,7 @@ const View = ({ id }: ViewProps) => {
                 {translateCondition(property.condition)}
               </h2>
               <h3 className={styles.price}>
-                <span className={styles.priceSymbol}>$</span>{" "}
+                <span className={styles.priceSymbol}>U$D</span>{" "}
                 <span className={styles.priceColor}>
                   {formatPrice(property.price)}
                 </span>
@@ -272,7 +287,7 @@ const View = ({ id }: ViewProps) => {
               <div className={styles.expenses}>
                 <span>Expensas </span>{" "}
                 <div>
-                  <span className={styles.priceSymbol}>$</span>
+                  <span className={styles.priceSymbol}>U$D</span>
                   <span className={styles.priceColor}>
                     {formatPrice(property.expenses!)}
                   </span>
@@ -380,7 +395,7 @@ const getAddressItem = (name: string, value: string) => {
         <h5 style={{ textTransform: "capitalize" }}>{name}: </h5>
       </td>
       <td>
-        <span>{value}</span>
+        <span>{value.toLowerCase()}</span>
       </td>
     </tr>
   );

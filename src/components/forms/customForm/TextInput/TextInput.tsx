@@ -1,4 +1,6 @@
 import { Form, InputGroup } from "react-bootstrap";
+import styles from "./TextInput.module.scss";
+
 import {
   ControllerRenderProps,
   Path,
@@ -34,7 +36,7 @@ export const TextInput = <T,>({
     defaultValue: defaultValue as any,
   });
   return (
-    <Form.Group>
+    <Form.Group className={styles.form_group_margin}>
       <Form.Label>{label}</Form.Label>
       <InputGroup hasValidation>
         {frontSymbol && (

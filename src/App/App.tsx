@@ -15,26 +15,48 @@ import {
 } from "../routes";
 import { actions, useAppDispatch, useAppSelector } from "../store";
 import { selectRedirectPath } from "../store/slices/session";
-import styles from "./App.module.scss";
 import { Loading } from "../components/common/loading/Loading";
 import { EditProperty } from "../routes/editProperty";
 import { Footer } from "../components/footer/Footer";
-import { useGetLoggedUsingGET } from "../api";
+import { useGetLoggedUsingGET, useProfileUserUsingGET } from "../api";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { CircularProgress, TextField } from "@material-ui/core";
-import React, { useState } from "react";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { useHistory } from "react-router-dom";
-import { convertCoordinates } from "../components/Map/utils";
+import { useWindowSize } from "../hooks/useWindowSize";
+import { ListingPageMobile } from "../routes/listingPage/ListingPageMobile";
+import { Home } from "../routes/home/Home";
+import { ViewPropertyMobile } from "../routes/viewProperty/ViewPropertyMobile";
+import { LogInMobile } from "../routes/logIn/LogInMobile";
+import { SignUpMobile } from "../routes/signUp/SignUpMobile";
+import { HomeMobile } from "../routes/home/mobile/HomeMobile";
+import { UserProfileMobile } from "../routes/userProfile/UserProfileMobile";
+import { PersonalDataMobile } from "../components/UserProfile/Mobile/PersonalDataMobile";
+import { MyFavoritesMobile } from "../components/UserProfile/Mobile/MyFavoritesMobile";
+import { MyPropertiesMobile } from "../components/UserProfile/Mobile/MyPropertiesMobile";
+import { MyRecentlyViewedMobile } from "../components/UserProfile/Mobile/MyRecentlyViewedMobile";
+import { useEffect, useRef, useState } from "react";
+import { Burger, Menu } from "../components/navbar/mobile/Menu";
+import { FooterMobile } from "../components/footer/mobile/FooterMobile";
+import { MyOpportunitiesMobile } from "../components/UserProfile/Mobile/MyOpportunitiesMobile";
+// import {UserProfileMobile} from "../routes/userProfile/UserProfileMobile";
 
 export default function App() {
   const redirectPath = useAppSelector(selectRedirectPath);
   const dispatch = useAppDispatch();
 
+  const size = useWindowSize();
+
   const { data: user, isLoading } = useGetLoggedUsingGET();
 
   const location = useLocation();
+
+  const [open, setOpen] = useState(false);
+  const node = useRef(null);
+
+  useEffect(() => {
+    if (location.pathname == redirectPath) {
+      dispatch(actions.session.setRedirectPath(""));
+    }
+  }, [location.pathname, redirectPath, dispatch]);
 
   if (isLoading) return <Loading />;
 
@@ -44,6 +66,68 @@ export default function App() {
     redirectPath,
     setRedirectPath: (path) => dispatch(actions.session.setRedirectPath(path)),
   };
+
+  if ((size.width ?? 0) < 770)
+    return (
+      <>
+        <Switch>
+          <Route exact path={urls.home} component={HomeMobile} />
+          <Route exact path={urls.listingPage} component={ListingPageMobile} />
+          <Route
+            exact
+            path={urls.viewProperty.path}
+            component={ViewPropertyMobile}
+          />
+          <Route exact path={urls.logIn} component={LogInMobile} />
+          <Route exact path={urls.signUp} component={SignUpMobile} />
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact
+            path={urls.userProfile.path}
+            component={UserProfileMobile}
+          />
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact
+            path={urls.userProfile.personalData}
+            component={PersonalDataMobile}
+          />
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact
+            path={urls.userProfile.favorites}
+            component={MyFavoritesMobile}
+          />
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact
+            path={urls.userProfile.properties}
+            component={MyPropertiesMobile}
+          />
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact
+            path={urls.userProfile.recentlyViewed}
+            component={MyRecentlyViewedMobile}
+          />
+          {user && user.investor && (
+            <ProtectedRoute
+              {...defaultProtectedRouteProps}
+              exact
+              path={urls.userProfile.opportunities}
+              component={MyOpportunitiesMobile}
+            />
+          )}
+
+          <Route component={NotFound} />
+        </Switch>
+        <div ref={node}>
+          <Burger open={open} setOpen={setOpen} />
+          <Menu open={open} setOpen={setOpen} isLoggedIn={!!user} />
+        </div>
+        {location.pathname !== "/listing-page" && <FooterMobile />}
+      </>
+    );
 
   return (
     <>
@@ -65,7 +149,7 @@ export default function App() {
         }}
       >
         <Switch>
-          <Route exact path={urls.home} component={WorkInProgress} />
+          <Route exact path={urls.home} component={Home} />
           <ProtectedRoute
             {...defaultProtectedRouteProps}
             exact
@@ -78,7 +162,12 @@ export default function App() {
           <Route exact path={urls.logIn} component={LogIn} />
           <Route exact path={urls.editProperty.path} component={EditProperty} />
           <Route exact path={"/loading"} component={Loading} />
-          <Route exact path={urls.userProfile} component={UserProfile} />
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact
+            path={urls.userProfile.path}
+            component={UserProfile}
+          />
           <Route component={NotFound} />
         </Switch>
       </div>
@@ -86,127 +175,3 @@ export default function App() {
     </>
   );
 }
-
-const WorkInProgress = () => {
-  const { data: user } = useGetLoggedUsingGET();
-  const dispatch = useAppDispatch();
-  const history = useHistory();
-
-  const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState([
-    { id: "", name: "", stateName: "", centroid: { lat: 0, long: 0 } },
-  ]);
-  const loading = open && options.length === 0;
-
-  const onChangeHandle = async (value: any) => {
-    const response = await fetch(
-      "http://localhost:3000/public/cities-and-states?name=" + value
-    );
-
-    const citiesAndStates = await response.json();
-    if (citiesAndStates && citiesAndStates.content) {
-      const options = citiesAndStates.content.map((option: any) => {
-        if (option.type === "STATE") {
-          return option.state;
-        } else {
-          return option.city;
-        }
-      });
-      setOptions(options);
-    }
-  };
-
-  const handleChangeView = (longitude: number, latitude: number) => {
-    dispatch(actions.map.setView({ longitude: longitude, latitude: latitude }));
-    dispatch(actions.map.setZoom(12));
-  };
-  const handleChangeName = (name: string) => {
-    dispatch(actions.session.setSearchBar(name));
-  };
-
-  const handleOptionLabel = (option: any) => {
-    if (option.id !== "") {
-      if (option.stateName)
-        return (
-          option.name[0].toUpperCase() +
-          option.name.substr(1).toLowerCase() +
-          ", " +
-          option.stateName
-        );
-      return option.name[0].toUpperCase() + option.name.substr(1).toLowerCase();
-    }
-    return "";
-  };
-
-  const handleOption = (value: any) => {
-    dispatch(actions.session.setOption(value));
-    history.push("/listing-page");
-  };
-
-  return (
-    <div className={styles.app}>
-      <div
-        style={{
-          marginBottom: 20,
-        }}
-      >
-        {user && <h4>Bienvenido {user.userName}</h4>}
-
-        <div style={{ margin: "auto" }}>
-          <Autocomplete
-            id="asyncState"
-            style={{ width: "500px" }}
-            open={open}
-            onChange={(e, value) => {
-              if (value) {
-                let coords = convertCoordinates(
-                  value.centroid.long,
-                  value.centroid.lat
-                );
-                handleChangeName(handleOptionLabel(value));
-                handleChangeView(coords[0], coords[1]);
-                handleOption(value);
-              }
-            }}
-            onOpen={() => {
-              setOpen(true);
-            }}
-            onClose={() => {
-              setOpen(false);
-            }}
-            getOptionSelected={(option, value) => option.name === value.name}
-            getOptionLabel={(option) => handleOptionLabel(option)}
-            options={options}
-            loading={loading}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                fullWidth
-                label={"Introduzca una dirección!"}
-                variant="outlined"
-                color={"secondary"}
-                onChange={(ev) => {
-                  // dont fire API if the user delete or not entered anything
-                  if (ev.target.value !== "" || ev.target.value !== null) {
-                    onChangeHandle(ev.target.value);
-                  }
-                }}
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <React.Fragment>
-                      {loading ? (
-                        <CircularProgress color="inherit" size={20} />
-                      ) : null}
-                      {params.InputProps.endAdornment}
-                    </React.Fragment>
-                  ),
-                }}
-              />
-            )}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};

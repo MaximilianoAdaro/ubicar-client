@@ -1,0 +1,215 @@
+.container {
+  margin-bottom: 2em;
+  margin-right: 200px;
+  padding: 1.5em;
+  background: whitesmoke;
+  box-shadow: 3px 3px 3px 2px #888888;
+  margin-top: 2em;
+  border-radius: 5px;
+}
+
+.myPropertyOuterDiv {
+  margin-right: 3em;
+}
+
+.myPropertiesImage {
+  margin-top: 1%;
+  height: 95%;
+  width: 95%;
+}
+.myPropertyPriceCondition {
+  font-size: 1em;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 0.3em;
+  font-weight: bold;
+}
+
+.myPropertySpecifications {
+  font-size: 1em;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 0.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: "...";
+}
+.myPropertyStreetNumber {
+  font-size: 1em;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 0;
+  font-weight: bold;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.myPropertyTownCity {
+  font-size: 0.9em;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 0.4em;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.myPropertyTitle {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.3em;
+  margin-bottom: 0.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.personalDataMainDiv {
+  padding: 2em 10% 3em;
+  background: rgba(211, 211, 211, 0.25);
+  margin-bottom: 3em;
+}
+
+.properties {
+  padding-left: 1%;
+}
+
+.personalDataInformation {
+  margin-top: 1em;
+}
+
+.emailButton:hover {
+  display: none;
+}
+
+.propertyListIcons {
+  cursor: pointer;
+  margin-bottom: 1em;
+}
+
+.editAndViewPropertyButtons {
+  margin-left: auto;
+  margin-top: 0.3em;
+}
+
+.userProfileToolTips {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.2em;
+  padding: 0;
+}
+
+.userProfileToolTips p {
+  margin: 0;
+  padding: 0;
+}
+
+.persona_data_subtitles {
+  color: #ff701f;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+.personal_data_textfield_span {
+  width: 100%;
+}
+.personal_data_textfield {
+  width: 80%;
+  background-color: white;
+}
+
+.personal_data_contact_textfield {
+  background-color: white;
+}
+.personal_data_contact_warning {
+  font-size: small;
+  margin-left: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 2em;
+}
+
+.propertiesImages {
+  height: 9.8em;
+  width: 95%;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.propertyInformation {
+  margin-bottom: 3%;
+  margin-top: 1.5%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background: white;
+  height: 10.3em;
+}
+
+.marginPaddingPTag {
+  padding: 0;
+  margin: 0;
+}
+
+.propertyTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 0;
+  margin: 0;
+}
+
+.propertyStreetNumber {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: "...";
+  font-weight: bold;
+  font-size: 1em;
+  text-transform: capitalize;
+}
+
+.propertyTownCity {
+  font-size: 0.9em;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.propertySpecifications {
+  margin-bottom: 1%;
+}
+
+.propertyPriceCondition {
+  font-weight: bold;
+}
+.propertyRight {
+  padding-top: 0.5em;
+}
+
+.published_property_list {
+  overflow: auto;
+  height: 100%;
+  max-height: 70vh;
+  padding-top: 0.25em;
+}
+
+.my_favorities_property_image {
+  width: 100%;
+  height: 175px;
+}
+
+.my_favorites_card_container {
+  margin-bottom: 2em;
+  padding: 0.75em;
+  background: whitesmoke;
+  box-shadow: 3px 3px 3px 2px #888888;
+  margin-top: 2em;
+  border-radius: 5px;
+}
+
+.my_favorite_card_outer_div {
+  width: 20em;
+}
+
+.user_profile_favorites_recently_list {
+  width: 20em;
+}

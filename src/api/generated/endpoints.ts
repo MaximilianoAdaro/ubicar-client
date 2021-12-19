@@ -155,6 +155,7 @@ export const useLogOutUsingPOST = <
     return logOutUsingPOST<TData>(requestOptions);
   }, mutationOptions);
 };
+
 export const getLoggedUsingGET = <TData = UserDTO>(
   options?: SecondParameter<typeof customInstance>
 ) => {
@@ -183,6 +184,53 @@ export const useGetLoggedUsingGET = <
   const query = useQuery<TQueryFnData, TError, TData>(
     queryKey,
     () => getLoggedUsingGET<TQueryFnData>(requestOptions),
+    {
+      retry: false,
+      refetchInterval: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      retryOnMount: false,
+      refetchIntervalInBackground: false,
+      staleTime: Infinity,
+      ...queryOptions,
+    }
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
+export const getProfileUserUsingGET = <TData = UserDTO>(
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/auth/profile`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getProfileUserUsingGETQueryKey = () => [`/auth/profile`];
+
+export const useProfileUserUsingGET = <
+  TQueryFnData = AsyncReturnType<typeof getProfileUserUsingGET, UserDTO>,
+  TError = unknown,
+  TData = TQueryFnData
+>(options?: {
+  query?: UseQueryOptions<TQueryFnData, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey = queryOptions?.queryKey ?? getProfileUserUsingGETQueryKey();
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getProfileUserUsingGET<TQueryFnData>(requestOptions),
     {
       retry: false,
       refetchInterval: false,
@@ -619,6 +667,218 @@ export const useCreatePropertyWithImagesUsingPOST = <
     return createPropertyWithImagesUsingPOST<TData>(data, requestOptions);
   }, mutationOptions);
 };
+
+export const getHomePagePropertiesUsingGET = <TData = PropertyDTO[]>(
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/auth/recentlyViewed`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetHomePagePropertiesUsingGETQueryKey = () => [
+  `/auth/recentlyViewed`,
+];
+
+export const useGetHomePagePropertiesUsingGET = <
+  TQueryFnData = AsyncReturnType<
+    typeof getHomePagePropertiesUsingGET,
+    PropertyDTO[]
+  >,
+  TError = unknown,
+  TData = TQueryFnData
+>(options?: {
+  query?: UseQueryOptions<TQueryFnData, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetHomePagePropertiesUsingGETQueryKey();
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getHomePagePropertiesUsingGET<TQueryFnData>(requestOptions),
+    queryOptions
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
+export const getMostLikedPropertiesUsingGET = <TData = PropertyDTO[]>(
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/auth/mostLiked`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetMostLikedPropertiesUsingGETQueryKey = () => [
+  `/auth/mostLiked`,
+];
+
+export const useGetMostLikedPropertiesUsingGET = <
+  TQueryFnData = AsyncReturnType<
+    typeof getMostLikedPropertiesUsingGET,
+    PropertyDTO[]
+  >,
+  TError = unknown,
+  TData = TQueryFnData
+>(options?: {
+  query?: UseQueryOptions<TQueryFnData, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetMostLikedPropertiesUsingGETQueryKey();
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getMostLikedPropertiesUsingGET<TQueryFnData>(requestOptions),
+    queryOptions
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
+export const getOpportunitiesUsingGET = <TData = PropertyDTO[]>(
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/auth/opportunities`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetOpportunitiesUsingGETQueryKey = () => [
+  `/auth/opportunities`,
+];
+
+export const useGetOpportunitiesUsingGET = <
+  TQueryFnData = AsyncReturnType<
+    typeof getOpportunitiesUsingGET,
+    PropertyDTO[]
+  >,
+  TError = unknown,
+  TData = TQueryFnData
+>(options?: {
+  query?: UseQueryOptions<TQueryFnData, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetOpportunitiesUsingGETQueryKey();
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getOpportunitiesUsingGET<TQueryFnData>(requestOptions),
+    queryOptions
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
+export const getSelectedTagsUsingGET = <TData = string[]>(
+  id: string,
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/public/selected-tags/${id}`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetSelectedTagsUsingGETQueryKey = (id: string) => [
+  `/public/selected-tags/${id}`,
+];
+
+export const useGetSelectedTagsUsingGET = <
+  TQueryFnData = AsyncReturnType<typeof getSelectedTagsUsingGET, string[]>,
+  TError = unknown,
+  TData = TQueryFnData
+>(
+  id: string,
+  options?: {
+    query?: UseQueryOptions<TQueryFnData, TError, TData>;
+    request?: SecondParameter<typeof customInstance>;
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetSelectedTagsUsingGETQueryKey(id);
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getSelectedTagsUsingGET<TQueryFnData>(id, requestOptions),
+    queryOptions
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
+export const setTagsUsingPUT = <TData = string[]>(
+  id: string,
+  value: string[],
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/set-tags/${id}`, method: "put", data: value },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const useSetTagsUsingPUT = <
+  TData = AsyncReturnType<typeof setTagsUsingPUT, string[]>,
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    TData,
+    TError,
+    { id: string; data: string[] },
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { mutation: mutationOptions, request: requestOptions } = options || {};
+
+  return useMutation<TData, TError, { id: string; data: string[] }, TContext>(
+    (props) => {
+      const { id, data } = props || {};
+
+      return setTagsUsingPUT<TData>(id, data, requestOptions);
+    },
+    mutationOptions
+  );
+};
+
 export const getFavoritePropertiesUsingGET = <TData = PropertyDTO[]>(
   options?: SecondParameter<typeof customInstance>
 ) => {
@@ -653,6 +913,50 @@ export const useGetFavoritePropertiesUsingGET = <
   const query = useQuery<TQueryFnData, TError, TData>(
     queryKey,
     () => getFavoritePropertiesUsingGET<TQueryFnData>(requestOptions),
+    queryOptions
+  );
+
+  return {
+    queryKey,
+    ...query,
+  };
+};
+
+export const getAllRecentlyViewedPropertiesUsingGET = <TData = PropertyDTO[]>(
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/auth/all-recently-viewed`, method: "get" },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const getGetAllRecentlyViewedPropertiesUsingGETQueryKey = () => [
+  `/auth/all-recently-viewed`,
+];
+
+export const useGetAllRecentlyViewedPropertiesUsingGET = <
+  TQueryFnData = AsyncReturnType<
+    typeof getAllRecentlyViewedPropertiesUsingGET,
+    PropertyDTO[]
+  >,
+  TError = unknown,
+  TData = TQueryFnData
+>(options?: {
+  query?: UseQueryOptions<TQueryFnData, TError, TData>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options || {};
+
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetAllRecentlyViewedPropertiesUsingGETQueryKey();
+
+  const query = useQuery<TQueryFnData, TError, TData>(
+    queryKey,
+    () => getAllRecentlyViewedPropertiesUsingGET<TQueryFnData>(requestOptions),
     queryOptions
   );
 
