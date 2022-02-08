@@ -22,6 +22,7 @@ import { ReactComponent as TwoGridIcon } from "../../assets/listingPageGridTwo.s
 import { ReactComponent as TwoGridIconSelected } from "../../assets/listingPageGridTwoSelected.svg";
 import SignUp from "../../components/PopUp/SignUp";
 import { Grid } from "@mui/material";
+import { selectSearchBar } from "../../store/slices/session";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -36,6 +37,7 @@ export const ListingPage = () => {
 
   const [zoom, setZoom] = useState(useAppSelector(selectZoom));
   const [view, setView] = useState(useAppSelector(selectView));
+  const bar = useAppSelector(selectSearchBar);
   const [bbox, setBbox] = useState([0]);
   const [load, setLoad] = useState(true);
   const [rightSideData, setRightSideData] = useState<PropertyPreviewDTO[]>();
@@ -73,6 +75,7 @@ export const ListingPage = () => {
     maxDistanceCommissary: checkNotUndefined(query.maxDistanceCommissary),
     minDistanceSubway: checkNotUndefined(query.minDistanceSubway),
     maxDistanceSubway: checkNotUndefined(query.maxDistanceSubway),
+    location: checkNotUndefined(bar),
   });
 
   const buildDataset = async () => {

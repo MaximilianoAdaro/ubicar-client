@@ -1,14 +1,18 @@
 import styles from "./HomePage.module.scss";
 import React from "react";
-import { Grid } from "@material-ui/core";
-import { ListItem, List } from "@material-ui/core";
+import { Grid, List, ListItem } from "@material-ui/core";
 import { PropretyCardMyFavorites } from "../UserProfile/Web/PropertyCardMyFavorites";
 import { useGetHomePagePropertiesUsingGET } from "../../api";
 import { urls } from "../../constants";
 import { useHistory } from "react-router-dom";
 import { MostLiked } from "./MostLiked";
 
-export function RecentlyViewed() {
+type RecentlyViewedProp = {
+  title: string;
+  numberOfHouses: number;
+};
+
+export function RecentlyViewed({ title, numberOfHouses }: RecentlyViewedProp) {
   const { data: properties } = useGetHomePagePropertiesUsingGET();
   const history = useHistory();
 
@@ -19,9 +23,7 @@ export function RecentlyViewed() {
           <Grid className={styles.properties}>
             <div className={styles.propertyList}>
               <div>
-                <h1 style={{ margin: "0px" }}>
-                  Propiedades recientemente vistas
-                </h1>
+                <h1 style={{ margin: "0px" }}>{title}</h1>
               </div>
               <List
                 style={{
@@ -32,7 +34,7 @@ export function RecentlyViewed() {
                   margin: "0",
                 }}
               >
-                {properties?.map((casa) => (
+                {properties?.slice(0, numberOfHouses).map((casa) => (
                   <ListItem
                     style={{ width: "20em", marginRight: "2em" }}
                     onClick={() =>

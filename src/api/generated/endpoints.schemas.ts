@@ -602,6 +602,7 @@ export interface PropertyFilterDto {
   maxDistanceCommissary?: number;
   minDistanceSubway?: number;
   maxDistanceSubway?: number;
+  cityId?: string;
 }
 
 export type PropertyPreviewDTOCondition = "RENT" | "SALE";

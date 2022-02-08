@@ -1,17 +1,14 @@
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styles from "./Home.module.scss";
 import { CircularProgress, TextField, Typography } from "@material-ui/core";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useGetLoggedUsingGET } from "../../api";
-import React from "react";
-import background from "./img/background.png";
 import background1 from "./img/my_background.jpg";
-import background2 from "./img/background2.jpeg";
 import { actions, useAppDispatch } from "../../store";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { convertCoordinates } from "../../components/Map/utils";
-import { RecentlyViewed } from "../../components/homePage/RecentlyViewed";
-import { MostLiked } from "../../components/homePage/MostLiked";
+import { MostLiked, RecentlyViewed } from "../../components/homePage";
+import { Recommendations } from "../../components/homePage/Recommendations";
 
 export const Home = () => {
   const { data: user } = useGetLoggedUsingGET();
@@ -163,7 +160,19 @@ export const Home = () => {
       </div>
       <div className={styles.properties} />
 
-      {user ? <RecentlyViewed /> : <MostLiked />}
+      {user ? (
+        <RecentlyViewed
+          title={"Propiedades recientemente vistas"}
+          numberOfHouses={10}
+        />
+      ) : (
+        <MostLiked />
+      )}
+      {user && <Recommendations recommendationNumber={0} />}
+      {user && <Recommendations recommendationNumber={1} />}
+      {user && <Recommendations recommendationNumber={2} />}
+      {/*{user && <RecentlyViewed title={"Por que te gusto x te recomendamos:"} numberOfHouses={5} />}*/}
+      {/*{user && <RecentlyViewed title={"Por que te gusto x te recomendamos:"} numberOfHouses={5} />}*/}
     </div>
   );
 };

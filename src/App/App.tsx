@@ -37,6 +37,8 @@ import { useEffect, useRef, useState } from "react";
 import { Burger, Menu } from "../components/navbar/mobile/Menu";
 import { FooterMobile } from "../components/footer/mobile/FooterMobile";
 import { MyOpportunitiesMobile } from "../components/UserProfile/Mobile/MyOpportunitiesMobile";
+import { MyRecommendations } from "../components/UserProfile/Web/MyRecommendations";
+import { MyRecommendationsMobile } from "../components/UserProfile/Mobile/MyRecommendationsMobile";
 // import {UserProfileMobile} from "../routes/userProfile/UserProfileMobile";
 
 export default function App() {
@@ -109,6 +111,12 @@ export default function App() {
             exact
             path={urls.userProfile.recentlyViewed}
             component={MyRecentlyViewedMobile}
+          />
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact
+            path={urls.userProfile.recommendations}
+            component={MyRecommendationsMobile}
           />
           {user && user.investor && (
             <ProtectedRoute

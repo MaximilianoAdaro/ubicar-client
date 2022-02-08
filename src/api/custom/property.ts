@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useQuery } from "react-query";
 import { getPropertiesFilteredUsingPOST } from "../generated/endpoints";
 import {
@@ -42,5 +41,14 @@ export const getPropertyDtoQueryKey = (data: CreatePropertyDTO) => [
 export const useGetPropertyDto = (data: CreatePropertyDTO) => {
   return useQuery(getPropertyDtoQueryKey(data), () =>
     getPropertyDtoRequest(data)
+  );
+};
+
+export const useGetRecommendations = () => {
+  return useQuery("reccomendations", () =>
+    customInstance<any>({
+      url: "/auth/recommendations",
+      method: "get",
+    })
   );
 };
