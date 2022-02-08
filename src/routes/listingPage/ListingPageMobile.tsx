@@ -1,9 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Switch, useHistory, useLocation } from "react-router";
 import {
+  getGetLoggedUsingGETQueryKey,
   PropertyPreviewDTO,
+  useGetLoggedUsingGET,
   useGetStylesUsingGET,
   useGetTypesUsingGET,
+  useSaveFiltersUsingPOST,
 } from "../../api";
 import styles from "./ListingPageMobile.module.scss";
 import { ReactComponent as OneGridIcon } from "../../assets/listingPageGridOne.svg";
@@ -21,7 +24,12 @@ import { CircularProgress, TextField } from "@material-ui/core";
 import { convertCoordinates } from "../../components/Map/utils";
 import { Autocomplete } from "@material-ui/lab";
 import { selectOption } from "../../store/slices/session";
-import { ListingFiltersMobile } from "../../components/listingFilters";
+import {
+  ListingFiltersMobile,
+  StyledButton,
+} from "../../components/listingFilters";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { useQueryClient } from "react-query";
 
 const checkNotUndefined = (value: any) => {
   return value ? value : null;
@@ -34,6 +42,7 @@ export const ListingPageMobile = () => {
 
   const { data: houseStyles } = useGetStylesUsingGET();
   const { data: houseTypes } = useGetTypesUsingGET();
+  const { data: user } = useGetLoggedUsingGET();
 
   const location = useLocation();
 
@@ -50,7 +59,7 @@ export const ListingPageMobile = () => {
     [location.search]
   );
 
-  const body = JSON.stringify({
+  const queryToSend = {
     condition: checkNotUndefined(query.condition),
     typeProperty: checkNotUndefined(query.typeProperty),
     minPrice: parseFloat(checkNotUndefined(query.minPrice)),
@@ -73,7 +82,9 @@ export const ListingPageMobile = () => {
     maxDistanceCommissary: checkNotUndefined(query.maxDistanceCommissary),
     minDistanceSubway: checkNotUndefined(query.minDistanceSubway),
     maxDistanceSubway: checkNotUndefined(query.maxDistanceSubway),
-  });
+  };
+
+  const body = JSON.stringify(queryToSend);
 
   const buildDataset = async () => {
     setLoad(true);
@@ -182,6 +193,27 @@ export const ListingPageMobile = () => {
     history.push("/listing-page");
   };
 
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useSaveFiltersUsingPOST({
+    mutation: {
+      onSuccess() {
+        queryClient.invalidateQueries(getGetLoggedUsingGETQueryKey());
+      },
+      onError() {},
+    },
+  });
+
+  const saveFilters = async () => {
+    try {
+      await mutateAsync({
+        // @ts-ignore
+        data: queryToSend,
+      });
+    } catch (e) {
+      throw Error;
+    }
+  };
+
   const search = useAppSelector(selectOption);
 
   return (
@@ -244,6 +276,12 @@ export const ListingPageMobile = () => {
               )}
             />
           </div>
+          {location.search.length > 0 && user && (
+            <BookmarkBorderIcon
+              className={styles.saveFilters}
+              onClick={saveFilters}
+            />
+          )}
           <div className={styles.filtersContainer}>
             <ListingFiltersMobile
               houseStyles={houseStyles ? houseStyles : null}

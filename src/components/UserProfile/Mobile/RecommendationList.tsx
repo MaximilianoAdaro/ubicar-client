@@ -214,14 +214,6 @@ export function RecommendationList({ listNumber }: RecommendationListProps) {
         )}
       </div>
       <div style={{ display: "flex" }}>
-        <Typography variant={"h6"} style={{ textAlign: "left" }}>
-          Tipo de usuario
-        </Typography>
-        <HelpOutlineIcon
-          fontSize="small"
-          style={{ margin: "auto 5px" }}
-          onClick={handleOpen}
-        />
         <BootstrapDialog
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"

@@ -37,7 +37,7 @@ type ListingFiltersProp = {
   setView: (arg0: MapView) => void;
 };
 
-const StyledButton = withStyles({
+export const StyledButton = withStyles({
   root: {
     width: "200px",
     minWidth: "auto",
@@ -165,8 +165,6 @@ export function ListingFiltersMobile({
     setDistanceSubway(event.currentTarget);
   };
 
-  const { data: user } = useGetLoggedUsingGET();
-
   const location = useLocation();
   const history = useHistory();
   const search = useAppSelector(selectOption);
@@ -229,45 +227,6 @@ export function ListingFiltersMobile({
     location: checkNotUndefined(bar),
   };
 
-  const queryClient = useQueryClient();
-  const { mutateAsync } = useSaveFiltersUsingPOST({
-    mutation: {
-      onSuccess() {
-        queryClient.invalidateQueries(getGetLoggedUsingGETQueryKey());
-        // toast.success(" ✅ Filtros guardados!", {
-        //   position: "bottom-center",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: false,
-        //   draggable: true,
-        //   progress: undefined,
-        // });
-      },
-      onError() {
-        // toast.error(" ❌ Error en el guardado de filtros!", {
-        //   position: "bottom-center",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: false,
-        //   draggable: true,
-        //   progress: undefined,
-        // });
-      },
-    },
-  });
-  const saveFilters = async () => {
-    try {
-      await mutateAsync({
-        data: body,
-      });
-      setUnsavedFilters(false);
-    } catch (e) {
-      throw Error;
-    }
-  };
-
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([
     { id: "", name: "", stateName: "", centroid: { lat: 0, long: 0 } },
@@ -317,23 +276,6 @@ export function ListingFiltersMobile({
   return (
     <div>
       <div className={styles.OptionsFilters}>
-        {location.search.length > 0 && user && (
-          <StyledButton
-            size="small"
-            style={
-              !unsavedFilters
-                ? {
-                    background: "rgba(255, 64, 0, 0.25)",
-                    border: "2px solid #FF4000",
-                    color: "#FF4000",
-                  }
-                : {}
-            }
-            onClick={saveFilters}
-          >
-            <BookmarkBorderIcon />
-          </StyledButton>
-        )}
         <StyledButton
           id="buttonForm"
           size="small"
