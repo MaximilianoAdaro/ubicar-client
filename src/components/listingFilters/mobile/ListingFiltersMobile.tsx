@@ -11,14 +11,22 @@ import {
 } from "@material-ui/core";
 import DropdownItem from "react-bootstrap/DropdownItem";
 import { Dropdown } from "react-bootstrap";
-import { StyleDTO, GetTypesUsingGET200Item } from "../../../api";
+import {
+  StyleDTO,
+  GetTypesUsingGET200Item,
+  useGetLoggedUsingGET,
+  useSaveFiltersUsingPOST,
+  getGetLoggedUsingGETQueryKey,
+} from "../../../api";
 import { useHistory, useLocation } from "react-router-dom";
 import QueryString from "query-string";
 import { actions, useAppDispatch, useAppSelector } from "../../../store";
-import { selectOption } from "../../../store/slices/session";
+import { selectOption, selectSearchBar } from "../../../store/slices/session";
 import { convertCoordinates } from "../../Map/utils";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { MapView } from "../../../store/slices/map/mapSlice";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { useQueryClient } from "react-query";
 
 const parseIntOrUndefined = (n: string) => (n !== "" ? parseInt(n) : undefined);
 
@@ -29,7 +37,7 @@ type ListingFiltersProp = {
   setView: (arg0: MapView) => void;
 };
 
-const StyledButton = withStyles({
+export const StyledButton = withStyles({
   root: {
     width: "200px",
     minWidth: "auto",
@@ -184,6 +192,40 @@ export function ListingFiltersMobile({
     () => QueryString.parse(location.search) as any,
     [location.search]
   );
+
+  const checkNotUndefined = (value: any) => {
+    return value ? value : null;
+  };
+
+  const bar = useAppSelector(selectSearchBar);
+
+  const [unsavedFilters, setUnsavedFilters] = React.useState<boolean>(true);
+
+  const body = {
+    condition: checkNotUndefined(query.condition),
+    typeProperty: checkNotUndefined(query.typeProperty),
+    minPrice: parseFloat(checkNotUndefined(query.minPrice)),
+    maxPrice: parseFloat(checkNotUndefined(query.maxPrice)),
+    style: checkNotUndefined(query.style),
+    minAmountBathroom: checkNotUndefined(query.minAmountBathroom),
+    minAmountRoom: checkNotUndefined(query.minAmountRoom),
+    maxAmountRoom: checkNotUndefined(query.maxAmountRoom),
+    minAmountSquareMeter: checkNotUndefined(query.minAmountSquareMeter),
+    maxAmountSquareMeter: checkNotUndefined(query.maxAmountSquareMeter),
+    minDistanceSchools: checkNotUndefined(query.minDistanceSchools),
+    maxDistanceSchool: checkNotUndefined(query.maxDistanceSchool),
+    minDistanceUniversity: checkNotUndefined(query.minDistanceUniversity),
+    maxDistanceUniversity: checkNotUndefined(query.maxDistanceUniversity),
+    minDistanceHospital: checkNotUndefined(query.minDistanceHospital),
+    maxDistanceHospital: checkNotUndefined(query.maxDistanceHospital),
+    minDistanceFireStation: checkNotUndefined(query.minDistanceFireStation),
+    maxDistanceFireStation: checkNotUndefined(query.maxDistanceFireStation),
+    minDistancePenitentiary: checkNotUndefined(query.minDistancePenitentiary),
+    maxDistanceCommissary: checkNotUndefined(query.maxDistanceCommissary),
+    minDistanceSubway: checkNotUndefined(query.minDistanceSubway),
+    maxDistanceSubway: checkNotUndefined(query.maxDistanceSubway),
+    location: checkNotUndefined(bar),
+  };
 
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([

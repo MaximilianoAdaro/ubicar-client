@@ -13,12 +13,8 @@ import { useState } from "react";
 import { createStyles, Theme } from "@material-ui/core/styles";
 import { MyRecentlyViewed } from "../../components/UserProfile/Web/MyRecentlyViewed";
 import { MyOpportunities } from "../../components/UserProfile/Web/MyOpportunities";
-import {
-  getGetLoggedUsingGETQueryKey,
-  useGetLoggedUsingGET,
-  useProfileUserUsingGET,
-} from "../../api";
-import { useQueryClient } from "react-query";
+import { useGetLoggedUsingGET } from "../../api";
+import { MyRecommendations } from "../../components/UserProfile/Web/MyRecommendations";
 
 const useStyles = makeStyles({
   button: {
@@ -102,6 +98,17 @@ export function UserProfile() {
                   Recientemente Vistos
                 </StyledButton>
               </Grid>
+              {user && !user.investor && (
+                <Grid xs>
+                  <StyledButton
+                    className={classes.button}
+                    onClick={() => setComponent("Recommendation")}
+                    fullWidth
+                  >
+                    Recomendaciones
+                  </StyledButton>
+                </Grid>
+              )}
               {user && user.investor && (
                 <Grid xs>
                   <StyledButton
@@ -122,6 +129,7 @@ export function UserProfile() {
             {component === "MyProperties" && <MyProperties />}
             {component === "RecentlyViewed" && <MyRecentlyViewed />}
             {component === "Opportunities" && <MyOpportunities />}
+            {component === "Recommendation" && <MyRecommendations />}
           </Grid>
         </Grid>
       </div>

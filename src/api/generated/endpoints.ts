@@ -1662,3 +1662,40 @@ export const useEditUserUsingPUT = <
     mutationOptions
   );
 };
+
+export const saveFiltersUsingPOST = <TData = PropertyFilterDto>(
+  filters: PropertyFilterDto,
+  options?: SecondParameter<typeof customInstance>
+) => {
+  return customInstance<TData>(
+    { url: `/auth/save-filters`, method: "post", data: filters },
+    // eslint-disable-next-line
+    // @ts-ignore
+    options
+  );
+};
+
+export const useSaveFiltersUsingPOST = <
+  TData = AsyncReturnType<typeof saveFiltersUsingPOST, PropertyFilterDto>,
+  TError = unknown,
+  TContext = unknown
+>(options?: {
+  mutation?: UseMutationOptions<
+    TData,
+    TError,
+    { data: PropertyFilterDto },
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { mutation: mutationOptions, request: requestOptions } = options || {};
+
+  return useMutation<TData, TError, { data: PropertyFilterDto }, TContext>(
+    (props) => {
+      const { data } = props || {};
+
+      return saveFiltersUsingPOST<TData>(data, requestOptions);
+    },
+    mutationOptions
+  );
+};

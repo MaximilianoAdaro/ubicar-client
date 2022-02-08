@@ -16,7 +16,7 @@ export function MostLikedMobile() {
         <div className={styles.propertyList}>
           <h4 className={styles.title}>Propiedades más likeadas</h4>
           <div className={styles.propertyCard}>
-            {properties?.map((casa) => (
+            {properties?.slice(0, 5).map((casa) => (
               <div
                 onClick={() => history.push(urls.viewProperty.byId(casa.id))}
               >

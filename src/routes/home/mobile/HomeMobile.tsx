@@ -1,6 +1,12 @@
 import { useHistory, useParams } from "react-router-dom";
 import styles from "./HomeMobile.module.scss";
-import { CircularProgress, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+  withStyles,
+} from "@material-ui/core";
 import { useState } from "react";
 import { useGetLoggedUsingGET } from "../../../api";
 import React from "react";
@@ -14,6 +20,7 @@ import {
   MostLikedMobile,
   RecentlyViewedMobile,
 } from "../../../components/homePage";
+import { RecommendationsMobile } from "../../../components/homePage/mobile/RecommendationsMobile";
 
 export const HomeMobile = () => {
   const { data: user } = useGetLoggedUsingGET();
@@ -152,6 +159,7 @@ export const HomeMobile = () => {
       <div className={styles.properties} />
 
       {user ? <RecentlyViewedMobile /> : <MostLikedMobile />}
+      {user && <RecommendationsMobile recommendationNumber={0} />}
     </div>
   );
 };
